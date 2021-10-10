@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 namespace Targil0
 {
 
-  partial class Program
-{
-static partial void Wellcome6095()
-{
+    partial class Program
+    {
+        static partial void Welcome6094()
+        {
 
-Console.WriteLine("I am also here!");
+            Console.WriteLine("I am also here!");
 
 
-}
-}
+        }
+    }
 
 }
