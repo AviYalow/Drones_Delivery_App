@@ -3,7 +3,7 @@
 
 namespace IDAL
 {
-   namespace DO
+    namespace DO
     {
         public struct Clint
         {
@@ -13,6 +13,7 @@ namespace IDAL
             double longitude;
             double latitude;
             private int myVar;
+
 
         }
         public struct Drown
