@@ -6,7 +6,12 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            IDAL.DO.Client clint = new IDAL.DO.Client
+            {
+
+
+            };
+            Console.WriteLine(clint);
         }
     }
 }
