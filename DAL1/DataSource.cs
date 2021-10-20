@@ -9,7 +9,7 @@ namespace DalObject
 {
     internal class DataSource
     {
-        internal Drown[] drowns = new Drown[10];
+        internal Drone[] drowns = new Drone[10];
         internal Base_Station[] base_Stations = new Base_Station[5];
         internal Client[] clients = new Client[100];
         internal Package[] packages = new Package[1000];

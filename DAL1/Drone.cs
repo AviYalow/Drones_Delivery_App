@@ -4,7 +4,7 @@ namespace IDAL
 {
     namespace DO
     {
-        public struct Drown
+        public struct Drone
         {
             public int siralNumber { get; private set; }
             public string Model { get; set; }

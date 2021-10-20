@@ -8,6 +8,7 @@ namespace Targil0
         {
             Welcome3417();
             Welcome6094();
+           
             Console.ReadKey();
         }
 
@@ -19,5 +20,6 @@ namespace Targil0
             string userName = Console.ReadLine();
             Console.WriteLine("{0}, welcome to my first console application", userName);
         }
+   
     }
 }
