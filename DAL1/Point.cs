@@ -12,10 +12,12 @@ namespace IDAL
         {
            public static string Degree(double point)
             {
+                point = (point < 0) ? point * (-1) : point;
                 uint d = (uint)point;
-                uint dd = (uint)((point-d) * 60);
-                double s = (point - d - dd / 60) * 3600;
-                return $"{d}\x00B0 {dd}' {s}\"";
+                uint m = (uint)((point-d) * 60);
+                double mph = (double)(m / 60);
+                double s = (point - d - mph) * 3600;
+                return $"{d}\x00B0 {m}' {s}\"";
             }
             public static double Distans(double Longitude1, double Latitude1, double Longitude2, double Latitude2)
             {
