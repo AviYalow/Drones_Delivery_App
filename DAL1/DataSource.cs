@@ -71,6 +71,10 @@ namespace DalObject
                 drons[i].  weightCategory = (Weight_categories)rand.Next(0, 3);
                 drons[i]. butrryStatos = rand.NextDouble() + rand.Next(0, 100);
                 drons[i].drownStatos = (drons[i].butrryStatos < 15) ? (Drone_statos)rand.Next(1, 3) : (Drone_statos)rand.Next(1, 2);
+                int j = rand.Next(0, Config.index_base_stations_empty);
+                drons[i].base_station = base_Stations[j].baseNumber;
+                drons[i].base_station_latitude = base_Stations[j].latitude;
+                drons[i].base_station_longitude = base_Stations[j].longitude;
                 Config.index_drowns_empty++;
             }
             for (int i = 0; i < 10; i++)

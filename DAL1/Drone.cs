@@ -11,6 +11,9 @@ namespace IDAL
             public Weight_categories weightCategory { get; set; }
             public double butrryStatos { get; set; }
             public Drone_statos drownStatos { get; set; }
+            public int base_station  { get; set; }
+            public double base_station_longitude { get; set; }
+            public double base_station_latitude { get; set; }
 
 
             public override string ToString()

@@ -83,9 +83,34 @@ namespace DalObject
         {
             bool cheak;
             int intNum;
-            double pointLine;
+            int send,get;
             Console.Write("Enter ID:");
-            DataSource.packages[DataSource.Config.package_num] = new Package { sirialNumber };
+            DataSource.packages[DataSource.Config.package_num] = new Package { sirialNumber = DataSource.Config.package_num++ };
+            cheak = int.TryParse(Console.ReadLine(), out intNum);
+            DataSource.packages[DataSource.Config.package_num].sendClient = intNum;
+            cheak = int.TryParse(Console.ReadLine(), out intNum);
+            DataSource.packages[DataSource.Config.package_num].getingClient = intNum;
+            cheak = int.TryParse(Console.ReadLine(), out intNum);
+            DataSource.packages[DataSource.Config.package_num].weightCatgory =(Weight_categories) intNum;
+            cheak = int.TryParse(Console.ReadLine(), out intNum);
+            DataSource.packages[DataSource.Config.package_num].priority = (Priority)intNum;
+            for (int i = 0; i < DataSource.Config.index_drowns_empty; i++)
+            {
+                if (DataSource.drons[i].weightCategory == DataSource.packages[DataSource.Config.package_num].weightCatgory
+                    && DataSource.drons[i].drownStatos==Drone_statos.Free)
+                {
+                    DataSource.packages[DataSource.Config.package_num].operator_skimmer_ID = DataSource.drons[i].siralNumber;
+                    intNum = i;
+                    break;
+                }
+                DataSource.packages[DataSource.Config.package_num].operator_skimmer_ID = 0;
+            }
+            DataSource.packages[DataSource.Config.package_num].receiving_delivery = DateTime.Now;
+            DataSource.packages[DataSource.Config.package_num].package_association = DateTime.Now.AddMinutes(2);
+            DataSource.packages[DataSource.Config.package_num].package_arrived = DateTime.Now.AddMinutes(52);
+            DataSource.packages[DataSource.Config.package_num].collect_package_for_shipment = DateTime.Now.AddMinutes(30);
+
+
         }
 
     }
