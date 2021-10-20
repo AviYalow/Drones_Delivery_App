@@ -84,34 +84,113 @@ namespace DalObject
             bool cheak;
             int intNum;
             int send,get;
-            Console.Write("Enter ID:");
+            
             DataSource.packages[DataSource.Config.package_num] = new Package { sirialNumber = DataSource.Config.package_num++ };
+            Console.Write("Enter ID of sender:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
             DataSource.packages[DataSource.Config.package_num].sendClient = intNum;
+            Console.Write("Enter ID of recipient:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
             DataSource.packages[DataSource.Config.package_num].getingClient = intNum;
+            Console.Write("Enter Weight categories 0 for easy,1 for mediom,3 for haevy:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
             DataSource.packages[DataSource.Config.package_num].weightCatgory =(Weight_categories) intNum;
+            Console.Write("Enter priority 0 for Immediate ,1 for quick ,2 for Regular:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
             DataSource.packages[DataSource.Config.package_num].priority = (Priority)intNum;
+            DataSource.packages[DataSource.Config.package_num].operator_skimmer_ID = 0;
+            DataSource.packages[DataSource.Config.package_num].receiving_delivery = DateTime.Now;
+            DataSource.packages[DataSource.Config.package_num].package_association =new DateTime(0,0,0,0,0,0);
+            DataSource.packages[DataSource.Config.package_num].package_arrived = new DateTime(0, 0, 0, 0, 0, 0);
+            DataSource.packages[DataSource.Config.package_num].collect_package_for_shipment = new DateTime(0, 0, 0, 0, 0, 0);
+
+
+        }
+        
+        public static void connect_package_to_drone()
+        {
+            bool cheak;
+            int intNum;
+            Console.Write("Enter package number:");
+            cheak = int.TryParse(Console.ReadLine(), out intNum);
             for (int i = 0; i < DataSource.Config.index_drowns_empty; i++)
             {
-                if (DataSource.drons[i].weightCategory == DataSource.packages[DataSource.Config.package_num].weightCatgory
-                    && DataSource.drons[i].drownStatos==Drone_statos.Free)
+                if (DataSource.drons[i].weightCategory == DataSource.packages[intNum].weightCatgory
+                    && DataSource.drons[i].drownStatos == Drone_statos.Free)
                 {
-                    DataSource.packages[DataSource.Config.package_num].operator_skimmer_ID = DataSource.drons[i].siralNumber;
-                    intNum = i;
+                    DataSource.packages[intNum].operator_skimmer_ID = DataSource.drons[i].siralNumber;
+                    DataSource.drons[i].drownStatos = Drone_statos.Maintenance;
+                    DataSource.packages[intNum].package_association = DateTime.Now;
                     break;
                 }
                 DataSource.packages[DataSource.Config.package_num].operator_skimmer_ID = 0;
             }
-            DataSource.packages[DataSource.Config.package_num].receiving_delivery = DateTime.Now;
-            DataSource.packages[DataSource.Config.package_num].package_association = DateTime.Now.AddMinutes(2);
-            DataSource.packages[DataSource.Config.package_num].package_arrived = DateTime.Now.AddMinutes(52);
-            DataSource.packages[DataSource.Config.package_num].collect_package_for_shipment = DateTime.Now.AddMinutes(30);
-
+        }
+        public static void Package_collected()
+        {
+            bool cheak;
+            int intNum;
+            Console.Write("Enter package number:");
+            cheak = int.TryParse(Console.ReadLine(), out intNum);
+            DataSource.packages[intNum].collect_package_for_shipment = DateTime.Now;
+        }
+        public static void Package_arrived()
+        {
+            bool cheak;
+            int intNum;
+            Console.Write("Enter package number:");
+            cheak = int.TryParse(Console.ReadLine(), out intNum);
+            DataSource.packages[intNum].package_arrived = DateTime.Now;
+            for (int i = 0; i < DataSource.Config.index_drowns_empty; i++)
+            {
+                if(DataSource.drons[i].siralNumber==DataSource.packages[intNum].operator_skimmer_ID)
+                {
+                    DataSource.drons[i].drownStatos = Drone_statos.Free;
+                    DataSource.drons[i].butrryStatos -= 20;
+                }
+            }
+        }
+        public static void send_drone_to_chrge(int base_station)
+        {
+            bool cheak;
+            int intNum;
+            Console.Write("Enter drone number:");
+            cheak = int.TryParse(Console.ReadLine(), out intNum);
+            for (int i = 0; i < DataSource.Config.index_drowns_empty; i++)
+            {
+                if (DataSource.drons[i].siralNumber==intNum)
+                {
+                    DataSource.drons[i].drownStatos = Drone_statos.charge;
+                    for (int j = 0; j < DataSource.Config.index_base_stations_empty; j++)
+                    {
+                        if(DataSource.base_Stations[j].baseNumber==base_station)
+                        {
+                            DataSource.base_Stations[j].Number_of_charging_stations--;
+                            DataSource.drons[i].base_station_latitude = DataSource.base_Stations[j].latitude;
+                                DataSource.drons[i].base_station_longitude = DataSource.base_Stations[j].longitude;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
 
         }
-
+        public static void free_drone_from_chrge()
+        {
+            bool cheak;
+            int intNum;
+            Console.Write("Enter drone number:");
+            cheak = int.TryParse(Console.ReadLine(), out intNum);
+            for (int i = 0; i < DataSource.Config.index_drowns_empty; i++)
+            {
+                if(DataSource.drons[i].siralNumber==intNum)
+                {
+                    DataSource.drons[i].drownStatos = Drone_statos.Free;
+                    DataSource.drons[i].butrryStatos = 100;
+                    break;
+                }
+            }
+        }
     }
 }
