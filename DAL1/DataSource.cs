@@ -66,7 +66,7 @@ namespace DalObject
             Config.index_base_stations_empty++;
             for (int i = 0; i < 5; i++)
             {
-                drons[i] = new Drone{ siralNumber = Config.index_drowns_empty + 1 };
+                drons[i] = new Drone{ siralNumber = rand.Next(10000) };
                   drons[i].  Model = randomName(rand, rand.Next(3, 7));
                 drons[i].  weightCategory = (Weight_categories)rand.Next(0, 3);
                 drons[i]. butrryStatos = rand.NextDouble() + rand.Next(0, 100);
@@ -75,7 +75,7 @@ namespace DalObject
             }
             for (int i = 0; i < 10; i++)
             {
-                clients[i] = new Client { ID = Config.index_clients_empty + 1 };
+                clients[i] = new Client { ID = rand.Next(100000000,999999999) };
                 clients[i].FonNumber += $"05{rand.Next(0, 6)}-{rand.Next(100, 999)}-{rand.Next(1000, 9999)}";
                 clients[i].Name += prsonalRandomName(rand, rand.Next(3, 7));
                 clients[i].Latitude = rand.Next(31, 33) + rand.NextDouble();
