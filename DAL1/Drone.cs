@@ -6,11 +6,11 @@ namespace IDAL
     {
         public struct Drone
         {
-            public int siralNumber { get; private set; }
+            public int siralNumber { get; init; }
             public string Model { get; set; }
-            public string weightCategory { get; set; }
-            public int butrryStatos { get; set; }
-            public string drownStatos { get; set; }
+            public Weight_categories weightCategory { get; set; }
+            public double butrryStatos { get; set; }
+            public Drone_statos drownStatos { get; set; }
 
 
             public override string ToString()

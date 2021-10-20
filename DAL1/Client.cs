@@ -7,7 +7,7 @@ namespace IDAL
     {
         public struct Client
         {
-            public int ID { get; private set; }
+            public int ID { get; init; }
             public String Name { get; set; }
             public String FonNumber { get; set; }
             public double Longitude { get; set; }
@@ -21,8 +21,8 @@ namespace IDAL
                 printClient += $"ID is {ID},\n";
                 printClient += $"Name is {Name},\n";
                 printClient += $"Phone Number is {FonNumber},\n";
-                printClient += $"Longitude is {Longitude},\n";
-                printClient += $"Latitude is {Latitude} \n";
+                printClient += $"Longitude is {Point.Degree(Longitude)},\n";
+                printClient += $"Latitude is {Point.Degree(Latitude)} \n";
                 return printClient;
             }
 

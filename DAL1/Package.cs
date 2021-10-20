@@ -6,11 +6,11 @@ namespace IDAL
     {
         public struct Package
         {
-            public int sirialNumber { get; private set; }
+            public int sirialNumber { get; init; }
             public int sendClient { get; set; }
             public int getingClient { get; set; }
-            public String weightCatgory { get; set; }
-            public String priority { get; set; }
+            public Weight_categories weightCatgory { get; set; }
+            public Priority priority { get; set; }
             public int operator_skimmer_ID { get; set; }
             public DateTime receiving_delivery { get; set; }
             public DateTime package_association { get; set; }
