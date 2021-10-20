@@ -57,6 +57,35 @@ namespace DalObject
             Console.Write("Enter a statos:0 for free,1 for maintenance,2 for in charge:");
             res = int.TryParse(Console.ReadLine(), out num);
             DataSource.drons[DataSource.Config.index_drowns_empty].drownStatos = (Drone_statos)num;
+            DataSource.Config.index_drowns_empty++;
+        }
+        public static void Add_client()
+        {
+            bool cheak;
+            int intNum;
+            double pointLine;
+            Console.Write("Enter ID:");
+            cheak = int.TryParse(Console.ReadLine(), out intNum);
+            DataSource.clients[DataSource.Config.index_clients_empty] = new Client { ID = intNum };
+            Console.Write("Enter name:");
+            DataSource.clients[DataSource.Config.index_clients_empty].Name = Console.ReadLine();
+            Console.Write("Enter fon number:");
+            DataSource.clients[DataSource.Config.index_clients_empty].FonNumber = Console.ReadLine();
+            Console.Write("Enter latitude:");
+            cheak = double.TryParse(Console.ReadLine(), out pointLine);
+            DataSource.clients[DataSource.Config.index_clients_empty].Latitude = pointLine;
+            Console.Write("Enter londitude:");
+            cheak = double.TryParse(Console.ReadLine(), out pointLine);
+            DataSource.clients[DataSource.Config.index_clients_empty].Longitude = pointLine;
+
+        }
+        public static void Add_package()
+        {
+            bool cheak;
+            int intNum;
+            double pointLine;
+            Console.Write("Enter ID:");
+            DataSource.packages[DataSource.Config.package_num] = new Package { sirialNumber };
         }
 
     }

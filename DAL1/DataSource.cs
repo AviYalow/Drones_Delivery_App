@@ -103,6 +103,7 @@ namespace DalObject
                 packages[i].collect_package_for_shipment = packages[i].package_association.AddMinutes(30);
                 packages[i].package_arrived = packages[i].collect_package_for_shipment.AddHours(rand.Next(1, 3));
                 Config.index_Packages_empty++;
+                Config.package_num++;
             }
 
         }
