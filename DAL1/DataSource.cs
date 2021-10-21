@@ -70,7 +70,7 @@ namespace DalObject
                   drones[i].  Model = randomName(rand, rand.Next(3, 7));
                 drones[i].  weightCategory = (Weight_categories)rand.Next(0, 3);
                 drones[i]. butrryStatus = rand.NextDouble() + rand.Next(0, 100);
-                drones[i].drownStatus = (drones[i].butrryStatus < 15) ? (Drone_status)rand.Next(1, 3) : (Drone_status)rand.Next(1, 2);
+                drones[i].drownStatus =  (Drone_status)rand.Next(0, 2) ;
                 int j = rand.Next(0, Config.index_base_stations_empty);
                 drones[i].base_station = base_Stations[j].baseNumber;
                 drones[i].base_station_latitude = base_Stations[j].latitude;
@@ -103,9 +103,13 @@ namespace DalObject
                     packages[i].operator_skimmer_ID = 0;
                 }
                 packages[i].receiving_delivery = (DateTime.Now.AddMinutes(rand.Next(-150, 0)));
-                packages[i].package_association = (packages[i].operator_skimmer_ID != 0) ?  packages[i].receiving_delivery.AddMinutes(5): packages[i].receiving_delivery.AddHours(3);
+                if (packages[i].operator_skimmer_ID != 0)
+                {
+                    packages[i].package_association = (packages[i].operator_skimmer_ID != 0) ? packages[i].receiving_delivery.AddMinutes(5) : packages[i].receiving_delivery.AddHours(3);
+                }
+                if(rand.Next(0,2)!=0)
                 packages[i].collect_package_for_shipment = packages[i].package_association.AddMinutes(30);
-                packages[i].package_arrived = packages[i].collect_package_for_shipment.AddHours(rand.Next(1, 3));
+               
                 Config.index_Packages_empty++;
                 Config.package_num++;
             }

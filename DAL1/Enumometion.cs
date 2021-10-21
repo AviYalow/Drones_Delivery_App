@@ -9,7 +9,7 @@ namespace IDAL
     namespace DO
     {
         public enum Weight_categories { Easy, Medium, Heavy }
-        public enum Drone_status { Free, Maintenance, charge }
+        public enum Drone_status { Free, Maintenance, Work }
         public enum Priority { Immediate, quick, Regular }
         public enum Distans_2_point { base_station = 1, client }
     }

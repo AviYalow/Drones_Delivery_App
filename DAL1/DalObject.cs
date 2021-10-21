@@ -84,7 +84,7 @@ namespace DalObject
             bool cheak;
             int intNum;
 
-
+            DataSource.packages[DataSource.Config.package_num].receiving_delivery = DateTime.Now;
             DataSource.packages[DataSource.Config.package_num] = new Package { sirialNumber = DataSource.Config.package_num++ };
             Console.Write("Enter ID of the sender:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
@@ -98,11 +98,17 @@ namespace DalObject
             Console.Write("Enter priority 0 for Immediate ,1 for quick ,2 for Regular:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
             DataSource.packages[DataSource.Config.package_num].priority = (Priority)intNum;
-            DataSource.packages[DataSource.Config.package_num].operator_skimmer_ID = 0;
-            DataSource.packages[DataSource.Config.package_num].receiving_delivery = DateTime.Now;
-            DataSource.packages[DataSource.Config.package_num].package_association = DateTime.Now.AddMinutes(2);
-            DataSource.packages[DataSource.Config.package_num].package_arrived = DateTime.Now.AddHours(1);
-            DataSource.packages[DataSource.Config.package_num].collect_package_for_shipment = DateTime.Now.AddMinutes(15);
+            for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
+            {
+                if (DataSource.drones[i].weightCategory == DataSource.packages[DataSource.Config.package_num].weightCatgory &&
+                    DataSource.drones[i].drownStatus == Drone_status.Free)
+                {
+                    DataSource.packages[DataSource.Config.package_num].operator_skimmer_ID = DataSource.drones[i].siralNumber;
+                    DataSource.drones[i].drownStatus = Drone_status.Work;
+                    DataSource.packages[DataSource.Config.package_num].package_association = DateTime.Now;
+                }
+                DataSource.packages[DataSource.Config.package_num].operator_skimmer_ID = 0;
+            }
             DataSource.Config.index_Packages_empty++;
             DataSource.Config.package_num++;
 
@@ -121,7 +127,7 @@ namespace DalObject
                     && DataSource.drones[i].drownStatus == Drone_status.Free)
                 {
                     DataSource.packages[intNum].operator_skimmer_ID = DataSource.drones[i].siralNumber;
-                    DataSource.drones[i].drownStatus = Drone_status.Maintenance;
+                    DataSource.drones[i].drownStatus = Drone_status.Work;
                     DataSource.packages[intNum].package_association = DateTime.Now;
                     break;
                 }
@@ -162,7 +168,7 @@ namespace DalObject
             {
                 if (DataSource.drones[i].siralNumber == intNum)
                 {
-                    DataSource.drones[i].drownStatus = Drone_status.charge;
+                    DataSource.drones[i].drownStatus = Drone_status.Maintenance;
                     for (int j = 0; j < DataSource.Config.index_base_stations_empty; j++)
                     {
                         if (DataSource.base_Stations[j].baseNumber == base_station)
@@ -205,10 +211,10 @@ namespace DalObject
             {
                 if (DataSource.base_Stations[i].baseNumber == intNum)
                 {
-                   return DataSource.base_Stations[i].ToString();
-                    
+                    return DataSource.base_Stations[i].ToString();
+
                 }
-                
+
             }
             return "base station not exitst";
         }
@@ -261,45 +267,45 @@ namespace DalObject
 
         public static void Base_station_list()
         {
-          
+
             for (int i = 0; i < DataSource.Config.index_base_stations_empty; i++)
             {
-                
-                    Console.WriteLine(DataSource.base_Stations[i].ToString());
-                   
-                
+
+                Console.WriteLine(DataSource.base_Stations[i].ToString());
+
+
             }
         }
         public static void Drone_list()
         {
-            
+
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-           
-              
-                    Console.WriteLine(DataSource.drones[i].ToString());
-               
+
+
+                Console.WriteLine(DataSource.drones[i].ToString());
+
             }
         }
         public static void cilent_list()
         {
-          
+
             for (int i = 0; i < DataSource.Config.index_clients_empty; i++)
             {
-               
-               
-                    Console.WriteLine(DataSource.clients[i].ToString());
-              
+
+
+                Console.WriteLine(DataSource.clients[i].ToString());
+
             }
         }
         public static void packege_list()
         {
-            
+
             for (int i = 0; i < DataSource.Config.package_num; i++)
             {
-                
-                    Console.WriteLine(DataSource.packages[i].ToString());
-                
+
+                Console.WriteLine(DataSource.packages[i].ToString());
+
             }
 
         }
@@ -308,8 +314,8 @@ namespace DalObject
         {
             for (int i = 0; i < DataSource.Config.package_num; i++)
             {
-                if(DataSource.packages[i].operator_skimmer_ID==0)
-                Console.WriteLine(DataSource.packages[i].ToString());
+                if (DataSource.packages[i].operator_skimmer_ID == 0)
+                    Console.WriteLine(DataSource.packages[i].ToString());
 
             }
         }
@@ -318,14 +324,14 @@ namespace DalObject
 
             for (int i = 0; i < DataSource.Config.index_base_stations_empty; i++)
             {
-                if(DataSource.base_Stations[i].Number_of_charging_stations>0)
-                Console.WriteLine(DataSource.base_Stations[i]);
+                if (DataSource.base_Stations[i].Number_of_charging_stations > 0)
+                    Console.WriteLine(DataSource.base_Stations[i]);
             }
         }
         public static void Distance()
         {
             bool cheak;
-            int intNum,count=0;
+            int intNum, count = 0;
             double[] points = new double[4];
             Console.Write("Enter 1 for base point,2 for client point for the first point:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
@@ -340,7 +346,7 @@ namespace DalObject
                         {
                             if (DataSource.base_Stations[j].baseNumber == intNum)
                             {
-                               points[count]=  DataSource.base_Stations[j].longitude;
+                                points[count] = DataSource.base_Stations[j].longitude;
                                 count++;
                                 points[count] = DataSource.base_Stations[j].latitude;
                                 count++;
@@ -367,9 +373,9 @@ namespace DalObject
                     default:
                         Console.WriteLine("no point");
                         return;
-                        
+
                 }
-                Console.Write("Enter 1 for base point, 2 for client point for the second point:") ;
+                Console.Write("Enter 1 for base point, 2 for client point for the second point:");
                 cheak = int.TryParse(Console.ReadLine(), out intNum);
             }
             Console.WriteLine($"the distans is: {Point.Distans(points[0], points[2], points[1], points[3])}KM");
