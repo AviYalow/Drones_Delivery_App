@@ -301,7 +301,7 @@ namespace DalObject
         public static void packege_list()
         {
 
-            for (int i = 1; i < DataSource.Config.package_num; i++)
+            for (int i = 0; i < DataSource.Config.package_num-1; i++)
             {
 
                 Console.WriteLine(DataSource.packages[i].ToString());
