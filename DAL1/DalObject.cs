@@ -319,10 +319,10 @@ namespace DalObject
             for (int i = 0; i < DataSource.Config.index_base_stations_empty; i++)
             {
                 if(DataSource.base_Stations[i].Number_of_charging_stations>0)
-                Console.WriteLine(DataSource.base_Stations[i].ToString());
+                Console.WriteLine(DataSource.base_Stations[i]);
             }
         }
-        public static void distans()
+        public static void Distance()
         {
             bool cheak;
             int intNum,count=0;

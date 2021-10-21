@@ -6,15 +6,18 @@ namespace ConsoleUI
 {
     class Program
     {
-        enum Options { Exit, Add, Update, ShowObject, ShowList }
+        enum Options { Exit, Add, Update, ShowDetails, ShowList }
         enum Entities { Exit, Client, Base_station, Drone, Package }
         enum UpdatesOptions { Exit, Associate, Collect, Delivery ,Charge, UnCharge}
-
+        enum Show { Exit, Client, Base_station, Drone, Package, ShowDistance }
+        enum ShowList { Exit, Base_station, Drones, Clients, Package, FreePackage, FreeBaseStation }
         private static void Menu()
         {
             Options option;
             Entities entity;
             UpdatesOptions updatesOption;
+            Show show;
+            ShowList showList;
 
             do
             {
@@ -67,27 +70,92 @@ namespace ConsoleUI
                         {
                             
                             case UpdatesOptions.Associate:
+                                DalObject.DalObject.connect_package_to_drone();
                                 break;
                             case UpdatesOptions.Collect:
+                                DalObject.DalObject.Package_collected();
                                 break;
                             case UpdatesOptions.Delivery:
+                                DalObject.DalObject.Package_arrived();
                                 break;
                             case UpdatesOptions.Charge:
+                                Console.WriteLine("Choose a base number from the following Base station:");
+                                DalObject.DalObject.Base_station_list_with_free_charge_states();
+                                int baseStation;
+                                bool success;
+                                do
+                                {
+                                    success = int.TryParse(Console.ReadLine(), out baseStation);
+                                    if(!success)
+                                        Console.WriteLine("Error! Chooose agine");
+                                } while (!success);
+                                DalObject.DalObject.send_drone_to_charge(baseStation);
                                 break;
                             case UpdatesOptions.UnCharge:
+                                DalObject.DalObject.free_drone_from_charge();
                                 break;
                             case UpdatesOptions.Exit:
                                 break;
                         }
                         break;
-                    case Options.ShowObject:
+
+                    case Options.ShowDetails:
+                        str = "Choose one of the following view option:\n " +
+                             "1-Client,\n 2-Base station,\n 3- Drone,\n 4- Package\n 5-Distance";
+                        num = getChoose(str);
+                        show = (Show)num;
+                        switch (show)
+                        {
+                            case Show.Client:
+                                DalObject.DalObject.cilent_by_number();
+                                break;
+                            case Show.Base_station:
+                                DalObject.DalObject.Base_station_by_number();
+                                break;
+                            case Show.Drone:
+                                DalObject.DalObject.Drone_by_number();
+                                break;
+                            case Show.Package:
+                                DalObject.DalObject.packege_by_number();
+                                break;
+                            case Show.ShowDistance:
+                               DalObject.DalObject.Distance();
+                               break;
+                            case Show.Exit:
+                                break;
+                        }
                         break;
                     case Options.ShowList:
+                        str = "Choose one of the following option:\n " +
+                             "1-Clients,\n 2-Base stations,\n 3- Drones,\n" +
+                             " 4- Packages\n 5-Free drones,\n 6- Free Base Stations";
+                        num = getChoose(str);
+                        showList = (ShowList)num;
+                        switch (showList)
+                        { 
+                            case ShowList.Base_station:
+                                DalObject.DalObject.Base_station_list();
+                                break;
+                            case ShowList.Drones:
+                                DalObject.DalObject.Drone_list();
+                                break;
+                            case ShowList.Clients:
+                                DalObject.DalObject.cilent_list();
+                                break;
+                            case ShowList.Package:
+                                DalObject.DalObject.packege_list();
+                                break;
+                            case ShowList.FreePackage:
+                                DalObject.DalObject.packege_list_with_no_drone();
+                                break;
+                            case ShowList.FreeBaseStation:
+                                DalObject.DalObject.Base_station_list_with_free_charge_states();
+                                break;
+                            case ShowList.Exit:
+                                break;
+                        }
                         break;
-
                     case Options.Exit:
-                        break;
-                    default:
                         break;
                 }
 
