@@ -23,7 +23,7 @@ namespace IDAL
             {
                
 
-                return Math.Sqrt((Longitude1 - Longitude2) * (Longitude1 - Longitude2) + (Latitude1 - Latitude2) * (Latitude1 - Latitude2));
+                return (Math.Sqrt((Longitude1 - Longitude2) * (Longitude1 - Longitude2) + (Latitude1 - Latitude2) * (Latitude1 - Latitude2))*100);
             }
         }
     }
