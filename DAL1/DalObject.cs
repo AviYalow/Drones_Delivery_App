@@ -168,6 +168,11 @@ namespace DalObject
             {
                 if (DataSource.drones[i].siralNumber == intNum)
                 {
+                    if(DataSource.drones[i].drownStatus == Drone_status.Work)
+                    {
+                        Console.WriteLine("The drone in shipment, plese with until is finish!");
+                        return;
+                    }
                     DataSource.drones[i].drownStatus = Drone_status.Maintenance;
                     for (int j = 0; j < DataSource.Config.index_base_stations_empty; j++)
                     {
