@@ -9,7 +9,7 @@ namespace ConsoleUI
         enum Options { Exit, Add, Update, ShowDetails, ShowList }
         enum Entities { Exit, Client, Base_station, Drone, Package }
         enum UpdatesOptions { Exit, Associate, Collect, Delivery ,Charge, UnCharge}
-        enum Show { Exit, Client, Base_station, Drone, Package, Distance }
+        enum Show { Exit, Client, Base_station, Drone, Package, ShowDistance }
         enum ShowList { Exit, Base_station, Drones, Clients, Package, FreePackage, FreeBaseStation }
         private static void Menu()
         {
@@ -118,20 +118,44 @@ namespace ConsoleUI
                             case Show.Package:
                                 DalObject.DalObject.packege_by_number();
                                 break;
-                            case Show.Distance:
-                                DalObject.DalObject.
+                            case Show.ShowDistance:
+                               DalObject.DalObject.Distance();
+                               break;
                             case Show.Exit:
                                 break;
                         }
-
-
                         break;
                     case Options.ShowList:
+                        str = "Choose one of the following option:\n " +
+                             "1-Clients,\n 2-Base stations,\n 3- Drones,\n" +
+                             " 4- Packages\n 5-Free drones,\n 6- Free Base Stations";
+                        num = getChoose(str);
+                        showList = (ShowList)num;
+                        switch (showList)
+                        { 
+                            case ShowList.Base_station:
+                                DalObject.DalObject.Base_station_list();
+                                break;
+                            case ShowList.Drones:
+                                DalObject.DalObject.Drone_list();
+                                break;
+                            case ShowList.Clients:
+                                DalObject.DalObject.cilent_list();
+                                break;
+                            case ShowList.Package:
+                                DalObject.DalObject.packege_list();
+                                break;
+                            case ShowList.FreePackage:
+                                DalObject.DalObject.packege_list_with_no_drone();
+                                break;
+                            case ShowList.FreeBaseStation:
+                                DalObject.DalObject.Base_station_list_with_free_charge_states();
+                                break;
+                            case ShowList.Exit:
+                                break;
+                        }
                         break;
-
                     case Options.Exit:
-                        break;
-                    default:
                         break;
                 }
 

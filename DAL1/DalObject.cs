@@ -322,7 +322,7 @@ namespace DalObject
                 Console.WriteLine(DataSource.base_Stations[i]);
             }
         }
-        public static void distans()
+        public static void Distance()
         {
             bool cheak;
             int intNum,count=0;
