@@ -349,7 +349,7 @@ namespace DalObject
                         }
 
                         break;
-                    case Distans_2_point.clien:
+                    case Distans_2_point.client:
                         Console.Write("Enter client number:");
                         cheak = int.TryParse(Console.ReadLine(), out intNum);
                         for (int j = 0; j < DataSource.Config.index_drones_empty; j++)
