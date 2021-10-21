@@ -16,6 +16,7 @@ namespace IDAL
         public enum Menu { Exit,AddItems, Update, Display, View_the_lists }
         public enum Drone_status { Free, Maintenance, charge}
         public enum Priority { Immediate , quick , Regular }
+        public enum Distans_2_point { base_station=1,clien}
     }
 
 }
