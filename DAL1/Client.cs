@@ -22,7 +22,9 @@ namespace IDAL
                 printClient += $"Name is {Name},\n";
                 printClient += $"Phone Number is {PhoneNumber},\n";
                 printClient += $"Longitude is {Point.Degree(Longitude)},\n";
+                printClient += $"Longitude is {Longitude},\n";
                 printClient += $"Latitude is {Point.Degree(Latitude)} \n";
+                printClient += $"Latitude is {Latitude} \n";
                 return printClient;
             }
 

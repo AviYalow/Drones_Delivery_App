@@ -15,7 +15,7 @@ namespace IDAL
                 point = (point < 0) ? point * (-1) : point;
                 uint d = (uint)point;
                 uint m = (uint)((point-d) * 60);
-                double mph = (double)(m / 60);
+                double mph = (double)((double) m / 60);
                 double s = (point - d - mph) * 3600;
                 return $"{d}\x00B0 {m}' {s}\"";
             }

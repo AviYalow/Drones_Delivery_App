@@ -126,9 +126,9 @@ namespace ConsoleUI
                         }
                         break;
                     case Options.ShowList:
-                        str = "Choose one of the following option:\n " +
-                             "1-Clients,\n 2-Base stations,\n 3- Drones,\n" +
-                             " 4- Packages\n 5-Free drones,\n 6- Free Base Stations";
+                        str = "Choose one of the following option:\n" +
+                             " 1-Base stations,\n 2- Drones,\n 3-Clients,\n" +
+                             " 4- Packages\n 5-packege with no drone,\n 6- Base station with free charge states";
                         num = getChoose(str);
                         showList = (ShowList)num;
                         switch (showList)
