@@ -195,7 +195,7 @@ namespace DalObject
             }
         }
 
-        public static void Base_station_by_number()
+        public static string Base_station_by_number()
         {
             bool cheak;
             int intNum;
@@ -205,10 +205,12 @@ namespace DalObject
             {
                 if (DataSource.base_Stations[i].baseNumber == intNum)
                 {
-                    Console.WriteLine(DataSource.base_Stations[i].ToString());
-                    break;
+                   return DataSource.base_Stations[i].ToString();
+                    
                 }
+                
             }
+            return "base station not exitst";
         }
         public static void Drone_by_number()
         {
@@ -319,6 +321,59 @@ namespace DalObject
                 if(DataSource.base_Stations[i].Number_of_charging_stations>0)
                 Console.WriteLine(DataSource.base_Stations[i]);
             }
+        }
+        public static void distans()
+        {
+            bool cheak;
+            int intNum,count=0;
+            double[] points = new double[4];
+            Console.Write("Enter 1 for base point,2 for client point for the first point:");
+            cheak = int.TryParse(Console.ReadLine(), out intNum);
+            for (int i = 1; i < 2; i++)
+            {
+                switch ((Distans_2_point)intNum)
+                {
+                    case Distans_2_point.base_station:
+                        Console.Write("Enter base number:");
+                        cheak = int.TryParse(Console.ReadLine(), out intNum);
+                        for (int j = 0; j < DataSource.Config.index_base_stations_empty; j++)
+                        {
+                            if (DataSource.base_Stations[j].baseNumber == intNum)
+                            {
+                               points[count]=  DataSource.base_Stations[j].longitude;
+                                count++;
+                                points[count] = DataSource.base_Stations[j].latitude;
+                                count++;
+                            }
+
+                        }
+
+                        break;
+                    case Distans_2_point.client:
+                        Console.Write("Enter client number:");
+                        cheak = int.TryParse(Console.ReadLine(), out intNum);
+                        for (int j = 0; j < DataSource.Config.index_drones_empty; j++)
+                        {
+                            if (DataSource.drones[j].siralNumber == intNum)
+                            {
+                                points[count] = DataSource.clients[j].Longitude;
+                                count++;
+                                points[count] = DataSource.clients[j].Latitude;
+                                count++;
+                            }
+
+                        }
+                        break;
+                    default:
+                        Console.WriteLine("no point");
+                        return;
+                        
+                }
+                Console.Write("Enter 1 for base point, 2 for client point for the second point:") ;
+                cheak = int.TryParse(Console.ReadLine(), out intNum);
+            }
+            Console.WriteLine($"the distans is: {Point.Distans(points[0], points[2], points[1], points[3])}KM");
+
         }
     }
 }
