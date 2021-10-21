@@ -10,14 +10,14 @@ namespace DalObject
 {
     internal class DataSource
     {
-        internal static Drone[] drons = new Drone[10];
+        internal static Drone[] drones = new Drone[10];
         internal static Base_Station[] base_Stations = new Base_Station[5];
         internal static Client[] clients = new Client[100];
         internal static Package[] packages = new Package[1000];
 
         internal class Config
         {
-            internal static int index_drowns_empty=0;
+            internal static int index_drones_empty=0;
             internal static int index_base_stations_empty=0;
             internal static int index_clients_empty=0;
             internal static int index_Packages_empty=0;
@@ -66,21 +66,21 @@ namespace DalObject
             Config.index_base_stations_empty++;
             for (int i = 0; i < 5; i++)
             {
-                drons[i] = new Drone{ siralNumber = rand.Next(10000) };
-                  drons[i].  Model = randomName(rand, rand.Next(3, 7));
-                drons[i].  weightCategory = (Weight_categories)rand.Next(0, 3);
-                drons[i]. butrryStatos = rand.NextDouble() + rand.Next(0, 100);
-                drons[i].drownStatos = (drons[i].butrryStatos < 15) ? (Drone_statos)rand.Next(1, 3) : (Drone_statos)rand.Next(1, 2);
+                drones[i] = new Drone{ siralNumber = rand.Next(10000) };
+                  drones[i].  Model = randomName(rand, rand.Next(3, 7));
+                drones[i].  weightCategory = (Weight_categories)rand.Next(0, 3);
+                drones[i]. butrryStatus = rand.NextDouble() + rand.Next(0, 100);
+                drones[i].drownStatus = (drones[i].butrryStatus < 15) ? (Drone_status)rand.Next(1, 3) : (Drone_status)rand.Next(1, 2);
                 int j = rand.Next(0, Config.index_base_stations_empty);
-                drons[i].base_station = base_Stations[j].baseNumber;
-                drons[i].base_station_latitude = base_Stations[j].latitude;
-                drons[i].base_station_longitude = base_Stations[j].longitude;
-                Config.index_drowns_empty++;
+                drones[i].base_station = base_Stations[j].baseNumber;
+                drones[i].base_station_latitude = base_Stations[j].latitude;
+                drones[i].base_station_longitude = base_Stations[j].longitude;
+                Config.index_drones_empty++;
             }
             for (int i = 0; i < 10; i++)
             {
                 clients[i] = new Client { ID = rand.Next(100000000,999999999) };
-                clients[i].FonNumber += $"05{rand.Next(0, 6)}-{rand.Next(100, 999)}-{rand.Next(1000, 9999)}";
+                clients[i].PhoneNumber += $"05{rand.Next(0, 6)}-{rand.Next(100, 999)}-{rand.Next(1000, 9999)}";
                 clients[i].Name += prsonalRandomName(rand, rand.Next(3, 7));
                 clients[i].Latitude = rand.Next(31, 33) + rand.NextDouble();
                 clients[i].Longitude = 34 + rand.NextDouble();
@@ -93,11 +93,11 @@ namespace DalObject
                   packages[i].getingClient= (packages[i].sendClient==10)? clients[rand.Next(0, 9)].ID: clients[rand.Next(packages[i].sendClient, 9)].ID;
                 packages[i].weightCatgory = (Weight_categories)rand.Next(0, 3);
                 packages[i].priority=(Priority)rand.Next(0, 3);
-                for (int j = 0; j <Config.index_drowns_empty; j++)
+                for (int j = 0; j <Config.index_drones_empty; j++)
                 {
-                    if (drons[j].weightCategory == packages[i].weightCatgory && drons[j].drownStatos == Drone_statos.Free)
+                    if (drones[j].weightCategory == packages[i].weightCatgory && drones[j].drownStatus == Drone_status.Free)
                     {
-                        packages[i].operator_skimmer_ID = drons[j].siralNumber;
+                        packages[i].operator_skimmer_ID = drones[j].siralNumber;
                         break;
                     }
                     packages[i].operator_skimmer_ID = 0;

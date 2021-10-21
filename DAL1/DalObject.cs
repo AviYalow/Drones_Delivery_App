@@ -45,19 +45,19 @@ namespace DalObject
             double butrry;
             Console.Write("Enter sireal number:");
             res = int.TryParse(Console.ReadLine(), out num);
-            DataSource.drons[DataSource.Config.index_drowns_empty] = new Drone() { siralNumber = num  };
+            DataSource.drones[DataSource.Config.index_drones_empty] = new Drone() { siralNumber = num };
             Console.Write("Enter name:");
-            DataSource.drons[DataSource.Config.index_drowns_empty].Model = Console.ReadLine();
+            DataSource.drones[DataSource.Config.index_drones_empty].Model = Console.ReadLine();
             Console.Write("Enter weight Category:0 for easy,1 for mediom,2 for heavy:");
             res = int.TryParse(Console.ReadLine(), out num);
-            DataSource.drons[DataSource.Config.index_drowns_empty].weightCategory = (Weight_categories)num;
+            DataSource.drones[DataSource.Config.index_drones_empty].weightCategory = (Weight_categories)num;
             Console.Write("Enter amount of butrry:");
             res =  double.TryParse(Console.ReadLine(), out butrry);
-            DataSource.drons[DataSource.Config.index_drowns_empty].butrryStatos = butrry;
+            DataSource.drones[DataSource.Config.index_drones_empty].butrryStatus = butrry;
             Console.Write("Enter a statos:0 for free,1 for maintenance,2 for in charge:");
             res = int.TryParse(Console.ReadLine(), out num);
-            DataSource.drons[DataSource.Config.index_drowns_empty].drownStatos = (Drone_statos)num;
-            DataSource.Config.index_drowns_empty++;
+            DataSource.drones[DataSource.Config.index_drones_empty].drownStatus = (Drone_status)num;
+            DataSource.Config.index_drones_empty++;
         }
         public static void Add_client()
         {
@@ -69,8 +69,8 @@ namespace DalObject
             DataSource.clients[DataSource.Config.index_clients_empty] = new Client { ID = intNum };
             Console.Write("Enter name:");
             DataSource.clients[DataSource.Config.index_clients_empty].Name = Console.ReadLine();
-            Console.Write("Enter fon number:");
-            DataSource.clients[DataSource.Config.index_clients_empty].FonNumber = Console.ReadLine();
+            Console.Write("Enter phone number:");
+            DataSource.clients[DataSource.Config.index_clients_empty].PhoneNumber = Console.ReadLine();
             Console.Write("Enter latitude:");
             cheak = double.TryParse(Console.ReadLine(), out pointLine);
             DataSource.clients[DataSource.Config.index_clients_empty].Latitude = pointLine;
@@ -86,10 +86,10 @@ namespace DalObject
             int send,get;
             
             DataSource.packages[DataSource.Config.package_num] = new Package { sirialNumber = DataSource.Config.package_num++ };
-            Console.Write("Enter ID of sender:");
+            Console.Write("Enter ID of the sender:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
             DataSource.packages[DataSource.Config.package_num].sendClient = intNum;
-            Console.Write("Enter ID of recipient:");
+            Console.Write("Enter ID of the recipient:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
             DataSource.packages[DataSource.Config.package_num].getingClient = intNum;
             Console.Write("Enter Weight categories 0 for easy,1 for mediom,3 for haevy:");
@@ -113,13 +113,13 @@ namespace DalObject
             int intNum;
             Console.Write("Enter package number:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
-            for (int i = 0; i < DataSource.Config.index_drowns_empty; i++)
+            for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-                if (DataSource.drons[i].weightCategory == DataSource.packages[intNum].weightCatgory
-                    && DataSource.drons[i].drownStatos == Drone_statos.Free)
+                if (DataSource.drones[i].weightCategory == DataSource.packages[intNum].weightCatgory
+                    && DataSource.drones[i].drownStatus == Drone_status.Free)
                 {
-                    DataSource.packages[intNum].operator_skimmer_ID = DataSource.drons[i].siralNumber;
-                    DataSource.drons[i].drownStatos = Drone_statos.Maintenance;
+                    DataSource.packages[intNum].operator_skimmer_ID = DataSource.drones[i].siralNumber;
+                    DataSource.drones[i].drownStatus = Drone_status.Maintenance;
                     DataSource.packages[intNum].package_association = DateTime.Now;
                     break;
                 }
@@ -141,12 +141,12 @@ namespace DalObject
             Console.Write("Enter package number:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
             DataSource.packages[intNum].package_arrived = DateTime.Now;
-            for (int i = 0; i < DataSource.Config.index_drowns_empty; i++)
+            for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-                if(DataSource.drons[i].siralNumber==DataSource.packages[intNum].operator_skimmer_ID)
+                if(DataSource.drones[i].siralNumber==DataSource.packages[intNum].operator_skimmer_ID)
                 {
-                    DataSource.drons[i].drownStatos = Drone_statos.Free;
-                    DataSource.drons[i].butrryStatos -= 20;
+                    DataSource.drones[i].drownStatus = Drone_status.Free;
+                    DataSource.drones[i].butrryStatus -= 20;
                 }
             }
         }
@@ -156,18 +156,18 @@ namespace DalObject
             int intNum;
             Console.Write("Enter drone number:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
-            for (int i = 0; i < DataSource.Config.index_drowns_empty; i++)
+            for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-                if (DataSource.drons[i].siralNumber==intNum)
+                if (DataSource.drones[i].siralNumber==intNum)
                 {
-                    DataSource.drons[i].drownStatos = Drone_statos.charge;
+                    DataSource.drones[i].drownStatus = Drone_status.charge;
                     for (int j = 0; j < DataSource.Config.index_base_stations_empty; j++)
                     {
                         if(DataSource.base_Stations[j].baseNumber==base_station)
                         {
                             DataSource.base_Stations[j].Number_of_charging_stations--;
-                            DataSource.drons[i].base_station_latitude = DataSource.base_Stations[j].latitude;
-                                DataSource.drons[i].base_station_longitude = DataSource.base_Stations[j].longitude;
+                            DataSource.drones[i].base_station_latitude = DataSource.base_Stations[j].latitude;
+                                DataSource.drones[i].base_station_longitude = DataSource.base_Stations[j].longitude;
                             break;
                         }
                     }
@@ -176,18 +176,18 @@ namespace DalObject
             }
 
         }
-        public static void free_drone_from_chrge()
+        public static void free_drone_from_charge()
         {
             bool cheak;
             int intNum;
             Console.Write("Enter drone number:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
-            for (int i = 0; i < DataSource.Config.index_drowns_empty; i++)
+            for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-                if(DataSource.drons[i].siralNumber==intNum)
+                if(DataSource.drones[i].siralNumber==intNum)
                 {
-                    DataSource.drons[i].drownStatos = Drone_statos.Free;
-                    DataSource.drons[i].butrryStatos = 100;
+                    DataSource.drones[i].drownStatus = Drone_status.Free;
+                    DataSource.drones[i].butrryStatus = 100;
                     break;
                 }
             }

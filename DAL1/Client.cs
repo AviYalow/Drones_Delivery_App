@@ -9,7 +9,7 @@ namespace IDAL
         {
             public int ID { get; init; }
             public String Name { get; set; }
-            public String FonNumber { get; set; }
+            public String PhoneNumber { get; set; }
             public double Longitude { get; set; }
             public double Latitude { get; set; }
             
@@ -20,7 +20,7 @@ namespace IDAL
                 String printClient = "";
                 printClient += $"ID is {ID},\n";
                 printClient += $"Name is {Name},\n";
-                printClient += $"Phone Number is {FonNumber},\n";
+                printClient += $"Phone Number is {PhoneNumber},\n";
                 printClient += $"Longitude is {Point.Degree(Longitude)},\n";
                 printClient += $"Latitude is {Point.Degree(Latitude)} \n";
                 return printClient;
