@@ -150,7 +150,7 @@ namespace DalObject
                 }
             }
         }
-        public static void send_drone_to_chrge(int base_station)
+        public static void send_drone_to_charge(int base_station)
         {
             bool cheak;
             int intNum;
