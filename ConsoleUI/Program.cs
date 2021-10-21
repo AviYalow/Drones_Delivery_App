@@ -110,7 +110,7 @@ namespace ConsoleUI
                                 DalObject.DalObject.cilent_by_number();
                                 break;
                             case Show.Base_station:
-                                DalObject.DalObject.Base_station_by_number();
+                                Console.WriteLine( DalObject.DalObject.Base_station_by_number());
                                 break;
                             case Show.Drone:
                                 DalObject.DalObject.Drone_by_number();
