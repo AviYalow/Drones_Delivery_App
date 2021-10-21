@@ -327,14 +327,14 @@ namespace DalObject
             bool cheak;
             int intNum,count=0;
             double[] points = new double[4];
-            Console.Write("Enter packege number:");
+            Console.Write("Enter 1 for base point,2 for client point for the first point:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
             for (int i = 1; i < 2; i++)
             {
                 switch ((Distans_2_point)intNum)
                 {
                     case Distans_2_point.base_station:
-                        Console.Write("Enter packege number:");
+                        Console.Write("Enter base number:");
                         cheak = int.TryParse(Console.ReadLine(), out intNum);
                         for (int j = 0; j < DataSource.Config.index_base_stations_empty; j++)
                         {
@@ -350,7 +350,7 @@ namespace DalObject
 
                         break;
                     case Distans_2_point.clien:
-                        Console.Write("Enter packege number:");
+                        Console.Write("Enter client number:");
                         cheak = int.TryParse(Console.ReadLine(), out intNum);
                         for (int j = 0; j < DataSource.Config.index_drones_empty; j++)
                         {
@@ -369,10 +369,10 @@ namespace DalObject
                         return;
                         
                 }
-                Console.Write("Enter packege number:");
+                Console.Write("Enter 1 for base point, 2 for client point for the second point:") ;
                 cheak = int.TryParse(Console.ReadLine(), out intNum);
             }
-            Console.WriteLine($"{Point.Distans(points[0], points[2], points[1], points[3])}");
+            Console.WriteLine($"the distans is: {Point.Distans(points[0], points[2], points[1], points[3])}KM");
 
         }
     }
