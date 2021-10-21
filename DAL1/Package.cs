@@ -33,7 +33,7 @@ namespace IDAL
                 printPackage += $"Receiving Delivery is {receiving_delivery},\n";
                 printPackage += $"Package Association is {package_association},\n";
                 printPackage += $"collect package for shipment is {collect_package_for_shipment},\n";
-                printPackage += $"Priority is {package_arrived}\n";
+                printPackage += $"package_arrived is {package_arrived}\n";
              
                 return printPackage;
             }

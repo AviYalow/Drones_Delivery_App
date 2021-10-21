@@ -123,12 +123,12 @@ namespace DalObject
             cheak = int.TryParse(Console.ReadLine(), out intNum);
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-                if (DataSource.drones[i].weightCategory == DataSource.packages[intNum].weightCatgory
+                if (DataSource.drones[i].weightCategory == DataSource.packages[intNum - 1].weightCatgory
                     && DataSource.drones[i].drownStatus == Drone_status.Free)
                 {
-                    DataSource.packages[intNum].operator_skimmer_ID = DataSource.drones[i].siralNumber;
+                    DataSource.packages[intNum - 1].operator_skimmer_ID = DataSource.drones[i].siralNumber;
                     DataSource.drones[i].drownStatus = Drone_status.Work;
-                    DataSource.packages[intNum].package_association = DateTime.Now;
+                    DataSource.packages[intNum - 1].package_association = DateTime.Now;
                     break;
                 }
                 DataSource.packages[DataSource.Config.package_num].operator_skimmer_ID = 0;
@@ -140,7 +140,11 @@ namespace DalObject
             int intNum;
             Console.Write("Enter package number:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
-            DataSource.packages[intNum].collect_package_for_shipment = DateTime.Now;
+            DataSource.packages[intNum - 1].collect_package_for_shipment = DateTime.Now;
+
+
+
+
         }
         public static void Package_arrived()
         {
@@ -148,10 +152,10 @@ namespace DalObject
             int intNum;
             Console.Write("Enter package number:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
-            DataSource.packages[intNum].package_arrived = DateTime.Now;
+            DataSource.packages[intNum - 1].package_arrived = DateTime.Now;
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-                if (DataSource.drones[i].siralNumber == DataSource.packages[intNum].operator_skimmer_ID)
+                if (DataSource.drones[i].siralNumber == DataSource.packages[intNum - 1].operator_skimmer_ID)
                 {
                     DataSource.drones[i].drownStatus = Drone_status.Free;
                     DataSource.drones[i].butrryStatus -= 20;
@@ -168,7 +172,7 @@ namespace DalObject
             {
                 if (DataSource.drones[i].siralNumber == intNum)
                 {
-                    if(DataSource.drones[i].drownStatus == Drone_status.Work)
+                    if (DataSource.drones[i].drownStatus == Drone_status.Work)
                     {
                         Console.WriteLine("The drone in shipment, plese with until is finish!");
                         return;
@@ -259,14 +263,9 @@ namespace DalObject
             int intNum;
             Console.Write("Enter packege number:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
-            for (int i = 0; i < DataSource.Config.package_num; i++)
-            {
-                if (DataSource.packages[i].sirialNumber == intNum)
-                {
-                    Console.WriteLine(DataSource.packages[i].ToString());
-                    break;
-                }
-            }
+            Console.WriteLine(DataSource.packages[intNum - 1].ToString());
+
+
 
         }
 
@@ -306,7 +305,7 @@ namespace DalObject
         public static void packege_list()
         {
 
-            for (int i = 0; i < DataSource.Config.package_num-1; i++)
+            for (int i = 0; i < DataSource.Config.package_num - 1; i++)
             {
 
                 Console.WriteLine(DataSource.packages[i].ToString());
