@@ -21,7 +21,7 @@ namespace DalObject
             internal static int index_base_stations_empty=0;
             internal static int index_clients_empty=0;
             internal static int index_Packages_empty=0;
-            internal static int package_num=0;
+            internal static int package_num=1;
         }
         public static void Initialize()
         {
@@ -88,7 +88,7 @@ namespace DalObject
             }
             for (int i = 0; i < 10; i++)
             {
-                packages[i] = new Package { sirialNumber = Config.index_Packages_empty + 1 };
+                packages[i] = new Package { sirialNumber = Config.package_num };
                 packages[i].sendClient = clients[rand.Next(0, 10)].ID;
                   packages[i].getingClient= (packages[i].sendClient==10)? clients[rand.Next(0, 9)].ID: clients[rand.Next(packages[i].sendClient, 9)].ID;
                 packages[i].weightCatgory = (Weight_categories)rand.Next(0, 3);
