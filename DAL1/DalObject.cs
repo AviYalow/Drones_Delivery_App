@@ -8,7 +8,7 @@ using IDAL;
 using IDAL.DO;
 namespace DalObject
 {
-  
+
     public class DalObject
     {
 
@@ -19,51 +19,27 @@ namespace DalObject
         }
 
         //Adding a new base station
-        public static void Add_station()
+        public static void Add_station(int base_num, string name, int numOfCharging, double latitude, double longitude)
         {
-            Console.Write("Enter base number:");
-            bool check;
-            int intNum;
-            double pointLine;
-            check = int.TryParse(Console.ReadLine(), out intNum);
+
             DataSource.base_Stations[DataSource.Config.index_base_stations_empty] = new Base_Station
             {
-                baseNumber = intNum
+                baseNumber = base_num,
+                NameBase = name,
+                Number_of_charging_stations = numOfCharging,
+                latitude = latitude,
+                longitude = longitude
+
             };
-            Console.Write("Enter base name:");
-            DataSource.base_Stations[DataSource.Config.index_base_stations_empty].NameBase = Console.ReadLine();
-            Console.Write("Enter Number of charging stations:");
-            check = int.TryParse(Console.ReadLine(), out intNum);
-            DataSource.base_Stations[DataSource.Config.index_base_stations_empty].Number_of_charging_stations = intNum;
-            Console.Write("Enter latitude:");
-            check = double.TryParse(Console.ReadLine(), out pointLine);
-            DataSource.base_Stations[DataSource.Config.index_base_stations_empty].latitude = pointLine;
-            Console.Write("Enter longitude:");
-            check = double.TryParse(Console.ReadLine(), out pointLine);
-            DataSource.base_Stations[DataSource.Config.index_base_stations_empty].longitude = pointLine;
+
+
             DataSource.Config.index_base_stations_empty++;
         }
 
         //Adding a new drone
-        public static void Add_drone()
+        public static void Add_drone(int siralNumber, string model, int category, double butrry, int statos)
         {
-            bool res;
-            int num;
-            double butrry;
-            Console.Write("Enter sireal number:");
-            res = int.TryParse(Console.ReadLine(), out num);
-            DataSource.drones[DataSource.Config.index_drones_empty] = new Drone() { siralNumber = num };
-            Console.Write("Enter name:");
-            DataSource.drones[DataSource.Config.index_drones_empty].Model = Console.ReadLine();
-            Console.Write("Enter weight Category:0 for easy,1 for mediom,2 for heavy:");
-            res = int.TryParse(Console.ReadLine(), out num);
-            DataSource.drones[DataSource.Config.index_drones_empty].weightCategory = (Weight_categories)num;
-            Console.Write("Enter amount of butrry:");
-            res = double.TryParse(Console.ReadLine(), out butrry);
-            DataSource.drones[DataSource.Config.index_drones_empty].butrryStatus = butrry;
-            Console.Write("Enter a statos:0 for free,1 for maintenance,2 for in charge:");
-            res = int.TryParse(Console.ReadLine(), out num);
-            DataSource.drones[DataSource.Config.index_drones_empty].drownStatus = (Drone_status)num;
+            DataSource.drones[DataSource.Config.index_drones_empty] = new Drone() { siralNumber = siralNumber, Model = model, weightCategory = (Weight_categories)category, butrryStatus = butrry, drownStatus = (Drone_status)statos };
             DataSource.Config.index_drones_empty++;
         }
 
@@ -226,7 +202,7 @@ namespace DalObject
             }
             for (int i = 0; i < DataSource.Config.index_butrry_chrge; i++)
             {
-                if(DataSource.droneInCharge[i].id_drown==intNum)
+                if (DataSource.droneInCharge[i].id_drown == intNum)
                 {
                     DataSource.Config.index_butrry_chrge--;
                     for (int j = i; j < DataSource.Config.index_butrry_chrge; j++)

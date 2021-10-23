@@ -7,10 +7,10 @@ namespace ConsoleUI
 
     class Program
     {
-      // enumes for the menu options
+        // enumes for the menu options
         enum Options { Exit, Add, Update, ShowDetails, ShowList }
         enum Entities { Exit, Client, Base_station, Drone, Package }
-        enum UpdatesOptions { Exit, Associate, Collect, Delivery ,Charge, UnCharge}
+        enum UpdatesOptions { Exit, Associate, Collect, Delivery, Charge, UnCharge }
         enum Show { Exit, Client, Base_station, Drone, Package, ShowDistance }
         enum ShowList { Exit, Base_station, Drones, Clients, Package, FreePackage, FreeBaseStation }
 
@@ -45,13 +45,15 @@ namespace ConsoleUI
 
             do
             {
+                bool check;
+                int num, id, num1, num2;
+                double doubleNum1, doubleNum2;
+                string str, name, fon;
 
-                int num;
-                string str;
                 str = "Choose one of the following:\n" +
                     " 1-Add,\n 2-Update,\n 3-Show Details,\n 4-Show List,\n 0-Exit";
-                
-                num=getChoose(str);
+
+                num = getChoose(str);
                 option = (Options)num;
 
                 switch (option)
@@ -69,11 +71,60 @@ namespace ConsoleUI
                                 DalObject.DalObject.Add_client(); // add new client
                                 break;
                             case Entities.Base_station:
-                                DalObject.DalObject.Add_station(); // add new Base station
-                                break;
+                                {
+                                    Console.Write("Enter base number:");
+                                    do
+                                    {
+                                        check = int.TryParse(Console.ReadLine(), out id);
+                                    } while (!check);
+                                    Console.Write("Enter base name:");
+                                    name = Console.ReadLine();
+                                    Console.Write("Enter Number of charging stations:");
+                                    do
+                                    {
+                                        check = int.TryParse(Console.ReadLine(), out num1);
+                                    } while (!check);
+                                    Console.Write("Enter latitude:");
+                                    do
+                                    {
+                                        check = double.TryParse(Console.ReadLine(), out doubleNum1);
+                                    } while (!check);
+                                    Console.Write("Enter longitude:");
+                                    do
+                                    {
+
+                                        check = double.TryParse(Console.ReadLine(), out doubleNum2);
+                                    } while (!check);
+                                    DalObject.DalObject.Add_station(id, name, num1, doubleNum1, doubleNum2); // add new Base station
+                                    break;
+                                }
                             case Entities.Drone:
-                                DalObject.DalObject.Add_drone(); //add new drone
-                                break;
+                                {
+                                    Console.Write("Enter sireal number:");
+                                    do
+                                    {
+                                        check = int.TryParse(Console.ReadLine(), out id);
+                                    } while (!check);
+                                    Console.Write("Enter name:");
+                                    name = Console.ReadLine();
+                                    Console.Write("Enter weight Category:0 for easy,1 for mediom,2 for heavy:");
+                                    do
+                                    {
+                                        check = int.TryParse(Console.ReadLine(), out num);
+                                    } while (!check);
+                                    Console.Write("Enter amount of butrry:");
+                                    do
+                                    {
+                                        check = double.TryParse(Console.ReadLine(), out doubleNum1);
+                                    } while (!check);
+                                    Console.Write("Enter a statos:0 for free,1 for maintenance,2 for in charge:");
+                                    do
+                                    {
+                                        check = int.TryParse(Console.ReadLine(), out num1);
+                                    } while (!check);
+                                    DalObject.DalObject.Add_drone(id, name, num, doubleNum1, num1); //add new drone
+                                    break;
+                                }
                             case Entities.Package:
                                 DalObject.DalObject.Add_package(); // add new package
                                 break;
@@ -118,13 +169,13 @@ namespace ConsoleUI
                                 do
                                 {
                                     success = int.TryParse(Console.ReadLine(), out baseStation);
-                                    if(!success)
+                                    if (!success)
                                         Console.WriteLine("Error! Choose again");
                                 } while (!success);
                                 DalObject.DalObject.send_drone_to_charge(baseStation);
                                 break;
 
-                             // Release drone from charging position
+                            // Release drone from charging position
                             case UpdatesOptions.UnCharge:
                                 DalObject.DalObject.free_drone_from_charge();
                                 break;
@@ -138,14 +189,14 @@ namespace ConsoleUI
                              "1-Client,\n 2-Base station,\n 3- Drone,\n 4- Package\n 5-Distance";
                         num = getChoose(str);
                         show = (Show)num;
-                        
+
                         switch (show)
                         {
                             case Show.Client:
                                 DalObject.DalObject.cilent_by_number();
                                 break;
                             case Show.Base_station:
-                                Console.WriteLine( DalObject.DalObject.Base_station_by_number());
+                                Console.WriteLine(DalObject.DalObject.Base_station_by_number());
                                 break;
                             case Show.Drone:
                                 DalObject.DalObject.Drone_by_number();
@@ -154,8 +205,8 @@ namespace ConsoleUI
                                 DalObject.DalObject.packege_by_number();
                                 break;
                             case Show.ShowDistance:
-                               DalObject.DalObject.Distance();
-                               break;
+                                DalObject.DalObject.Distance();
+                                break;
                             case Show.Exit:
                                 break;
                         }
@@ -167,7 +218,7 @@ namespace ConsoleUI
                         num = getChoose(str);
                         showList = (ShowList)num;
                         switch (showList)
-                        { 
+                        {
                             case ShowList.Base_station:
                                 DalObject.DalObject.Base_station_list();
                                 break;
@@ -198,8 +249,8 @@ namespace ConsoleUI
 
         }
 
-        
-       
+
+
 
         static void Main(string[] args)
         {
