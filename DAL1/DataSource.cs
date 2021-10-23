@@ -16,9 +16,11 @@ namespace DalObject
         internal static Client[] clients = new Client[100];
         internal static Package[] packages = new Package[1000];
 
-        /// <summary>
-        /// 
-        /// </summary>
+        /// <Config>
+        /// Inner class that contain a static int
+        /// for indexes of the first free element
+        /// in each of the arrays
+        /// </Config>
         internal class Config
         {
             internal static int index_drones_empty=0;
@@ -28,11 +30,13 @@ namespace DalObject
             internal static int package_num=1;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
+        /// <Initialize>
+        /// A function that starts with a quick boot of all arrays with
+        /// Data and update fields in the Config class accordingly
+        /// </Initialize>
         public static void Initialize()
         {
+            //A function that responsible for initializing names randomly in upercase 
             Random rand = new Random();
             string randomName(Random rand,int num=3)
             {
@@ -43,6 +47,9 @@ namespace DalObject
                 }
                 return name;
             }
+
+            //A function that responsible for initializing names randomly-upercase
+            //letter for the firt letter and lowercase for the other letters
             string prsonalRandomName(Random rand, int num = 3)
             {
                 string name = "";
@@ -54,6 +61,7 @@ namespace DalObject
                 return name;
             }
 
+            //initializing the base station's array
             base_Stations[0] = new Base_Station
             {
                 baseNumber = Config.index_base_stations_empty + 1,
@@ -63,6 +71,7 @@ namespace DalObject
                 longitude = 34.627143
             };
             Config.index_base_stations_empty++;
+
             base_Stations[1] = new Base_Station
             {
                 baseNumber = Config.index_base_stations_empty + 1,
@@ -72,6 +81,8 @@ namespace DalObject
                 longitude = 34.736002
             };
             Config.index_base_stations_empty++;
+
+            //initializing the drones's array
             for (int i = 0; i < 5; i++)
             {
                 drones[i] = new Drone{ siralNumber = rand.Next(10000) };
@@ -85,6 +96,8 @@ namespace DalObject
                 drones[i].base_station_longitude = base_Stations[j].longitude;
                 Config.index_drones_empty++;
             }
+
+            //initializing the client's array
             for (int i = 0; i < 10; i++)
             {
                 clients[i] = new Client { ID = rand.Next(100000000,999999999) };
@@ -94,6 +107,8 @@ namespace DalObject
                 clients[i].Longitude = 34 + (double)rand.Next(60000, 80000) / 1000000;
                 Config.index_clients_empty++;
             }
+
+            //initializing the package's array
             for (int i = 0; i < 10; i++)
             {
                 packages[i] = new Package { sirialNumber = Config.package_num };
