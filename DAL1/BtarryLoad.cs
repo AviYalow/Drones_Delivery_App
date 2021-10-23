@@ -4,6 +4,10 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <BtarryLoad>
+        /// An entity that will represent a position
+        /// for loading drones
+        /// </BtarryLoad>
         public struct BtarryLoad
         {
             public int idBaseStation { get; set; }

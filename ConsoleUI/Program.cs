@@ -4,13 +4,37 @@ using DalObject;
 
 namespace ConsoleUI
 {
+
     class Program
     {
+      // enumes for the menu options
         enum Options { Exit, Add, Update, ShowDetails, ShowList }
         enum Entities { Exit, Client, Base_station, Drone, Package }
         enum UpdatesOptions { Exit, Associate, Collect, Delivery ,Charge, UnCharge}
         enum Show { Exit, Client, Base_station, Drone, Package, ShowDistance }
         enum ShowList { Exit, Base_station, Drones, Clients, Package, FreePackage, FreeBaseStation }
+
+        // function that which allows us to receive a number from the user safely
+        private static int getChoose(string val)
+        {
+            bool success;
+            int number;
+            do
+            {
+                Console.WriteLine(val);
+                success = int.TryParse(Console.ReadLine(), out number);
+                if (!success)
+                    Console.WriteLine("Error!\n");
+            }
+            while (!success);
+            return number;
+        }
+
+        /// <Menu>
+        /// Selection menu that which show to the customer 
+        /// when opening the program
+        /// 
+        /// </Menu>
         private static void Menu()
         {
             Options option;
@@ -42,16 +66,16 @@ namespace ConsoleUI
                         switch (entity)
                         {
                             case Entities.Client:
-                                DalObject.DalObject.Add_client();
+                                DalObject.DalObject.Add_client(); // add new client
                                 break;
                             case Entities.Base_station:
-                                DalObject.DalObject.Add_station();
+                                DalObject.DalObject.Add_station(); // add new Base station
                                 break;
                             case Entities.Drone:
-                                DalObject.DalObject.Add_drone();
+                                DalObject.DalObject.Add_drone(); //add new drone
                                 break;
                             case Entities.Package:
-                                DalObject.DalObject.Add_package();
+                                DalObject.DalObject.Add_package(); // add new package
                                 break;
                             case Entities.Exit:
                                 break;
@@ -68,29 +92,39 @@ namespace ConsoleUI
 
                         switch (updatesOption)
                         {
-                            
+                            //option to connect package to drone
                             case UpdatesOptions.Associate:
                                 DalObject.DalObject.connect_package_to_drone();
                                 break;
+
+                            // update that the package is collected
                             case UpdatesOptions.Collect:
                                 DalObject.DalObject.Package_collected();
                                 break;
+
+                            // update that the package is arrived to the target
                             case UpdatesOptions.Delivery:
                                 DalObject.DalObject.Package_arrived();
                                 break;
+
+                            //sent drone to a free charging station
                             case UpdatesOptions.Charge:
                                 Console.WriteLine("Choose a base number from the following Base station:");
                                 DalObject.DalObject.Base_station_list_with_free_charge_states();
                                 int baseStation;
                                 bool success;
+
+                                // recived a number safely
                                 do
                                 {
                                     success = int.TryParse(Console.ReadLine(), out baseStation);
                                     if(!success)
-                                        Console.WriteLine("Error! Chooose agine");
+                                        Console.WriteLine("Error! Choose again");
                                 } while (!success);
                                 DalObject.DalObject.send_drone_to_charge(baseStation);
                                 break;
+
+                             // Release drone from charging position
                             case UpdatesOptions.UnCharge:
                                 DalObject.DalObject.free_drone_from_charge();
                                 break;
@@ -104,6 +138,7 @@ namespace ConsoleUI
                              "1-Client,\n 2-Base station,\n 3- Drone,\n 4- Package\n 5-Distance";
                         num = getChoose(str);
                         show = (Show)num;
+                        
                         switch (show)
                         {
                             case Show.Client:
@@ -163,20 +198,8 @@ namespace ConsoleUI
 
         }
 
-        private static int getChoose(string val)
-        {
-            bool success;
-            int number;
-            do
-            {
-                Console.WriteLine(val);
-                success = int.TryParse(Console.ReadLine(), out number);
-                if (!success)
-                    Console.WriteLine("Error!\n");
-            }
-            while (!success);
-            return number;
-        }
+        
+       
 
         static void Main(string[] args)
         {
