@@ -4,6 +4,10 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <Drone>
+        /// An entity that will represent 
+        /// a Drone for deliverly 
+        /// </Drone>
         public struct Drone
         {
             public int siralNumber { get; init; }

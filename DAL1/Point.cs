@@ -8,22 +8,29 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <Point>
+        /// A class that represents points on a sexagesimal 
+        /// of the coordinate values
+        /// </Point>
         class Point
         {
-           public static string Degree(double point)
+
+            //Conversion of points in decimal base to base sexagesimal
+            public static string Degree(double point)
             {
                 point = (point < 0) ? point * (-1) : point;
                 uint d = (uint)point;
-                uint m = (uint)((point-d) * 60);
-                double mph = (double)((double) m / 60);
+                uint m = (uint)((point - d) * 60);
+                double mph = (double)((double)m / 60);
                 double s = (point - d - mph) * 3600;
                 return $"{d}\x00B0 {m}' {s}\"";
             }
-            public static double Distans(double Longitude1, double Latitude1, double Longitude2, double Latitude2)
-            {
-               
 
-                return (Math.Sqrt((Longitude1 - Longitude2) * (Longitude1 - Longitude2) + (Latitude1 - Latitude2) * (Latitude1 - Latitude2))*100);
+            //A function that calculates distance at sea given two points
+            public static double Distance(double Longitude1, double Latitude1, double Longitude2, double Latitude2)
+            {
+
+                return (Math.Sqrt((Longitude1 - Longitude2) * (Longitude1 - Longitude2) + (Latitude1 - Latitude2) * (Latitude1 - Latitude2)) * 100);
             }
         }
     }

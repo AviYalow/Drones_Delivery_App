@@ -397,7 +397,7 @@ namespace DalObject
                 Console.Write("Enter 1 for base point, 2 for client point for the second point:");
                 cheak = int.TryParse(Console.ReadLine(), out intNum);
             }
-            Console.WriteLine($"the distans is: {Point.Distans(points[0], points[2], points[1], points[3])}KM");
+            Console.WriteLine($"the distans is: {Point.Distance(points[0], points[2], points[1], points[3])}KM");
 
         }
     }
