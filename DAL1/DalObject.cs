@@ -79,7 +79,7 @@ namespace DalObject
             DataSource.clients[DataSource.Config.index_clients_empty].Longitude = pointLine;
             DataSource.Config.index_clients_empty++;
         }
-        public static void Add_package()
+        public static int Add_package()
         {
             bool cheak;
             int intNum;
@@ -111,7 +111,7 @@ namespace DalObject
             }
             DataSource.Config.index_Packages_empty++;
             DataSource.Config.package_num++;
-
+            return DataSource.Config.package_num - 1;
         }
 
 
