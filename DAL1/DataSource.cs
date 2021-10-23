@@ -15,6 +15,7 @@ namespace DalObject
         internal static Base_Station[] base_Stations = new Base_Station[5];
         internal static Client[] clients = new Client[100];
         internal static Package[] packages = new Package[1000];
+        internal static BtarryLoad[] droneInCharge = new BtarryLoad[10];
 
         /// <Config>
         /// Inner class that contain a static int
@@ -28,6 +29,7 @@ namespace DalObject
             internal static int index_clients_empty=0;
             internal static int index_Packages_empty=0;
             internal static int package_num=1;
+            internal static int index_butrry_chrge = 0;
         }
 
         /// <Initialize>
@@ -94,6 +96,12 @@ namespace DalObject
                 drones[i].base_station = base_Stations[j].baseNumber;
                 drones[i].base_station_latitude = base_Stations[j].latitude;
                 drones[i].base_station_longitude = base_Stations[j].longitude;
+                if(drones[i].drownStatus==Drone_status.Maintenance)
+                {
+                    droneInCharge[Config.index_butrry_chrge].id_drown = drones[i].siralNumber;
+                    droneInCharge[Config.index_butrry_chrge].idBaseStation = drones[i].base_station;
+                    Config.index_butrry_chrge++;
+                }
                 Config.index_drones_empty++;
             }
 

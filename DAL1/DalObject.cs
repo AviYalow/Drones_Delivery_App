@@ -188,6 +188,8 @@ namespace DalObject
                             DataSource.drones[i].base_station_latitude = DataSource.base_Stations[j].latitude;
                             DataSource.drones[i].base_station_longitude = DataSource.base_Stations[j].longitude;
                             break;
+                            DataSource.droneInCharge[DataSource.Config.index_butrry_chrge].idBaseStation = DataSource.base_Stations[j].baseNumber;
+                            DataSource.droneInCharge[DataSource.Config.index_butrry_chrge].id_drown = DataSource.drones[i].siralNumber;
                         }
                     }
                     break;
@@ -208,6 +210,17 @@ namespace DalObject
                     DataSource.drones[i].drownStatus = Drone_status.Free;
                     DataSource.drones[i].butrryStatus = 100;
                     break;
+                }
+            }
+            for (int i = 0; i < DataSource.Config.index_butrry_chrge; i++)
+            {
+                if(DataSource.droneInCharge[i].id_drown==intNum)
+                {
+                    DataSource.Config.index_butrry_chrge--;
+                    for (int j = i; j < DataSource.Config.index_butrry_chrge; j++)
+                    {
+                        DataSource.droneInCharge[j] = DataSource.droneInCharge[j + 1];
+                    }
                 }
             }
         }
