@@ -11,18 +11,21 @@ namespace DalObject
   
     public class DalObject
     {
-   
+
+        //Creating entities with initial initialization
         public DalObject()
         {
             DataSource.Initialize();
         }
+
+        //Adding a new base station
         public static void Add_station()
         {
             Console.Write("Enter base number:");
-            bool cheak;
+            bool check;
             int intNum;
             double pointLine;
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
+            check = int.TryParse(Console.ReadLine(), out intNum);
             DataSource.base_Stations[DataSource.Config.index_base_stations_empty] = new Base_Station
             {
                 baseNumber = intNum
@@ -30,16 +33,18 @@ namespace DalObject
             Console.Write("Enter base name:");
             DataSource.base_Stations[DataSource.Config.index_base_stations_empty].NameBase = Console.ReadLine();
             Console.Write("Enter Number of charging stations:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
+            check = int.TryParse(Console.ReadLine(), out intNum);
             DataSource.base_Stations[DataSource.Config.index_base_stations_empty].Number_of_charging_stations = intNum;
             Console.Write("Enter latitude:");
-            cheak = double.TryParse(Console.ReadLine(), out pointLine);
+            check = double.TryParse(Console.ReadLine(), out pointLine);
             DataSource.base_Stations[DataSource.Config.index_base_stations_empty].latitude = pointLine;
             Console.Write("Enter longitude:");
-            cheak = double.TryParse(Console.ReadLine(), out pointLine);
+            check = double.TryParse(Console.ReadLine(), out pointLine);
             DataSource.base_Stations[DataSource.Config.index_base_stations_empty].longitude = pointLine;
             DataSource.Config.index_base_stations_empty++;
         }
+
+        //Adding a new drone
         public static void Add_drone()
         {
             bool res;
@@ -61,6 +66,8 @@ namespace DalObject
             DataSource.drones[DataSource.Config.index_drones_empty].drownStatus = (Drone_status)num;
             DataSource.Config.index_drones_empty++;
         }
+
+        //Adding a new client
         public static void Add_client()
         {
             bool cheak;
@@ -81,6 +88,8 @@ namespace DalObject
             DataSource.clients[DataSource.Config.index_clients_empty].Longitude = pointLine;
             DataSource.Config.index_clients_empty++;
         }
+
+        //Adding a new package
         public static int Add_package()
         {
             bool cheak;
@@ -116,7 +125,7 @@ namespace DalObject
             return DataSource.Config.package_num - 1;
         }
 
-
+        //connect package to drone
         public static void connect_package_to_drone()
         {
             bool cheak;
@@ -136,6 +145,8 @@ namespace DalObject
                 DataSource.packages[DataSource.Config.package_num].operator_skimmer_ID = 0;
             }
         }
+
+        //Updated package collected
         public static void Package_collected()
         {
             bool cheak;
@@ -143,11 +154,9 @@ namespace DalObject
             Console.Write("Enter package number:");
             cheak = int.TryParse(Console.ReadLine(), out intNum);
             DataSource.packages[intNum - 1].collect_package_for_shipment = DateTime.Now;
-
-
-
-
         }
+
+        //Updating a package that has reached its destination
         public static void Package_arrived()
         {
             bool cheak;
@@ -164,6 +173,9 @@ namespace DalObject
                 }
             }
         }
+
+
+        //sent drone to a free charging station
         public static void send_drone_to_charge(int base_station)
         {
             bool cheak;
@@ -176,7 +188,7 @@ namespace DalObject
                 {
                     if (DataSource.drones[i].drownStatus == Drone_status.Work)
                     {
-                        Console.WriteLine("The drone in shipment, plese with until is finish!");
+                        Console.WriteLine("The drone in shipment, please wait until it arrives!");
                         return;
                     }
                     DataSource.drones[i].drownStatus = Drone_status.Maintenance;
