@@ -31,9 +31,23 @@ namespace IDAL
                 printPackage += $"Priority is {priority},\n";
                 printPackage += $"operator skimmer ID is {operator_skimmer_ID},\n";
                 printPackage += $"Receiving Delivery is {receiving_delivery},\n";
-                printPackage += $"Package Association is {package_association},\n";
-                printPackage += $"collect package for shipment is {collect_package_for_shipment},\n";
-                printPackage += $"package_arrived is {package_arrived}\n";
+                if (operator_skimmer_ID != 0)
+                {
+                    printPackage += $"Package Association is {package_association},\n";
+                    if (collect_package_for_shipment != new DateTime())
+                    {
+                        printPackage += $"collect package for shipment is {collect_package_for_shipment},\n";
+                        if (package_arrived != new DateTime())
+                            printPackage += $"package_arrived is {package_arrived}\n";
+                        else
+                            printPackage += $"Shipping on the way \n";
+                    }
+                    else
+                        printPackage += "The shipment has not yet been collected";
+                }
+                else
+                    printPackage += $"Package is not Association yet ,\n";
+              
              
                 return printPackage;
             }
