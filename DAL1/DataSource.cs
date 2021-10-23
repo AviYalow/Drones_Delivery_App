@@ -10,11 +10,15 @@ namespace DalObject
 {
     internal class DataSource
     {
+        //an arrays that contain the various entity
         internal static Drone[] drones = new Drone[10];
         internal static Base_Station[] base_Stations = new Base_Station[5];
         internal static Client[] clients = new Client[100];
         internal static Package[] packages = new Package[1000];
 
+        /// <summary>
+        /// 
+        /// </summary>
         internal class Config
         {
             internal static int index_drones_empty=0;
@@ -23,6 +27,10 @@ namespace DalObject
             internal static int index_Packages_empty=0;
             internal static int package_num=1;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static void Initialize()
         {
             Random rand = new Random();
