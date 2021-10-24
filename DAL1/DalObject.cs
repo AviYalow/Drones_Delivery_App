@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -207,105 +208,114 @@ namespace DalObject
             }
             return "base station not exitst";
         }
-        public static void Drone_by_number(int droneNum)
+        public static string Drone_by_number(int droneNum)
         {
           
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
                 if (DataSource.drones[i].siralNumber == droneNum)
                 {
-                    Console.WriteLine(DataSource.drones[i].ToString());
-                    break;
+                    return DataSource.drones[i].ToString();
+                    
                 }
             }
+            return "drone not found!";
         }
-        public static void cilent_by_number(int id)
+        public static string cilent_by_number(int id)
         {
            
             for (int i = 0; i < DataSource.Config.index_clients_empty; i++)
             {
                 if (DataSource.clients[i].ID == id)
                 {
-                    Console.WriteLine(DataSource.clients[i].ToString());
-                    break;
+                    return(DataSource.clients[i].ToString());
+                    
                 }
             }
+            return "client not found!";
         }
         public static string packege_by_number(int packageNumbe)
         {
+
            return(DataSource.packages[packageNumbe - 1].ToString());
         }
 
-        public static void Base_station_list()
+        public static void Base_station_list(ArrayList array)
         {
 
             for (int i = 0; i < DataSource.Config.index_base_stations_empty; i++)
             {
 
-                Console.WriteLine(DataSource.base_Stations[i].ToString());
+                array.Add(DataSource.base_Stations[i].ToString());
 
 
             }
         }
-        public static void Drone_list()
+        public static void Drone_list(ArrayList array)
         {
 
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
 
 
-                Console.WriteLine(DataSource.drones[i].ToString());
+                array.Add(DataSource.drones[i].ToString());
 
             }
         }
-        public static void cilent_list()
+        public static void cilent_list(ArrayList array)
         {
 
             for (int i = 0; i < DataSource.Config.index_clients_empty; i++)
             {
 
 
-                Console.WriteLine(DataSource.clients[i].ToString());
+                array.Add(DataSource.clients[i].ToString());
 
             }
         }
-        public static void packege_list()
+        public static void packege_list(ArrayList array)
         {
 
             for (int i = 0; i < DataSource.Config.package_num - 1; i++)
             {
 
-                Console.WriteLine(DataSource.packages[i].ToString());
+                array.Add(DataSource.packages[i].ToString());
 
             }
 
         }
 
-        public static void packege_list_with_no_drone()
+        public static void packege_list_with_no_drone(ArrayList array)
         {
             for (int i = 0; i < DataSource.Config.package_num; i++)
             {
+                
                 if (DataSource.packages[i].operator_skimmer_ID == 0)
-                    Console.WriteLine(DataSource.packages[i].ToString());
+                    array.Add(DataSource.packages[i].ToString());
 
             }
         }
-        public static void Base_station_list_with_free_charge_states()
+        public static void Base_station_list_with_free_charge_states(ArrayList array)
         {
+            
 
             for (int i = 0; i < DataSource.Config.index_base_stations_empty; i++)
             {
                 if (DataSource.base_Stations[i].Number_of_charging_stations > 0)
-                    Console.WriteLine(DataSource.base_Stations[i]);
+                {
+                    array.Add(DataSource.base_Stations[i]);
+                    
+                }
             }
+            
         }
-        public static void Distance(double Longitude1, double Latitude1, double Longitude2, double Latitude2)
+        public static string Distance(double Longitude1, double Latitude1, double Longitude2, double Latitude2)
         {
            
            
                 
             
-            Console.WriteLine($"the distans is: {Point.Distance( Longitude1,Latitude1, Longitude2, Latitude2)}KM");
+           return($"the distans is: {Point.Distance( Longitude1,Latitude1, Longitude2, Latitude2)}KM");
 
         }
     }

@@ -16,6 +16,7 @@ namespace DalObject
         internal static Client[] clients = new Client[100];
         internal static Package[] packages = new Package[1000];
         internal static BtarryLoad[] droneInCharge = new BtarryLoad[10];
+        
 
         /// <Config>
         /// Inner class that contain a static int

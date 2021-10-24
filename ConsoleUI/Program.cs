@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using IDAL;
 using DalObject;
 
@@ -18,6 +19,8 @@ namespace ConsoleUI
         // function that which allows us to receive a number from the user safely
         private static int getChoose(string val)
         {
+
+
             bool success;
             int number;
             do
@@ -48,8 +51,9 @@ namespace ConsoleUI
             {
                 bool check;
                 int num, id, num1, num2;
-                double doubleNum1, doubleNum2,point1,point2;
+                double doubleNum1, doubleNum2, point1, point2;
                 string str, name, phon;
+                ArrayList backList = new ArrayList();
 
                 str = "Choose one of the following:\n" +
                     " 1-Add,\n 2-Update,\n 3-Show Details,\n 4-Show List,\n 0-Exit";
@@ -173,7 +177,7 @@ namespace ConsoleUI
                                     break;
                                 }
                             case Entities.Exit:
-                                break; 
+                                break;
                         }
                         break;
 
@@ -220,7 +224,11 @@ namespace ConsoleUI
                             //sent drone to a free charging station
                             case UpdatesOptions.Charge:
                                 Console.WriteLine("Choose a base number from the following Base station:");
-                                DalObject.DalObject.Base_station_list_with_free_charge_states();
+                                DalObject.DalObject.Base_station_list_with_free_charge_states(backList);
+                                for (int i = 0; i < backList.Count; i++)
+                                {
+                                    Console.WriteLine(backList[i]);
+                                }
                                 int baseStation;
                                 bool success;
 
@@ -233,7 +241,7 @@ namespace ConsoleUI
                                 } while (!success);
                                 Console.Write("Enter drone number:");
                                 check = int.TryParse(Console.ReadLine(), out num);
-                                DalObject.DalObject.send_drone_to_charge(baseStation,num);
+                                DalObject.DalObject.send_drone_to_charge(baseStation, num);
                                 break;
 
                             // Release drone from charging position
@@ -258,7 +266,7 @@ namespace ConsoleUI
                             case Show.Client:
                                 Console.Write("Enter ID:");
                                 check = int.TryParse(Console.ReadLine(), out num);
-                                DalObject.DalObject.cilent_by_number(num);
+                                Console.WriteLine( DalObject.DalObject.cilent_by_number(num));
                                 break;
                             case Show.Base_station:
                                 Console.Write("Enter base number:");
@@ -268,12 +276,12 @@ namespace ConsoleUI
                             case Show.Drone:
                                 Console.Write("Enter drone number:");
                                 check = int.TryParse(Console.ReadLine(), out num);
-                                DalObject.DalObject.Drone_by_number(num);
+                                Console.WriteLine( DalObject.DalObject.Drone_by_number(num));
                                 break;
                             case Show.Package:
                                 Console.Write("Enter packege number:");
                                 check = int.TryParse(Console.ReadLine(), out num);
-                                Console.WriteLine( DalObject.DalObject.packege_by_number(num));
+                                Console.WriteLine(DalObject.DalObject.packege_by_number(num));
                                 break;
                             case Show.ShowDistance:
                                 {
@@ -300,7 +308,7 @@ namespace ConsoleUI
                                         check = double.TryParse(Console.ReadLine(), out point2);
                                     } while (!check);
 
-                                    DalObject.DalObject.Distance(doubleNum2,doubleNum1,point2,point1);
+                                    Console.WriteLine( DalObject.DalObject.Distance(doubleNum2, doubleNum1, point2, point1));
 
                                     break;
                                 }
@@ -317,22 +325,52 @@ namespace ConsoleUI
                         switch (showList)
                         {
                             case ShowList.Base_station:
-                                DalObject.DalObject.Base_station_list();
+                                backList.Clear();
+                                DalObject.DalObject.Base_station_list(backList);
+                                for (int i = 0; i < backList.Count; i++)
+                                {
+                                    Console.WriteLine(backList[i]);
+                                }
                                 break;
                             case ShowList.Drones:
-                                DalObject.DalObject.Drone_list();
+                                backList.Clear();
+                                DalObject.DalObject.Drone_list(backList);
+                                for (int i = 0; i < backList.Count; i++)
+                                {
+                                    Console.WriteLine(backList[i]);
+                                }
                                 break;
                             case ShowList.Clients:
-                                DalObject.DalObject.cilent_list();
+                                backList.Clear();
+                                DalObject.DalObject.cilent_list(backList);
+                                for (int i = 0; i < backList.Count; i++)
+                                {
+                                    Console.WriteLine(backList[i]);
+                                }
                                 break;
                             case ShowList.Package:
-                                DalObject.DalObject.packege_list();
+                                backList.Clear();
+                                DalObject.DalObject.packege_list(backList);
+                                for (int i = 0; i < backList.Count; i++)
+                                {
+                                    Console.WriteLine(backList[i]);
+                                }
                                 break;
                             case ShowList.FreePackage:
-                                DalObject.DalObject.packege_list_with_no_drone();
+                                backList.Clear();
+                                DalObject.DalObject.packege_list_with_no_drone(backList);
+                                for (int i = 0; i < backList.Count; i++)
+                                {
+                                    Console.WriteLine(backList[i]);
+                                }
                                 break;
                             case ShowList.FreeBaseStation:
-                                DalObject.DalObject.Base_station_list_with_free_charge_states();
+                                backList.Clear();
+                                DalObject.DalObject.Base_station_list_with_free_charge_states(backList);
+                                for (int i = 0; i < backList.Count; i++)
+                                {
+                                    Console.WriteLine(backList[i]);
+                                }
                                 break;
                             case ShowList.Exit:
                                 break;
