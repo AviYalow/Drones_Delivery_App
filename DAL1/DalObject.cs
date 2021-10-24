@@ -13,13 +13,22 @@ namespace DalObject
     public class DalObject
     {
 
-        //Creating entities with initial initialization
+        /// <summary>
+        ///Creating entities with initial initialization
+        /// </summary>
         public DalObject()
         {
             DataSource.Initialize();
         }
 
-        //Adding a new base station
+        /// <summary>
+        ///Adding a new base station
+        /// </summary>
+        /// <param name="base_num">The base station number </param>
+        /// <param name="name"> The name ot the station </param>
+        /// <param name="numOfCharging">The amount of charging stations at the station </param>
+        /// <param name="latitude">Latitude of the station</param>
+        /// <param name="longitude">Longitude of the station</param>
         public static void Add_station(int base_num, string name, int numOfCharging, double latitude, double longitude)
         {
 
@@ -37,14 +46,30 @@ namespace DalObject
             DataSource.Config.index_base_stations_empty++;
         }
 
-        //Adding a new drone
+        /// <summary>
+        /// Adding a new drone
+        /// </summary>
+        /// <param name="siralNumber">Serial number of the drone</param>
+        /// <param name="model">The name of the modek </param>
+        /// <param name="category"> Easy / Medium / Heavy</param>
+        /// <param name="butrry">Battery status</param>
+        /// <param name="statos"> Free/ Maintenance/ Work</param>
         public static void Add_drone(int siralNumber, string model, int category, double butrry, int statos)
         {
             DataSource.drones[DataSource.Config.index_drones_empty] = new Drone() { siralNumber = siralNumber, Model = model, weightCategory = (Weight_categories)category, butrryStatus = butrry, drownStatus = (Drone_status)statos };
             DataSource.Config.index_drones_empty++;
         }
 
-        //Adding a new client
+
+        /// <summary>
+        /// Adding a new client
+        /// </summary>
+        /// <param name="id">ID of the new client</param>
+        /// <param name="name">Name of the new cliet</param>
+        /// <param name="phone">Phone number</param>
+        /// <param name="latitude">Latitude of the client</param>
+        /// <param name="londitude">Londitude of the client</param>
+
         public static void Add_client(int id, string name, string phone, double latitude, double londitude)
         {
 
@@ -61,7 +86,14 @@ namespace DalObject
             DataSource.Config.index_clients_empty++;
         }
 
-        //Adding a new package
+        /// <summary>
+        /// Adding a new package
+        /// </summary>
+        /// <param name="idsend">Sending customer ID</param>
+        /// <param name="idget">Receiving customer ID</param>
+        /// <param name="kg">Weight categories</param>
+        /// <param name="priorityByUser">Priority: Immediate/ quick/ Regular </param>
+        /// <returns>Returns the serial number of the created package</returns>
         public static int Add_package(int idsend, int idget, int kg, int priorityByUser)
         {
 
@@ -75,23 +107,17 @@ namespace DalObject
                 priority = (Priority)priorityByUser
             };
 
-            for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
-            {
-                if (DataSource.drones[i].weightCategory == DataSource.packages[DataSource.Config.package_num].weightCatgory &&
-                    DataSource.drones[i].drownStatus == Drone_status.Free)
-                {
-                    DataSource.packages[DataSource.Config.package_num].operator_skimmer_ID = DataSource.drones[i].siralNumber;
-                    DataSource.drones[i].drownStatus = Drone_status.Work;
-                    DataSource.packages[DataSource.Config.package_num].package_association = DateTime.Now;
-                }
-                DataSource.packages[DataSource.Config.package_num].operator_skimmer_ID = 0;
-            }
+            connect_package_to_drone(DataSource.Config.package_num);
             DataSource.Config.index_Packages_empty++;
             DataSource.Config.package_num++;
             return DataSource.Config.package_num - 1;
         }
 
-        //connect package to drone
+        /// <summary>
+        /// connect package to drone
+        /// </summary>
+        /// <param name="packageNumber">serial number of the package that needs 
+        /// to connect to drone </param>
         public static void connect_package_to_drone(int packageNumber)
         {
 
@@ -111,15 +137,19 @@ namespace DalObject
             Console.WriteLine("No suitable drone found");
         }
 
-        //Updated package collected
+        /// <summary>
+        /// Updated package collected
+        /// </summary>
+        /// <param name="packageNumber">serial number of the package</param>
         public static void Package_collected(int packageNumber)
         {
-
-
             DataSource.packages[packageNumber - 1].collect_package_for_shipment = DateTime.Now;
         }
 
-        //Updating a package that has reached its destination
+        /// <summary>
+        /// Update that package has arrived at destination
+        /// </summary>
+        /// <param name="packageNumber">serial number of the package</param>
         public static void Package_arrived(int packageNumber)
         {
 
@@ -135,7 +165,11 @@ namespace DalObject
         }
 
 
-        //sent drone to a free charging station
+        /// <summary>
+        /// sent drone to a free charging station
+        /// </summary>
+        /// <param name="base_station">Desired base station number</param>
+        /// <param name="droneNmber">Desirable drone number</param>
         public static void send_drone_to_charge(int base_station, int droneNmber)
         {
 
@@ -167,6 +201,11 @@ namespace DalObject
             }
 
         }
+
+        /// <summary>
+        /// Update of drone release from charging station
+        /// </summary>
+        /// <param name="sirialNumber">serial number of the drone</</param>
         public static void free_drone_from_charge(int sirialNumber)
         {
             
@@ -193,6 +232,11 @@ namespace DalObject
             }
         }
 
+        /// <summary>
+        /// Display base station data desired   
+        /// </summary>
+        /// <param name="baseNum">Desired base station number</param>
+        /// <returns> String of data </returns>
         public static string Base_station_by_number(int baseNum)
         {
             
@@ -208,6 +252,12 @@ namespace DalObject
             }
             return "base station not exitst";
         }
+
+        /// <summary>
+        /// Display drone data desired   
+        /// </summary>
+        /// <param name="droneNum">Desired drone number</param>
+        /// <returns> String of data</returns>
         public static string Drone_by_number(int droneNum)
         {
           
@@ -221,6 +271,12 @@ namespace DalObject
             }
             return "drone not found!";
         }
+
+        /// <summary>
+        /// Display client data desired 
+        /// </summary>
+        /// <param name="id">ID of desired client </param>
+        /// <returns> string of data </returns>
         public static string cilent_by_number(int id)
         {
            
@@ -234,45 +290,70 @@ namespace DalObject
             }
             return "client not found!";
         }
+
+        /// <summary>
+        /// Display packege data desired
+        /// </summary>
+        /// <param name="packageNumbe">Serial number of a particular package</param>
+        /// <returns> string of data</returns>
         public static string packege_by_number(int packageNumbe)
         {
 
            return(DataSource.packages[packageNumbe - 1].ToString());
         }
 
+        /// <summary>
+        /// Print all the base stations
+        /// </summary>
+        /// <param name="array">A array list that will contain 
+        /// the values ​​of all the base stations so we can print them</param>
         public static void Base_station_list(ArrayList array)
         {
 
             for (int i = 0; i < DataSource.Config.index_base_stations_empty; i++)
-            {
-
+            { 
                 array.Add(DataSource.base_Stations[i].ToString());
-
 
             }
         }
+
+        /// <summary>
+        /// Print all the drones
+        /// </summary>
+        /// <param name="array">A array list that will contain 
+        /// the values ​​of all the drones so we can print them</param>
         public static void Drone_list(ArrayList array)
         {
 
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-
-
                 array.Add(DataSource.drones[i].ToString());
 
             }
         }
+
+
+        /// <summary>
+        /// Print thr all clients
+        /// </summary>
+        /// <param name="array">A array list that will contain 
+        /// the values ​​of all the clients so we can print them</param>
         public static void cilent_list(ArrayList array)
         {
 
             for (int i = 0; i < DataSource.Config.index_clients_empty; i++)
             {
 
-
                 array.Add(DataSource.clients[i].ToString());
 
             }
         }
+
+        /// <summary>
+        /// Print all the packages
+        /// </summary>
+        /// <param name="array">A array list that will contain 
+        /// the values ​​of all the packages so we can print them</param>
         public static void packege_list(ArrayList array)
         {
 
@@ -285,6 +366,12 @@ namespace DalObject
 
         }
 
+        /// <summary>
+        /// Displays a list of packages that
+        /// have not been assigned to a drone yet 
+        /// </summary>
+        /// <param name="array">A array list that will contain 
+        /// the values so we can print them</param>
         public static void packege_list_with_no_drone(ArrayList array)
         {
             for (int i = 0; i < DataSource.Config.package_num; i++)
@@ -295,6 +382,12 @@ namespace DalObject
 
             }
         }
+
+        /// <summary>
+        /// Display of base stations with available charging stations
+        /// </summary>
+        /// <param name="array">A array list that will contain 
+        /// the values so we can print them</param>
         public static void Base_station_list_with_free_charge_states(ArrayList array)
         {
             
@@ -309,14 +402,21 @@ namespace DalObject
             }
             
         }
+
+        /// <summary>  
+        /// The function takes two-point coordinates and
+        /// calculates the distance between them
+        /// </summary>
+        /// <param name="Longitude1">Longitude of the first point </param>
+        /// <param name="Latitude1">Latitude of the first point </param>
+        /// <param name="Longitude2">Longitude of the second point</param>
+        /// <param name="Latitude2">Latitude of the second point</param>
+        /// <returns>The distance between the two points at sexagesimal base</returns>
+
+
         public static string Distance(double Longitude1, double Latitude1, double Longitude2, double Latitude2)
         {
-           
-           
-                
-            
-           return($"the distans is: {Point.Distance( Longitude1,Latitude1, Longitude2, Latitude2)}KM");
-
+            return ($"the distance is: {Point.Distance(Longitude1, Latitude1, Longitude2, Latitude2)}KM");
         }
     }
 }
