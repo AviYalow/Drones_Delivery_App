@@ -13,6 +13,7 @@ namespace ConsoleUI
         enum UpdatesOptions { Exit, Associate, Collect, Delivery, Charge, UnCharge }
         enum Show { Exit, Client, Base_station, Drone, Package, ShowDistance }
         enum ShowList { Exit, Base_station, Drones, Clients, Package, FreePackage, FreeBaseStation }
+        enum Distans_2_point { base_station = 1, client }
 
         // function that which allows us to receive a number from the user safely
         private static int getChoose(string val)
@@ -47,8 +48,8 @@ namespace ConsoleUI
             {
                 bool check;
                 int num, id, num1, num2;
-                double doubleNum1, doubleNum2;
-                string str, name, fon;
+                double doubleNum1, doubleNum2,point1,point2;
+                string str, name, phon;
 
                 str = "Choose one of the following:\n" +
                     " 1-Add,\n 2-Update,\n 3-Show Details,\n 4-Show List,\n 0-Exit";
@@ -68,8 +69,29 @@ namespace ConsoleUI
                         switch (entity)
                         {
                             case Entities.Client:
-                                DalObject.DalObject.Add_client(); // add new client
-                                break;
+                                {
+                                    Console.Write("Enter ID:");
+                                    do
+                                    {
+                                        check = int.TryParse(Console.ReadLine(), out num);
+                                    } while (!check);
+                                    Console.Write("Enter name:");
+                                    name = Console.ReadLine();
+                                    Console.Write("Enter phone number:");
+                                    phon = Console.ReadLine();
+                                    Console.Write("Enter latitude:");
+                                    do
+                                    {
+                                        check = double.TryParse(Console.ReadLine(), out doubleNum1);
+                                    } while (!check);
+                                    Console.Write("Enter londitude:");
+                                    do
+                                    {
+                                        check = double.TryParse(Console.ReadLine(), out doubleNum2);
+                                    } while (!check);
+                                    DalObject.DalObject.Add_client(num, name, phon, doubleNum1, doubleNum2); // add new client
+                                    break;
+                                }
                             case Entities.Base_station:
                                 {
                                     Console.Write("Enter base number:");
@@ -126,10 +148,32 @@ namespace ConsoleUI
                                     break;
                                 }
                             case Entities.Package:
-                                DalObject.DalObject.Add_package(); // add new package
-                                break;
+                                {
+                                    Console.Write("Enter ID of the sender:");
+                                    do
+                                    {
+                                        check = int.TryParse(Console.ReadLine(), out id);
+                                    } while (!check);
+                                    Console.Write("Enter ID of the recipient:");
+                                    do
+                                    {
+                                        check = int.TryParse(Console.ReadLine(), out num1);
+                                    } while (!check);
+                                    Console.Write("Enter Weight categories 0 for easy,1 for mediom,3 for haevy:");
+                                    do
+                                    {
+                                        check = int.TryParse(Console.ReadLine(), out num2);
+                                    } while (!check);
+                                    Console.Write("Enter priority 0 for Immediate ,1 for quick ,2 for Regular:");
+                                    do
+                                    {
+                                        check = int.TryParse(Console.ReadLine(), out num);
+                                    } while (!check);
+                                    DalObject.DalObject.Add_package(id, num1, num2, num); // add new package
+                                    break;
+                                }
                             case Entities.Exit:
-                                break;
+                                break; 
                         }
                         break;
 
@@ -145,17 +189,32 @@ namespace ConsoleUI
                         {
                             //option to connect package to drone
                             case UpdatesOptions.Associate:
-                                DalObject.DalObject.connect_package_to_drone();
+                                Console.Write("Enter package number:");
+                                do
+                                {
+                                    check = int.TryParse(Console.ReadLine(), out num);
+                                } while (!check);
+                                DalObject.DalObject.connect_package_to_drone(num);
                                 break;
 
                             // update that the package is collected
                             case UpdatesOptions.Collect:
-                                DalObject.DalObject.Package_collected();
+                                Console.Write("Enter package number:");
+                                do
+                                {
+                                    check = int.TryParse(Console.ReadLine(), out num);
+                                } while (!check);
+                                DalObject.DalObject.Package_collected(num);
                                 break;
 
                             // update that the package is arrived to the target
                             case UpdatesOptions.Delivery:
-                                DalObject.DalObject.Package_arrived();
+                                Console.Write("Enter package number:");
+                                do
+                                {
+                                    check = int.TryParse(Console.ReadLine(), out num);
+                                } while (!check);
+                                DalObject.DalObject.Package_arrived(num);
                                 break;
 
                             //sent drone to a free charging station
@@ -172,12 +231,16 @@ namespace ConsoleUI
                                     if (!success)
                                         Console.WriteLine("Error! Choose again");
                                 } while (!success);
-                                DalObject.DalObject.send_drone_to_charge(baseStation);
+                                Console.Write("Enter drone number:");
+                                check = int.TryParse(Console.ReadLine(), out num);
+                                DalObject.DalObject.send_drone_to_charge(baseStation,num);
                                 break;
 
                             // Release drone from charging position
                             case UpdatesOptions.UnCharge:
-                                DalObject.DalObject.free_drone_from_charge();
+                                Console.Write("Enter drone number:");
+                                check = int.TryParse(Console.ReadLine(), out num);
+                                DalObject.DalObject.free_drone_from_charge(num);
                                 break;
                             case UpdatesOptions.Exit:
                                 break;
@@ -193,20 +256,54 @@ namespace ConsoleUI
                         switch (show)
                         {
                             case Show.Client:
-                                DalObject.DalObject.cilent_by_number();
+                                Console.Write("Enter ID:");
+                                check = int.TryParse(Console.ReadLine(), out num);
+                                DalObject.DalObject.cilent_by_number(num);
                                 break;
                             case Show.Base_station:
-                                Console.WriteLine(DalObject.DalObject.Base_station_by_number());
+                                Console.Write("Enter base number:");
+                                check = int.TryParse(Console.ReadLine(), out num);
+                                Console.WriteLine(DalObject.DalObject.Base_station_by_number(num));
                                 break;
                             case Show.Drone:
-                                DalObject.DalObject.Drone_by_number();
+                                Console.Write("Enter drone number:");
+                                check = int.TryParse(Console.ReadLine(), out num);
+                                DalObject.DalObject.Drone_by_number(num);
                                 break;
                             case Show.Package:
-                                DalObject.DalObject.packege_by_number();
+                                Console.Write("Enter packege number:");
+                                check = int.TryParse(Console.ReadLine(), out num);
+                                Console.WriteLine( DalObject.DalObject.packege_by_number(num));
                                 break;
                             case Show.ShowDistance:
-                                DalObject.DalObject.Distance();
-                                break;
+                                {
+                                    num1 = 0;
+                                    double[] points = new double[4];
+                                    Console.Write("Insert the latitude of the first point:");
+                                    do
+                                    {
+                                        check = double.TryParse(Console.ReadLine(), out doubleNum1);
+                                    } while (!check);
+                                    Console.Write("Enter a longitude of the first point:");
+                                    do
+                                    {
+                                        check = double.TryParse(Console.ReadLine(), out doubleNum2);
+                                    } while (!check);
+                                    Console.Write("Enter a latitude of the second point:");
+                                    do
+                                    {
+                                        check = double.TryParse(Console.ReadLine(), out point1);
+                                    } while (!check);
+                                    Console.Write("Enter a longitude of the second point:");
+                                    do
+                                    {
+                                        check = double.TryParse(Console.ReadLine(), out point2);
+                                    } while (!check);
+
+                                    DalObject.DalObject.Distance(doubleNum2,doubleNum1,point2,point1);
+
+                                    break;
+                                }
                             case Show.Exit:
                                 break;
                         }

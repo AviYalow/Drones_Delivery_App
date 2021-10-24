@@ -68,7 +68,7 @@ namespace DalObject
             {
                 baseNumber = Config.index_base_stations_empty + 1,
                 NameBase = randomName(rand),
-                Number_of_charging_stations = rand.Next(1, 6),
+                Number_of_charging_stations = rand.Next(3, 6),
                 latitude = 31.790133,
                 longitude = 34.627143
             };
@@ -78,7 +78,7 @@ namespace DalObject
             {
                 baseNumber = Config.index_base_stations_empty + 1,
                 NameBase = randomName(rand),
-                Number_of_charging_stations = rand.Next(1, 6),
+                Number_of_charging_stations = rand.Next(3, 6),
                 latitude = 32.009490,
                 longitude = 34.736002
             };
@@ -92,6 +92,11 @@ namespace DalObject
                 drones[i].  weightCategory = (Weight_categories)rand.Next(0, 3);
                 drones[i]. butrryStatus =  rand.Next(25, 100) +(double) rand.Next(0,100)/100;
                 drones[i].drownStatus =  (Drone_status)rand.Next(0, 2) ;
+                if (drones[i].drownStatus== Drone_status.Maintenance)
+                {
+                    droneInCharge[Config.index_butrry_chrge].id_drown = drones[i].siralNumber;
+
+                }
                 int j = rand.Next(0, Config.index_base_stations_empty);
                 drones[i].base_station = base_Stations[j].baseNumber;
                 drones[i].base_station_latitude = base_Stations[j].latitude;
@@ -119,6 +124,7 @@ namespace DalObject
             //initializing the package's array
             for (int i = 0; i < 10; i++)
             {
+                int j;
                 packages[i] = new Package { sirialNumber = Config.package_num };
                 packages[i].sendClient = clients[rand.Next(0, 10)].ID;
                 do
@@ -127,7 +133,7 @@ namespace DalObject
                 } while (packages[i].getingClient== packages[i].sendClient);
                 packages[i].weightCatgory = (Weight_categories)rand.Next(0, 3);
                 packages[i].priority=(Priority)rand.Next(0, 3);
-                for (int j = 0; j <Config.index_drones_empty; j++)
+                for ( j = 0; j <Config.index_drones_empty; j++)
                 {
                     if (drones[j].weightCategory == packages[i].weightCatgory && drones[j].drownStatus == Drone_status.Free)
                     {
@@ -137,12 +143,19 @@ namespace DalObject
                     }
                     packages[i].operator_skimmer_ID = 0;
                 }
-                packages[i].receiving_delivery = (DateTime.Now.AddMinutes(rand.Next(-150, 0)));
+                packages[i].receiving_delivery = (DateTime.Now.AddMinutes(rand.Next(-300, -150)));
                 if (packages[i].operator_skimmer_ID != 0)
                 {
                     packages[i].package_association = packages[i].receiving_delivery.AddMinutes(5);
                     if (rand.Next(0, 2) != 0)
+                    {
                         packages[i].collect_package_for_shipment = packages[i].package_association.AddMinutes(30);
+                        if (rand.Next(0, 2) != 0)
+                        {
+                            packages[i].package_arrived= packages[i].package_association.AddMinutes(60);
+                            drones[j].drownStatus = Drone_status.Free;
+                        }
+                    }
                 }
                
                

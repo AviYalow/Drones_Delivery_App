@@ -34,7 +34,7 @@ namespace IDAL
             public override string ToString()
             {
                 String printPackage = "";
-                printPackage += $"Sirial Number is {sirialNumber},\n";
+                printPackage += $"Sirial Number is {sirialNumber:x6},\n";
                 printPackage += $"Send Client is {sendClient},\n";
                 printPackage += $"Getting Client is {getingClient},\n";
                 printPackage += $"weight Catgory is {weightCatgory},\n";
@@ -46,28 +46,33 @@ namespace IDAL
                 if (operator_skimmer_ID != 0)
                 {
                     printPackage += $"Package Association is {package_association},\n";
+                    //if the package have been collected
+                    if (collect_package_for_shipment != new DateTime())
+                    {
+                        printPackage += $"collect package for shipment is {collect_package_for_shipment},\n";
+                        // if the package arrived
+                        if (package_arrived != new DateTime())
+                        {
+                            printPackage += $"package_arrived is {package_arrived}\n";
+                        }
+                        //if the package not arrived
+                        else
+                            printPackage += $"Shipping on the way \n";
 
-                 
+                    }
+                    //if the package haven't been collected
+                    else
+                        printPackage += "The shipment has not been collected yet";
+
+
                 }
                 else //If the package wasn't associated with a drone
                     printPackage += $"Package is not Association yet ,\n";
-                //if the package have been collected
-                if (collect_package_for_shipment != new DateTime())
-                {
-                    printPackage += $"collect package for shipment is {collect_package_for_shipment},\n";
+              
+              
+               
 
-
-                }
-                //if the package haven't been collected
-                else
-                    printPackage += "The shipment has not been collected yet";
-                // if the package arrived
-                if (package_arrived != new DateTime())
-                    printPackage += $"package_arrived is {package_arrived}\n";
-
-                //if the package not arrived
-                else
-                    printPackage += $"Shipping on the way \n";
+              
 
 
                 return printPackage;

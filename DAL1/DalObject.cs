@@ -44,47 +44,36 @@ namespace DalObject
         }
 
         //Adding a new client
-        public static void Add_client()
+        public static void Add_client(int id, string name, string phone, double latitude, double londitude)
         {
-            bool cheak;
-            int intNum;
-            double pointLine;
-            Console.Write("Enter ID:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
-            DataSource.clients[DataSource.Config.index_clients_empty] = new Client { ID = intNum };
-            Console.Write("Enter name:");
-            DataSource.clients[DataSource.Config.index_clients_empty].Name = Console.ReadLine();
-            Console.Write("Enter phone number:");
-            DataSource.clients[DataSource.Config.index_clients_empty].PhoneNumber = Console.ReadLine();
-            Console.Write("Enter latitude:");
-            cheak = double.TryParse(Console.ReadLine(), out pointLine);
-            DataSource.clients[DataSource.Config.index_clients_empty].Latitude = pointLine;
-            Console.Write("Enter londitude:");
-            cheak = double.TryParse(Console.ReadLine(), out pointLine);
-            DataSource.clients[DataSource.Config.index_clients_empty].Longitude = pointLine;
+
+            DataSource.clients[DataSource.Config.index_clients_empty] = new Client
+            {
+                ID = id
+            ,
+                Name = name,
+                PhoneNumber = phone,
+                Latitude = latitude,
+                Longitude = londitude
+            };
+
             DataSource.Config.index_clients_empty++;
         }
 
         //Adding a new package
-        public static int Add_package()
+        public static int Add_package(int idsend, int idget, int kg, int priorityByUser)
         {
-            bool cheak;
-            int intNum;
 
-            DataSource.packages[DataSource.Config.package_num].receiving_delivery = DateTime.Now;
-            DataSource.packages[DataSource.Config.package_num] = new Package { sirialNumber = DataSource.Config.package_num++ };
-            Console.Write("Enter ID of the sender:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
-            DataSource.packages[DataSource.Config.package_num].sendClient = intNum;
-            Console.Write("Enter ID of the recipient:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
-            DataSource.packages[DataSource.Config.package_num].getingClient = intNum;
-            Console.Write("Enter Weight categories 0 for easy,1 for mediom,3 for haevy:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
-            DataSource.packages[DataSource.Config.package_num].weightCatgory = (Weight_categories)intNum;
-            Console.Write("Enter priority 0 for Immediate ,1 for quick ,2 for Regular:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
-            DataSource.packages[DataSource.Config.package_num].priority = (Priority)intNum;
+            DataSource.packages[DataSource.Config.package_num] = new Package
+            {
+                sirialNumber = DataSource.Config.package_num,
+                receiving_delivery = DateTime.Now,
+                sendClient = idsend,
+                getingClient = idget,
+                weightCatgory = (Weight_categories)kg,
+                priority = (Priority)priorityByUser
+            };
+
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
                 if (DataSource.drones[i].weightCategory == DataSource.packages[DataSource.Config.package_num].weightCatgory &&
@@ -102,47 +91,41 @@ namespace DalObject
         }
 
         //connect package to drone
-        public static void connect_package_to_drone()
+        public static void connect_package_to_drone(int packageNumber)
         {
-            bool cheak;
-            int intNum;
-            Console.Write("Enter package number:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
+
+
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-                if (DataSource.drones[i].weightCategory == DataSource.packages[intNum - 1].weightCatgory
+                if (DataSource.drones[i].weightCategory == DataSource.packages[packageNumber - 1].weightCatgory
                     && DataSource.drones[i].drownStatus == Drone_status.Free)
                 {
-                    DataSource.packages[intNum - 1].operator_skimmer_ID = DataSource.drones[i].siralNumber;
+                    DataSource.packages[packageNumber - 1].operator_skimmer_ID = DataSource.drones[i].siralNumber;
                     DataSource.drones[i].drownStatus = Drone_status.Work;
-                    DataSource.packages[intNum - 1].package_association = DateTime.Now;
-                    break;
+                    DataSource.packages[packageNumber - 1].package_association = DateTime.Now;
+                    return;
                 }
                 DataSource.packages[DataSource.Config.package_num].operator_skimmer_ID = 0;
             }
+            Console.WriteLine("No suitable drone found");
         }
 
         //Updated package collected
-        public static void Package_collected()
+        public static void Package_collected(int packageNumber)
         {
-            bool cheak;
-            int intNum;
-            Console.Write("Enter package number:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
-            DataSource.packages[intNum - 1].collect_package_for_shipment = DateTime.Now;
+
+
+            DataSource.packages[packageNumber - 1].collect_package_for_shipment = DateTime.Now;
         }
 
         //Updating a package that has reached its destination
-        public static void Package_arrived()
+        public static void Package_arrived(int packageNumber)
         {
-            bool cheak;
-            int intNum;
-            Console.Write("Enter package number:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
-            DataSource.packages[intNum - 1].package_arrived = DateTime.Now;
+
+            DataSource.packages[packageNumber - 1].package_arrived = DateTime.Now;
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-                if (DataSource.drones[i].siralNumber == DataSource.packages[intNum - 1].operator_skimmer_ID)
+                if (DataSource.drones[i].siralNumber == DataSource.packages[packageNumber - 1].operator_skimmer_ID)
                 {
                     DataSource.drones[i].drownStatus = Drone_status.Free;
                     DataSource.drones[i].butrryStatus -= 20;
@@ -152,15 +135,13 @@ namespace DalObject
 
 
         //sent drone to a free charging station
-        public static void send_drone_to_charge(int base_station)
+        public static void send_drone_to_charge(int base_station, int droneNmber)
         {
-            bool cheak;
-            int intNum;
-            Console.Write("Enter drone number:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
+
+
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-                if (DataSource.drones[i].siralNumber == intNum)
+                if (DataSource.drones[i].siralNumber == droneNmber)
                 {
                     if (DataSource.drones[i].drownStatus == Drone_status.Work)
                     {
@@ -175,9 +156,9 @@ namespace DalObject
                             DataSource.base_Stations[j].Number_of_charging_stations--;
                             DataSource.drones[i].base_station_latitude = DataSource.base_Stations[j].latitude;
                             DataSource.drones[i].base_station_longitude = DataSource.base_Stations[j].longitude;
-                            break;
                             DataSource.droneInCharge[DataSource.Config.index_butrry_chrge].idBaseStation = DataSource.base_Stations[j].baseNumber;
                             DataSource.droneInCharge[DataSource.Config.index_butrry_chrge].id_drown = DataSource.drones[i].siralNumber;
+                            break;
                         }
                     }
                     break;
@@ -185,15 +166,13 @@ namespace DalObject
             }
 
         }
-        public static void free_drone_from_charge()
+        public static void free_drone_from_charge(int sirialNumber)
         {
-            bool cheak;
-            int intNum;
-            Console.Write("Enter drone number:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
+            
+          
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-                if (DataSource.drones[i].siralNumber == intNum)
+                if (DataSource.drones[i].siralNumber == sirialNumber)
                 {
                     DataSource.drones[i].drownStatus = Drone_status.Free;
                     DataSource.drones[i].butrryStatus = 100;
@@ -202,7 +181,7 @@ namespace DalObject
             }
             for (int i = 0; i < DataSource.Config.index_butrry_chrge; i++)
             {
-                if (DataSource.droneInCharge[i].id_drown == intNum)
+                if (DataSource.droneInCharge[i].id_drown == sirialNumber)
                 {
                     DataSource.Config.index_butrry_chrge--;
                     for (int j = i; j < DataSource.Config.index_butrry_chrge; j++)
@@ -213,15 +192,13 @@ namespace DalObject
             }
         }
 
-        public static string Base_station_by_number()
+        public static string Base_station_by_number(int baseNum)
         {
-            bool cheak;
-            int intNum;
-            Console.Write("Enter base number:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
+            
+           
             for (int i = 0; i < DataSource.Config.index_base_stations_empty; i++)
             {
-                if (DataSource.base_Stations[i].baseNumber == intNum)
+                if (DataSource.base_Stations[i].baseNumber == baseNum)
                 {
                     return DataSource.base_Stations[i].ToString();
 
@@ -230,46 +207,33 @@ namespace DalObject
             }
             return "base station not exitst";
         }
-        public static void Drone_by_number()
+        public static void Drone_by_number(int droneNum)
         {
-            bool cheak;
-            int intNum;
-            Console.Write("Enter drone number:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
+          
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-                if (DataSource.drones[i].siralNumber == intNum)
+                if (DataSource.drones[i].siralNumber == droneNum)
                 {
                     Console.WriteLine(DataSource.drones[i].ToString());
                     break;
                 }
             }
         }
-        public static void cilent_by_number()
+        public static void cilent_by_number(int id)
         {
-            bool cheak;
-            int intNum;
-            Console.Write("Enter ID:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
+           
             for (int i = 0; i < DataSource.Config.index_clients_empty; i++)
             {
-                if (DataSource.clients[i].ID == intNum)
+                if (DataSource.clients[i].ID == id)
                 {
                     Console.WriteLine(DataSource.clients[i].ToString());
                     break;
                 }
             }
         }
-        public static void packege_by_number()
+        public static string packege_by_number(int packageNumbe)
         {
-            bool cheak;
-            int intNum;
-            Console.Write("Enter packege number:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
-            Console.WriteLine(DataSource.packages[intNum - 1].ToString());
-
-
-
+           return(DataSource.packages[packageNumbe - 1].ToString());
         }
 
         public static void Base_station_list()
@@ -335,57 +299,13 @@ namespace DalObject
                     Console.WriteLine(DataSource.base_Stations[i]);
             }
         }
-        public static void Distance()
+        public static void Distance(double Longitude1, double Latitude1, double Longitude2, double Latitude2)
         {
-            bool cheak;
-            int intNum, count = 0;
-            double[] points = new double[4];
-            Console.Write("Enter 1 for base point,2 for client point for the first point:");
-            cheak = int.TryParse(Console.ReadLine(), out intNum);
-            for (int i = 1; i < 2; i++)
-            {
-                switch ((Distans_2_point)intNum)
-                {
-                    case Distans_2_point.base_station:
-                        Console.Write("Enter base number:");
-                        cheak = int.TryParse(Console.ReadLine(), out intNum);
-                        for (int j = 0; j < DataSource.Config.index_base_stations_empty; j++)
-                        {
-                            if (DataSource.base_Stations[j].baseNumber == intNum)
-                            {
-                                points[count] = DataSource.base_Stations[j].longitude;
-                                count++;
-                                points[count] = DataSource.base_Stations[j].latitude;
-                                count++;
-                            }
-
-                        }
-
-                        break;
-                    case Distans_2_point.client:
-                        Console.Write("Enter client number:");
-                        cheak = int.TryParse(Console.ReadLine(), out intNum);
-                        for (int j = 0; j < DataSource.Config.index_drones_empty; j++)
-                        {
-                            if (DataSource.drones[j].siralNumber == intNum)
-                            {
-                                points[count] = DataSource.clients[j].Longitude;
-                                count++;
-                                points[count] = DataSource.clients[j].Latitude;
-                                count++;
-                            }
-
-                        }
-                        break;
-                    default:
-                        Console.WriteLine("no point");
-                        return;
-
-                }
-                Console.Write("Enter 1 for base point, 2 for client point for the second point:");
-                cheak = int.TryParse(Console.ReadLine(), out intNum);
-            }
-            Console.WriteLine($"the distans is: {Point.Distance(points[0], points[2], points[1], points[3])}KM");
+           
+           
+                
+            
+            Console.WriteLine($"the distans is: {Point.Distance( Longitude1,Latitude1, Longitude2, Latitude2)}KM");
 
         }
     }
