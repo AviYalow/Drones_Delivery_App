@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+ we add the bonus function
+ */
+
+using System;
 using System.Collections;
 using IDAL;
 using DalObject;
@@ -177,7 +181,7 @@ namespace ConsoleUI
                                     {
                                         check = int.TryParse(Console.ReadLine(), out num1);
                                     } while (!check);
-                                    Console.Write("Enter Weight categories 0 for easy,1 for mediom,3 for haevy:");
+                                    Console.Write("Enter Weight categories 0 for easy,1 for mediom,2 for haevy:");
                                     do
                                     {
                                         check = int.TryParse(Console.ReadLine(), out num2);

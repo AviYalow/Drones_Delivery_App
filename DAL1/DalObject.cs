@@ -197,11 +197,7 @@ namespace DalObject
             {
                 if (DataSource.drones[i].siralNumber == droneNmber)
                 {
-                    if (DataSource.drones[i].drownStatus == Drone_status.Work)
-                    {
-                        Console.WriteLine("The drone in shipment, please wait until it arrives!");
-                        return;
-                    }
+                   
                     DataSource.drones[i].drownStatus = Drone_status.Maintenance;
                     for (int j = 0; j < DataSource.Config.index_base_stations_empty; j++)
                     {
@@ -473,6 +469,11 @@ namespace DalObject
         {
             return ($"the distance is: {Point.Distance(Longitude1, Latitude1, Longitude2, Latitude2)}KM");
         }
+        /// <summary>
+        /// Returns a point in the form of degrees
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
         public static string Point_to_degree(double point)
         {
             return Point.Degree(point);
