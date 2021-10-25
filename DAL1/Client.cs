@@ -27,8 +27,8 @@ namespace IDAL
                 printClient += $"Phone Number is {PhoneNumber},\n";
 
                 //A view based on a sexagesimal of the coordinate values
-                printClient += $"Longitude is {Point.Degree(Longitude)},\n";
-                printClient += $"Latitude is {Point.Degree(Latitude)} \n";
+                printClient += $"Longitude is {(Longitude)},\n";
+                printClient += $"Latitude is {(Latitude)} \n";
 
                 return printClient;
             }

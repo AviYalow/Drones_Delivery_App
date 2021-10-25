@@ -16,8 +16,7 @@ namespace IDAL
             public double butrryStatus { get; set; }
             public Drone_status drownStatus { get; set; }
             public int base_station  { get; set; }
-            public double base_station_longitude { get; set; }
-            public double base_station_latitude { get; set; }
+            
 
 
             public override string ToString()

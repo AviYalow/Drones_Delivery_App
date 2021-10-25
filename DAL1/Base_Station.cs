@@ -24,8 +24,8 @@ namespace IDAL
                 print_Base_Station += $"Number of charging stations: {Number_of_charging_stations},\n";
 
                 //A view based on a sexagesimal of the coordinate values
-                print_Base_Station += $"Longitude Status: {Point.Degree(longitude)},\n";
-                print_Base_Station += $"Latitude Status: {Point.Degree(latitude)}\n";
+                print_Base_Station += $"Longitude Status: {(longitude)},\n";
+                print_Base_Station += $"Latitude Status: {(latitude)}\n";
                 return print_Base_Station;
             }
 

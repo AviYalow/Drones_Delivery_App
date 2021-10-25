@@ -12,7 +12,7 @@ namespace ConsoleUI
         enum Options { Exit, Add, Update, ShowDetails, ShowList }
         enum Entities { Exit, Client, Base_station, Drone, Package }
         enum UpdatesOptions { Exit, Associate, Collect, Delivery, Charge, UnCharge }
-        enum Show { Exit, Client, Base_station, Drone, Package, ShowDistance }
+        enum Show { Exit, Client, Base_station, Drone, Package, ShowDistance,ShoeDegree }
         enum ShowList { Exit, Base_station, Drones, Clients, Package, FreePackage, FreeBaseStation }
         enum Distans_2_point { base_station = 1, client }
 
@@ -143,7 +143,7 @@ namespace ConsoleUI
                                     {
                                         check = double.TryParse(Console.ReadLine(), out doubleNum1);
                                     } while (!check);
-                                    Console.Write("Enter a statos:0 for free,1 for maintenance,2 for in charge:");
+                                    Console.Write("Enter a statos:0 for free,1 for maintenance:");
                                     do
                                     {
                                         check = int.TryParse(Console.ReadLine(), out num1);
@@ -312,6 +312,14 @@ namespace ConsoleUI
 
                                     break;
                                 }
+                            case Show.ShoeDegree:
+                                Console.Write("Enter a longitude or latitude to ge it in degree :");
+                                do
+                                {
+                                    check = double.TryParse(Console.ReadLine(), out point2);
+                                } while (!check);
+                                Console.WriteLine( DalObject.DalObject.Point_to_degree(point2));
+                                break;
                             case Show.Exit:
                                 break;
                         }

@@ -34,7 +34,7 @@ namespace IDAL
             public override string ToString()
             {
                 String printPackage = "";
-                printPackage += $"Sirial Number is {sirialNumber:x6},\n";
+                printPackage += $"Sirial Number is {sirialNumber},\n";
                 printPackage += $"Send Client is {sendClient},\n";
                 printPackage += $"Getting Client is {getingClient},\n";
                 printPackage += $"weight Catgory is {weightCatgory},\n";
@@ -62,7 +62,7 @@ namespace IDAL
                     }
                     //if the package haven't been collected
                     else
-                        printPackage += "The shipment has not been collected yet";
+                        printPackage += "The shipment has not been collected yet\n";
 
 
                 }
