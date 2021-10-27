@@ -56,7 +56,7 @@ namespace DalObject
         /// <param name="statos"> Free/ Maintenance/ Work</param>
         public static void Add_drone(int siralNumber, string model, int category, double butrry, int statos)
         {
-            DataSource.drones[DataSource.Config.index_drones_empty] = new Drone() { siralNumber = siralNumber, Model = model, weightCategory = (Weight_categories)category, butrryStatus = butrry, drownStatus = (Drone_status)statos };
+            DataSource.drones[DataSource.Config.index_drones_empty] = new Drone() { serialNumber = siralNumber, Model = model, weightCategory = (Weight_categories)category, butrryStatus = butrry, drownStatus = (Drone_status)statos };
             DataSource.Config.index_drones_empty++;
         }
 
@@ -99,7 +99,7 @@ namespace DalObject
 
             DataSource.packages[DataSource.Config.package_num] = new Package
             {
-                sirialNumber = DataSource.Config.package_num,
+                serialNumber = DataSource.Config.package_num,
                 receiving_delivery = DateTime.Now,
                 sendClient = idsend,
                 getingClient = idget,
@@ -143,7 +143,7 @@ namespace DalObject
                 {
 
                     DataSource.drones[i].drownStatus = Drone_status.Work;
-                    return DataSource.drones[i].siralNumber;
+                    return DataSource.drones[i].serialNumber;
                 }
 
             }
@@ -177,7 +177,7 @@ namespace DalObject
         {
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-                if (DataSource.drones[i].siralNumber == sirialNum)
+                if (DataSource.drones[i].serialNumber == sirialNum)
                 {
                     DataSource.drones[i].drownStatus = Drone_status.Free;
                     DataSource.drones[i].butrryStatus -= 20;
@@ -195,7 +195,7 @@ namespace DalObject
         {
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-                if (DataSource.drones[i].siralNumber == droneNmber)
+                if (DataSource.drones[i].serialNumber == droneNmber)
                 {
                    
                     DataSource.drones[i].drownStatus = Drone_status.Maintenance;
@@ -204,7 +204,7 @@ namespace DalObject
                         if (DataSource.base_Stations[j].baseNumber == base_station)
                         {
                             update_charge_station_in_base(base_station, -1);
-                            update_drone_charge_in_base(DataSource.base_Stations[j].baseNumber, Drone_in_charge.Add, DataSource.drones[i].siralNumber);
+                            update_drone_charge_in_base(DataSource.base_Stations[j].baseNumber, Drone_in_charge.Add, DataSource.drones[i].serialNumber);
                             break;
                         }
                     }
@@ -226,16 +226,16 @@ namespace DalObject
             switch (chose)
             {
                 case Drone_in_charge.Add:
-                    DataSource.droneInCharge[DataSource.Config.index_butrry_chrge].idBaseStation = base_station;
-                    DataSource.droneInCharge[DataSource.Config.index_butrry_chrge].id_drown = dronSirialNum;
+                    DataSource.droneInCharge[DataSource.Config.index_battery_charge].idBaseStation = base_station;
+                    DataSource.droneInCharge[DataSource.Config.index_battery_charge].id_drone = dronSirialNum;
                     break;
                 case Drone_in_charge.Delete:
-                    for (int i = 0; i < DataSource.Config.index_butrry_chrge; i++)
+                    for (int i = 0; i < DataSource.Config.index_battery_charge; i++)
                     {
-                        if (DataSource.droneInCharge[i].id_drown == dronSirialNum)
+                        if (DataSource.droneInCharge[i].id_drone == dronSirialNum)
                         {
-                            DataSource.Config.index_butrry_chrge--;
-                            for (int j = i; j < DataSource.Config.index_butrry_chrge; j++)
+                            DataSource.Config.index_battery_charge--;
+                            for (int j = i; j < DataSource.Config.index_battery_charge; j++)
                             {
                                 DataSource.droneInCharge[j] = DataSource.droneInCharge[j + 1];
                             }
@@ -269,12 +269,12 @@ namespace DalObject
 
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-                if (DataSource.drones[i].siralNumber == sirialNumber)
+                if (DataSource.drones[i].serialNumber == sirialNumber)
                 {
                     DataSource.drones[i].drownStatus = Drone_status.Free;
                     DataSource.drones[i].butrryStatus = 100;
                     update_charge_station_in_base(DataSource.drones[i].base_station, 1);
-                    update_drone_charge_in_base(DataSource.drones[i].siralNumber,Drone_in_charge.Delete);
+                    update_drone_charge_in_base(DataSource.drones[i].serialNumber,Drone_in_charge.Delete);
                     break;
                 }
             }
@@ -314,7 +314,7 @@ namespace DalObject
 
             for (int i = 0; i < DataSource.Config.index_drones_empty; i++)
             {
-                if (DataSource.drones[i].siralNumber == droneNum)
+                if (DataSource.drones[i].serialNumber == droneNum)
                 {
                     return DataSource.drones[i].ToString();
 

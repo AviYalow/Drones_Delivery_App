@@ -15,7 +15,7 @@ namespace DalObject
         internal static Base_Station[] base_Stations = new Base_Station[5];
         internal static Client[] clients = new Client[100];
         internal static Package[] packages = new Package[1000];
-        internal static BtarryLoad[] droneInCharge = new BtarryLoad[10];
+        internal static BatteryLoad[] droneInCharge = new BatteryLoad[10];
         
 
         /// <Config>
@@ -30,7 +30,7 @@ namespace DalObject
             internal static int index_clients_empty=0;
             internal static int index_Packages_empty=0;
             internal static int package_num=1;
-            internal static int index_butrry_chrge = 0;
+            internal static int index_battery_charge = 0;
         }
 
         /// <Initialize>
@@ -55,7 +55,7 @@ namespace DalObject
 
             //A function that responsible for initializing names randomly-upercase
             //letter for the firt letter and lowercase for the other letters
-            string prsonalRandomName(Random rand, int num = 3)
+            string personalRandomName(Random rand, int num = 3)
             {
                 string name = "";
                 name += (char)rand.Next(65, 91);
@@ -90,15 +90,16 @@ namespace DalObject
             //initializing the drones's array in a randone values
             for (int i = 0; i < 5; i++)
             {
-                drones[i] = new Drone{ siralNumber = rand.Next(10000) };
+                drones[i] = new Drone{ serialNumber = rand.Next(10000) };
                   drones[i].  Model = randomName(rand, rand.Next(3, 7));
                 drones[i].  weightCategory = (Weight_categories)rand.Next(0, 3);
                 drones[i]. butrryStatus =  rand.Next(25, 100) +(double) rand.Next(0,100)/100;
                 drones[i].drownStatus =  (Drone_status)rand.Next(0, 2) ;
                 
+                //
                 if (drones[i].drownStatus== Drone_status.Maintenance)
                 {
-                    droneInCharge[Config.index_butrry_chrge].id_drown = drones[i].siralNumber;
+                    droneInCharge[Config.index_battery_charge].id_drone = drones[i].serialNumber;
 
                 }
 
@@ -107,9 +108,9 @@ namespace DalObject
                 
                 if(drones[i].drownStatus==Drone_status.Maintenance)
                 {
-                    droneInCharge[Config.index_butrry_chrge].id_drown = drones[i].siralNumber;
-                    droneInCharge[Config.index_butrry_chrge].idBaseStation = drones[i].base_station;
-                    Config.index_butrry_chrge++;
+                    droneInCharge[Config.index_battery_charge].id_drone = drones[i].serialNumber;
+                    droneInCharge[Config.index_battery_charge].idBaseStation = drones[i].base_station;
+                    Config.index_battery_charge++;
                 }
                 Config.index_drones_empty++;
             }
@@ -119,7 +120,7 @@ namespace DalObject
             {
                 clients[i] = new Client { ID = rand.Next(100000000,999999999) };
                 clients[i].PhoneNumber += $"05{rand.Next(0, 6)}-{rand.Next(100, 999)}-{rand.Next(1000, 9999)}";
-                clients[i].Name += prsonalRandomName(rand, rand.Next(3, 7));
+                clients[i].Name += personalRandomName(rand, rand.Next(3, 7));
                 clients[i].Latitude = rand.Next(31, 33) +(double) rand.Next(60000,80000)/1000000;
                 clients[i].Longitude = 34 + (double)rand.Next(60000, 80000) / 1000000;
                 Config.index_clients_empty++;
@@ -129,7 +130,7 @@ namespace DalObject
             for (int i = 0; i < 10; i++)
             {
                 int j;
-                packages[i] = new Package { sirialNumber = Config.package_num };
+                packages[i] = new Package { serialNumber = Config.package_num };
                 packages[i].sendClient = clients[rand.Next(0, 10)].ID;
                
                 do
@@ -144,7 +145,7 @@ namespace DalObject
                 {
                     if (drones[j].weightCategory == packages[i].weightCatgory && drones[j].drownStatus == Drone_status.Free)
                     {
-                        packages[i].operator_skimmer_ID = drones[j].siralNumber;
+                        packages[i].operator_skimmer_ID = drones[j].serialNumber;
                         drones[j].drownStatus = Drone_status.Work;
                         break;
                     }

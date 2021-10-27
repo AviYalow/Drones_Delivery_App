@@ -9,7 +9,7 @@ namespace IDAL
         /// </Package>
         public struct Package
         {
-            public int sirialNumber { get; init; }
+            public int serialNumber { get; init; }
             public int sendClient { get; set; }
             public int getingClient { get; set; }
             public Weight_categories weightCatgory { get; set; }
@@ -34,7 +34,7 @@ namespace IDAL
             public override string ToString()
             {
                 String printPackage = "";
-                printPackage += $"Sirial Number is {sirialNumber},\n";
+                printPackage += $"Sirial Number is {serialNumber},\n";
                 printPackage += $"Send Client is {sendClient},\n";
                 printPackage += $"Getting Client is {getingClient},\n";
                 printPackage += $"weight Catgory is {weightCatgory},\n";
