@@ -16,6 +16,7 @@ namespace IDAL
             public double longitude { get; set; }
             public double latitude { get; set; }
 
+
             public override string ToString()
             {
                 String print_Base_Station = "";

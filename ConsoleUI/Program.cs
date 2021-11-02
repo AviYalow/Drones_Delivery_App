@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using IDAL;
 using DalObject;
 
@@ -42,7 +43,7 @@ namespace ConsoleUI
         /// Selection menu that which show to the customer 
         /// when opening the program 
         /// </Menu>
-        private static void Menu()
+        private static void Menu(DalObject.DalObject dalObject)
         {
             Options option;
             Entities entity;
@@ -78,25 +79,25 @@ namespace ConsoleUI
                             case Entities.Client:
                                 {
                                     //received the details from the user
-                                    addClient(out check, out num, out doubleNum1, out doubleNum2, out name, out phone);
+                                    addClient(DalObject.DalObject dalObject,out check, out num, out doubleNum1, out doubleNum2, out name, out phone);
                                     break;
                                 }
                             case Entities.Base_station:
                                 {
                                     //received the details from the user
-                                    addBase(out check, out id, out num1, out doubleNum1, out doubleNum2, out name);
+                                    addBase(DalObject.DalObject dalObject, out check, out id, out num1, out doubleNum1, out doubleNum2, out name);
                                     break;
                                 }
                             case Entities.Drone:
                                 {
                                     //received the details from the user
 
-                                    addDrone(out check, out num, out id, out num1, out doubleNum1, out name);
+                                    addDrone(DalObject.DalObject dalObject, out check, out num, out id, out num1, out doubleNum1, out name);
                                     break;
                                 }
                             case Entities.Package:
                                 {
-                                   addPackage(out check, out num, out id, out num1, out num2);
+                                   addPackage(DalObject.DalObject dalObject, out check, out num, out id, out num1, out num2);
                                     break;
                                 }
                             case Entities.Exit:
@@ -117,32 +118,32 @@ namespace ConsoleUI
                             //option to connect package to drone
                             case UpdatesOptions.Associate:
 
-                                updateAssociate(out check, out num);
+                                updateAssociate(DalObject.DalObject dalObject, out check, out num);
                                 break;
 
                             // update that the package is collected
                             case UpdatesOptions.Collect:
 
                                 //received the details from the user
-                                updateCollect(out check, out num);
+                                updateCollect(DalObject.DalObject dalObject, out check, out num);
                                 break;
 
                             // update that the package is arrived to the target
                             case UpdatesOptions.Delivery:
 
-                                updateDelivery(out check, out num);
+                                updateDelivery(DalObject.DalObject dalObject, out check, out num);
                                 break;
 
                             //sent drone to a free charging station
                             case UpdatesOptions.Charge:
 
-                                updateCharge(out check, out num, backList);
+                                updateCharge(DalObject.DalObject dalObject, out check, out num, backList);
                                 break;
 
                             // Release drone from charging position
                             case UpdatesOptions.UnCharge:
 
-                                releaseDrone(out check, out num);
+                                releaseDrone(DalObject.DalObject dalObject, out check, out num);
                                 break;
 
                             case UpdatesOptions.Exit:
@@ -160,28 +161,28 @@ namespace ConsoleUI
                         {
                             case Show.Client:
 
-                                clientById(out check, out num);
+                                clientById( dalObject, out check, out num);
                                 break;
                             case Show.Base_station:
 
-                                baseByNumber(out check, out num);
+                                baseByNumber( dalObject, out check, out num);
                                 break;
                             case Show.Drone:
-                                droneBySirialNumber(out check, out num);
+                                droneBySirialNumber(dalObject, out check, out num);
                                 break;
                             case Show.Package:
-                                packageByNumber(out check, out num);
+                                packageByNumber( dalObject, out check, out num);
                                 break;
 
                             //option to show distance between two points
                             case Show.ShowDistance:
                                 {
-                                    distanceBetween2points(out check, out num1, out doubleNum1, out doubleNum2, out point1, out point2);
+                                    distanceBetween2points( dalObject, out check, out num1, out doubleNum1, out doubleNum2, out point1, out point2);
 
                                     break;
                                 }
                             case Show.ShoeDegree:
-                                pointToDegree(out check, out point2);
+                                pointToDegree( dalObject, out check, out point2);
                                 break;
                             case Show.Exit:
                                 break;
@@ -196,22 +197,22 @@ namespace ConsoleUI
                         switch (showList)
                         {
                             case ShowList.Base_station:
-                                listOfBass(backList);
+                                listOfBass(dalObject);
                                 break;
                             case ShowList.Drones:
-                                listOfDrone(backList);
+                                listOfDrone( dalObject);
                                 break;
                             case ShowList.Clients:
-                                listOfClinet(backList);
+                                listOfClinet( dalObject);
                                 break;
                             case ShowList.Package:
-                                listOfPackage(backList);
+                                listOfPackage( dalObject);
                                 break;
                             case ShowList.FreePackage:
-                                packegeWhitNoDrone(backList);
+                                packegeWhitNoDrone( dalObject);
                                 break;
                             case ShowList.FreeBaseStation:
-                                baseWhitFreeChargeStation(backList);
+                                baseWhitFreeChargeStation( dalObject);
                                 break;
                             case ShowList.Exit:
                                 break;
@@ -225,77 +226,62 @@ namespace ConsoleUI
 
         }
 
-        private static void baseWhitFreeChargeStation(ArrayList backList)
+        private static void baseWhitFreeChargeStation(DalObject.DalObject dalObject)
         {
-            backList.Clear();
-            DalObject.DalObject.Base_station_list_with_free_charge_states(backList);
-            for (int i = 0; i < backList.Count; i++)
-            {
-                Console.WriteLine(backList[i]);
-            }
+            List<IDAL.DO.Base_Station> list = (List<IDAL.DO.Base_Station>)dalObject.Base_station_list_with_free_charge_states();
+            foreach (IDAL.DO.Base_Station print in list)
+                Console.WriteLine(print);
         }
 
-        private static void packegeWhitNoDrone(ArrayList backList)
+        private static void packegeWhitNoDrone(DalObject.DalObject dalObject)
         {
-            backList.Clear();
-            DalObject.DalObject.packege_list_with_no_drone(backList);
-            for (int i = 0; i < backList.Count; i++)
-            {
-                Console.WriteLine(backList[i]);
-            }
+            List<IDAL.DO.Package> list = (List<IDAL.DO.Package>)dalObject.packege_list_with_no_drone();
+            foreach (IDAL.DO.Package print in list)
+                Console.WriteLine(print);
         }
 
-        private static void listOfPackage(ArrayList backList)
+        private static void listOfPackage(DalObject.DalObject dalObject)
         {
-            backList.Clear();
-            DalObject.DalObject.packege_list(backList);
-            for (int i = 0; i < backList.Count; i++)
-            {
-                Console.WriteLine(backList[i]);
-            }
+            List<IDAL.DO.Package> list = (List<IDAL.DO.Package>)dalObject.packege_list();
+            foreach (IDAL.DO.Package print in list)
+                Console.WriteLine(print);
         }
 
-        private static void listOfClinet(ArrayList backList)
+        private static void listOfClinet(DalObject.DalObject dalObject)
         {
-            backList.Clear();
-            DalObject.DalObject.cilent_list(backList);
-            for (int i = 0; i < backList.Count; i++)
-            {
-                Console.WriteLine(backList[i]);
-            }
+            List<IDAL.DO.Client> list = (List<IDAL.DO.Client>)dalObject.cilent_list();
+            foreach (IDAL.DO.Client print in list)
+                Console.WriteLine(print);
         }
 
-        private static void listOfDrone(ArrayList backList)
+        private static void listOfDrone(DalObject.DalObject dalObject)
         {
-            backList.Clear();
-            DalObject.DalObject.Drone_list(backList);
-            for (int i = 0; i < backList.Count; i++)
-            {
-                Console.WriteLine(backList[i]);
-            }
+
+            List<IDAL.DO.Drone> list = (List<IDAL.DO.Drone>)dalObject.Drone_list();
+            foreach (IDAL.DO.Drone print in list)
+                Console.WriteLine(print);
         }
 
-        private static void listOfBass(ArrayList backList)
+        private static void listOfBass(DalObject.DalObject dalObject)
         {
-            backList.Clear();
-            DalObject.DalObject.Base_station_list(backList);
-            for (int i = 0; i < backList.Count; i++)
-            {
-                Console.WriteLine(backList[i]);
-            }
+            
+           List<IDAL.DO.Base_Station > list = (List < IDAL.DO.Base_Station >) dalObject.Base_station_list();
+            foreach(IDAL.DO.Base_Station print in list)
+                Console.WriteLine(print);
+            
         }
 
-        private static void pointToDegree(out bool check, out double point2)
+        private static void pointToDegree(DalObject.DalObject dalObject, out bool check, out double point2)
         {
             Console.Write("Enter a longitude or latitude to ge it in degree :");
             do
             {
                 check = double.TryParse(Console.ReadLine(), out point2);
             } while (!check);
-            Console.WriteLine(DalObject.DalObject.Point_to_degree(point2));
+            Console.WriteLine(dalObject.Point_to_degree(point2));
         }
 
-        private static void distanceBetween2points(out bool check, out int num1, out double doubleNum1, out double doubleNum2, out double point1, out double point2)
+        private static void distanceBetween2points(DalObject.DalObject dalObject, out bool check, out int num1, out double doubleNum1, out double doubleNum2, out double point1, out double point2)
         {
             num1 = 0;
             double[] points = new double[4];
@@ -322,52 +308,52 @@ namespace ConsoleUI
                 check = double.TryParse(Console.ReadLine(), out point2);
             } while (!check);
 
-            Console.WriteLine(DalObject.DalObject.Distance(doubleNum2, doubleNum1, point2, point1));
+            Console.WriteLine(dalObject.Distance(doubleNum2, doubleNum1, point2, point1));
         }
 
-        private static void packageByNumber(out bool check, out int num)
+        private static void packageByNumber(DalObject.DalObject dalObject, out bool check, out int num)
         {
             Console.Write("Enter packege number:");
             check = int.TryParse(Console.ReadLine(), out num);
-            Console.WriteLine(DalObject.DalObject.packege_by_number(num));
+            Console.WriteLine(dalObject.packege_by_number(num));
         }
 
-        private static void droneBySirialNumber(out bool check, out int num)
+        private static void droneBySirialNumber(DalObject.DalObject dalObject, out bool check, out int num)
         {
             Console.Write("Enter drone number:");
             check = int.TryParse(Console.ReadLine(), out num);
-            Console.WriteLine(DalObject.DalObject.Drone_by_number(num));
+            Console.WriteLine(dalObject.Drone_by_number(num));
         }
 
-        private static void baseByNumber(out bool check, out int num)
+        private static void baseByNumber(DalObject.DalObject dalObject, out bool check, out int num)
         {
             //received the details from the user
             Console.Write("Enter base number:");
             check = int.TryParse(Console.ReadLine(), out num);
-            Console.WriteLine(DalObject.DalObject.Base_station_by_number(num));
+            Console.WriteLine(dalObject.Base_station_by_number(num));
         }
 
-        private static void clientById(out bool check, out int num)
+        private static void clientById(DalObject.DalObject dalObject, out bool check, out int num)
         {
             //received the details from the user
             Console.Write("Enter ID:");
             check = int.TryParse(Console.ReadLine(), out num);
-            Console.WriteLine(DalObject.DalObject.cilent_by_number(num));
+            Console.WriteLine(dalObject.cilent_by_number(num));
         }
 
-        private static void releaseDrone(out bool check, out int num)
+        /*private static void releaseDrone(DalObject.DalObject dalObject, out bool check, out int num)
         {
             //received the details from the user
             Console.Write("Enter drone number:");
             check = int.TryParse(Console.ReadLine(), out num);
             DalObject.DalObject.free_drone_from_charge(num);
         }
-
-        private static void updateCharge(out bool check, out int num, ArrayList backList)
+        */
+        /*private static void updateCharge(DalObject.DalObject dalObject, out bool check, out int num, ArrayList backList)
         {
             //received the details from the user
             Console.WriteLine("Choose a base number from the following Base station:");
-            DalObject.DalObject.Base_station_list_with_free_charge_states(backList);
+            dalObject.Base_station_list_with_free_charge_states(backList);
             for (int i = 0; i < backList.Count; i++)
             {
                 Console.WriteLine(backList[i]);
@@ -384,10 +370,10 @@ namespace ConsoleUI
             } while (!success);
             Console.Write("Enter drone number:");
             check = int.TryParse(Console.ReadLine(), out num);
-            DalObject.DalObject.send_drone_to_charge(baseStation, num);
-        }
+            dalObject.send_drone_to_charge(baseStation, num);
+        }*/
 
-        private static void updateDelivery(out bool check, out int num)
+        private static void updateDelivery(DalObject.DalObject dalObject, out bool check, out int num)
         {
             //received the details from the user
             Console.Write("Enter package number:");
@@ -395,20 +381,20 @@ namespace ConsoleUI
             {
                 check = int.TryParse(Console.ReadLine(), out num);
             } while (!check);
-            DalObject.DalObject.Package_arrived(num);
+            dalObject.Package_arrived(num);
         }
 
-        private static void updateCollect(out bool check, out int num)
+        private static void updateCollect(DalObject.DalObject dalObject, out bool check, out int num)
         {
             Console.Write("Enter package number:");
             do
             {
                 check = int.TryParse(Console.ReadLine(), out num);
             } while (!check);
-            DalObject.DalObject.Package_collected(num);
+            dalObject.Package_collected(num);
         }
 
-        private static void updateAssociate(out bool check, out int num)
+        private static void updateAssociate(DalObject.DalObject dalObject, out bool check, out int num,out int num1)
         {
             //received the details from the user
             Console.Write("Enter package number:");
@@ -416,10 +402,15 @@ namespace ConsoleUI
             {
                 check = int.TryParse(Console.ReadLine(), out num);
             } while (!check);
-            DalObject.DalObject.connect_package_to_drone(num);
+            Console.Write("Enter drone number:");
+            do
+            {
+                check = int.TryParse(Console.ReadLine(), out num1);
+            } while (!check);
+            dalObject.connect_package_to_drone(num,num1);
         }
 
-        private static void addPackage(out bool check, out int num, out int id, out int num1, out int num2)
+        private static void addPackage(DalObject.DalObject dalObject, out bool check, out int num, out int id, out int num1, out int num2)
         {
             //received the details from the user
 
@@ -444,10 +435,10 @@ namespace ConsoleUI
                 check = int.TryParse(Console.ReadLine(), out num);
             } while (!check);
             // add new package
-            DalObject.DalObject.Add_package(id, num1, num2, num);
+            dalObject.Add_package(id, num1, num2, num);
         }
 
-        private static void addDrone(out bool check, out int num, out int id, out int num1, out double doubleNum1, out string name)
+        private static void addDrone(DalObject.DalObject dalObject, out bool check, out int num, out int id, out int num1, out double doubleNum1, out string name)
         {
             Console.Write("Enter sireal number:");
             do
@@ -473,10 +464,10 @@ namespace ConsoleUI
             } while (!check);
 
             //add new drone
-            DalObject.DalObject.Add_drone(id, name, num, doubleNum1, num1);
+            dalObject.Add_drone(id, name, num, doubleNum1, num1);
         }
 
-        private static void addBase(out bool check, out int id, out int num1, out double doubleNum1, out double doubleNum2, out string name)
+        private static void addBase(DalObject.DalObject dalObject, out bool check, out int id, out int num1, out double doubleNum1, out double doubleNum2, out string name)
         {
             Console.Write("Enter base number:");
             do
@@ -503,10 +494,10 @@ namespace ConsoleUI
             } while (!check);
 
             // add new Base station
-            DalObject.DalObject.Add_station(id, name, num1, doubleNum1, doubleNum2);
+            dalObject.Add_station(id, name, num1, doubleNum1, doubleNum2);
         }
 
-        private static void addClient(out bool check, out int num, out double doubleNum1, out double doubleNum2, out string name, out string phone)
+        private static void addClient(DalObject.DalObject dalObject, out bool check, out int num, out double doubleNum1, out double doubleNum2, out string name, out string phone)
         {
             Console.Write("Enter ID:");
             do
@@ -529,7 +520,7 @@ namespace ConsoleUI
             } while (!check);
 
             // add new client
-            DalObject.DalObject.Add_client(num, name, phone, doubleNum1, doubleNum2);
+            dalObject.Add_client(num, name, phone, doubleNum1, doubleNum2);
         }
 
 
@@ -537,8 +528,9 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
 
-            new DalObject.DalObject();
-            Menu();
+            DalObject.DalObject dalObject = new DalObject.DalObject();
+
+            Menu(DalObject.DalObject dalObject);
         }
     }
 }

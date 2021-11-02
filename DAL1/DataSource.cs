@@ -15,7 +15,7 @@ namespace DalObject
         internal static List<Base_Station> base_Stations = new List<Base_Station>();
         internal static List<Client> clients = new List<Client>();
         internal static List<Package> packages = new List<Package>();
-        internal static List<BtarryLoad> droneInCharge = new List<BtarryLoad>();
+       // internal static List<BtarryLoad> droneInCharge = new List<BtarryLoad>();
 
 
         /// <Config>
@@ -81,7 +81,8 @@ namespace DalObject
                 NameBase = randomName(rand),
                 Number_of_charging_stations = rand.Next(3, 6),
                 latitude = 31.790133,
-                longitude = 34.627143
+                  longitude = 34.627143
+                
             });
 
 

@@ -14,9 +14,9 @@ namespace IDAL
             public int ID { get; init; }
             public String Name { get; set; }
             public String PhoneNumber { get; set; }
-            public double Longitude { get; set; }
-            public double Latitude { get; set; }
-
+              public double Longitude { get; set; }
+             public double Latitude { get; set; }
+          
 
             public override string ToString()
             {

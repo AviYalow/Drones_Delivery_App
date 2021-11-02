@@ -14,6 +14,8 @@ namespace IDAL
         /// </Point>
         class Point
         {
+          public  double longitude { get; set; }
+           public double latitude { get; set; }
 
             //Conversion of points in decimal base to base sexagesimal
             public static string Degree(double point)
@@ -27,10 +29,16 @@ namespace IDAL
             }
 
             //A function that calculates distance at sea given two points
-            public static double Distance(double Longitude1, double Latitude1, double Longitude2, double Latitude2)
+            public static double Distance(Point point1,Point point2)
             {
 
-                return (Math.Sqrt((Longitude1 - Longitude2) * (Longitude1 - Longitude2) + (Latitude1 - Latitude2) * (Latitude1 - Latitude2)) * 100);
+                return ((Math.Sqrt((point1.longitude - point2. longitude) * (point1.longitude - point2.longitude) + (point1.latitude - point2.latitude) * point1.latitude - point2.latitude)) * 100);
+            }
+            public static double Distance(double longitude1, double longitude2,double latitude1, double latitude2)
+            {
+
+                return ((Math.Sqrt((longitude1 - longitude2) * (longitude1 - longitude2) 
+                    + (latitude1 - latitude2) * latitude1 - latitude2)) * 100);
             }
         }
     }
