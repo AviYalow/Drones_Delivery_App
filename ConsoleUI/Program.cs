@@ -9,7 +9,6 @@ using DalObject;
 
 namespace ConsoleUI
 {
-
     class Program
     {
         // enumes for the menu options

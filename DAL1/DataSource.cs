@@ -52,7 +52,7 @@ namespace DalObject
 
             //A function that responsible for initializing names randomly-upercase
             //letter for the firt letter and lowercase for the other letters
-            string prsonalRandomName(Random rand, int num = 3)
+            string personalRandomName(Random rand, int num = 3)
             {
                 string name = "";
                 name += (char)rand.Next(65, 91);
