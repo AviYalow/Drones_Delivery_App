@@ -11,12 +11,12 @@ namespace DalObject
     internal class DataSource
     {
         //an arrays that contain the various entity
-        internal static Drone[] drones = new Drone[10];
-        internal static Base_Station[] base_Stations = new Base_Station[5];
-        internal static Client[] clients = new Client[100];
-        internal static Package[] packages = new Package[1000];
-        internal static BtarryLoad[] droneInCharge = new BtarryLoad[10];
-        
+        internal static List<Drone> drones = new List<Drone>();
+        internal static List<Base_Station> base_Stations = new List<Base_Station>();
+        internal static List<Client> clients = new List<Client>();
+        internal static List<Package> packages = new List<Package>();
+        internal static List<BtarryLoad> droneInCharge = new List<BtarryLoad>();
+
 
         /// <Config>
         /// Inner class that contain a static int
@@ -25,12 +25,9 @@ namespace DalObject
         /// </Config>
         internal class Config
         {
-            internal static int index_drones_empty=0;
-            internal static int index_base_stations_empty=0;
-            internal static int index_clients_empty=0;
-            internal static int index_Packages_empty=0;
-            internal static int package_num=1;
-            internal static int index_butrry_chrge = 0;
+
+            internal static int package_num = 10000;
+
         }
 
         /// <Initialize>
@@ -39,11 +36,11 @@ namespace DalObject
         /// </Initialize>
         public static void Initialize()
         {
-             
+
             Random rand = new Random();
 
             //A function that responsible for initializing names randomly in upercase
-            string randomName(Random rand,int num=3)
+            string randomName(Random rand, int num = 3)
             {
                 string name = "";
                 for (int j = 0; j < num; j++)
@@ -59,121 +56,106 @@ namespace DalObject
             {
                 string name = "";
                 name += (char)rand.Next(65, 91);
-                for (int j = 0; j < num-1; j++)
+                for (int j = 0; j < num - 1; j++)
                 {
                     name += (char)rand.Next(97, 123);
                 }
                 return name;
             }
 
-            //initializing the base station's array
-            base_Stations[0] = new Base_Station
+            int idSnding(List<Client> client ,int sending)
             {
-                baseNumber = Config.index_base_stations_empty + 1,
+                int i;
+                
+                for ( i = rand.Next(10); client[i].ID!=sending; i = rand.Next(10))
+                {
+
+                }
+                return client[i].ID;
+            }
+
+            //initializing the base station's array
+            base_Stations.Add(new Base_Station
+            {
+                baseNumber = rand.Next(1000, 10000),
                 NameBase = randomName(rand),
                 Number_of_charging_stations = rand.Next(3, 6),
                 latitude = 31.790133,
                 longitude = 34.627143
-            };
-            Config.index_base_stations_empty++;
+            });
 
-            base_Stations[1] = new Base_Station
+
+            base_Stations.Add(new Base_Station
             {
-                baseNumber = Config.index_base_stations_empty + 1,
+                baseNumber = rand.Next(1000, 10000),
                 NameBase = randomName(rand),
                 Number_of_charging_stations = rand.Next(3, 6),
                 latitude = 32.009490,
                 longitude = 34.736002
-            };
-            Config.index_base_stations_empty++;
+            });
+
 
             //initializing the drones's array in a randone values
             for (int i = 0; i < 5; i++)
             {
-                drones[i] = new Drone{ siralNumber = rand.Next(10000) };
-                  drones[i].  Model = randomName(rand, rand.Next(3, 7));
-                drones[i].  weightCategory = (Weight_categories)rand.Next(0, 3);
-                drones[i]. butrryStatus =  rand.Next(25, 100) +(double) rand.Next(0,100)/100;
-                drones[i].drownStatus =  (Drone_status)rand.Next(0, 2) ;
-                
-                if (drones[i].drownStatus== Drone_status.Maintenance)
+                drones.Add(new Drone
                 {
-                    droneInCharge[Config.index_butrry_chrge].id_drown = drones[i].siralNumber;
+                    siralNumber = rand.Next(10000),
+                    Model = randomName(rand, rand.Next(3, 7)),
+                    weightCategory = (Weight_categories)rand.Next(0, 3),
+                    base_station = base_Stations[rand.Next(2)].baseNumber
+                });
 
-                }
 
-                int j = rand.Next(0, Config.index_base_stations_empty);
-                drones[i].base_station = base_Stations[j].baseNumber;
-                
-                if(drones[i].drownStatus==Drone_status.Maintenance)
-                {
-                    droneInCharge[Config.index_butrry_chrge].id_drown = drones[i].siralNumber;
-                    droneInCharge[Config.index_butrry_chrge].idBaseStation = drones[i].base_station;
-                    Config.index_butrry_chrge++;
-                }
-                Config.index_drones_empty++;
             }
 
             //initializing the client's array in a random values
             for (int i = 0; i < 10; i++)
             {
-                clients[i] = new Client { ID = rand.Next(100000000,999999999) };
-                clients[i].PhoneNumber += $"05{rand.Next(0, 6)}-{rand.Next(100, 999)}-{rand.Next(1000, 9999)}";
-                clients[i].Name += prsonalRandomName(rand, rand.Next(3, 7));
-                clients[i].Latitude = rand.Next(31, 33) +(double) rand.Next(60000,80000)/1000000;
-                clients[i].Longitude = 34 + (double)rand.Next(60000, 80000) / 1000000;
-                Config.index_clients_empty++;
+                clients.Add(new Client
+                {
+                    ID = rand.Next(100000000, 999999999),
+
+                    PhoneNumber = ($"05{rand.Next(0, 6)}-{rand.Next(100, 999)}-{rand.Next(1000, 9999)}"),
+                    Name = (prsonalRandomName(rand, rand.Next(3, 7))),
+                    Latitude = rand.Next(31, 33) + (double)rand.Next(60000, 80000) / 1000000,
+                    Longitude = 34 + (double)rand.Next(60000, 80000) / 1000000
+                });
+
+
             }
 
             //initializing the package's array in a random values
             for (int i = 0; i < 10; i++)
             {
-                int j;
-                packages[i] = new Package { sirialNumber = Config.package_num };
-                packages[i].sendClient = clients[rand.Next(0, 10)].ID;
-               
-                do
+                int j= rand.Next(0, 10);
+                Package package = new Package
                 {
-                    packages[i].getingClient = clients[rand.Next(0, 10)].ID;
-                } while (packages[i].getingClient== packages[i].sendClient);
-                
-                packages[i].weightCatgory = (Weight_categories)rand.Next(0, 3);
-                packages[i].priority=(Priority)rand.Next(0, 3);
-                
-                for ( j = 0; j <Config.index_drones_empty; j++)
-                {
-                    if (drones[j].weightCategory == packages[i].weightCatgory && drones[j].drownStatus == Drone_status.Free)
-                    {
-                        packages[i].operator_skimmer_ID = drones[j].siralNumber;
-                        drones[j].drownStatus = Drone_status.Work;
-                        break;
-                    }
-                    packages[i].operator_skimmer_ID = 0;
-                }
-                
-                packages[i].receiving_delivery = (DateTime.Now.AddMinutes(rand.Next(-300, -150)));
-                
-                if (packages[i].operator_skimmer_ID != 0)
-                {
-                    packages[i].package_association = packages[i].receiving_delivery.AddMinutes(5);
-                    if (rand.Next(0, 2) != 0)
-                    {
-                        packages[i].collect_package_for_shipment = packages[i].package_association.AddMinutes(30);
-                        if (rand.Next(0, 2) != 0)
-                        {
-                            packages[i].package_arrived= packages[i].package_association.AddMinutes(60);
-                            drones[j].drownStatus = Drone_status.Free;
-                        }
-                    }
-                }
-               
-               
-                Config.index_Packages_empty++;
-                Config.package_num++;
-            }
+                    sirialNumber = Config.package_num,
+                    sendClient = clients[j].ID,
+                    getingClient = idSnding(clients, clients[j].ID),
+                    weightCatgory = (Weight_categories)rand.Next(0, 3),
+                    priority = (Priority)rand.Next(0, 3),
+                    operator_skimmer_ID = (rand.Next(2) != 0) ? drones[rand.Next(10)].siralNumber : 0,
+                    receiving_delivery = DateTime.Now.AddMinutes(rand.Next(-300, -150)),
+                };
+                package.package_association = (package.operator_skimmer_ID != 0) ? package.receiving_delivery.AddMinutes(2) : new DateTime();
 
+                packages.Add(new Package
+                {
+                  
+                }) ;
+               
+                
+
+            };
+
+
+            Config.package_num++;
         }
 
-
     }
+
+
 }
+
