@@ -45,7 +45,7 @@ namespace DalObject
             });
 
 
-            DataSource.Config.index_base_stations_empty++;
+
         }
 
         /// <summary>
@@ -431,9 +431,10 @@ namespace DalObject
         /// </summary>
         /// <param name="array">A array list that will contain 
         /// the values ​​of all the base stations so we can print them</param>
-        public IEnumerable<List<Base_Station>> Base_station_list()
+        public IEnumerable<Base_Station> Base_station_list()
         {
-            yield return DataSource.base_Stations;
+            foreach(Base_Station base_ in DataSource.base_Stations)
+            yield return base_;
 
         }
 
@@ -442,10 +443,10 @@ namespace DalObject
         /// </summary>
         /// <param name="array">A array list that will contain 
         /// the values ​​of all the drones so we can print them</param>
-        public IEnumerable<List<Drone>> Drone_list()
+        public IEnumerable<Drone> Drone_list()
         {
-
-            yield return DataSource.drones;
+            foreach(Drone drone in DataSource.drones)
+            yield return drone;
         }
 
 
@@ -454,10 +455,10 @@ namespace DalObject
         /// </summary>
         /// <param name="array">A array list that will contain 
         /// the values ​​of all the clients so we can print them</param>
-        public IEnumerable<List<Client>> cilent_list()
+        public IEnumerable<Client> cilent_list()
         {
-
-            yield return DataSource.clients;
+            foreach (Client item in DataSource.clients)
+                yield return item;
         }
 
         /// <summary>
@@ -465,10 +466,10 @@ namespace DalObject
         /// </summary>
         /// <param name="array">A array list that will contain 
         /// the values ​​of all the packages so we can print them</param>
-        public IEnumerable<List<Package>> packege_list()
+        public IEnumerable<Package> packege_list()
         {
-
-            yield return DataSource.packages;
+            foreach (Package item in DataSource.packages)
+                yield return item;
 
         }
 
@@ -476,16 +477,18 @@ namespace DalObject
         /// Displays a list of packages that
         /// have not been assigned to a drone yet 
         /// </summary>
-        
-        public IEnumerable<List<Package>> packege_list_with_no_drone()
-        {
-            List<Package> package=new List<Package>();
-            foreach (Package item in DataSource.packages)
-                if (item.operator_skimmer_ID == 0)
-                    package.Add(item);
 
-            yield return package;
+        public IEnumerable<Package> packege_list_with_no_drone()
+        {
+
+            foreach (Package item in DataSource.packages)
+            {
+                if (item.operator_skimmer_ID == 0)
+                    yield return item;
+            }
+
             
+
         }
 
         /// <summary>
@@ -493,16 +496,16 @@ namespace DalObject
         /// </summary>
         /// <param name="array">A array list that will contain 
         /// the values so we can print them</param>
-        public IEnumerable<List<Base_Station>> Base_station_list_with_free_charge_states()
+        public IEnumerable<Base_Station> Base_station_list_with_free_charge_states()
         {
 
-            List<Base_Station> base_Station = new List<Base_Station>();
+            
             foreach (Base_Station item in DataSource.base_Stations)
                 if (item.Number_of_charging_stations > 0)
-                    base_Station.Add(item);
+                    yield return item;
 
-            yield return base_Station;
-           
+
+
 
         }
 
@@ -529,6 +532,68 @@ namespace DalObject
         public string Point_to_degree(double point)
         {
             return Point.Degree(point);
+        }
+
+
+        /// <summary>
+        /// delete a spsific base for list
+        /// </summary>
+        /// <param name="sirial"></param>
+        public void DeleteBase(int sirial)
+        {
+            for (int i = 0; i < DataSource.base_Stations.Count(); i++)
+            {
+                if(DataSource.base_Stations[i].baseNumber==sirial)
+                {
+                    DataSource.base_Stations.Remove(DataSource.base_Stations[i]);
+                    return;
+                }
+            }
+        }
+        /// <summary>
+        /// delete a spsific client 
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteClient(int id)
+        {
+            for (int i = 0; i < DataSource.clients.Count(); i++)
+            {
+                if (DataSource.clients[i].ID == id)
+                {
+                    DataSource.clients.Remove(DataSource.clients[i]);
+                    return;
+                }
+            }
+        }
+        /// <summary>
+        /// delete a spsific drone
+        /// </summary>
+        /// <param name="sirial"></param>
+        public void DeleteDrone(int sirial)
+        {
+            for (int i = 0; i < DataSource.drones.Count(); i++)
+            {
+                if (DataSource.drones[i].serialNumber == sirial)
+                {
+                    DataSource.drones.Remove(DataSource.drones[i]);
+                    return;
+                }
+            }
+        }
+        /// <summary>
+        /// delete a spsific packege
+        /// </summary>
+        /// <param name="sirial"></param>
+        public void Deletepackege(int sirial)
+        {
+            for (int i = 0; i < DataSource.packages.Count(); i++)
+            {
+                if (DataSource.packages[i].serialNumber == sirial)
+                {
+                    DataSource.packages.Remove(DataSource.packages[i]);
+                    return;
+                }
+            }
         }
     }
 }

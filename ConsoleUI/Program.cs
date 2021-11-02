@@ -79,25 +79,25 @@ namespace ConsoleUI
                             case Entities.Client:
                                 {
                                     //received the details from the user
-                                    addClient(DalObject.DalObject dalObject,out check, out num, out doubleNum1, out doubleNum2, out name, out phone);
+                                    addClient( dalObject,out check, out num, out doubleNum1, out doubleNum2, out name, out phone);
                                     break;
                                 }
                             case Entities.Base_station:
                                 {
                                     //received the details from the user
-                                    addBase(DalObject.DalObject dalObject, out check, out id, out num1, out doubleNum1, out doubleNum2, out name);
+                                    addBase( dalObject, out check, out id, out num1, out doubleNum1, out doubleNum2, out name);
                                     break;
                                 }
                             case Entities.Drone:
                                 {
                                     //received the details from the user
 
-                                    addDrone(DalObject.DalObject dalObject, out check, out num, out id, out num1, out doubleNum1, out name);
+                                    addDrone( dalObject, out check, out num, out id, out num1, out doubleNum1, out name);
                                     break;
                                 }
                             case Entities.Package:
                                 {
-                                   addPackage(DalObject.DalObject dalObject, out check, out num, out id, out num1, out num2);
+                                   addPackage( dalObject, out check, out num, out id, out num1, out num2);
                                     break;
                                 }
                             case Entities.Exit:
@@ -115,37 +115,37 @@ namespace ConsoleUI
 
                         switch (updatesOption)
                         {
-                            //option to connect package to drone
+                       /*     //option to connect package to drone
                             case UpdatesOptions.Associate:
 
-                                updateAssociate(DalObject.DalObject dalObject, out check, out num);
+                                updateAssociate( dalObject, out check, out num);
                                 break;
-
+                       */
                             // update that the package is collected
                             case UpdatesOptions.Collect:
 
                                 //received the details from the user
-                                updateCollect(DalObject.DalObject dalObject, out check, out num);
+                                updateCollect( dalObject, out check, out num);
                                 break;
 
                             // update that the package is arrived to the target
                             case UpdatesOptions.Delivery:
 
-                                updateDelivery(DalObject.DalObject dalObject, out check, out num);
+                                updateDelivery( dalObject, out check, out num);
                                 break;
-
+/*
                             //sent drone to a free charging station
                             case UpdatesOptions.Charge:
 
-                                updateCharge(DalObject.DalObject dalObject, out check, out num, backList);
+                                updateCharge( dalObject, out check, out num, backList);
                                 break;
 
                             // Release drone from charging position
                             case UpdatesOptions.UnCharge:
 
-                                releaseDrone(DalObject.DalObject dalObject, out check, out num);
+                                releaseDrone( dalObject, out check, out num);
                                 break;
-
+                                */
                             case UpdatesOptions.Exit:
                                 break;
                         }
@@ -235,22 +235,22 @@ namespace ConsoleUI
 
         private static void packegeWhitNoDrone(DalObject.DalObject dalObject)
         {
-            List<IDAL.DO.Package> list = (List<IDAL.DO.Package>)dalObject.packege_list_with_no_drone();
-            foreach (IDAL.DO.Package print in list)
+            
+            foreach (IDAL.DO.Package print in dalObject.packege_list_with_no_drone())
                 Console.WriteLine(print);
         }
 
         private static void listOfPackage(DalObject.DalObject dalObject)
         {
-            List<IDAL.DO.Package> list = (List<IDAL.DO.Package>)dalObject.packege_list();
-            foreach (IDAL.DO.Package print in list)
+           
+            foreach (IDAL.DO.Package print in dalObject.packege_list())
                 Console.WriteLine(print);
         }
 
         private static void listOfClinet(DalObject.DalObject dalObject)
         {
-            List<IDAL.DO.Client> list = (List<IDAL.DO.Client>)dalObject.cilent_list();
-            foreach (IDAL.DO.Client print in list)
+             
+            foreach (IDAL.DO.Client print in dalObject.cilent_list())
                 Console.WriteLine(print);
         }
 
@@ -265,10 +265,11 @@ namespace ConsoleUI
         private static void listOfBass(DalObject.DalObject dalObject)
         {
             
-           List<IDAL.DO.Base_Station > list = (List < IDAL.DO.Base_Station >) dalObject.Base_station_list();
-            foreach(IDAL.DO.Base_Station print in list)
-                Console.WriteLine(print);
             
+            foreach(IDAL.DO.Base_Station print in dalObject.Base_station_list())
+                Console.WriteLine(print);
+         
+
         }
 
         private static void pointToDegree(DalObject.DalObject dalObject, out bool check, out double point2)
@@ -527,10 +528,10 @@ namespace ConsoleUI
 
         static void Main(string[] args)
         {
-
+          
             DalObject.DalObject dalObject = new DalObject.DalObject();
 
-            Menu(DalObject.DalObject dalObject);
+            Menu( dalObject);
         }
     }
 }

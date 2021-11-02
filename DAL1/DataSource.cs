@@ -15,7 +15,7 @@ namespace DalObject
         internal static List<Base_Station> base_Stations = new List<Base_Station>();
         internal static List<Client> clients = new List<Client>();
         internal static List<Package> packages = new List<Package>();
-       // internal static List<BtarryLoad> droneInCharge = new List<BtarryLoad>();
+        // internal static List<BtarryLoad> droneInCharge = new List<BtarryLoad>();
 
 
         /// <Config>
@@ -25,9 +25,12 @@ namespace DalObject
         /// </Config>
         internal class Config
         {
-
+            internal static double free = 0;
+            internal static double easyWeight = 0;
+            internal static double mediomWeight = 0;
+            internal static double heavyWeight = 0;
             internal static int package_num = 10000;
-
+            internal double Charging_speed;
         }
 
         /// <Initialize>
@@ -63,11 +66,11 @@ namespace DalObject
                 return name;
             }
 
-            int idSnding(List<Client> client ,int sending)
+            int idSnding(List<Client> client, int sending)
             {
                 int i;
-                
-                for ( i = rand.Next(10); client[i].ID!=sending; i = rand.Next(10))
+
+                for (i = rand.Next(10); client[i].ID == sending; i = rand.Next(10))
                 {
 
                 }
@@ -81,8 +84,8 @@ namespace DalObject
                 NameBase = randomName(rand),
                 Number_of_charging_stations = rand.Next(3, 6),
                 latitude = 31.790133,
-                  longitude = 34.627143
-                
+                longitude = 34.627143
+
             });
 
 
@@ -101,7 +104,7 @@ namespace DalObject
             {
                 drones.Add(new Drone
                 {
-                    siralNumber = rand.Next(10000),
+                    serialNumber = rand.Next(10000),
                     Model = randomName(rand, rand.Next(3, 7)),
                     weightCategory = (Weight_categories)rand.Next(0, 3),
                     base_station = base_Stations[rand.Next(2)].baseNumber
@@ -118,7 +121,7 @@ namespace DalObject
                     ID = rand.Next(100000000, 999999999),
 
                     PhoneNumber = ($"05{rand.Next(0, 6)}-{rand.Next(100, 999)}-{rand.Next(1000, 9999)}"),
-                    Name = (prsonalRandomName(rand, rand.Next(3, 7))),
+                    Name = (personalRandomName(rand, rand.Next(3, 7))),
                     Latitude = rand.Next(31, 33) + (double)rand.Next(60000, 80000) / 1000000,
                     Longitude = 34 + (double)rand.Next(60000, 80000) / 1000000
                 });
@@ -129,30 +132,48 @@ namespace DalObject
             //initializing the package's array in a random values
             for (int i = 0; i < 10; i++)
             {
-                int j= rand.Next(0, 10);
-                Package package = new Package
-                {
-                    sirialNumber = Config.package_num,
-                    sendClient = clients[j].ID,
-                    getingClient = idSnding(clients, clients[j].ID),
-                    weightCatgory = (Weight_categories)rand.Next(0, 3),
-                    priority = (Priority)rand.Next(0, 3),
-                    operator_skimmer_ID = (rand.Next(2) != 0) ? drones[rand.Next(10)].siralNumber : 0,
-                    receiving_delivery = DateTime.Now.AddMinutes(rand.Next(-300, -150)),
-                };
+                int j = rand.Next(0, 10);
+                Package package = new Package() { serialNumber = Config.package_num };
+
+
+
+                package.sendClient = clients[j].ID;
+                package.getingClient = idSnding(clients, clients[j].ID);
+                package.weightCatgory = (Weight_categories)rand.Next(0, 3);
+                package.priority = (Priority)rand.Next(0, 3);
+                package.operator_skimmer_ID = (rand.Next(2) != 0) ? drones[rand.Next(5)].serialNumber : 0;
+                package.receiving_delivery = DateTime.Now.AddMinutes(rand.Next(-300, -150));
+
                 package.package_association = (package.operator_skimmer_ID != 0) ? package.receiving_delivery.AddMinutes(2) : new DateTime();
+                if (package.package_association != new DateTime())
+                {
+                    package.package_arrived = (rand.Next(2) != 0) ? package.package_association.AddMinutes(rand.Next(60)) : new DateTime();
+                    if (package.package_arrived != new DateTime())
+                        package.collect_package_for_shipment = (rand.Next(2) != 0) ? package.package_arrived.AddMinutes(rand.Next(60)) : new DateTime();
+                }
 
                 packages.Add(new Package
                 {
-                  
-                }) ;
-               
-                
+                    serialNumber = package.serialNumber,
+                    sendClient = package.sendClient,
+                    getingClient = package.getingClient,
+                    package_arrived = package.package_arrived,
+                    collect_package_for_shipment = package.collect_package_for_shipment,
+                    operator_skimmer_ID = package.operator_skimmer_ID,
+                    package_association = package.package_association,
+                    priority = package.priority,
+                    receiving_delivery = package.receiving_delivery,
+                    weightCatgory = package.weightCatgory
+
+
+                });
+
+                Config.package_num++;
 
             };
 
 
-            Config.package_num++;
+
         }
 
     }
