@@ -4,14 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL.BO
+namespace BL
 {
-    class Location
+    class DroneToList
     {
-        public double Longitude { get; set; }
-        public double Latitude { get; set; }
-
-
-
     }
 }

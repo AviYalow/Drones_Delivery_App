@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    class Location
-    {
-        public double Longitude { get; set; }
-        public double Latitude { get; set; }
-
-
-
-    }
+    
+        public enum Weight_categories { Easy, Medium, Heavy }
+        public enum Priority { Immediate, quick, Regular }
+    
 }

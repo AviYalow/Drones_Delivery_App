@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL
+namespace IBL.BO
 {
     class ClientInDelivery
     {
+        public int ID { get; set; }
+        public string Name { get; set; }
     }
 }
