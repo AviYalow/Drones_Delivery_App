@@ -498,14 +498,10 @@ namespace DalObject
         /// the values so we can print them</param>
         public IEnumerable<Base_Station> Base_station_list_with_free_charge_states()
         {
-
-            
+    
             foreach (Base_Station item in DataSource.base_Stations)
                 if (item.Number_of_charging_stations > 0)
                     yield return item;
-
-
-
 
         }
 
