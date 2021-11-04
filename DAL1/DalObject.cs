@@ -433,8 +433,8 @@ namespace DalObject
         /// the values ​​of all the base stations so we can print them</param>
         public IEnumerable<Base_Station> Base_station_list()
         {
-            foreach(Base_Station base_ in DataSource.base_Stations)
-            yield return base_;
+            foreach (Base_Station base_ in DataSource.base_Stations)
+                yield return base_;
 
         }
 
@@ -445,8 +445,8 @@ namespace DalObject
         /// the values ​​of all the drones so we can print them</param>
         public IEnumerable<Drone> Drone_list()
         {
-            foreach(Drone drone in DataSource.drones)
-            yield return drone;
+            foreach (Drone drone in DataSource.drones)
+                yield return drone;
         }
 
 
@@ -487,7 +487,7 @@ namespace DalObject
                     yield return item;
             }
 
-            
+
 
         }
 
@@ -498,7 +498,7 @@ namespace DalObject
         /// the values so we can print them</param>
         public IEnumerable<Base_Station> Base_station_list_with_free_charge_states()
         {
-    
+
             foreach (Base_Station item in DataSource.base_Stations)
                 if (item.Number_of_charging_stations > 0)
                     yield return item;
@@ -539,7 +539,7 @@ namespace DalObject
         {
             for (int i = 0; i < DataSource.base_Stations.Count(); i++)
             {
-                if(DataSource.base_Stations[i].baseNumber==sirial)
+                if (DataSource.base_Stations[i].baseNumber == sirial)
                 {
                     DataSource.base_Stations.Remove(DataSource.base_Stations[i]);
                     return;
@@ -590,6 +590,17 @@ namespace DalObject
                     return;
                 }
             }
+        }
+
+        public double[] Elctrtricity()
+        {
+            double[] elctricity = new double[5];
+            elctricity[0] = DataSource.Config.free;
+            elctricity[1] = DataSource.Config.easyWeight;
+            elctricity[2] = DataSource.Config.mediomWeight;
+            elctricity[3] = DataSource.Config.heavyWeight;
+            elctricity[4] = DataSource.Config.Charging_speed;
+            return elctricity;
         }
     }
 }

@@ -23,14 +23,15 @@ namespace DalObject
         /// for indexes of the first free element
         /// in each of the arrays
         /// </Config>
-        internal class Config
+        internal static class Config
         {
-            internal static double free = 0;
-            internal static double easyWeight = 0;
-            internal static double mediomWeight = 0;
-            internal static double heavyWeight = 0;
-            internal static int package_num = 10000;
-            internal double Charging_speed;
+            internal static double free = 1;
+            internal static double easyWeight = 3;
+            internal static double mediomWeight = 4.5;
+            internal static double heavyWeight = 6;
+            internal static double Charging_speed = 5;
+            internal static int package_num = 10000; 
+            
         }
 
         /// <Initialize>
