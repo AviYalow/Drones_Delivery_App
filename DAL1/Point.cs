@@ -12,7 +12,7 @@ namespace IDAL
         /// A class that represents points on a sexagesimal 
         /// of the coordinate values
         /// </Point>
-        class Point
+       public class Point
         {
           public  double longitude { get; set; }
            public double latitude { get; set; }
