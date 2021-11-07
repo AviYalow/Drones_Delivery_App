@@ -55,17 +55,10 @@ namespace DAL
         /// <returns> string of data </returns>
         public Client cilent_by_number(int id)
         {
-          //  if (!sustainability_test(id))
-          // throw ("Error: The client does not exist in the system");
-            foreach (Client client in DataSource.clients)
-            {
-                if (client.ID == id)
-                {
-                    return (client);
-
-                }
-            }
-            return DataSource.clients[0];
+            //  if (!sustainability_test(id))
+            // throw ("Error: The client does not exist in the system");
+            return DataSource.clients[DataSource.clients.FindIndex(x => x.ID == id)];
+            
         }
 
 
