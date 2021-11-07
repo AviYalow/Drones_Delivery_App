@@ -8,6 +8,7 @@ namespace IBL
 {
     interface IBL
     {
+        public
 
     }
 }
