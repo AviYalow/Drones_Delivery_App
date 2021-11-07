@@ -15,7 +15,9 @@ namespace IDAL
             public int Number_of_charging_stations { get; set; }
             public double longitude { get; set; }
             public double latitude { get; set; }
+           
 
+           
 
             public override string ToString()
             {
