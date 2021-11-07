@@ -22,6 +22,8 @@ namespace IDAL
                 String printBtarryLoad = "";
                 printBtarryLoad += $"ID BaseStation is {idBaseStation},\n";
                 printBtarryLoad += $"ID drown is {id_drone}\n";
+                printBtarryLoad += $"Time of geting drone {entringDrone}\n";
+                printBtarryLoad += $"Time of free drone {freeDrone}\n";
                 return printBtarryLoad;
             }
         }

@@ -10,7 +10,7 @@ using DalObject;
 
 namespace ConsoleUI
 {
-    class Program
+    partial class Program
     {
         // enumes for the menu options
         enum Options { Exit, Add, Update, ShowDetails, ShowList }
@@ -228,8 +228,8 @@ namespace ConsoleUI
 
         private static void baseWhitFreeChargeStation(DalObject.DalObject dalObject)
         {
-            List<IDAL.DO.Base_Station> list = (List<IDAL.DO.Base_Station>)dalObject.Base_station_list_with_free_charge_states();
-            foreach (IDAL.DO.Base_Station print in list)
+            
+            foreach (IDAL.DO.Base_Station print in dalObject.Base_station_list_with_free_charge_states())
                 Console.WriteLine(print);
         }
 
@@ -265,7 +265,7 @@ namespace ConsoleUI
         private static void listOfBass(DalObject.DalObject dalObject)
         {
             
-            
+           
             foreach(IDAL.DO.Base_Station print in dalObject.Base_station_list())
                 Console.WriteLine(print);
          
@@ -526,7 +526,7 @@ namespace ConsoleUI
 
 
 
-        static void Main(string[] args)
+        static  void Main(string[] args)
         {
           
             DalObject.DalObject dalObject = new DalObject.DalObject();

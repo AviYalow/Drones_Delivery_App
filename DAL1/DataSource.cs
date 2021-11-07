@@ -29,8 +29,9 @@ namespace DalObject
             internal static double easyWeight = 2.5;
             internal static double mediomWeight = 3.5;
             internal static double heavyWeight = 5;
+            internal static double Charging_speed = 5.5;
             internal static int package_num = 10000;
-            internal double Charging_speed;
+            
         }
 
         /// <Initialize>

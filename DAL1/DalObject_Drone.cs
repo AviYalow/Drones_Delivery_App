@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using DalObject;
 using IDAL.DO;
 
-namespace DAL
+namespace DalObject
 {
-     partial class DalObject_Drone:DalObject.DalObject
+     partial class DalObject
     {
-        public static bool sustainability_test(int number)
+        public static bool sustainability_test_drone(int number)
         {
             
             foreach(Drone item in DataSource.drones)
@@ -98,11 +98,11 @@ namespace DAL
         public double[] Elctrtricity()
         {
             double[] elctricity = new double[5];
-            elctricity[0] = DataSource.Config.free;
-            elctricity[1] = DataSource.Config.easyWeight;
-            elctricity[2] = DataSource.Config.mediomWeight;
-            elctricity[3] = DataSource.Config.heavyWeight;
-            elctricity[4] = DataSource.Config.Charging_speed;
+            elctricity[(int)butturyLoad.Free] = DataSource.Config.free;
+            elctricity[(int)butturyLoad.Easy] = DataSource.Config.easyWeight;
+            elctricity[(int)butturyLoad.Medium] = DataSource.Config.mediomWeight;
+            elctricity[(int)butturyLoad.Heavy] = DataSource.Config.heavyWeight;
+            elctricity[(int)butturyLoad.Charging] = DataSource.Config.Charging_speed;
             return elctricity;
         }
 

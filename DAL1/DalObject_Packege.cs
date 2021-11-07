@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using DalObject;
 using IDAL.DO;
 
-namespace DAL
+namespace DalObject
 {
-    partial class DalObject_Packege : DalObject.DalObject
+    partial class DalObject
     {
-       public static bool sustainability_test(int number)
+       public static bool sustainability_test_packege(int number)
         {
 
             foreach (Package item in DataSource.packages)
@@ -172,10 +172,7 @@ namespace DAL
         {
             /* if (!sustainability_test(packageNumber))
                throw ("Error: The package does not exist in the system");*/
-            foreach (Package package in DataSource.packages)
-                if (package.serialNumber == packageNumbe)
-                    return (package);
-            return DataSource.packages[0];
+            return DataSource.packages[DataSource.packages.FindIndex(x => x.serialNumber == packageNumbe)];
 
         }
 
@@ -186,8 +183,7 @@ namespace DAL
         /// the values ​​of all the packages so we can print them</param>
         public IEnumerable<Package> packege_list()
         {
-            foreach (Package item in DataSource.packages)
-                yield return item;
+            return DataSource.packages.ToList<Package>();
 
         }
 
@@ -199,11 +195,7 @@ namespace DAL
         public IEnumerable<Package> packege_list_with_no_drone()
         {
 
-            foreach (Package item in DataSource.packages)
-            {
-                if (item.operator_skimmer_ID == 0)
-                    yield return item;
-            }
+            return DataSource.packages.FindAll(x => x.operator_skimmer_ID == 0);
 
 
 

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using DalObject;
 using IDAL.DO;
 
-namespace DAL
+namespace DalObject
 {
-   partial class DalObject_Client:DalObject.DalObject
+    partial class DalObject 
     {
-        public static bool sustainability_test(int number)
+        public static bool sustainability_test_client(int number)
         {
 
             foreach (Client item in DataSource.clients)
@@ -58,7 +58,7 @@ namespace DAL
             //  if (!sustainability_test(id))
             // throw ("Error: The client does not exist in the system");
             return DataSource.clients[DataSource.clients.FindIndex(x => x.ID == id)];
-            
+
         }
 
 
@@ -69,8 +69,7 @@ namespace DAL
         /// the values ​​of all the clients so we can print them</param>
         public IEnumerable<Client> cilent_list()
         {
-            foreach (Client item in DataSource.clients)
-                yield return item;
+            return DataSource.clients.ToList<Client>();
         }
 
         /// <summary>
@@ -81,14 +80,10 @@ namespace DAL
         {
             //  if (!sustainability_test(id))
             // throw ("Error: The client does not exist in the system");
-            for (int i = 0; i < DataSource.clients.Count(); i++)
-            {
-                if (DataSource.clients[i].ID == id)
-                {
-                    DataSource.clients.Remove(DataSource.clients[i]);
-                    return;
-                }
-            }
+
+            DataSource.clients.Remove(DataSource.clients[DataSource.clients.FindIndex(x => x.ID == id)]);
+
+
         }
     }
 }

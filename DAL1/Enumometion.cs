@@ -15,6 +15,7 @@ namespace IDAL
         public enum Drone_status { Free, Maintenance, Work }
         public enum Priority { Immediate, quick, Regular }
         public enum Drone_in_charge { Add,Delete}
+        public enum butturyLoad { Free,Easy,Medium,Heavy,Charging}
     }
 
 }
