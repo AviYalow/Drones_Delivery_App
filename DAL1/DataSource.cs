@@ -25,10 +25,10 @@ namespace DalObject
         /// </Config>
         internal class Config
         {
-            internal static double free = 0;
-            internal static double easyWeight = 0;
-            internal static double mediomWeight = 0;
-            internal static double heavyWeight = 0;
+            internal static double free = 1;
+            internal static double easyWeight = 2.5;
+            internal static double mediomWeight = 3.5;
+            internal static double heavyWeight = 5;
             internal static int package_num = 10000;
             internal double Charging_speed;
         }
