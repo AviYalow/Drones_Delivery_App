@@ -10,7 +10,19 @@ namespace DalObject
 {
      partial class DalObject
     {
-        
+        bool sustainability_test_D(int number)
+        {
+
+            foreach (Drone item in DataSource.drones)
+            {
+                if (item.serialNumber == number)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// Adding a new drone
@@ -22,8 +34,8 @@ namespace DalObject
         /// <param name="statos"> Free/ Maintenance/ Work</param>
         public void Add_drone(int siralNumber, string model, int category, double butrry, int statos)
         {
-            //  if (sustainability_test(droneNum))
-            // throw ("Error: The drone already exist in the system");
+              if (sustainability_test_D(siralNumber))
+             throw (new DAL.Item_found_exception("drone", siralNumber));
             DataSource.drones.Add(new Drone()
             {
                 serialNumber = siralNumber,
@@ -40,8 +52,8 @@ namespace DalObject
         /// <returns> String of data</returns>
         public Drone Drone_by_number(int droneNum)
         {
-            //  if (!sustainability_test(droneNum))
-            // throw ("Error: The drone does not exist in the system");
+            if (sustainability_test_D(droneNum))
+                throw (new DAL.Item_not_found_exception("drone", droneNum));
 
             foreach (Drone item in DataSource.drones)
             {
@@ -71,8 +83,8 @@ namespace DalObject
         /// <param name="sirial"></param>
         public void DeleteDrone(int sirial)
         {
-            //  if (!sustainability_test(droneNum))
-            // throw ("Error: The drone does not exist in the system");
+            if (sustainability_test_D(sirial))
+                throw (new DAL.Item_not_found_exception("drone", sirial));
             for (int i = 0; i < DataSource.drones.Count(); i++)
             {
                 if (DataSource.drones[i].serialNumber == sirial)
