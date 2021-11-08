@@ -10,19 +10,7 @@ namespace DalObject
 {
      partial class DalObject
     {
-        public static bool sustainability_test_drone(int number)
-        {
-            
-            foreach(Drone item in DataSource.drones)
-            {
-                if(item.serialNumber==number)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
+        
 
         /// <summary>
         /// Adding a new drone

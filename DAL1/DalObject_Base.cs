@@ -11,19 +11,7 @@ namespace DalObject
     public partial class DalObject  
     {
       
-            public static bool sustainability_test_base(int number)
-            {
-
-                foreach (Base_Station item in DataSource.base_Stations)
-                {
-                    if (item.baseNumber == number)
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
+           
             /// <summary>
             ///Adding a new base station
             /// </summary>

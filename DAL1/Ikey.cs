@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL
+namespace DAL
 {
-    interface IBL
+    interface IKey
     {
-        
-
+        public int key { get;  }
     }
 }

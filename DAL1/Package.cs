@@ -7,7 +7,7 @@ namespace IDAL
         /// <Package>
         /// Entity representing a package for delivery
         /// </Package>
-        public struct Package
+        public struct Package:DAL.IKey
         {
             public int serialNumber { get; init; }
             public int sendClient { get; set; }
@@ -15,6 +15,8 @@ namespace IDAL
             public Weight_categories weightCatgory { get; set; }
             public Priority priority { get; set; }
             public int operator_skimmer_ID { get; set; }
+            public int key { get => serialNumber; }
+
 
             //Delivery time create a package
             public DateTime receiving_delivery { get; set; }

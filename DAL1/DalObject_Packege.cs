@@ -10,19 +10,7 @@ namespace DalObject
 {
     partial class DalObject
     {
-       public static bool sustainability_test_packege(int number)
-        {
-
-            foreach (Package item in DataSource.packages)
-            {
-                if (item.serialNumber == number)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
+       
 
         /// <summary>
         /// Adding a new package

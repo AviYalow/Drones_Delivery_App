@@ -22,7 +22,21 @@ namespace DalObject
         }
 
 
-        
+         /* bool sustainability_test(IEnumerable<DAL.IKey> keys, int number)
+        {
+            
+            foreach (DAL.IKey item in keys)
+            {
+                if (item.key == number)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }*/
+
+
 
 
         /// <summary>

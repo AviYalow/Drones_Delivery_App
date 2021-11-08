@@ -8,16 +8,16 @@ namespace IDAL
         /// An entity that will represent 
         /// a base station for the drones
         /// </Base_Station>
-        public struct Base_Station
+        public struct Base_Station:DAL.IKey
         {
             public int baseNumber { get; init; }
             public String NameBase { get; set; }
             public int Number_of_charging_stations { get; set; }
             public double longitude { get; set; }
             public double latitude { get; set; }
-           
+            public int key { get => baseNumber; }
 
-           
+
 
             public override string ToString()
             {

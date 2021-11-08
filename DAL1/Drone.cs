@@ -8,14 +8,16 @@ namespace IDAL
         /// An entity that will represent 
         /// a Drone for deliverly 
         /// </Drone>
-        public struct Drone
+        public struct Drone:DAL.IKey
         {
             public int serialNumber { get; init; }
             public string Model { get; set; }
             public Weight_categories weightCategory { get; set; }
            
             public int base_station  { get; set; }
-            
+            public int key { get => serialNumber;  }
+
+           
 
 
             public override string ToString()
