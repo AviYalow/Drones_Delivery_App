@@ -388,6 +388,7 @@ namespace ConsoleUI
         private static void updateCollect(DalObject.DalObject dalObject, out bool check, out int num)
         {
             Console.Write("Enter package number:");
+
             do
             {
                 check = int.TryParse(Console.ReadLine(), out num);
