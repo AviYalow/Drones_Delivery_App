@@ -10,7 +10,19 @@ namespace DalObject
 {
     partial class DalObject
     {
-       
+        bool sustainability_test_P(int number)
+        {
+
+            foreach (Package item in DataSource.packages)
+            {
+                if (item.serialNumber == number)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// Adding a new package
@@ -48,10 +60,10 @@ namespace DalObject
         /// to connect to drone </param>
         public void connect_package_to_drone(int packageNumber, int drone_sirial_number)
         {
-            /* if (!sustainability_test(packageNumber))
-                 throw ("Error: The package does not exist in the system");*/
-            // if (!DalObject_Drone.sustainability_test(drone_sirial_number))
-                // throw ("Error: The package does not exist in the system");*/
+             if (!sustainability_test_P(packageNumber))
+                 throw (new DAL.Item_not_found_exception("packege",packageNumber));
+             if (!sustainability_test_D(drone_sirial_number))
+                 throw (new DAL.Item_not_found_exception("drone",drone_sirial_number));
 
             int i = 0;
             for (; i < DataSource.packages.Count(); i++)
