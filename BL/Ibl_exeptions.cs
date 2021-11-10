@@ -19,6 +19,7 @@ namespace IBL
                 DateTime time = DateTime.Now;
                 exeptionString += $"\aTime:{time.ToLongTimeString()}\n";
                 exeptionString += exeption.ToString();
+                return exeptionString;
             }
         }
     }
