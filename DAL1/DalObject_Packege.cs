@@ -8,21 +8,9 @@ using IDAL.DO;
 
 namespace DalObject
 {
-    partial class DalObject
+    partial class DalObject : IDAL.IDal
     {
-        bool sustainability_test_P(int number)
-        {
-
-            foreach (Package item in DataSource.packages)
-            {
-                if (item.serialNumber == number)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
+     
 
         /// <summary>
         /// Adding a new package
@@ -47,8 +35,6 @@ namespace DalObject
                 priority = (Priority)priorityByUser
             };
 
-            //  package.operator_skimmer_ID = found_drone_for_package(DataSource.packages[DataSource.Config.package_num].weightCatgory);
-
             DataSource.packages.Add(package);
             return DataSource.Config.package_num;
         }
@@ -60,36 +46,20 @@ namespace DalObject
         /// to connect to drone </param>
         public void connect_package_to_drone(int packageNumber, int drone_sirial_number)
         {
-             if (!sustainability_test_P(packageNumber))
-                 throw (new DAL.Item_not_found_exception("packege",packageNumber));
-             if (!sustainability_test_D(drone_sirial_number))
-                 throw (new DAL.Item_not_found_exception("drone",drone_sirial_number));
+            int i = DataSource.packages.FindIndex(x=>x.serialNumber==packageNumber);
+            if (i==-1)
+                 throw (new Item_not_found_exception("packege",packageNumber));
+             if (DataSource.drones.Any(x => x.serialNumber == drone_sirial_number))
+                 throw (new Item_not_found_exception("drone",drone_sirial_number));
 
-            int i = 0;
-            for (; i < DataSource.packages.Count(); i++)
-            {
-                if (DataSource.packages[i].serialNumber == packageNumber)
-                    break;
-            }
+            
+          
             Package package = DataSource.packages[i];
             package.operator_skimmer_ID = drone_sirial_number;
 
             package.package_association = DateTime.Now;
-            DataSource.packages[i] = new Package
-            {
-                serialNumber = package.serialNumber,
-                sendClient = package.sendClient,
-                getingClient = package.getingClient,
-                operator_skimmer_ID = package.operator_skimmer_ID,
-                weightCatgory = package.weightCatgory,
-                package_arrived = package.package_arrived,
-                priority = package.priority,
-                receiving_delivery = package.receiving_delivery,
-                collect_package_for_shipment = package.collect_package_for_shipment,
-                package_association = package.package_association
-
-            };
-
+            DataSource.packages[i] = package;
+         
 
 
         }
@@ -100,30 +70,15 @@ namespace DalObject
         /// <param name="packageNumber">serial number of the package</param>
         public void Package_collected(int packageNumber)
         {
-            /* if (!sustainability_test(packageNumber))
-               throw ("Error: The package does not exist in the system");*/
-            int i = 0;
-            for (; i < DataSource.packages.Count(); i++)
-            {
-                if (DataSource.packages[i].serialNumber == packageNumber)
-                    break;
-            }
+            int i = DataSource.packages.FindIndex(x=>x.serialNumber==packageNumber);
+            if (i == -1)
+                throw (new Item_not_found_exception("package", packageNumber));
+
+            
             Package package = DataSource.packages[i];
             package.collect_package_for_shipment = DateTime.Now;
-            DataSource.packages[i] = new Package
-            {
-                serialNumber = package.serialNumber,
-                sendClient = package.sendClient,
-                getingClient = package.getingClient,
-                operator_skimmer_ID = package.operator_skimmer_ID,
-                weightCatgory = package.weightCatgory,
-                package_arrived = package.package_arrived,
-                priority = package.priority,
-                receiving_delivery = package.receiving_delivery,
-                collect_package_for_shipment = package.collect_package_for_shipment,
-                package_association = package.package_association
-
-            };
+            DataSource.packages[i] = package;
+            
         }
 
         /// <summary>
@@ -132,35 +87,13 @@ namespace DalObject
         /// <param name="packageNumber">serial number of the package</param>
         public void Package_arrived(int packageNumber)
         {
-            /* if (!sustainability_test(packageNumber))
-               throw ("Error: The package does not exist in the system");*/
-            int i = 0;
-            for (; i < DataSource.packages.Count(); i++)
-            {
-                if (DataSource.packages[i].serialNumber == packageNumber)
-                {
-                    break;
-                }
+            int i = DataSource.packages.FindIndex(x => x.serialNumber == packageNumber);
+            if (i == -1)
+                throw (new Item_not_found_exception("package", packageNumber));
 
-            }
             Package package = DataSource.packages[i];
             package.package_arrived = DateTime.Now;
-            DataSource.packages[i] = new Package
-            {
-                serialNumber = package.serialNumber,
-                sendClient = package.sendClient,
-                getingClient = package.getingClient,
-                operator_skimmer_ID = package.operator_skimmer_ID,
-                weightCatgory = package.weightCatgory,
-                package_arrived = package.package_arrived,
-                priority = package.priority,
-                receiving_delivery = package.receiving_delivery,
-                collect_package_for_shipment = package.collect_package_for_shipment,
-                package_association = package.package_association
-
-            };
-            // drone_after_work(DataSource.packages[packageNumber - 1].operator_skimmer_ID);
-        }
+            DataSource.packages[i] = package;        }
 
 
         /// <summary>
@@ -168,11 +101,12 @@ namespace DalObject
         /// </summary>
         /// <param name="packageNumbe">Serial number of a particular package</param>
         /// <returns> string of data</returns>
-        public Package packege_by_number(int packageNumbe)
+        public Package packege_by_number(int packageNumber)
         {
-            /* if (!sustainability_test(packageNumber))
-               throw ("Error: The package does not exist in the system");*/
-            return DataSource.packages[DataSource.packages.FindIndex(x => x.serialNumber == packageNumbe)];
+            int i = DataSource.packages.FindIndex(x => x.serialNumber == packageNumber);
+            if (i == -1)
+                throw (new Item_not_found_exception("package", packageNumber));
+            return DataSource.packages[i];
 
         }
 
@@ -207,16 +141,10 @@ namespace DalObject
         /// <param name="sirial"></param>
         public void Deletepackege(int sirial)
         {
-            /* if (!sustainability_test(packageNumber))
-               throw ("Error: The package does not exist in the system");*/
-            for (int i = 0; i < DataSource.packages.Count(); i++)
-            {
-                if (DataSource.packages[i].serialNumber == sirial)
-                {
-                    DataSource.packages.Remove(DataSource.packages[i]);
-                    return;
-                }
-            }
+            int i = DataSource.packages.FindIndex(x => x.serialNumber == sirial);
+            if (i == -1)
+                throw (new Item_not_found_exception("package", sirial));
+            DataSource.packages.Remove(DataSource.packages[i]);
         }
 
     }

@@ -8,22 +8,10 @@ using IDAL.DO;
 
 namespace DalObject
 {
-    public partial class DalObject
+    public partial class DalObject:IDAL.IDal
     {
 
-        bool sustainability_test_B(int number)
-        {
-
-            foreach (Base_Station item in DataSource.base_Stations)
-            {
-                if (item.baseNumber == number)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
+        
         /// <summary>
         ///Adding a new base station
         /// </summary>
@@ -35,8 +23,8 @@ namespace DalObject
         public void Add_station(int base_num, string name, int numOfCharging, double latitude, double longitude)
         {
 
-            if (sustainability_test_B(base_num))
-                throw (new DAL.Item_found_exception("Base station", base_num));
+            if (DataSource.base_Stations.Any(x=>x.baseNumber==base_num))
+                throw (new Item_found_exception("Base station", base_num));
 
             DataSource.base_Stations.Add(new Base_Station
             {
@@ -61,8 +49,8 @@ namespace DalObject
         public Base_Station Base_station_by_number(int baseNum)
         {
 
-            if (sustainability_test_B(baseNum))
-                throw (new DAL.Item_not_found_exception("Base station", baseNum));
+            if (!DataSource.base_Stations.Any(x => x.baseNumber == baseNum))
+                throw (new Item_not_found_exception("Base station", baseNum));
             return DataSource.base_Stations[DataSource.base_Stations.FindIndex(x => x.baseNumber == baseNum)];
 
         }
@@ -76,8 +64,6 @@ namespace DalObject
         public IEnumerable<Base_Station> Base_station_list()
         {
 
-
-
             return DataSource.base_Stations.ToList<Base_Station>();
         }
 
@@ -89,11 +75,8 @@ namespace DalObject
         /// the values so we can print them</param>
         public IEnumerable<Base_Station> Base_station_list_with_free_charge_states()
         {
-            List<Base_Station> temp = new List<Base_Station>();
-            foreach (Base_Station item in DataSource.base_Stations)
-                if (item.Number_of_charging_stations > 0)
-                    temp.Add(item);
-            return temp.ToList<Base_Station>();
+         
+            return DataSource.base_Stations.FindAll(x=>x.Number_of_charging_stations>0);
 
         }
 
@@ -104,8 +87,8 @@ namespace DalObject
         /// <param name="sirial"></param>
         public void DeleteBase(int sirial)
         {
-            if (sustainability_test_B(sirial))
-                throw (new DAL.Item_not_found_exception("Base station", sirial));
+            if (!DataSource.base_Stations.Any(x => x.baseNumber == sirial))
+                throw (new Item_not_found_exception("Base station", sirial));
             DataSource.base_Stations.Remove(DataSource.base_Stations[DataSource.base_Stations.FindIndex(x => x.baseNumber == sirial)]);
 
 

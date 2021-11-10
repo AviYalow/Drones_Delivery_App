@@ -8,22 +8,10 @@ using IDAL.DO;
 
 namespace DalObject
 {
-    partial class DalObject
+    partial class DalObject : IDAL.IDal
     {
 
-        bool sustainability_test_c(int number)
-        {
-
-            foreach (Client item in DataSource.clients)
-            {
-                if (item.ID == number)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
+        
 
         /// <summary>
         /// Adding a new client
@@ -38,8 +26,8 @@ namespace DalObject
         {
 
           
-            if (sustainability_test_c( id))
-                throw (new DAL.Item_found_exception("Client", id));
+            if (DataSource.clients.Any(x=>x.ID==id))
+                throw (new Item_found_exception("Client", id));
             DataSource.clients.Add(new Client
             {
                 ID = id,
@@ -59,8 +47,8 @@ namespace DalObject
         /// <returns> string of data </returns>
         public Client cilent_by_number(int id)
         {
-              if (sustainability_test_c(id))
-             throw (new DAL.Item_not_found_exception("client",id));
+              if (DataSource.clients.Any(x=>x.ID==id))
+             throw (new Item_not_found_exception("client",id));
             return DataSource.clients[DataSource.clients.FindIndex(x => x.ID == id)];
 
         }
@@ -82,8 +70,8 @@ namespace DalObject
         /// <param name="id"></param>
         public void DeleteClient(int id)
         {
-            if (sustainability_test_c(id))
-                throw (new DAL.Item_not_found_exception("client", id));
+            if (!DataSource.clients.Any(x=>x.ID==id))
+                throw (new Item_not_found_exception("client", id));
 
             DataSource.clients.Remove(DataSource.clients[DataSource.clients.FindIndex(x => x.ID == id)]);
 

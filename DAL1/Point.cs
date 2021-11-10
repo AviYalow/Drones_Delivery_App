@@ -29,17 +29,29 @@ namespace IDAL
             }
 
             //A function that calculates distance at sea given two points
-            public static double Distance(Point point1,Point point2)
+            public static  double Distance(Point point1,Point point2)
             {
 
-                return ((Math.Sqrt((point1.longitude - point2. longitude) * (point1.longitude - point2.longitude) + (point1.latitude - point2.latitude) * point1.latitude - point2.latitude)) * 100);
+                return (getDistanceFromLatLonInKm(point1.latitude,point1.longitude,point2.latitude,point2.longitude));
             }
-            public static double Distance(double longitude1, double longitude2,double latitude1, double latitude2)
+            public static  double Distance(double longitude1, double longitude2,double latitude1, double latitude2)
             {
 
-                return ((Math.Sqrt((longitude1 - longitude2) * (longitude1 - longitude2) 
-                    + (latitude1 - latitude2) * latitude1 - latitude2)) * 100);
+                return (getDistanceFromLatLonInKm(latitude1,longitude1,latitude2,longitude2));
             }
+
+            public static double getDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2)
+            {
+                var R = 6371; // Radius of the earth in km
+                var dLat = deg2rad(lat2 - lat1);
+
+                var dLon = deg2rad(lon2 - lon1);
+                var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) + Math.Cos(deg2rad(lat1)) * Math.Cos(deg2rad(lat2)) * Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+                var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+                return R * c; // Distance in km return d;
+            }
+            public static double deg2rad(double deg)
+            { return deg * (Math.PI / 180); }
         }
     }
 }

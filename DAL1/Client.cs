@@ -10,7 +10,7 @@ namespace IDAL
         /// An entity that will represent 
         /// a client
         /// </Client>
-        public struct Client //: DAL.IKey
+        public struct Client 
         {
             public int ID { get; init; }
             public String Name { get; set; }
@@ -18,7 +18,7 @@ namespace IDAL
             public double Longitude { get; set; }
             public double Latitude { get; set; }
 
-           // public int key => ID;
+           
 
             public override string ToString()
             {

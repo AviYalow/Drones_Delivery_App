@@ -8,21 +8,9 @@ using IDAL.DO;
 
 namespace DalObject
 {
-     partial class DalObject
+     partial class DalObject : IDAL.IDal
     {
-        bool sustainability_test_D(int number)
-        {
-
-            foreach (Drone item in DataSource.drones)
-            {
-                if (item.serialNumber == number)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
+       
 
         /// <summary>
         /// Adding a new drone
@@ -34,8 +22,8 @@ namespace DalObject
         /// <param name="statos"> Free/ Maintenance/ Work</param>
         public void Add_drone(int siralNumber, string model, int category, double butrry, int statos)
         {
-              if (sustainability_test_D(siralNumber))
-             throw (new DAL.Item_found_exception("drone", siralNumber));
+              if (DataSource.drones.Any(x=>x.serialNumber==siralNumber))
+             throw (new Item_found_exception("drone", siralNumber));
             DataSource.drones.Add(new Drone()
             {
                 serialNumber = siralNumber,
@@ -52,8 +40,8 @@ namespace DalObject
         /// <returns> String of data</returns>
         public Drone Drone_by_number(int droneNum)
         {
-            if (sustainability_test_D(droneNum))
-                throw (new DAL.Item_not_found_exception("drone", droneNum));
+            if (!DataSource.drones.Any(x=>x.serialNumber==droneNum))
+                throw (new Item_not_found_exception("drone", droneNum));
 
             foreach (Drone item in DataSource.drones)
             {
@@ -73,8 +61,7 @@ namespace DalObject
         /// the values ​​of all the drones so we can print them</param>
         public IEnumerable<Drone> Drone_list()
         {
-            foreach (Drone drone in DataSource.drones)
-                yield return drone;
+            return DataSource.drones.ToList<Drone>();
         }
 
         /// <summary>
@@ -83,8 +70,8 @@ namespace DalObject
         /// <param name="sirial"></param>
         public void DeleteDrone(int sirial)
         {
-            if (sustainability_test_D(sirial))
-                throw (new DAL.Item_not_found_exception("drone", sirial));
+            if (DataSource.drones.Any(x=>x.serialNumber==sirial))
+                throw (new Item_not_found_exception("drone", sirial));
             for (int i = 0; i < DataSource.drones.Count(); i++)
             {
                 if (DataSource.drones[i].serialNumber == sirial)
@@ -105,6 +92,17 @@ namespace DalObject
             elctricity[(int)butturyLoad.Charging] = DataSource.Config.Charging_speed;
             return elctricity;
         }
+
+        public void Update_drone(Drone drone)
+        {
+            int index = DataSource.drones.FindIndex(x => x.serialNumber == drone.serialNumber);
+            if (index != -1)
+                DataSource.drones[index] = drone;
+            else
+                throw (new IDAL.DO.Item_not_found_exception("drone", drone.serialNumber));
+        }
+        
+
 
     }
 }
