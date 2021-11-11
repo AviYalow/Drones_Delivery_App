@@ -93,7 +93,8 @@ namespace DalObject
 
             Package package = DataSource.packages[i];
             package.package_arrived = DateTime.Now;
-            DataSource.packages[i] = package;        }
+            DataSource.packages[i] = package;
+        }
 
 
         /// <summary>
@@ -133,6 +134,11 @@ namespace DalObject
 
 
 
+        }
+
+        public IEnumerable<Package> Packages_with_drone()
+        {
+            return DataSource.packages.FindAll(x => x.operator_skimmer_ID != 0);
         }
 
         /// <summary>

@@ -365,7 +365,7 @@ namespace ConsoleUI
                     check = double.TryParse(Console.ReadLine(), out point2);
                 } while (!check);
 
-                Console.WriteLine(dalObject.Distance(doubleNum2, doubleNum1, point2, point1));
+                Console.WriteLine($"the distance is: {0}KM",dalObject.Distance(doubleNum2, doubleNum1, point2, point1));
             }
 
             void packageByNumber(DalObject.DalObject dalObject, out bool check, out int num)

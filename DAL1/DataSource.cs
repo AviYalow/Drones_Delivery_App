@@ -15,7 +15,7 @@ namespace DalObject
         internal static List<Base_Station> base_Stations = new List<Base_Station>();
         internal static List<Client> clients = new List<Client>();
         internal static List<Package> packages = new List<Package>();
-         internal static List<BatteryLoad> droneInCharge = new List<BatteryLoad>();
+        internal static List<BatteryLoad> droneInCharge = new List<BatteryLoad>();
 
 
         /// <Config>
@@ -25,11 +25,11 @@ namespace DalObject
         /// </Config>
         internal class Config
         {
-            internal static double free = 1;
-            internal static double easyWeight = 2.5;
-            internal static double mediomWeight = 3.5;
-            internal static double heavyWeight = 5;
-            internal static double Charging_speed = 5.5;
+            internal static double free { get { return 0.5; } }
+            internal static double easyWeight  { get { return 1; } }
+            internal static double mediomWeight { get { return 1.5; } }
+            internal static double heavyWeight { get { return 2; } }
+            internal static double Charging_speed { get { return 1.8; } }
             internal static int package_num = 10000;
             
         }
@@ -108,7 +108,7 @@ namespace DalObject
                     serialNumber = rand.Next(10000),
                     Model = randomName(rand, rand.Next(3, 7)),
                     weightCategory = (Weight_categories)rand.Next(0, 3),
-                    base_station = base_Stations[rand.Next(2)].baseNumber
+                   
                 });
 
 

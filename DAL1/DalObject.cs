@@ -22,11 +22,12 @@ namespace DalObject
         {
             DataSource.Initialize();
         }
-
-        public string Distance(double Longitude1, double Latitude1, double Longitude2, double Latitude2)
+        public double Distance(double Longitude1, double Latitude1, double Longitude2, double Latitude2)
         {
-            return ($"the distance is: {IDAL.DO.Point. Distance(Longitude1, Latitude1, Longitude2, Latitude2)}KM");
+            return IDAL.DO.Point.Distance(Longitude1, Latitude1, Longitude2, Latitude2);
         }
+
+        
         /// <summary>
         /// Returns a point in the form of degrees
         /// </summary>
@@ -36,12 +37,6 @@ namespace DalObject
         {
             return Point.Degree(point);
         }
-
-
-
-
-
-
 
     }
 }

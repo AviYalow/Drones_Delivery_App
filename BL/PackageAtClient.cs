@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
-    class PackageAtClient
+    public class PackageAtClient
     {
         public int SerialNum { get; set; }
         public Weight_categories WeightCatgory { get; set; }
