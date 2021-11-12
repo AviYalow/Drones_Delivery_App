@@ -17,7 +17,7 @@ namespace IBL.BO
         public double butrryStatus { get; set; }
         public Drone_status droneStatus { get; set; }
         public Location location { get; set; }
-
+        
 
     }
 }

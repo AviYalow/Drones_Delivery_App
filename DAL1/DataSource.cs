@@ -25,11 +25,11 @@ namespace DalObject
         /// </Config>
         internal class Config
         {
-            internal static double free { get { return 0.5; } }
-            internal static double easyWeight  { get { return 1; } }
-            internal static double mediomWeight { get { return 1.5; } }
-            internal static double heavyWeight { get { return 2; } }
-            internal static double Charging_speed { get { return 1.8; } }
+            internal static double free { get { return 0.5; } }//per minute
+            internal static double easyWeight  { get { return 1; } }//per minute
+            internal static double mediomWeight { get { return 1.5; } }//per minute
+            internal static double heavyWeight { get { return 2; } }//per minute
+            internal static double Charging_speed { get { return 1.8; } }//per minute
             internal static int package_num = 10000;
             
         }
