@@ -141,6 +141,11 @@ namespace DalObject
             return DataSource.packages.FindAll(x => x.operator_skimmer_ID != 0);
         }
 
+        public IEnumerable<Package> Packages_arrive_list()
+        {
+            return DataSource.packages.FindAll(x => x.package_arrived != new DateTime());
+        }
+
         /// <summary>
         /// delete a spsific packege
         /// </summary>

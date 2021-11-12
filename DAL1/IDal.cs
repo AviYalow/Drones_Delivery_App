@@ -22,6 +22,7 @@ namespace IDAL
         public IEnumerable<Package> packege_list();
         public IEnumerable<Package> packege_list_with_no_drone();
         public IEnumerable<Package> Packages_with_drone();
+        public IEnumerable<Package> Packages_arrive_list();
 
         public Drone Drone_by_number(int droneNum);
         public double[] Elctrtricity();

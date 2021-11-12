@@ -14,6 +14,7 @@ namespace IBL
 
         public BL()
         {
+            Random random = new Random();
             dalObj = new DalObject.DalObject();
             foreach (IDAL.DO.Drone drone in dalObj.Drone_list())
             {
@@ -39,14 +40,64 @@ namespace IBL
                         }
                     }
                 }
-                if (package.package_association != new DateTime())
+                if (new_drone.droneStatus == Drone_status.Work)
                 {
-                    new_drone.location = Clloset_base(package.sendClient);
+                    
+                    double min_butrry;
+                    if (package.package_association != new DateTime())
+                    {
+
+                        new_drone.location = Clloset_base(package.sendClient);
+                        min_butrry = ButtryDownWithNoPackege(new_drone.location, Client_location(package.sendClient)) +
+                            ButtryDownPackegeDelivery(package.serialNumber) +
+                            ButtryDownWithNoPackege(Clloset_base(package.getingClient), Client_location(package.getingClient));
+                        new_drone.butrryStatus = random.Next((int)min_butrry + 1, 100);
+
+                    }
+                    else if (package.collect_package_for_shipment != new DateTime())
+                    {
+                        new_drone.location = Client_location(package.sendClient);
+                        min_butrry = ButtryDownPackegeDelivery(package.serialNumber) +
+                           ButtryDownWithNoPackege(Clloset_base(package.getingClient), Client_location(package.getingClient));
+                        new_drone.butrryStatus = random.Next((int)min_butrry + 1, 100);
+                    }
+
 
                 }
-                else if (package.collect_package_for_shipment != new DateTime())
+                else
                 {
-                    new_drone.location = Client_location(package.sendClient);
+                    new_drone.droneStatus = (Drone_status)random.Next(2);
+                    if (new_drone.droneStatus ==Drone_status.Maintenance)
+                    {
+                        new_drone.butrryStatus = random.Next(21);
+                        int i = random.Next(2);
+                        foreach(IDAL.DO.Base_Station base_ in dalObj.Base_station_list())
+                        {
+                            if(i==0)
+                            {
+                                new_drone.location = Base_location(base_.baseNumber);
+                                break;
+                            }
+                            i--;
+                        }
+                    }
+                    if (new_drone.droneStatus == Drone_status.Free)
+                    {
+                       // new_drone.butrryStatus = random.Next(21);
+                        int i = random.Next(10);
+                        int j = 0;
+                        foreach (IDAL.DO.Package package1 in dalObj.Packages_arrive_list() )
+                        {
+                            if (j == i)
+                            {
+                                new_drone.location =Client_location( package1.getingClient) ;
+                                random.Next((int)ButtryDownWithNoPackege(new_drone.location, Clloset_base(package1.getingClient))+1, 100);
+                                break;
+                            }
+                            j++;
+                        }
+                    }
+
                 }
 
                 drones.Add(new_drone);
@@ -105,28 +156,52 @@ namespace IBL
             location_client.Longitude = client.Longitude;
             return location_client;
         }
-
-
-        public double ButtryDownWithPackege(Drone drone, int id)
+        public Location Base_location(int base_number)
         {
-            double new_buttry = 0;
-            Location location_client = new Location();
-            IDAL.DO.Client client = dalObj.cilent_by_number(id);
-            location_client.Latitude = client.Latitude;
-            location_client.Longitude = client.Longitude;
-            double distans = Distans(drone.location, location_client);
-            if (drone.droneStatus == Drone_status.Work)
-                switch (drone.weightCategory)//להשלים פונקציה ע"י חישוב לכל משקל
-                {
-                    case Weight_categories.Easy:
+            Location base_location = new Location();
+            IDAL.DO.Base_Station base_Station = dalObj.Base_station_by_number(base_number);
+            base_location.Latitude = base_Station.latitude;
+            base_location.Longitude = base_Station.longitude;
+            return base_location;
+        }
 
 
-                    default:
-                        break;
-                }
+        public double ButtryDownPackegeDelivery(int packegeNumber)
+        {
+            double[] elctricity = dalObj.Elctrtricity();
+            double battery_drop = 0, distans = 0;
 
+            IDAL.DO.Package package = dalObj.packege_by_number(packegeNumber);
+            Location sending_location = Client_location(package.sendClient), geting_location = Client_location(package.getingClient);
 
-            return new_buttry;
+            distans = Distans(geting_location, sending_location);
+
+            switch ((Weight_categories)package.weightCatgory)//להשלים פונקציה ע"י חישוב לכל משקל
+            {
+                case Weight_categories.Easy:
+                    battery_drop = ((distans / (double)Speed_drone.Easy) / (double)butrryPer__.Minute);
+                    battery_drop *= elctricity[1];
+                    break;
+                case Weight_categories.Medium:
+                    battery_drop = ((distans / (double)Speed_drone.Easy) / (double)butrryPer__.Minute);
+                    battery_drop *= elctricity[2];
+                    break;
+                case Weight_categories.Heavy:
+                    battery_drop = ((distans / (double)Speed_drone.Easy) / (double)butrryPer__.Minute);
+                    battery_drop *= elctricity[3];
+                    break;
+                default:
+                    break;
+
+            }
+            return battery_drop;
+        }
+        public double ButtryDownWithNoPackege(Location fromLocation, Location toLocation)
+        {
+            double[] elctricity = dalObj.Elctrtricity();
+            double distans = Distans(fromLocation, toLocation);
+            double buttry = ((distans / (double)Speed_drone.Free) / (double)butrryPer__.Minute) * elctricity[0];
+            return buttry;
         }
 
     }
