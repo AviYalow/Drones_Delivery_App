@@ -20,7 +20,7 @@ namespace DalObject
         /// <param name="category"> Easy / Medium / Heavy</param>
         /// <param name="butrry">Battery status</param>
         /// <param name="statos"> Free/ Maintenance/ Work</param>
-        public void Add_drone(int siralNumber, string model, int category, double butrry, int statos)
+        public void Add_drone(int siralNumber, string model, int category)
         {
               if (DataSource.drones.Any(x=>x.serialNumber==siralNumber))
              throw (new Item_found_exception("drone", siralNumber));
@@ -64,6 +64,20 @@ namespace DalObject
             return DataSource.drones.ToList<Drone>();
         }
 
+        public void Drone_To_charge(int drone,int base_)
+        {
+            if(DataSource.drones.All(x=>x.serialNumber!=drone))
+            {
+                throw (new Item_not_found_exception("drone", drone));
+            }
+            if (DataSource.base_Stations.All(x => x.baseNumber !=base_))
+            {
+                throw (new Item_not_found_exception("base station", base_));
+            }
+            DataSource.droneInCharge.Add(new BatteryLoad { id_drone = drone, idBaseStation = base_, entringDrone = DateTime.Now });
+            
+        }
+
         /// <summary>
         /// delete a spsific drone
         /// </summary>
@@ -102,6 +116,25 @@ namespace DalObject
                 throw (new IDAL.DO.Item_not_found_exception("drone", drone.serialNumber));
         }
         
+        public TimeSpan TimeInCharge(int drone)
+        {
+            int i = DataSource.droneInCharge.FindIndex(x => x.id_drone == drone);
+            if (i==-1)
+            {
+                throw (new Item_not_found_exception("drone", drone));
+            }
+            return (DateTime.Now - DataSource.droneInCharge[i].entringDrone);
+
+        }
+
+        public void FreeDroneFromCharge(int drone)
+        {
+            int i = DataSource.droneInCharge.FindIndex(x => x.id_drone == drone);
+                if (i == -1)
+                throw (new Item_not_found_exception("drone", drone));
+            DataSource.droneInCharge.RemoveAt(i);
+           
+        }
 
 
     }

@@ -33,8 +33,11 @@ namespace DalObject
                 getingClient = idget,
                 weightCatgory = (Weight_categories)kg,
                 priority = (Priority)priorityByUser
+                
             };
-
+            package.collect_package_for_shipment = new DateTime();
+            package.package_arrived = new DateTime();
+            package.package_association = new DateTime();
             DataSource.packages.Add(package);
             return DataSource.Config.package_num;
         }
@@ -156,6 +159,15 @@ namespace DalObject
             if (i == -1)
                 throw (new Item_not_found_exception("package", sirial));
             DataSource.packages.Remove(DataSource.packages[i]);
+        }
+
+        public void UpdatePackege(Package package)
+        {
+            int i = DataSource.packages.FindIndex(x => x.serialNumber == package.serialNumber);
+            if (i == -1)
+                throw (new IDAL.DO.Item_not_found_exception("Packege", package.serialNumber));
+            else
+                DataSource.packages[i] = package;
         }
 
     }

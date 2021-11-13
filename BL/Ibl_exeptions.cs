@@ -9,10 +9,10 @@ namespace IBL
     namespace BO
     {
 
-        public class Item_found_exeptin : Exception
+        public class Item_found_exeption : Exception
         {
             IDAL.DO.Item_found_exception exeption { get; set; }
-            public Item_found_exeptin(IDAL.DO.Item_found_exception ex) { exeption = ex; }
+            public Item_found_exeption(IDAL.DO.Item_found_exception ex) { exeption = ex; }
             public override string ToString()
             {
                 string exeptionString = "";
@@ -22,10 +22,10 @@ namespace IBL
                 return exeptionString;
             }
         }
-        public class Item_not_found_exeptin : Exception
+        public class Item_not_found_exeption : Exception
         {
             IDAL.DO.Item_not_found_exception exeption { get; set; }
-            public Item_not_found_exeptin(IDAL.DO.Item_not_found_exception ex) { exeption = ex; }
+            public Item_not_found_exeption(IDAL.DO.Item_not_found_exception ex) { exeption = ex; }
             public override string ToString()
             {
                 string exeptionString = "";

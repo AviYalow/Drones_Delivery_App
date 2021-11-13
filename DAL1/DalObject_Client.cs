@@ -77,5 +77,14 @@ namespace DalObject
 
 
         }
+
+        public void Update_client(Client client)
+        {
+            int index = DataSource.clients.FindIndex(x => x.ID == client.ID);
+            if (index != -1)
+                DataSource.clients[index] = client;
+            else
+                throw (new IDAL.DO.Item_not_found_exception("client", client.ID));
+        }
     }
 }

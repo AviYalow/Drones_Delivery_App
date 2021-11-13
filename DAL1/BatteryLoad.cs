@@ -15,7 +15,7 @@ namespace IDAL
             public int id_drone { get; set; }
 
             public DateTime entringDrone { get; init; }
-            public DateTime freeDrone { get; init; }
+            
 
             public override string ToString()
             {
@@ -23,7 +23,7 @@ namespace IDAL
                 printBtarryLoad += $"ID BaseStation is {idBaseStation},\n";
                 printBtarryLoad += $"ID drown is {id_drone}\n";
                 printBtarryLoad += $"Time of geting drone {entringDrone}\n";
-                printBtarryLoad += $"Time of free drone {freeDrone}\n";
+                
                 return printBtarryLoad;
             }
         }

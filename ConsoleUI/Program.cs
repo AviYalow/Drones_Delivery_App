@@ -285,7 +285,7 @@ namespace ConsoleUI
             void baseWhitFreeChargeStation(DalObject.DalObject dalObject)
             {
 
-                foreach (IDAL.DO.Base_Station print in dalObject.Base_station_list_with_free_charge_states())
+                foreach (IDAL.DO.Base_Station print in dalObject.Base_station_list_with_charge_states())
                     Console.WriteLine(print);
             }
 

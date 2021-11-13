@@ -10,7 +10,7 @@ namespace IBL.BO
     {
         public int ID { get; init; }
         public string Name { get; set; }
-        public int Phone { get; set; }
+        public String Phone { get; set; }
         public Location location { get; set; }
 
         public List<Package> fromClient { get; set; }

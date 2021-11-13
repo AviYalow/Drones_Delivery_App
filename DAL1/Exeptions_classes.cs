@@ -51,5 +51,24 @@ namespace IDAL
 
             }
         }
+
+        public class List_empty_exception : Exception
+        {
+            string ExceptionMesseg { get; set; }
+            public List_empty_exception(string list)
+            {
+                ExceptionMesseg = $"ERROR: this {list} empty! ";
+            }
+            public override string ToString()
+            {
+                return ExceptionMesseg;
+            }
+        }
+
+        public class No_Item_Whit_this_condition_exception : Exception
+        {
+            string ExceptionMassege { get => " no items whit your condition!"; }
+        }
+
     }
 }
