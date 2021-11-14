@@ -9,7 +9,7 @@ namespace IBL
 {
     partial class BL:IBL
     {
-        public void AddDrone(Drone drone,int base_)
+        public void AddDrone(Drone drone,uint base_)
         {
             try
             {
@@ -19,14 +19,14 @@ namespace IBL
             }
             catch(IDAL.DO.Item_not_found_exception ex)
             {
-                throw (new Item_not_found_exeption(ex));
+                throw (new Item_not_found_exception(ex));
             }
             drone.droneStatus = Drone_status.Maintenance;
 
             Random random = new Random();
             try
             {
-                dalObj.Add_drone(drone.SerialNum, drone.Model, (int)drone.weightCategory);
+                dalObj.Add_drone(drone.SerialNum, drone.Model, (uint)drone.weightCategory);
             }
             catch(IDAL.DO.Item_found_exception ex)
             {
@@ -35,6 +35,15 @@ namespace IBL
             drone.butrryStatus = random.Next(20, 41);
             DroneToCharge(drone.SerialNum, base_);
             drones.Add(drone);
+
+        }
+
+        public void updateDronelocation(uint drone ,Location location)
+        {
+            int i = drones.FindIndex(x => x.SerialNum == drone);
+            if (i == -1)
+                throw (new Item_not_found_exception("Drone", drone));
+            drones[i].location = location;
 
         }
 

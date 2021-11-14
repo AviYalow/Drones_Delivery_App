@@ -8,7 +8,7 @@ namespace IBL.BO
 {
    public class Drone
     {
-        public int SerialNum { get; init; }
+        public uint SerialNum { get; init; }
         public string Model { get; set; }
 
         public Weight_categories weightCategory { get; set; }

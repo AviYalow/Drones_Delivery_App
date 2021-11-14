@@ -9,15 +9,15 @@ namespace IBL.BO
     public class ClientToList
     {
 
-        public int ID { get; init; }
+        public uint ID { get; init; }
         public string Name { get; set; }
-        public int Phone { get; set; }
+        public string Phone { get; set; }
 
-        public int Arrived { get; set; } //the number of package that send and arrived
+        public uint Arrived { get; set; } //the number of package that send and arrived
 
-        public int NotArrived { get; set; }//the number of package that send and hasn't arrived yet
-        public int received { get; set; }//the number of package that recived
-        public int OnTheWay { get; set; }//the number of package that on the way
+        public uint NotArrived { get; set; }//the number of package that send and hasn't arrived yet
+        public uint received { get; set; }//the number of package that recived
+        public uint OnTheWay { get; set; }//the number of package that on the way
 
 
 

@@ -8,9 +8,9 @@ namespace IBL.BO
 {
     public class Package
     {
-        public int SerialNumber { get; init; }
-        public int SendClient { get; set; }
-        public int RecivedClient { get; set; }
+        public uint SerialNumber { get; init; }
+        public uint SendClient { get; set; }
+        public uint RecivedClient { get; set; }
         public Weight_categories weightCatgory { get; set; }
         public Priority priority { get; set; }
         public DroneInPackage drone { get; set; }

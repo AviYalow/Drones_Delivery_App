@@ -24,14 +24,14 @@ namespace ConsoleUI
         ///  function which allows us to receive 
         ///  a number from the user safely
         /// </summary>
-        private static int getChoose(string val)
+        private static uint getChoose(string val)
         {
             bool success;
-            int number;
+            uint number;
             do
             {
                 Console.WriteLine(val);
-                success = int.TryParse(Console.ReadLine(), out number);
+                success = uint.TryParse(Console.ReadLine(), out number);
                 if (!success)
                     Console.WriteLine("Error!\n");
             }
@@ -54,7 +54,7 @@ namespace ConsoleUI
             do
             {
                 bool check;
-                int num, id, num1, num2;
+                uint num, id, num1, num2;
                 double doubleNum1, doubleNum2, point1, point2;
                 string str, name, phone;
                 ArrayList backList = new ArrayList();
@@ -338,7 +338,7 @@ namespace ConsoleUI
                 Console.WriteLine(dalObject.Point_to_degree(point2));
             }
 
-            void distanceBetween2points(DalObject.DalObject dalObject, out bool check, out int num1, out double doubleNum1, out double doubleNum2, out double point1, out double point2)
+            void distanceBetween2points(DalObject.DalObject dalObject, out bool check, out uint num1, out double doubleNum1, out double doubleNum2, out double point1, out double point2)
             {
                 num1 = 0;
                 double[] points = new double[4];
@@ -368,116 +368,116 @@ namespace ConsoleUI
                 Console.WriteLine($"the distance is: {0}KM",dalObject.Distance(doubleNum2, doubleNum1, point2, point1));
             }
 
-            void packageByNumber(DalObject.DalObject dalObject, out bool check, out int num)
+            void packageByNumber(DalObject.DalObject dalObject, out bool check, out uint num)
             {
                 Console.Write("Enter packege number:");
-                check = int.TryParse(Console.ReadLine(), out num);
+                check = uint.TryParse(Console.ReadLine(), out num);
                 Console.WriteLine(dalObject.packege_by_number(num));
             }
 
-             void droneBySirialNumber(DalObject.DalObject dalObject, out bool check, out int num)
+             void droneBySirialNumber(DalObject.DalObject dalObject, out bool check, out uint num)
             {
                 Console.Write("Enter drone number:");
-                check = int.TryParse(Console.ReadLine(), out num);
+                check = uint.TryParse(Console.ReadLine(), out num);
                 Console.WriteLine(dalObject.Drone_by_number(num));
             }
 
-           void baseByNumber(DalObject.DalObject dalObject, out bool check, out int num)
+           void baseByNumber(DalObject.DalObject dalObject, out bool check, out uint num)
             {
                 //received the details from the user
                 Console.Write("Enter base number:");
-                check = int.TryParse(Console.ReadLine(), out num);
+                check = uint.TryParse(Console.ReadLine(), out num);
                 Console.WriteLine(dalObject.Base_station_by_number(num));
             }
 
-            void clientById(DalObject.DalObject dalObject, out bool check, out int num)
+            void clientById(DalObject.DalObject dalObject, out bool check, out uint num)
             {
                 //received the details from the user
                 Console.Write("Enter ID:");
-                check = int.TryParse(Console.ReadLine(), out num);
+                check = uint.TryParse(Console.ReadLine(), out num);
                 Console.WriteLine(dalObject.cilent_by_number(num));
             }
 
           
-            void updateDelivery(DalObject.DalObject dalObject, out bool check, out int num)
+            void updateDelivery(DalObject.DalObject dalObject, out bool check, out uint num)
             {
                 //received the details from the user
                 Console.Write("Enter package number:");
                 do
                 {
-                    check = int.TryParse(Console.ReadLine(), out num);
+                    check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
                 dalObject.Package_arrived(num);
             }
 
-             void updateCollect(DalObject.DalObject dalObject, out bool check, out int num)
+             void updateCollect(DalObject.DalObject dalObject, out bool check, out uint num)
             {
                 Console.Write("Enter package number:");
 
                 do
                 {
-                    check = int.TryParse(Console.ReadLine(), out num);
+                    check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
                 dalObject.Package_collected(num);
             }
 
-            void updateAssociate(DalObject.DalObject dalObject, out bool check, out int num, out int num1)
+            void updateAssociate(DalObject.DalObject dalObject, out bool check, out uint num, out uint num1)
             {
                 //received the details from the user
                 Console.Write("Enter package number:");
                 do
                 {
-                    check = int.TryParse(Console.ReadLine(), out num);
+                    check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
                 Console.Write("Enter drone number:");
                 do
                 {
-                    check = int.TryParse(Console.ReadLine(), out num1);
+                    check = uint.TryParse(Console.ReadLine(), out num1);
                 } while (!check);
                 dalObject.connect_package_to_drone(num, num1);
             }
 
-           void addPackage(DalObject.DalObject dalObject, out bool check, out int num, out int id, out int num1, out int num2)
+           void addPackage(DalObject.DalObject dalObject, out bool check, out uint num, out uint id, out uint num1, out uint num2)
             {
                 //received the details from the user
 
                 Console.Write("Enter ID of the sender:");
                 do
                 {
-                    check = int.TryParse(Console.ReadLine(), out id);
+                    check = uint.TryParse(Console.ReadLine(), out id);
                 } while (!check);
                 Console.Write("Enter ID of the recipient:");
                 do
                 {
-                    check = int.TryParse(Console.ReadLine(), out num1);
+                    check = uint.TryParse(Console.ReadLine(), out num1);
                 } while (!check);
                 Console.Write("Enter Weight categories 0 for easy,1 for mediom,2 for haevy:");
                 do
                 {
-                    check = int.TryParse(Console.ReadLine(), out num2);
+                    check = uint.TryParse(Console.ReadLine(), out num2);
                 } while (!check);
                 Console.Write("Enter priority 0 for Immediate ,1 for quick ,2 for Regular:");
                 do
                 {
-                    check = int.TryParse(Console.ReadLine(), out num);
+                    check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
                 // add new package
                 dalObject.Add_package(id, num1, num2, num);
             }
 
-            void addDrone(DalObject.DalObject dalObject, out bool check, out int num, out int id, out int num1, out double doubleNum1, out string name)
+            void addDrone(DalObject.DalObject dalObject, out bool check, out uint num, out uint id, out uint num1, out double doubleNum1, out string name)
             {
                 Console.Write("Enter sireal number:");
                 do
                 {
-                    check = int.TryParse(Console.ReadLine(), out id);
+                    check = uint.TryParse(Console.ReadLine(), out id);
                 } while (!check);
                 Console.Write("Enter name:");
                 name = Console.ReadLine();
                 Console.Write("Enter weight Category:0 for easy,1 for mediom,2 for heavy:");
                 do
                 {
-                    check = int.TryParse(Console.ReadLine(), out num);
+                    check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
                 Console.Write("Enter amount of butrry:");
                 do
@@ -487,26 +487,26 @@ namespace ConsoleUI
                 Console.Write("Enter a statos:0 for free,1 for maintenance:");
                 do
                 {
-                    check = int.TryParse(Console.ReadLine(), out num1);
+                    check = uint.TryParse(Console.ReadLine(), out num1);
                 } while (!check);
 
                 //add new drone
-                dalObject.Add_drone(id, name, num, doubleNum1, num1);
+                dalObject.Add_drone(id, name, num);
             }
 
-            void addBase(DalObject.DalObject dalObject, out bool check, out int id, out int num1, out double doubleNum1, out double doubleNum2, out string name)
+            void addBase(DalObject.DalObject dalObject, out bool check, out uint id, out uint num1, out double doubleNum1, out double doubleNum2, out string name)
             {
                 Console.Write("Enter base number:");
                 do
                 {
-                    check = int.TryParse(Console.ReadLine(), out id);
+                    check = uint.TryParse(Console.ReadLine(), out id);
                 } while (!check);
                 Console.Write("Enter base name:");
                 name = Console.ReadLine();
                 Console.Write("Enter Number of charging stations:");
                 do
                 {
-                    check = int.TryParse(Console.ReadLine(), out num1);
+                    check = uint.TryParse(Console.ReadLine(), out num1);
                 } while (!check);
                 Console.Write("Enter latitude:");
                 do
@@ -524,12 +524,12 @@ namespace ConsoleUI
                 dalObject.Add_station(id, name, num1, doubleNum1, doubleNum2);
             }
 
-             void addClient(DalObject.DalObject dalObject, out bool check, out int num, out double doubleNum1, out double doubleNum2, out string name, out string phone)
+             void addClient(DalObject.DalObject dalObject, out bool check, out uint num, out double doubleNum1, out double doubleNum2, out string name, out string phone)
             {
                 Console.Write("Enter ID:");
                 do
                 {
-                    check = int.TryParse(Console.ReadLine(), out num);
+                    check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
                 Console.Write("Enter name:");
                 name = Console.ReadLine();

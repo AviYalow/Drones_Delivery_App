@@ -14,7 +14,7 @@ namespace IBL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Location Client_location(int id)
+        public Location Client_location(uint id)
         {
             IDAL.DO.Client client = new IDAL.DO.Client();
             try
@@ -23,7 +23,7 @@ namespace IBL
             }
             catch(IDAL.DO.Item_not_found_exception ex)
             {
-                throw (new Item_not_found_exeption(ex));
+                throw (new Item_not_found_exception(ex));
             }
             Location location_client = new Location();
             location_client.Latitude = client.Latitude;

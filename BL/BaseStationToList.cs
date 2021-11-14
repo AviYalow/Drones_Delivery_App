@@ -8,9 +8,9 @@ namespace IBL.BO
 {
     public class BaseStationToList
     {
-        public int SerialNum { get; init; }
+        public uint SerialNum { get; init; }
         public string Name { get; set; }
-        public int FreeState { get; set; }
-        public int BusyState { get; set; }
+        public uint FreeState { get; set; }
+        public uint BusyState { get; set; }
     }
 }

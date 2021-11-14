@@ -27,7 +27,7 @@ namespace DalObject
             return IDAL.DO.Point.Distance(Longitude1, Latitude1, Longitude2, Latitude2);
         }
 
-        
+
         /// <summary>
         /// Returns a point in the form of degrees
         /// </summary>
@@ -36,6 +36,12 @@ namespace DalObject
         public string Point_to_degree(double point)
         {
             return Point.Degree(point);
+        }
+
+        public IEnumerable<BatteryLoad> Charging_Drone_List()
+        {
+
+            return DataSource.droneInCharge.ToList();
         }
 
     }

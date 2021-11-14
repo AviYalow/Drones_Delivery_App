@@ -12,7 +12,7 @@ namespace IDAL
         /// </Client>
         public struct Client 
         {
-            public int ID { get; init; }
+            public uint ID { get; init; }
             public String Name { get; set; }
             public String PhoneNumber { get; set; }
             public double Longitude { get; set; }

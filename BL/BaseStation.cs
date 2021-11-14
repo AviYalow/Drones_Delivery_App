@@ -9,10 +9,10 @@ namespace IBL.BO
   public  class BaseStation
     {
 
-        public int SerialNum { get; init; }
+        public uint SerialNum { get; init; }
         public string Name { get; set; }
         public Location location { get; set; }
-        public int FreeState { get; set; }
+        public uint FreeState { get; set; }
         public List<DroneInCharge> dronesInCharge { get; set; }
 
     }

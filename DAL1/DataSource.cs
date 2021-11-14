@@ -30,7 +30,7 @@ namespace DalObject
             internal static double mediomWeight { get { return 1.5; } }//per minute
             internal static double heavyWeight { get { return 2; } }//per minute
             internal static double Charging_speed { get { return 1.8; } }//per minute
-            internal static int package_num = 10000;
+            internal static uint package_num = 10000;
             
         }
 
@@ -67,7 +67,7 @@ namespace DalObject
                 return name;
             }
 
-            int idSnding(List<Client> client, int sending)
+            uint idSnding(List<Client> client, uint sending)
             {
                 int i;
 
@@ -81,9 +81,9 @@ namespace DalObject
             //initializing the base station's array
             base_Stations.Add(new Base_Station
             {
-                baseNumber = rand.Next(1000, 10000),
+                baseNumber =(uint)rand.Next(1000, 10000),
                 NameBase = randomName(rand),
-                Number_of_charging_stations = rand.Next(3, 6),
+                Number_of_charging_stations = (uint)rand.Next(3, 6),
                 latitude = 31.790133,
                 longitude = 34.627143
 
@@ -92,9 +92,9 @@ namespace DalObject
 
             base_Stations.Add(new Base_Station
             {
-                baseNumber = rand.Next(1000, 10000),
+                baseNumber = (uint)rand.Next(1000, 10000),
                 NameBase = randomName(rand),
-                Number_of_charging_stations = rand.Next(3, 6),
+                Number_of_charging_stations = (uint)rand.Next(3, 6),
                 latitude = 32.009490,
                 longitude = 34.736002
             });
@@ -105,7 +105,7 @@ namespace DalObject
             {
                 drones.Add(new Drone
                 {
-                    serialNumber = rand.Next(10000),
+                    serialNumber = (uint)rand.Next(10000),
                     Model = randomName(rand, rand.Next(3, 7)),
                     weightCategory = (Weight_categories)rand.Next(0, 3),
                    
@@ -119,7 +119,7 @@ namespace DalObject
             {
                 clients.Add(new Client
                 {
-                    ID = rand.Next(100000000, 999999999),
+                    ID = (uint)rand.Next(100000000, 999999999),
 
                     PhoneNumber = ($"05{rand.Next(0, 6)}-{rand.Next(100, 999)}-{rand.Next(1000, 9999)}"),
                     Name = (personalRandomName(rand, rand.Next(3, 7))),

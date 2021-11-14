@@ -15,7 +15,7 @@ namespace IBL
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        public Location Clloset_base(int client)
+        public Location Clloset_base(uint client)
         {
             Location new_location = new Location();
             try
@@ -38,7 +38,7 @@ namespace IBL
             }
             catch(IDAL.DO.Item_not_found_exception ex)
             {
-                throw (new Item_not_found_exeption(ex));
+                throw (new Item_not_found_exception(ex));
             }
             return new_location;
         }
@@ -47,7 +47,7 @@ namespace IBL
         /// </summary>
         /// <param name="base_number"></param>
         /// <returns></returns>
-        public Location Base_location(int base_number)
+        public Location Base_location(uint base_number)
         {
             IDAL.DO.Base_Station base_Station = new IDAL.DO.Base_Station();
             try
@@ -56,7 +56,7 @@ namespace IBL
             }
             catch (IDAL.DO.Item_not_found_exception ex)
             {
-                throw (new Item_not_found_exeption(ex));
+                throw (new Item_not_found_exception(ex));
             }
             Location base_location = new Location();
           

@@ -20,7 +20,7 @@ namespace DalObject
         /// <param name="kg">Weight categories</param>
         /// <param name="priorityByUser">Priority: Immediate/ quick/ Regular </param>
         /// <returns>Returns the serial number of the created package</returns>
-        public int Add_package(int idsend, int idget, int kg, int priorityByUser)
+        public uint Add_package(uint idsend, uint idget, uint kg, uint priorityByUser)
         {
 
 
@@ -47,7 +47,7 @@ namespace DalObject
         /// </summary>
         /// <param name="packageNumber">serial number of the package that needs 
         /// to connect to drone </param>
-        public void connect_package_to_drone(int packageNumber, int drone_sirial_number)
+        public void connect_package_to_drone(uint packageNumber, uint drone_sirial_number)
         {
             int i = DataSource.packages.FindIndex(x=>x.serialNumber==packageNumber);
             if (i==-1)
@@ -71,7 +71,7 @@ namespace DalObject
         /// Updated package collected
         /// </summary>
         /// <param name="packageNumber">serial number of the package</param>
-        public void Package_collected(int packageNumber)
+        public void Package_collected(uint packageNumber)
         {
             int i = DataSource.packages.FindIndex(x=>x.serialNumber==packageNumber);
             if (i == -1)
@@ -88,7 +88,7 @@ namespace DalObject
         /// Update that package has arrived at destination
         /// </summary>
         /// <param name="packageNumber">serial number of the package</param>
-        public void Package_arrived(int packageNumber)
+        public void Package_arrived(uint packageNumber)
         {
             int i = DataSource.packages.FindIndex(x => x.serialNumber == packageNumber);
             if (i == -1)
@@ -105,7 +105,7 @@ namespace DalObject
         /// </summary>
         /// <param name="packageNumbe">Serial number of a particular package</param>
         /// <returns> string of data</returns>
-        public Package packege_by_number(int packageNumber)
+        public Package packege_by_number(uint packageNumber)
         {
             int i = DataSource.packages.FindIndex(x => x.serialNumber == packageNumber);
             if (i == -1)
@@ -153,7 +153,7 @@ namespace DalObject
         /// delete a spsific packege
         /// </summary>
         /// <param name="sirial"></param>
-        public void Deletepackege(int sirial)
+        public void Deletepackege(uint sirial)
         {
             int i = DataSource.packages.FindIndex(x => x.serialNumber == sirial);
             if (i == -1)

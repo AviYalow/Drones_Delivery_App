@@ -14,7 +14,7 @@ namespace IBL
         /// </summary>
         /// <param name="packegeNumber"></param>
         /// <returns></returns>
-        double buttryDownPackegeDelivery(int packegeNumber)
+        double buttryDownPackegeDelivery(uint packegeNumber)
         {
             double[] elctricity = dalObj.Elctrtricity();
             double battery_drop = 0, distans = 0;
@@ -59,16 +59,38 @@ namespace IBL
             return buttry;
         }
 
-        public void DroneToCharge(int drone,int base_)
+        public void DroneToCharge(uint drone,uint base_)
         {
+
+            IDAL.DO.Base_Station base_Station;
             try
             {
+                base_Station = dalObj.Base_station_by_number(base_);
+                if (ChargingStationFreeInBase(base_Station.baseNumber) <= 0)
+                    throw (new NoPlaceForChargeException(base_));
                 dalObj.Drone_To_charge(drone, base_);
             }
             catch(IDAL.DO.Item_not_found_exception ex)
             {
-                throw (new Item_not_found_exeption(ex));
+                throw (new Item_not_found_exception(ex));
             }
+
+        }
+
+        public int ChargingStationFreeInBase(uint base_)
+        {
+            int i = 0,base_Station;
+          
+            try
+            {
+               base_Station=(int) dalObj.Base_station_by_number(base_).Number_of_charging_stations;
+            }
+            catch(IDAL.DO.Item_not_found_exception ex)
+            {
+                throw (new Item_not_found_exception(ex));
+            }
+             i = dalObj.Charging_Drone_List().Count(x => x.idBaseStation == base_);
+            return base_Station- i;
         }
     }
 }

@@ -10,9 +10,9 @@ namespace IDAL
         /// </BtarryLoad>
         public struct BatteryLoad
         {
-            public int idBaseStation { get; set; }
+            public uint idBaseStation { get; set; }
 
-            public int id_drone { get; set; }
+            public uint id_drone { get; set; }
 
             public DateTime entringDrone { get; init; }
             

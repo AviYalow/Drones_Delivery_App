@@ -20,7 +20,7 @@ namespace DalObject
         /// <param name="category"> Easy / Medium / Heavy</param>
         /// <param name="butrry">Battery status</param>
         /// <param name="statos"> Free/ Maintenance/ Work</param>
-        public void Add_drone(int siralNumber, string model, int category)
+        public void Add_drone(uint siralNumber, string model, uint category)
         {
               if (DataSource.drones.Any(x=>x.serialNumber==siralNumber))
              throw (new Item_found_exception("drone", siralNumber));
@@ -38,7 +38,7 @@ namespace DalObject
         /// </summary>
         /// <param name="droneNum">Desired drone number</param>
         /// <returns> String of data</returns>
-        public Drone Drone_by_number(int droneNum)
+        public Drone Drone_by_number(uint droneNum)
         {
             if (!DataSource.drones.Any(x=>x.serialNumber==droneNum))
                 throw (new Item_not_found_exception("drone", droneNum));
@@ -64,7 +64,7 @@ namespace DalObject
             return DataSource.drones.ToList<Drone>();
         }
 
-        public void Drone_To_charge(int drone,int base_)
+        public void Drone_To_charge(uint drone,uint base_)
         {
             if(DataSource.drones.All(x=>x.serialNumber!=drone))
             {
@@ -82,7 +82,7 @@ namespace DalObject
         /// delete a spsific drone
         /// </summary>
         /// <param name="sirial"></param>
-        public void DeleteDrone(int sirial)
+        public void DeleteDrone(uint sirial)
         {
             if (DataSource.drones.Any(x=>x.serialNumber==sirial))
                 throw (new Item_not_found_exception("drone", sirial));
@@ -116,7 +116,7 @@ namespace DalObject
                 throw (new IDAL.DO.Item_not_found_exception("drone", drone.serialNumber));
         }
         
-        public TimeSpan TimeInCharge(int drone)
+        public TimeSpan TimeInCharge(uint drone)
         {
             int i = DataSource.droneInCharge.FindIndex(x => x.id_drone == drone);
             if (i==-1)
@@ -127,7 +127,7 @@ namespace DalObject
 
         }
 
-        public void FreeDroneFromCharge(int drone)
+        public void FreeDroneFromCharge(uint drone)
         {
             int i = DataSource.droneInCharge.FindIndex(x => x.id_drone == drone);
                 if (i == -1)

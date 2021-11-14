@@ -10,7 +10,7 @@ namespace IDAL
         /// </Drone>
         public struct Drone 
         {
-            public int serialNumber { get; init; }
+            public uint serialNumber { get; init; }
             public string Model { get; set; }
             public Weight_categories weightCategory { get; set; }
             

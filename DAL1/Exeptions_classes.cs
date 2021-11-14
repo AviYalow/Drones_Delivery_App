@@ -11,8 +11,8 @@ namespace IDAL
        public class Item_found_exception : Exception
         {
             public string type { get; set; }
-            public int key { get; set; }
-            public Item_found_exception(string type, int unic_key)
+            public uint key { get; set; }
+            public Item_found_exception(string type, uint unic_key)
             {
                 this.type = type;
                 key = unic_key;
@@ -32,8 +32,8 @@ namespace IDAL
        public class Item_not_found_exception : Exception
         {
             public string type { get; set; }
-            public int key { get; set; }
-            public Item_not_found_exception(string type, int unic_key)
+            public uint key { get; set; }
+            public Item_not_found_exception(string type, uint unic_key)
             {
                 this.type = type;
                 key = unic_key;

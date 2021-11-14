@@ -20,7 +20,7 @@ namespace DalObject
         /// <param name="numOfCharging">The amount of charging stations at the station </param>
         /// <param name="latitude">Latitude of the station</param>
         /// <param name="longitude">Longitude of the station</param>
-        public void Add_station(int base_num, string name, int numOfCharging, double latitude, double longitude)
+        public void Add_station(uint base_num, string name, uint numOfCharging, double latitude, double longitude)
         {
 
             if (DataSource.base_Stations.Any(x => x.baseNumber == base_num))
@@ -52,7 +52,7 @@ namespace DalObject
         /// </summary>
         /// <param name="baseNum">Desired base station number</param>
         /// <returns> String of data </returns>
-        public Base_Station Base_station_by_number(int baseNum)
+        public Base_Station Base_station_by_number(uint baseNum)
         {
 
             if (!DataSource.base_Stations.Any(x => x.baseNumber == baseNum))
@@ -95,7 +95,7 @@ namespace DalObject
         /// delete a spsific base for list
         /// </summary>
         /// <param name="sirial"></param>
-        public void DeleteBase(int sirial)
+        public void DeleteBase(uint sirial)
         {
             if (!DataSource.base_Stations.Any(x => x.baseNumber == sirial))
                 throw (new Item_not_found_exception("Base station", sirial));
