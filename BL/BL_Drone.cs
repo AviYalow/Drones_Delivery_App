@@ -7,30 +7,30 @@ using IBL.BO;
 
 namespace IBL
 {
-    partial class BL:IBL
+    partial class BL : IBL
     {
-        public void AddDrone(Drone drone,uint base_)
+        public void AddDrone(Drone drone, uint base_)
         {
             try
             {
-                
+
                 drone.location = Base_location(base_);
-                
+
             }
-            catch(IDAL.DO.Item_not_found_exception ex)
+            catch (IDAL.DO.ItemNotFoundException ex)
             {
-                throw (new Item_not_found_exception(ex));
+                throw (new ItemNotFoundException(ex));
             }
             drone.droneStatus = Drone_status.Maintenance;
 
             Random random = new Random();
             try
             {
-                dalObj.Add_drone(drone.SerialNum, drone.Model, (uint)drone.weightCategory);
+                dalObj.AddDrone(drone.SerialNum, drone.Model, (uint)drone.weightCategory);
             }
-            catch(IDAL.DO.Item_found_exception ex)
+            catch (IDAL.DO.ItemFoundException ex)
             {
-                throw (new Item_found_exeption(ex));
+                throw (new ItemFoundExeption(ex));
             }
             drone.butrryStatus = random.Next(20, 41);
             DroneToCharge(drone.SerialNum, base_);
@@ -38,13 +38,33 @@ namespace IBL
 
         }
 
-        public void updateDronelocation(uint drone ,Location location)
+        public void UpdateDronelocation(uint drone, Location location)
         {
             int i = drones.FindIndex(x => x.SerialNum == drone);
             if (i == -1)
-                throw (new Item_not_found_exception("Drone", drone));
+                throw (new ItemNotFoundException("Drone", drone));
             drones[i].location = location;
 
+        }
+
+        public void UpdateDroneName(uint droneId, string newName)
+        {
+            IDAL.DO.Drone droneInData;
+            try
+            {
+
+                droneInData = dalObj.DroneByNumber(droneId);
+            }
+            catch (IDAL.DO.ItemNotFoundException ex)
+            {
+                throw new ItemNotFoundException(ex);
+            }
+            int i = drones.FindIndex(x => x.SerialNum == droneId);
+            if (i == -1)
+                throw new ItemNotFoundException("Drone", droneId);
+            drones[i].Model = newName;
+            droneInData.Model = newName;
+            dalObj.UpdateDrone(droneInData);
         }
 
     }

@@ -10,9 +10,9 @@ namespace IDAL
         /// </Drone>
         public struct Drone 
         {
-            public uint serialNumber { get; init; }
+            public uint SerialNumber { get; init; }
             public string Model { get; set; }
-            public Weight_categories weightCategory { get; set; }
+            public Weight_categories WeightCategory { get; set; }
             
             
 
@@ -22,8 +22,8 @@ namespace IDAL
             public override string ToString()
             {
                 String printDrown = "";
-                printDrown += $"Siral Number is {serialNumber},\n";
-                printDrown += $"Weight Category is {weightCategory},\n";
+                printDrown += $"Siral Number is {SerialNumber},\n";
+                printDrown += $"Weight Category is {WeightCategory},\n";
                 /* printDrown += $"Butrry Statos is {butrryStatus},\n";
                  printDrown += $"Drown Statos is {drownStatus}\n";*/
                 return printDrown;

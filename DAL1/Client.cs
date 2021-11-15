@@ -12,7 +12,7 @@ namespace IDAL
         /// </Client>
         public struct Client 
         {
-            public uint ID { get; init; }
+            public uint Id { get; init; }
             public String Name { get; set; }
             public String PhoneNumber { get; set; }
             public double Longitude { get; set; }
@@ -24,7 +24,7 @@ namespace IDAL
             {
 
                 String printClient = "";
-                printClient += $"ID is {ID},\n";
+                printClient += $"ID is {Id},\n";
                 printClient += $"Name is {Name},\n";
                 printClient += $"Phone Number is {PhoneNumber},\n";
 

@@ -20,11 +20,11 @@ namespace DalObject
         /// <param name="numOfCharging">The amount of charging stations at the station </param>
         /// <param name="latitude">Latitude of the station</param>
         /// <param name="longitude">Longitude of the station</param>
-        public void Add_station(uint base_num, string name, uint numOfCharging, double latitude, double longitude)
+        public void AddStation(uint base_num, string name, uint numOfCharging, double latitude, double longitude)
         {
 
             if (DataSource.base_Stations.Any(x => x.baseNumber == base_num))
-                throw (new Item_found_exception("Base station", base_num));
+                throw (new ItemFoundException("Base station", base_num));
 
             DataSource.base_Stations.Add(new Base_Station
             {
@@ -39,10 +39,10 @@ namespace DalObject
 
 
         }
-        public void Add_station(Base_Station base_Station)
+        public void AddStation(Base_Station base_Station)
         {
             if (DataSource.base_Stations.Any(x => x.baseNumber == base_Station.baseNumber))
-                throw (new Item_found_exception("base station", base_Station.baseNumber));
+                throw (new ItemFoundException("base station", base_Station.baseNumber));
             DataSource.base_Stations.Add(base_Station);
         }
 
@@ -52,11 +52,11 @@ namespace DalObject
         /// </summary>
         /// <param name="baseNum">Desired base station number</param>
         /// <returns> String of data </returns>
-        public Base_Station Base_station_by_number(uint baseNum)
+        public Base_Station BaseStationByNumber(uint baseNum)
         {
 
             if (!DataSource.base_Stations.Any(x => x.baseNumber == baseNum))
-                throw (new Item_not_found_exception("Base station", baseNum));
+                throw (new ItemNotFoundException("Base station", baseNum));
             return DataSource.base_Stations[DataSource.base_Stations.FindIndex(x => x.baseNumber == baseNum)];
 
         }
@@ -67,11 +67,11 @@ namespace DalObject
         /// </summary>
         /// <param name="array">A array list that will contain 
         /// the values ​​of all the base stations so we can print them</param>
-        public IEnumerable<Base_Station> Base_station_list()
+        public IEnumerable<Base_Station> BaseStationList()
         {
             if(DataSource.base_Stations.Count==0)
             {
-                throw (new List_empty_exception("Base Station"));
+                throw (new ListEmptyException("Base Station"));
             }
             return DataSource.base_Stations.ToList<Base_Station>();
         }
@@ -82,10 +82,10 @@ namespace DalObject
         /// </summary>
         /// <param name="array">A array list that will contain 
         /// the values so we can print them</param>
-        public IEnumerable<Base_Station> Base_station_list_with_charge_states()
+        public IEnumerable<Base_Station> BaseStationListWithChargeStates()
         {
             if (DataSource.base_Stations.Count == 0)
-                throw (new No_Item_Whit_this_condition_exception());
+                throw (new NoItemWhitThisConditionException());
             return DataSource.base_Stations.FindAll(x => x.Number_of_charging_stations > 0);
 
         }
@@ -98,7 +98,7 @@ namespace DalObject
         public void DeleteBase(uint sirial)
         {
             if (!DataSource.base_Stations.Any(x => x.baseNumber == sirial))
-                throw (new Item_not_found_exception("Base station", sirial));
+                throw (new ItemNotFoundException("Base station", sirial));
             DataSource.base_Stations.Remove(DataSource.base_Stations[DataSource.base_Stations.FindIndex(x => x.baseNumber == sirial)]);
 
 
@@ -108,7 +108,7 @@ namespace DalObject
         {
             int i = DataSource.base_Stations.FindIndex(x => x.baseNumber == base_.baseNumber);
             if (i == -1)
-                throw (new IDAL.DO.Item_not_found_exception("Base Station", base_.baseNumber));
+                throw (new IDAL.DO.ItemNotFoundException("Base Station", base_.baseNumber));
             else
                 DataSource.base_Stations[i] = base_;
         }

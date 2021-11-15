@@ -20,24 +20,24 @@ namespace DalObject
         /// <param name="kg">Weight categories</param>
         /// <param name="priorityByUser">Priority: Immediate/ quick/ Regular </param>
         /// <returns>Returns the serial number of the created package</returns>
-        public uint Add_package(uint idsend, uint idget, uint kg, uint priorityByUser)
+        public uint AddPackage(uint idsend, uint idget, uint kg, uint priorityByUser)
         {
 
 
             DataSource.Config.package_num++;
             Package package = new Package
             {
-                serialNumber = DataSource.Config.package_num,
-                receiving_delivery = DateTime.Now,
-                sendClient = idsend,
-                getingClient = idget,
-                weightCatgory = (Weight_categories)kg,
-                priority = (Priority)priorityByUser
+                SerialNumber = DataSource.Config.package_num,
+                ReceivingDelivery = DateTime.Now,
+                SendClient = idsend,
+                GetingClient = idget,
+                WeightCatgory = (Weight_categories)kg,
+                Priority = (Priority)priorityByUser
                 
             };
-            package.collect_package_for_shipment = new DateTime();
-            package.package_arrived = new DateTime();
-            package.package_association = new DateTime();
+            package.CollectPackageForShipment = new DateTime();
+            package.PackageArrived = new DateTime();
+            package.PackageAssociation = new DateTime();
             DataSource.packages.Add(package);
             return DataSource.Config.package_num;
         }
@@ -47,20 +47,20 @@ namespace DalObject
         /// </summary>
         /// <param name="packageNumber">serial number of the package that needs 
         /// to connect to drone </param>
-        public void connect_package_to_drone(uint packageNumber, uint drone_sirial_number)
+        public void ConnectPackageToDrone(uint packageNumber, uint drone_sirial_number)
         {
-            int i = DataSource.packages.FindIndex(x=>x.serialNumber==packageNumber);
+            int i = DataSource.packages.FindIndex(x=>x.SerialNumber==packageNumber);
             if (i==-1)
-                 throw (new Item_not_found_exception("packege",packageNumber));
-             if (DataSource.drones.Any(x => x.serialNumber == drone_sirial_number))
-                 throw (new Item_not_found_exception("drone",drone_sirial_number));
+                 throw (new ItemNotFoundException("packege",packageNumber));
+             if (DataSource.drones.Any(x => x.SerialNumber == drone_sirial_number))
+                 throw (new ItemNotFoundException("drone",drone_sirial_number));
 
             
           
             Package package = DataSource.packages[i];
-            package.operator_skimmer_ID = drone_sirial_number;
+            package.OperatorSkimmerId = drone_sirial_number;
 
-            package.package_association = DateTime.Now;
+            package.PackageAssociation = DateTime.Now;
             DataSource.packages[i] = package;
          
 
@@ -71,15 +71,15 @@ namespace DalObject
         /// Updated package collected
         /// </summary>
         /// <param name="packageNumber">serial number of the package</param>
-        public void Package_collected(uint packageNumber)
+        public void PackageCollected(uint packageNumber)
         {
-            int i = DataSource.packages.FindIndex(x=>x.serialNumber==packageNumber);
+            int i = DataSource.packages.FindIndex(x=>x.SerialNumber==packageNumber);
             if (i == -1)
-                throw (new Item_not_found_exception("package", packageNumber));
+                throw (new ItemNotFoundException("package", packageNumber));
 
             
             Package package = DataSource.packages[i];
-            package.collect_package_for_shipment = DateTime.Now;
+            package.CollectPackageForShipment = DateTime.Now;
             DataSource.packages[i] = package;
             
         }
@@ -88,14 +88,14 @@ namespace DalObject
         /// Update that package has arrived at destination
         /// </summary>
         /// <param name="packageNumber">serial number of the package</param>
-        public void Package_arrived(uint packageNumber)
+        public void PackageArrived(uint packageNumber)
         {
-            int i = DataSource.packages.FindIndex(x => x.serialNumber == packageNumber);
+            int i = DataSource.packages.FindIndex(x => x.SerialNumber == packageNumber);
             if (i == -1)
-                throw (new Item_not_found_exception("package", packageNumber));
+                throw (new ItemNotFoundException("package", packageNumber));
 
             Package package = DataSource.packages[i];
-            package.package_arrived = DateTime.Now;
+            package.PackageArrived = DateTime.Now;
             DataSource.packages[i] = package;
         }
 
@@ -105,11 +105,11 @@ namespace DalObject
         /// </summary>
         /// <param name="packageNumbe">Serial number of a particular package</param>
         /// <returns> string of data</returns>
-        public Package packege_by_number(uint packageNumber)
+        public Package packegeByNumber(uint packageNumber)
         {
-            int i = DataSource.packages.FindIndex(x => x.serialNumber == packageNumber);
+            int i = DataSource.packages.FindIndex(x => x.SerialNumber == packageNumber);
             if (i == -1)
-                throw (new Item_not_found_exception("package", packageNumber));
+                throw (new ItemNotFoundException("package", packageNumber));
             return DataSource.packages[i];
 
         }
@@ -119,7 +119,7 @@ namespace DalObject
         /// </summary>
         /// <param name="array">A array list that will contain 
         /// the values ​​of all the packages so we can print them</param>
-        public IEnumerable<Package> packege_list()
+        public IEnumerable<Package> PackegeList()
         {
             return DataSource.packages.ToList<Package>();
 
@@ -130,42 +130,42 @@ namespace DalObject
         /// have not been assigned to a drone yet 
         /// </summary>
 
-        public IEnumerable<Package> packege_list_with_no_drone()
+        public IEnumerable<Package> PackegeListWithNoDrone()
         {
 
-            return DataSource.packages.FindAll(x => x.operator_skimmer_ID == 0);
+            return DataSource.packages.FindAll(x => x.OperatorSkimmerId == 0);
 
 
 
         }
 
-        public IEnumerable<Package> Packages_with_drone()
+        public IEnumerable<Package> PackagesWithDrone()
         {
-            return DataSource.packages.FindAll(x => x.operator_skimmer_ID != 0);
+            return DataSource.packages.FindAll(x => x.OperatorSkimmerId != 0);
         }
 
-        public IEnumerable<Package> Packages_arrive_list()
+        public IEnumerable<Package> PackagesArriveList()
         {
-            return DataSource.packages.FindAll(x => x.package_arrived != new DateTime());
+            return DataSource.packages.FindAll(x => x.PackageArrived != new DateTime());
         }
 
         /// <summary>
         /// delete a spsific packege
         /// </summary>
         /// <param name="sirial"></param>
-        public void Deletepackege(uint sirial)
+        public void DeletePackege(uint sirial)
         {
-            int i = DataSource.packages.FindIndex(x => x.serialNumber == sirial);
+            int i = DataSource.packages.FindIndex(x => x.SerialNumber == sirial);
             if (i == -1)
-                throw (new Item_not_found_exception("package", sirial));
+                throw (new ItemNotFoundException("package", sirial));
             DataSource.packages.Remove(DataSource.packages[i]);
         }
 
         public void UpdatePackege(Package package)
         {
-            int i = DataSource.packages.FindIndex(x => x.serialNumber == package.serialNumber);
+            int i = DataSource.packages.FindIndex(x => x.SerialNumber == package.SerialNumber);
             if (i == -1)
-                throw (new IDAL.DO.Item_not_found_exception("Packege", package.serialNumber));
+                throw (new IDAL.DO.ItemNotFoundException("Packege", package.SerialNumber));
             else
                 DataSource.packages[i] = package;
         }

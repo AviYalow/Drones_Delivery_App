@@ -33,12 +33,12 @@ namespace DalObject
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        public string Point_to_degree(double point)
+        public string PointToDegree(double point)
         {
             return Point.Degree(point);
         }
 
-        public IEnumerable<BatteryLoad> Charging_Drone_List()
+        public IEnumerable<BatteryLoad> ChargingDroneList()
         {
 
             return DataSource.droneInCharge.ToList();

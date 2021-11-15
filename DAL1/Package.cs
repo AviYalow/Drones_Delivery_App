@@ -9,26 +9,26 @@ namespace IDAL
         /// </Package>
         public struct Package
         {
-            public uint serialNumber { get; init; }
-            public uint sendClient { get; set; }
-            public uint getingClient { get; set; }
-            public Weight_categories weightCatgory { get; set; }
-            public Priority priority { get; set; }
-            public uint operator_skimmer_ID { get; set; }
+            public uint SerialNumber { get; init; }
+            public uint SendClient { get; set; }
+            public uint GetingClient { get; set; }
+            public Weight_categories WeightCatgory { get; set; }
+            public Priority Priority { get; set; }
+            public uint OperatorSkimmerId { get; set; }
            
 
 
             //Delivery time create a package
-            public DateTime receiving_delivery { get; set; }
+            public DateTime ReceivingDelivery { get; set; }
 
             //Time to assign the package to a drone
-            public DateTime package_association { get; set; }
+            public DateTime PackageAssociation { get; set; }
 
             //Package collection time from the sender
-            public DateTime collect_package_for_shipment { get; set; }
+            public DateTime CollectPackageForShipment { get; set; }
 
             //Time of arrival of the package to the recipient
-            public DateTime package_arrived { get; set; }
+            public DateTime PackageArrived { get; set; }
 
 
 
@@ -36,26 +36,26 @@ namespace IDAL
             public override string ToString()
             {
                 String printPackage = "";
-                printPackage += $"Sirial Number is {serialNumber},\n";
-                printPackage += $"Send Client is {sendClient},\n";
-                printPackage += $"Getting Client is {getingClient},\n";
-                printPackage += $"weight Catgory is {weightCatgory},\n";
-                printPackage += $"Priority is {priority},\n";
-                printPackage += $"operator skimmer ID is {operator_skimmer_ID},\n";
-                printPackage += $"Receiving Delivery is {receiving_delivery},\n";
+                printPackage += $"Sirial Number is {SerialNumber},\n";
+                printPackage += $"Send Client is {SendClient},\n";
+                printPackage += $"Getting Client is {GetingClient},\n";
+                printPackage += $"weight Catgory is {WeightCatgory},\n";
+                printPackage += $"Priority is {Priority},\n";
+                printPackage += $"operator skimmer ID is {OperatorSkimmerId},\n";
+                printPackage += $"Receiving Delivery is {ReceivingDelivery},\n";
 
                 //If the package was associated with a drone
-                if (operator_skimmer_ID != 0)
+                if (OperatorSkimmerId != 0)
                 {
-                    printPackage += $"Package Association is {package_association},\n";
+                    printPackage += $"Package Association is {PackageAssociation},\n";
                     //if the package have been collected
-                    if (collect_package_for_shipment != new DateTime())
+                    if (CollectPackageForShipment != new DateTime())
                     {
-                        printPackage += $"collect package for shipment is {collect_package_for_shipment},\n";
+                        printPackage += $"collect package for shipment is {CollectPackageForShipment},\n";
                         // if the package arrived
-                        if (package_arrived != new DateTime())
+                        if (PackageArrived != new DateTime())
                         {
-                            printPackage += $"package_arrived is {package_arrived}\n";
+                            printPackage += $"package_arrived is {PackageArrived}\n";
                         }
                         //if the package not arrived
                         else

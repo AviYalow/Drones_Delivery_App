@@ -16,9 +16,9 @@ namespace IBL
             {
                 packegeNum = dalObj.Add_package(package.SendClient, package.RecivedClient, (int)package.weightCatgory, (uint)package.priority);
             }
-            catch (IDAL.DO.Item_found_exception ex)
+            catch (IDAL.DO.ItemFoundException ex)
             {
-                throw (new Item_found_exeption(ex));
+                throw (new ItemFoundExeption(ex));
             }
 
            

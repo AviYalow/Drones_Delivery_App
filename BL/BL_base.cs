@@ -24,7 +24,7 @@ namespace IBL
                 Location base_location = new Location();
 
                 double distans = 0, distans2;
-                foreach (IDAL.DO.Base_Station base_ in dalObj.Base_station_list())
+                foreach (IDAL.DO.Base_Station base_ in dalObj.BaseStationList())
                 {
                     base_location.Latitude = base_.latitude;
                     base_location.Longitude = base_.longitude;
@@ -36,9 +36,9 @@ namespace IBL
                     }
                 }
             }
-            catch(IDAL.DO.Item_not_found_exception ex)
+            catch(IDAL.DO.ItemNotFoundException ex)
             {
-                throw (new Item_not_found_exception(ex));
+                throw (new ItemNotFoundException(ex));
             }
             return new_location;
         }
@@ -52,11 +52,11 @@ namespace IBL
             IDAL.DO.Base_Station base_Station = new IDAL.DO.Base_Station();
             try
             {
-                base_Station = dalObj.Base_station_by_number(base_number);
+                base_Station = dalObj.BaseStationByNumber(base_number);
             }
-            catch (IDAL.DO.Item_not_found_exception ex)
+            catch (IDAL.DO.ItemNotFoundException ex)
             {
-                throw (new Item_not_found_exception(ex));
+                throw (new ItemNotFoundException(ex));
             }
             Location base_location = new Location();
           
@@ -72,11 +72,11 @@ namespace IBL
         {
             try
             {
-                dalObj.Add_station(baseStation.SerialNum, baseStation.Name, baseStation.FreeState, baseStation.location.Latitude, baseStation.location.Longitude);
+                dalObj.AddStation(baseStation.SerialNum, baseStation.Name, baseStation.FreeState, baseStation.location.Latitude, baseStation.location.Longitude);
             }
-            catch (IDAL.DO.Item_found_exception ex)
+            catch (IDAL.DO.ItemFoundException ex)
             {
-                throw (new Item_found_exeption(ex));
+                throw (new ItemFoundExeption(ex));
             }
             baseStation.dronesInCharge.Clear();
         }

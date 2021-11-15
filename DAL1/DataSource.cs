@@ -71,11 +71,11 @@ namespace DalObject
             {
                 int i;
 
-                for (i = rand.Next(10); client[i].ID == sending; i = rand.Next(10))
+                for (i = rand.Next(10); client[i].Id == sending; i = rand.Next(10))
                 {
 
                 }
-                return client[i].ID;
+                return client[i].Id;
             }
 
             //initializing the base station's array
@@ -105,9 +105,9 @@ namespace DalObject
             {
                 drones.Add(new Drone
                 {
-                    serialNumber = (uint)rand.Next(10000),
+                    SerialNumber = (uint)rand.Next(10000),
                     Model = randomName(rand, rand.Next(3, 7)),
-                    weightCategory = (Weight_categories)rand.Next(0, 3),
+                    WeightCategory = (Weight_categories)rand.Next(0, 3),
                    
                 });
 
@@ -119,7 +119,7 @@ namespace DalObject
             {
                 clients.Add(new Client
                 {
-                    ID = (uint)rand.Next(100000000, 999999999),
+                    Id = (uint)rand.Next(100000000, 999999999),
 
                     PhoneNumber = ($"05{rand.Next(0, 6)}-{rand.Next(100, 999)}-{rand.Next(1000, 9999)}"),
                     Name = (personalRandomName(rand, rand.Next(3, 7))),
@@ -134,37 +134,37 @@ namespace DalObject
             for (int i = 0; i < 10; i++)
             {
                 int j = rand.Next(0, 10);
-                Package package = new Package() { serialNumber = Config.package_num };
+                Package package = new Package() { SerialNumber = Config.package_num };
 
 
 
-                package.sendClient = clients[j].ID;
-                package.getingClient = idSnding(clients, clients[j].ID);
-                package.weightCatgory = (Weight_categories)rand.Next(0, 3);
-                package.priority = (Priority)rand.Next(0, 3);
-                package.operator_skimmer_ID = (rand.Next(2) != 0) ? drones[rand.Next(5)].serialNumber : 0;
-                package.receiving_delivery = DateTime.Now.AddMinutes(rand.Next(-300, -150));
+                package.SendClient = clients[j].Id;
+                package.GetingClient = idSnding(clients, clients[j].Id);
+                package.WeightCatgory = (Weight_categories)rand.Next(0, 3);
+                package.Priority = (Priority)rand.Next(0, 3);
+                package.OperatorSkimmerId = (rand.Next(2) != 0) ? drones[rand.Next(5)].SerialNumber : 0;
+                package.ReceivingDelivery = DateTime.Now.AddMinutes(rand.Next(-300, -150));
 
-                package.package_association = (package.operator_skimmer_ID != 0) ? package.receiving_delivery.AddMinutes(2) : new DateTime();
-                if (package.package_association != new DateTime())
+                package.PackageAssociation = (package.OperatorSkimmerId != 0) ? package.ReceivingDelivery.AddMinutes(2) : new DateTime();
+                if (package.PackageAssociation != new DateTime())
                 {
-                    package.package_arrived = (rand.Next(2) != 0) ? package.package_association.AddMinutes(rand.Next(60)) : new DateTime();
-                    if (package.package_arrived != new DateTime())
-                        package.collect_package_for_shipment = (rand.Next(2) != 0) ? package.package_arrived.AddMinutes(rand.Next(60)) : new DateTime();
+                    package.PackageArrived = (rand.Next(2) != 0) ? package.PackageAssociation.AddMinutes(rand.Next(60)) : new DateTime();
+                    if (package.PackageArrived != new DateTime())
+                        package.CollectPackageForShipment = (rand.Next(2) != 0) ? package.PackageArrived.AddMinutes(rand.Next(60)) : new DateTime();
                 }
 
                 packages.Add(new Package
                 {
-                    serialNumber = package.serialNumber,
-                    sendClient = package.sendClient,
-                    getingClient = package.getingClient,
-                    package_arrived = package.package_arrived,
-                    collect_package_for_shipment = package.collect_package_for_shipment,
-                    operator_skimmer_ID = package.operator_skimmer_ID,
-                    package_association = package.package_association,
-                    priority = package.priority,
-                    receiving_delivery = package.receiving_delivery,
-                    weightCatgory = package.weightCatgory
+                    SerialNumber = package.SerialNumber,
+                    SendClient = package.SendClient,
+                    GetingClient = package.GetingClient,
+                    PackageArrived = package.PackageArrived,
+                    CollectPackageForShipment = package.CollectPackageForShipment,
+                    OperatorSkimmerId = package.OperatorSkimmerId,
+                    PackageAssociation = package.PackageAssociation,
+                    Priority = package.Priority,
+                    ReceivingDelivery = package.ReceivingDelivery,
+                    WeightCatgory = package.WeightCatgory
 
 
                 });

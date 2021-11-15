@@ -8,11 +8,11 @@ namespace IDAL
 {
     namespace DO
     {
-       public class Item_found_exception : Exception
+       public class ItemFoundException : Exception
         {
             public string type { get; set; }
             public uint key { get; set; }
-            public Item_found_exception(string type, uint unic_key)
+            public ItemFoundException(string type, uint unic_key)
             {
                 this.type = type;
                 key = unic_key;
@@ -29,11 +29,11 @@ namespace IDAL
             }
         }
 
-       public class Item_not_found_exception : Exception
+       public class ItemNotFoundException : Exception
         {
             public string type { get; set; }
             public uint key { get; set; }
-            public Item_not_found_exception(string type, uint unic_key)
+            public ItemNotFoundException(string type, uint unic_key)
             {
                 this.type = type;
                 key = unic_key;
@@ -52,10 +52,10 @@ namespace IDAL
             }
         }
 
-        public class List_empty_exception : Exception
+        public class ListEmptyException : Exception
         {
             string ExceptionMesseg { get; set; }
-            public List_empty_exception(string list)
+            public ListEmptyException(string list)
             {
                 ExceptionMesseg = $"ERROR: this {list} empty! ";
             }
@@ -65,7 +65,7 @@ namespace IDAL
             }
         }
 
-        public class No_Item_Whit_this_condition_exception : Exception
+        public class NoItemWhitThisConditionException : Exception
         {
             string ExceptionMassege { get => " no items whit your condition!"; }
         }

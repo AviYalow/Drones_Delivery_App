@@ -22,15 +22,15 @@ namespace DalObject
         /// <param name="latitude">Latitude of the client</param>
         /// <param name="londitude">Londitude of the client</param>
 
-        public void Add_client(uint id, string name, string phone, double latitude, double londitude)
+        public void AddClient(uint id, string name, string phone, double latitude, double londitude)
         {
 
           
-            if (DataSource.clients.Any(x=>x.ID==id))
-                throw (new Item_found_exception("Client", id));
+            if (DataSource.clients.Any(x=>x.Id==id))
+                throw (new ItemFoundException("Client", id));
             DataSource.clients.Add(new Client
             {
-                ID = id,
+                Id = id,
                 Name = name,
                 PhoneNumber = phone,
                 Latitude = latitude,
@@ -45,11 +45,11 @@ namespace DalObject
         /// </summary>
         /// <param name="id">ID of desired client </param>
         /// <returns> string of data </returns>
-        public Client cilent_by_number(uint id)
+        public Client CilentByNumber(uint id)
         {
-              if (DataSource.clients.Any(x=>x.ID==id))
-             throw (new Item_not_found_exception("client",id));
-            return DataSource.clients[DataSource.clients.FindIndex(x => x.ID == id)];
+              if (DataSource.clients.Any(x=>x.Id==id))
+             throw (new ItemNotFoundException("client",id));
+            return DataSource.clients[DataSource.clients.FindIndex(x => x.Id == id)];
 
         }
 
@@ -59,7 +59,7 @@ namespace DalObject
         /// </summary>
         /// <param name="array">A array list that will contain 
         /// the values ​​of all the clients so we can print them</param>
-        public IEnumerable<Client> cilent_list()
+        public IEnumerable<Client> cilentList()
         {
             return DataSource.clients.ToList<Client>();
         }
@@ -70,21 +70,21 @@ namespace DalObject
         /// <param name="id"></param>
         public void DeleteClient(uint id)
         {
-            if (!DataSource.clients.Any(x=>x.ID==id))
-                throw (new Item_not_found_exception("client", id));
+            if (!DataSource.clients.Any(x=>x.Id==id))
+                throw (new ItemNotFoundException("client", id));
 
-            DataSource.clients.Remove(DataSource.clients[DataSource.clients.FindIndex(x => x.ID == id)]);
+            DataSource.clients.Remove(DataSource.clients[DataSource.clients.FindIndex(x => x.Id == id)]);
 
 
         }
 
-        public void Update_client(Client client)
+        public void UpdateClient(Client client)
         {
-            int index = DataSource.clients.FindIndex(x => x.ID == client.ID);
+            int index = DataSource.clients.FindIndex(x => x.Id == client.Id);
             if (index != -1)
                 DataSource.clients[index] = client;
             else
-                throw (new IDAL.DO.Item_not_found_exception("client", client.ID));
+                throw (new IDAL.DO.ItemNotFoundException("client", client.Id));
         }
     }
 }

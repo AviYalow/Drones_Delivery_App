@@ -9,10 +9,10 @@ namespace IBL
     namespace BO
     {
 
-        public class Item_found_exeption : Exception
+        public class ItemFoundExeption : Exception
         {
-            IDAL.DO.Item_found_exception exeption { get; set; }
-            public Item_found_exeption(IDAL.DO.Item_found_exception ex) { exeption = ex; }
+            IDAL.DO.ItemFoundException exeption { get; set; }
+            public ItemFoundExeption(IDAL.DO.ItemFoundException ex) { exeption = ex; }
             public override string ToString()
             {
                 string exeptionString = "";
@@ -22,18 +22,18 @@ namespace IBL
                 return exeptionString;
             }
         }
-        public class Item_not_found_exception : Exception
+        public class ItemNotFoundException : Exception
         {
-            IDAL.DO.Item_not_found_exception exeption { get; set; }
+            IDAL.DO.ItemNotFoundException exeption { get; set; }
             public string type { get; set; }
             public uint key { get; set; }
 
-            public Item_not_found_exception(string type, uint unic_key)
+            public ItemNotFoundException(string type, uint unic_key):base(type)
             {
                 this.type = type;
                 key = unic_key;
             }
-            public Item_not_found_exception(IDAL.DO.Item_not_found_exception ex) { exeption = ex; }
+            public ItemNotFoundException(IDAL.DO.ItemNotFoundException ex):base(ex.Message,ex) { exeption = ex; }
             public override string ToString()
             {
                 string exeptionString = "";
