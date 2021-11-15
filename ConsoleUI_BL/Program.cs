@@ -435,7 +435,7 @@ namespace ConsoleUI_BL
                 {
                     check = uint.TryParse(Console.ReadLine(), out num1);
                 } while (!check);
-                bl.connect_package_to_drone(num, num1);
+                bl.ConnectPackageToDrone(num, num1);
             }
 
             void addPackage(BL.BL bl, out bool check, out uint num, out uint id, out uint num1, out uint num2)
@@ -463,7 +463,7 @@ namespace ConsoleUI_BL
                     check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
                 // add new package
-                bl.Add_package(id, num1, num2, num);
+                bl.AddPackage(id, num1, num2, num);
             }
 
             void addDrone(BL.BL bl, out bool check, out uint num, out uint id, out uint num1, out double doubleNum1, out string name)
@@ -492,7 +492,7 @@ namespace ConsoleUI_BL
                 } while (!check);
 
                 //add new drone
-                bl.Add_drone(id, name, num);
+                bl.AddDrone(id, name, num);
             }
 
             void addBase(BL.BL bL, out bool check, out uint id, out uint num1, out double doubleNum1, out double doubleNum2, out string name)
@@ -522,7 +522,7 @@ namespace ConsoleUI_BL
                 } while (!check);
 
                 // add new Base station
-               bl.Add_station(id, name, num1, doubleNum1, doubleNum2);
+               bl.AddStation(id, name, num1, doubleNum1, doubleNum2);
             }
 
             void addClient(BL.BL bl, out bool check, out uint myId, out double doubleNum1, out double doubleNum2, out string name, out string phone)
@@ -548,7 +548,7 @@ namespace ConsoleUI_BL
                 } while (!check);
 
                 // add new client
-                bl.Add_client(myId, name, phone, doubleNum1, doubleNum2);
+                bl.AddClient(myId, name, phone, doubleNum1, doubleNum2);
             }
 
             void releaseDrone(BL.BL bl, out bool check, out uint serial,out uint timeInCharge)

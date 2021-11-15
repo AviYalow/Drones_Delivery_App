@@ -123,28 +123,28 @@ namespace BL
             }
         }
 
-        public void Add_client(uint id, string name, string phone, double latitude, double londitude)
+        public void AddClient(uint id, string name, string phone, double latitude, double londitude)
         {
             throw new NotImplementedException();
         }
 
-        public void Add_drone(uint siralNumber, string model, uint category)
+        public void AddDrone(uint siralNumber, string model, uint category)
         {
             throw new NotImplementedException();
         }
 
-        public uint Add_package(uint idsend, uint idget, uint kg, uint priorityByUser)
+        public uint AddPackage(uint idsend, uint idget, uint kg, uint priorityByUser)
         {
             throw new NotImplementedException();
         }
 
-        public void Add_station(uint base_num, string name, uint numOfCharging, double latitude, double longitude)
+        public void AddStation(uint base_num, string name, uint numOfCharging, double latitude, double longitude)
         {
 
             throw new NotImplementedException();
         }
 
-        public void connect_package_to_drone(uint packageNumber, uint drone_sirial_number)
+        public void ConnectPackageToDrone(uint packageNumber, uint drone_sirial_number)
         {
             throw new NotImplementedException();
         }

@@ -15,6 +15,8 @@ namespace IDAL
         public void AddClient(uint id, string name, string phone, double latitude, double londitude);
 
 
+        
+
         public void PackageCollected(uint packageNumber);
         public void ConnectPackageToDrone(uint packageNumber, uint drone_sirial_number);
         public void PackageArrived(uint packageNumber);
@@ -55,7 +57,9 @@ namespace IDAL
 
 
 
-
+        
+        
+       
 
 
     }
