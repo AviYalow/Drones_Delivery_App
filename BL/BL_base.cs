@@ -8,46 +8,56 @@ using IBL.BO;
 
 namespace IBL
 {
-   partial class BL:IBL
+    partial class BL : IBL
     {
         /// <summary>
         /// clculet the most collset base to the cilent
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        public Location Clloset_base(uint client)
+        public BaseStation CllosetBase(Location location)
         {
-            Location new_location = new Location();
+            BaseStation baseStation = new BaseStation();
+            baseStation.location = new Location();
             try
             {
-                Location client_location = Client_location(client);
+
                 Location base_location = new Location();
 
-                double distans = 0, distans2;
+                double distans = -5, distans2;
                 foreach (IDAL.DO.Base_Station base_ in dalObj.BaseStationList())
                 {
                     base_location.Latitude = base_.latitude;
                     base_location.Longitude = base_.longitude;
-                    distans2 = Distans(client_location, base_location);
-                    if (distans < distans2 || distans == 0)
+                    distans2 = Distans(location, base_location);
+                    if (distans > distans2 || distans == -5)
                     {
+
                         distans = distans2;
-                        new_location = base_location;
+                        baseStation = new BaseStation
+                        {
+                            location = base_location,
+                            Name = base_.NameBase,
+                            SerialNum = base_.baseNumber,
+                            FreeState = base_.NumberOfChargingStations,
+                            dronesInCharge = null
+                        };
+
                     }
                 }
             }
-            catch(IDAL.DO.ItemNotFoundException ex)
+            catch (IDAL.DO.ItemNotFoundException ex)
             {
                 throw (new ItemNotFoundException(ex));
             }
-            return new_location;
+            return baseStation;
         }
         /// <summary>
         /// geting location for spsific base
         /// </summary>
         /// <param name="base_number"></param>
         /// <returns></returns>
-        public Location Base_location(uint base_number)
+        public Location BaseLocation(uint base_number)
         {
             IDAL.DO.Base_Station base_Station = new IDAL.DO.Base_Station();
             try
@@ -59,7 +69,7 @@ namespace IBL
                 throw (new ItemNotFoundException(ex));
             }
             Location base_location = new Location();
-          
+
             base_location.Latitude = base_Station.latitude;
             base_location.Longitude = base_Station.longitude;
             return base_location;
@@ -80,5 +90,29 @@ namespace IBL
             }
             baseStation.dronesInCharge.Clear();
         }
+
+        public void UpdateBase(string newName = "", int newNumber = -1)
+        {
+            var baseUpdat = new IDAL.DO.Base_Station();
+            try
+            {
+                baseUpdat = dalObj.BaseStationByNumber((uint)newNumber);
+            }
+            catch (IDAL.DO.ItemNotFoundException ex)
+            {
+                throw new ItemNotFoundException(ex);
+            }
+            if (newName != "")
+                baseUpdat.NameBase = newName;
+            if (newNumber != -1)
+            {
+                int droneInCharge = dalObj.ChargingDroneList().Count(x => x.idBaseStation == (uint)newNumber);
+                baseUpdat.NumberOfChargingStations = (droneInCharge <= newNumber) ?
+                    (uint)newNumber : throw new UpdateChargingPositionsException(droneInCharge);
+
+            }
+        }
+
+
     }
 }

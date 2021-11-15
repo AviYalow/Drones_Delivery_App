@@ -5,9 +5,9 @@ using IDAL;
 using IBL;
 using IBL.BO;
 
-namespace BL
+namespace IBL
 {
-    public partial class BL : IBL.IBL
+    public partial class BL : IBL
     {
         public IDal dalObj;
         public List<Drone> drones = new List<Drone>();
@@ -50,19 +50,19 @@ namespace BL
                     //drone need to collect shipment
                     if (package.CollectPackageForShipment != new DateTime())
                     {
-                        new_drone.location = Client_location(package.SendClient);
+                        new_drone.location = ClientLocation(package.SendClient);
                         min_butrry = buttryDownPackegeDelivery(package.SerialNumber) +
-                           buttryDownWithNoPackege(Clloset_base(package.GetingClient), Client_location(package.GetingClient));
+                           buttryDownWithNoPackege(CllosetBase(ClientLocation(package.GetingClient)).location, ClientLocation(package.GetingClient));
                         new_drone.butrryStatus = random.Next((int)min_butrry + 1, 100);
                     }
                     //drone need to dliver shipment
                     else if (package.PackageAssociation != new DateTime())
                     {
 
-                        new_drone.location = Clloset_base(package.SendClient);
-                        min_butrry = buttryDownWithNoPackege(new_drone.location, Client_location(package.SendClient)) +
+                        new_drone.location = CllosetBase(ClientLocation(package.SendClient)).location;
+                        min_butrry = buttryDownWithNoPackege(new_drone.location, ClientLocation(package.SendClient)) +
                             buttryDownPackegeDelivery(package.SerialNumber) +
-                            buttryDownWithNoPackege(Clloset_base(package.GetingClient), Client_location(package.GetingClient));
+                            buttryDownWithNoPackege(CllosetBase(ClientLocation(package.GetingClient)).location, ClientLocation(package.GetingClient));
                         new_drone.butrryStatus = random.Next((int)min_butrry + 1, 100);
 
                     }
@@ -83,7 +83,7 @@ namespace BL
                             if (i == 0)
                             {
                                 new_drone.packageInTransfer = 0;
-                                new_drone.location = Base_location(base_.baseNumber);
+                                new_drone.location = BaseLocation(base_.baseNumber);
                                 break;
                             }
                             i--;
@@ -102,8 +102,8 @@ namespace BL
                                 if (j == i)
                                 {
                                     new_drone.packageInTransfer = package1.SerialNumber;
-                                    new_drone.location = Client_location(package1.GetingClient);
-                                    random.Next((int)buttryDownWithNoPackege(new_drone.location, Clloset_base(package1.GetingClient)) + 1, 100);
+                                    new_drone.location = ClientLocation(package1.GetingClient);
+                                    random.Next((int)buttryDownWithNoPackege(new_drone.location, CllosetBase(ClientLocation(package1.GetingClient)).location) + 1, 100);
                                     break;
                                 }
                                 else
@@ -113,12 +113,7 @@ namespace BL
 
                 }
 
-
                 drones.Add(new_drone);
-
-
-
-
 
             }
         }
@@ -128,21 +123,13 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        public void AddDrone(uint siralNumber, string model, uint category)
-        {
-            throw new NotImplementedException();
-        }
-
+     
         public uint AddPackage(uint idsend, uint idget, uint kg, uint priorityByUser)
         {
             throw new NotImplementedException();
         }
 
-        public void AddStation(uint base_num, string name, uint numOfCharging, double latitude, double longitude)
-        {
-
-            throw new NotImplementedException();
-        }
+        
 
         public void ConnectPackageToDrone(uint packageNumber, uint drone_sirial_number)
         {

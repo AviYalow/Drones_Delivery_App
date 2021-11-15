@@ -30,7 +30,7 @@ namespace DalObject
             {
                 baseNumber = base_num,
                 NameBase = name,
-                Number_of_charging_stations = numOfCharging,
+                NumberOfChargingStations = numOfCharging,
                 latitude = latitude,
                 longitude = longitude
 
@@ -86,7 +86,7 @@ namespace DalObject
         {
             if (DataSource.base_Stations.Count == 0)
                 throw (new NoItemWhitThisConditionException());
-            return DataSource.base_Stations.FindAll(x => x.Number_of_charging_stations > 0);
+            return DataSource.base_Stations.FindAll(x => x.NumberOfChargingStations > 0);
 
         }
 

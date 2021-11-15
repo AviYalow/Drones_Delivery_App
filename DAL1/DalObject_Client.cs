@@ -22,20 +22,13 @@ namespace DalObject
         /// <param name="latitude">Latitude of the client</param>
         /// <param name="londitude">Londitude of the client</param>
 
-        public void AddClient(uint id, string name, string phone, double latitude, double londitude)
+        public void AddClient(Client client)
         {
 
           
-            if (DataSource.clients.Any(x=>x.Id==id))
-                throw (new ItemFoundException("Client", id));
-            DataSource.clients.Add(new Client
-            {
-                Id = id,
-                Name = name,
-                PhoneNumber = phone,
-                Latitude = latitude,
-                Longitude = londitude
-            });
+            if (DataSource.clients.Any(x=>x.Id==client.Id))
+                throw (new ItemFoundException("Client", client.Id));
+            DataSource.clients.Add(client);
 
 
         }

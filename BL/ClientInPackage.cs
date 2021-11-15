@@ -8,7 +8,7 @@ namespace IBL.BO
 {
     public class ClientInPackage
     {
-        public uint ID { get; set; }
+        public uint Id { get; set; }
         public string Name { get; set; }
     }
 }

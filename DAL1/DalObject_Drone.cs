@@ -95,7 +95,11 @@ namespace DalObject
                 }
             }
         }
-
+        /// <summary>
+        /// Returns how much electricity the drone needs:
+        /// 0. Available, 1. Light weight 2. Medium weight 3. Heavy 4. Charging per minute
+        /// </summary>
+        /// <returns></returns>
         public double[] Elctrtricity()
         {
             double[] elctricity = new double[5];

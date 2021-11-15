@@ -9,12 +9,12 @@ namespace IBL
 {
     partial class BL : IBL
     {
-        public int AddPackege(Package package)
+        public uint AddPackege(Package package)
         {
-            int packegeNum = 0;
+            uint packegeNum = 0;
             try
             {
-                packegeNum = dalObj.Add_package(package.SendClient, package.RecivedClient, (int)package.weightCatgory, (uint)package.priority);
+                packegeNum = dalObj.AddPackage(package.SendClient, package.RecivedClient, (uint)package.weightCatgory, (uint)package.priority);
             }
             catch (IDAL.DO.ItemFoundException ex)
             {

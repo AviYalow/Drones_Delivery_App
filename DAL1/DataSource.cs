@@ -83,7 +83,7 @@ namespace DalObject
             {
                 baseNumber =(uint)rand.Next(1000, 10000),
                 NameBase = randomName(rand),
-                Number_of_charging_stations = (uint)rand.Next(3, 6),
+                NumberOfChargingStations = (uint)rand.Next(3, 6),
                 latitude = 31.790133,
                 longitude = 34.627143
 
@@ -94,7 +94,7 @@ namespace DalObject
             {
                 baseNumber = (uint)rand.Next(1000, 10000),
                 NameBase = randomName(rand),
-                Number_of_charging_stations = (uint)rand.Next(3, 6),
+                NumberOfChargingStations = (uint)rand.Next(3, 6),
                 latitude = 32.009490,
                 longitude = 34.736002
             });

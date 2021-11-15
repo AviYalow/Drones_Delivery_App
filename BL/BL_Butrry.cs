@@ -7,8 +7,10 @@ using IBL.BO;
 
 namespace IBL
 {
-   partial class BL:IBL
+    partial class BL : IBL
     {
+
+
         /// <summary>
         /// clculate how match butrry drone need for dleviry point to point
         /// </summary>
@@ -20,7 +22,7 @@ namespace IBL
             double battery_drop = 0, distans = 0;
 
             IDAL.DO.Package package = dalObj.packegeByNumber(packegeNumber);
-            Location sending_location = Client_location(package.SendClient), geting_location = Client_location(package.GetingClient);
+            Location sending_location = ClientLocation(package.SendClient), geting_location = ClientLocation(package.GetingClient);
 
             distans = Distans(geting_location, sending_location);
 
@@ -58,39 +60,94 @@ namespace IBL
             double buttry = ((distans / (double)Speed_drone.Free) / (double)butrryPer__.Minute) * elctricity[0];
             return buttry;
         }
-
-        public void DroneToCharge(uint drone,uint base_)
+        /// <summary>
+        /// send drone to charge
+        /// </summary>
+        /// <param name="dronenumber"></param>
+        /// <param name="base_"></param>
+        public void DroneToCharge(uint dronenumber, uint base_)
         {
 
-            IDAL.DO.Base_Station base_Station;
+            
+            var drone = SpsiciSpecificDrone(dronenumber);
+            if(drone.droneStatus!=Drone_status.Free)
+            {
+                throw new DroneCantSendToChargeException();
+            }
+            var baseStation = CllosetBase(drone.location);
+            double buttry = buttryDownWithNoPackege(drone.location, baseStation.location);
+            if (drone.butrryStatus-buttry <0)
+            {
+                throw new NoButrryToTripException(buttry);
+            }
+
             try
             {
-                base_Station = dalObj.BaseStationByNumber(base_);
-                if (ChargingStationFreeInBase(base_Station.baseNumber) <= 0)
+
+                
+                if (baseStation.FreeState <= 0)
                     throw (new NoPlaceForChargeException(base_));
-                dalObj.DroneToCharge(drone, base_);
+                dalObj.DroneToCharge(dronenumber, base_);
+                
+                dalObj.UpdateBase(new IDAL.DO.Base_Station { baseNumber= baseStation .SerialNum,latitude= baseStation .location.Latitude,
+               longitude= baseStation.location.Longitude,NameBase= baseStation.Name,NumberOfChargingStations= baseStation.FreeState-1
+                });
             }
-            catch(IDAL.DO.ItemNotFoundException ex)
+            catch (IDAL.DO.ItemNotFoundException ex)
             {
                 throw (new ItemNotFoundException(ex));
             }
+
 
         }
 
-        public int ChargingStationFreeInBase(uint base_)
+
+
+        /// <summary>
+        /// free all drone in charge in spsifice base
+        /// </summary>
+        /// <param name="baseNumber"></param>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public IEnumerable<DroneInCharge> FreeBaseFromDrone(uint baseNumber, int number)
         {
-            int i = 0,base_Station;
-          
             try
             {
-               base_Station=(int) dalObj.BaseStationByNumber(base_).Number_of_charging_stations;
+                if (dalObj.BaseStationByNumber(baseNumber).NumberOfChargingStations - number < 0)
+                {
+                    throw (new TryToPullOutMoreDrone());
+                }
             }
-            catch(IDAL.DO.ItemNotFoundException ex)
+            catch (IDAL.DO.ItemNotFoundException ex)
             {
-                throw (new ItemNotFoundException(ex));
+                throw new ItemNotFoundException(ex);
             }
-             i = dalObj.ChargingDroneList().Count(x => x.idBaseStation == base_);
-            return base_Station- i;
+            int i = 0;
+            var returnDrone = new DroneInCharge();
+            List<DroneInCharge> list = new List<DroneInCharge>();
+            foreach (var droneChrging in dalObj.ChargingDroneList().ToList().FindAll(x => x.idBaseStation == baseNumber))
+            {
+                if (i <= number)
+                {
+                    returnDrone.SerialNum = droneChrging.IdDrone;
+                    returnDrone.butrryStatus = DroneChrgingAlredy(droneChrging.EntringDrone, DateTime.Now);
+                    i++;
+                    dalObj.FreeDroneFromCharge(droneChrging.IdDrone);
+                    list.Add(returnDrone);
+                }
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// Some drone has already been charged 
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="newdateTime"></param>
+        /// <returns></returns>
+        public double DroneChrgingAlredy(DateTime dateTime, DateTime newdateTime)
+        {
+            return ((newdateTime - dateTime).Seconds) * ((dalObj.Elctrtricity().ToList()[4]) / 60.0);
         }
     }
 }

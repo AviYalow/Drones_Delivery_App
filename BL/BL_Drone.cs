@@ -9,12 +9,17 @@ namespace IBL
 {
     partial class BL : IBL
     {
+        /// <summary>
+        /// add drone to list
+        /// </summary>
+        /// <param name="drone"></param>
+        /// <param name="base_"></param>
         public void AddDrone(Drone drone, uint base_)
         {
             try
             {
 
-                drone.location = Base_location(base_);
+                drone.location = BaseLocation(base_);
 
             }
             catch (IDAL.DO.ItemNotFoundException ex)
@@ -37,17 +42,26 @@ namespace IBL
             drones.Add(drone);
 
         }
-
-        public void UpdateDronelocation(uint drone, Location location)
+        /// <summary>
+        /// update new location for drone
+        /// </summary>
+        /// <param name="drone"></param>
+        /// <param name="location"></param>
+        public void UpdateDronelocation(  uint drone, Location location)
         {
+            
             int i = drones.FindIndex(x => x.SerialNum == drone);
             if (i == -1)
                 throw (new ItemNotFoundException("Drone", drone));
             drones[i].location = location;
-
+            
         }
-
-        public void UpdateDroneName(uint droneId, string newName)
+        /// <summary>
+        /// update new model for drone
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <param name="newName"></param>
+        public void UpdateDroneName( uint droneId, string newName)
         {
             IDAL.DO.Drone droneInData;
             try
@@ -65,6 +79,15 @@ namespace IBL
             drones[i].Model = newName;
             droneInData.Model = newName;
             dalObj.UpdateDrone(droneInData);
+        }
+
+        public Drone SpsiciSpecificDrone(uint siralNuber)
+        {
+            var drone = drones.Find(x => x.SerialNum == siralNuber);
+            if (drone == null)
+                throw new ItemNotFoundException("drone", siralNuber);
+            return drone;
+
         }
 
     }

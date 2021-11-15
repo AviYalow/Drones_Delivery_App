@@ -12,7 +12,7 @@ namespace IDAL
         {
             public uint baseNumber { get; init; }
             public String NameBase { get; set; }
-            public uint Number_of_charging_stations { get; set; }
+            public uint NumberOfChargingStations { get; set; }
             public double longitude { get; set; }
             public double latitude { get; set; }
             
@@ -24,7 +24,7 @@ namespace IDAL
                 String print_Base_Station = "";
                 print_Base_Station += $"Base Number: {baseNumber},\n";
                 print_Base_Station += $"Name Base: {NameBase},\n";
-                print_Base_Station += $"Number of charging stations: {Number_of_charging_stations},\n";
+                print_Base_Station += $"Number of charging stations: {NumberOfChargingStations},\n";
 
                 //A view based on a sexagesimal of the coordinate values
                 print_Base_Station += $"Longitude Status: {(longitude)},\n";

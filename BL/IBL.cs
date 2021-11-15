@@ -8,8 +8,6 @@ namespace IBL
 {
     public interface IBL
     {
-        
-
-
+        double DroneChrgingAlredy(DateTime dateTime, DateTime newdateTime = default);
     }
 }

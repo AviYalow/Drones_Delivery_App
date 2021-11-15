@@ -12,7 +12,7 @@ namespace IDAL
         public void AddDrone(uint siralNumber, string model,uint category);
         public uint AddPackage(uint idsend, uint idget, uint kg, uint priorityByUser);
         public void AddStation(uint base_num, string name, uint numOfCharging, double latitude, double longitude);
-        public void AddClient(uint id, string name, string phone, double latitude, double londitude);
+        public void AddClient(Client client);
 
 
         
@@ -35,6 +35,7 @@ namespace IDAL
         public void DeleteDrone(uint sirial);
         public IEnumerable<Drone> DroneList();
         public void DroneToCharge(uint drone, uint base_);
+        public void FreeDroneFromCharge(uint drone);
 
         public void AddStation(Base_Station base_Station);
         public IEnumerable<Base_Station> BaseStationList();
