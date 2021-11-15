@@ -5,9 +5,9 @@ using IDAL;
 using IBL;
 using IBL.BO;
 
-namespace IBL
+namespace BL
 {
-    partial class BL : IBL
+    public partial class BL : IBL.IBL
     {
         public IDal dalObj;
         public List<Drone> drones = new List<Drone>();
@@ -122,6 +122,33 @@ namespace IBL
 
             }
         }
+
+        public void Add_client(uint id, string name, string phone, double latitude, double londitude)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add_drone(uint siralNumber, string model, uint category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public uint Add_package(uint idsend, uint idget, uint kg, uint priorityByUser)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add_station(uint base_num, string name, uint numOfCharging, double latitude, double longitude)
+        {
+
+            throw new NotImplementedException();
+        }
+
+        public void connect_package_to_drone(uint packageNumber, uint drone_sirial_number)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// cacolete distand betwen two points
         /// </summary>
@@ -133,12 +160,24 @@ namespace IBL
             return dalObj.Distance(location1.Longitude, location1.Latitude, location2.Longitude, location2.Latitude);
         }
 
-        
+        public void DroneToCharge(uint serial)
+        {
+            throw new NotImplementedException();
+        }
 
+        public void Package_arrived(uint packageNumber)
+        {
+            throw new NotImplementedException();
+        }
 
+        public void Package_collected(uint packageNumber)
+        {
+            throw new NotImplementedException();
+        }
 
-
-
-
+        public void ReleaseDroneFromCharge(uint serial, uint timeInCharge)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
