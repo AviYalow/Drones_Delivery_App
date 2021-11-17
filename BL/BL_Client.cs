@@ -43,7 +43,7 @@ namespace IBL
             { throw new NumberMoreException(); }
             //chcing phon number
             chekingFon(client.Phone);
-
+           
             try
             {
                 dalObj.AddClient(new IDAL.DO.Client
@@ -76,7 +76,7 @@ namespace IBL
             fon = fon.Insert(7, "-");
 
         }
-       public void UpdateClient(Client client)
+       public void UpdateClient(ref Client client)
         {
             //chcinkg id
             if (client.Id < 100000000)

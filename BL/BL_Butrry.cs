@@ -65,7 +65,7 @@ namespace IBL
         /// </summary>
         /// <param name="dronenumber"></param>
         /// <param name="base_"></param>
-        public void DroneToCharge(uint dronenumber, uint base_)
+        public void DroneToCharge(uint dronenumber)
         {
 
 
@@ -85,8 +85,8 @@ namespace IBL
             {
 
                 if (baseStation.FreeState <= 0)
-                    throw (new NoPlaceForChargeException(base_));
-                dalObj.DroneToCharge(dronenumber, base_);
+                    throw (new NoPlaceForChargeException(baseStation.SerialNum));
+                dalObj.DroneToCharge(dronenumber, baseStation.SerialNum);
 
                 dalObj.UpdateBase(new IDAL.DO.Base_Station
                 {
@@ -114,7 +114,7 @@ namespace IBL
         /// <param name="droneNumber"></param>
         /// <param name="timeInCharge"></param>
         /// <returns></returns>
-        public double FreeDroneFromCharging(uint droneNumber, int timeInCharge)
+        public double FreeDroneFromCharging(uint droneNumber, uint timeInCharge)
         {
             //מחפש את הרחפן
             var drone = dronesListInBl.Find(x => x.SerialNum == droneNumber);
@@ -182,7 +182,7 @@ namespace IBL
         /// <param name="dateTime"></param>
         /// <param name="newdateTime"></param>
         /// <returns></returns>
-        public double DroneChrgingAlredy(DateTime dateTime, DateTime newdateTime)
+        public double DroneChrgingAlredy(DateTime dateTime, DateTime newdateTime=default)
         {
             return ((newdateTime - dateTime).Seconds) * ((dalObj.Elctrtricity().ToList()[4]) / 60.0);
         }

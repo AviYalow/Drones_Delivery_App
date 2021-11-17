@@ -129,7 +129,10 @@ namespace IBL
         {
             return dalObj.Distance(location1.Longitude, location1.Latitude, location2.Longitude, location2.Latitude);
         }
-
+        public string PointToDegree(double point)
+        {
+            return dalObj.PointToDegree(point);
+        }
      
     }
 }

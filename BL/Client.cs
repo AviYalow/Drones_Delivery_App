@@ -11,7 +11,7 @@ namespace IBL.BO
         public uint Id { get; init; }
         public string Name { get; set; }
         public string Phone { get; set; }
-        public Location location { get; set; }
+        public Location Location { get; set; }
 
         public List<Package> FromClient { get; set; }
         public List<Package> ToClient { get; set; }

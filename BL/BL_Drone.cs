@@ -38,7 +38,7 @@ namespace IBL
                 throw (new ItemFoundExeption(ex));
             }
             drone.butrryStatus = random.Next(20, 41);
-            DroneToCharge(drone.SerialNum, base_);
+            DroneToCharge(drone.SerialNum);
             dronesListInBl.Add(drone);
 
         }
