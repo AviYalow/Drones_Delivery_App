@@ -44,7 +44,7 @@ namespace IBL
             
             try
             {
-                dalObj.AddClient(new IDAL.DO.Client {Id=client.Id,Latitude= client.Location.Latitude,Longitude= client.Location.Longitude,
+                dalObj.AddClient(new IDAL.DO.Client {Id=client.Id,Latitude= client.location.Latitude,Longitude= client.location.Longitude,
                     Name= client.Name,PhoneNumber= client.Phone});
             }
             catch(IDAL.DO.ItemFoundException ex)
