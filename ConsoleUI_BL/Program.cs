@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using BL;
+using IBL.BO;
 using IBL;
 
 namespace ConsoleUI_BL
@@ -81,7 +82,7 @@ namespace ConsoleUI_BL
                                     //received the details from the user
                                     try
                                     {
-                                        addBase(bl, out check, out id, out num1, out doubleNum1, out doubleNum2, out name);
+                                        Add_Base(bl, out check, out id, out num1, out doubleNum1, out doubleNum2, out name);
                                     }
                                     catch (IDAL.DO.Item_found_exception exception)
                                     {
@@ -94,7 +95,7 @@ namespace ConsoleUI_BL
                                     //received the details from the user
                                     try
                                     {
-                                        addDrone(bl, out check, out num, out id, out num1, out doubleNum1, out name);
+                                        Add_Drone(bl, out check, out num, out id, out num1, out doubleNum1, out name);
                                     }
                                     catch (IDAL.DO.Item_found_exception exception)
                                     {
@@ -107,7 +108,7 @@ namespace ConsoleUI_BL
                                     //received the details from the user
                                     try
                                     {
-                                        addClient(bl, out check, out num, out doubleNum1, out doubleNum2, out name, out phone);
+                                        Add_Client(bl, out check, out num, out doubleNum1, out doubleNum2, out name, out phone);
                                     }
                                     catch (IDAL.DO.Item_found_exception exception)
                                     {
@@ -466,36 +467,40 @@ namespace ConsoleUI_BL
                 bl.AddPackage(id, num1, num2, num);
             }
 
-            void addDrone(BL.BL bl, out bool check, out uint num, out uint id, out uint num1, out double doubleNum1, out string name)
+            void Add_Drone(BL.BL bl, out bool check, out uint num, out uint id, out uint num1, out string name)
             {
                 Console.Write("Enter sireal number:");
                 do
                 {
                     check = uint.TryParse(Console.ReadLine(), out id);
                 } while (!check);
-                Console.Write("Enter name:");
+                Console.Write("Enter model:");
                 name = Console.ReadLine();
                 Console.Write("Enter weight Category:0 for easy,1 for mediom,2 for heavy:");
                 do
                 {
                     check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
-                Console.Write("Enter amount of butrry:");
-                do
-                {
-                    check = double.TryParse(Console.ReadLine(), out doubleNum1);
-                } while (!check);
-                Console.Write("Enter a statos:0 for free,1 for maintenance:");
+
+                Console.Write("Enter number of base station for the first charging: ");
                 do
                 {
                     check = uint.TryParse(Console.ReadLine(), out num1);
                 } while (!check);
 
+                Drone drone = new Drone
+                {
+                    SerialNum = id,
+                    Model = name,
+                    weightCategory = (Weight_categories)num,
+             
+                };
+
                 //add new drone
-                bl.AddDrone(id, name, num);
+                bl.AddDrone(drone, num1);
             }
 
-            void addBase(BL.BL bL, out bool check, out uint id, out uint num1, out double doubleNum1, out double doubleNum2, out string name)
+            void Add_Base(BL.BL bL, out bool check, out uint id, out uint num1, out double doubleNum1, out double doubleNum2, out string name)
             {
                 Console.Write("Enter base number:");
                 do
@@ -521,11 +526,18 @@ namespace ConsoleUI_BL
                     check = double.TryParse(Console.ReadLine(), out doubleNum2);
                 } while (!check);
 
+                BaseStation baseStation = new BaseStation
+                {
+                    SerialNum = id,
+                    Name = name,
+                    location = new Location { Longitude = doubleNum1, Latitude = doubleNum2 },
+                    dronesInCharge = null
+                };
                 // add new Base station
-               bl.AddStation(id, name, num1, doubleNum1, doubleNum2);
+               bl.AddBase(baseStation);
             }
 
-            void addClient(BL.BL bl, out bool check, out uint myId, out double doubleNum1, out double doubleNum2, out string name, out string phone)
+            void Add_Client(BL.BL bl, out bool check, out uint myId, out double doubleNum1, out double doubleNum2, out string name, out string phone)
             {
                 Console.Write("Enter ID:");
                 do
@@ -548,7 +560,16 @@ namespace ConsoleUI_BL
                 } while (!check);
 
                 // add new client
-                bl.AddClient(myId, name, phone, doubleNum1, doubleNum2);
+                Client client = new Client
+                {
+                    Id = myId,
+                    Name = name,
+                    Phone = phone,
+                    location = new Location { Longitude = doubleNum1, Latitude = doubleNum2 },
+                    FromClient = null,
+                    ToClient=null
+                };
+                bl.AddClient(client);
             }
 
             void releaseDrone(BL.BL bl, out bool check, out uint serial,out uint timeInCharge)
@@ -581,7 +602,7 @@ namespace ConsoleUI_BL
             static void Main(string[] args)
 
             {
-                
+
                 IBL.IBL bl = new BL.BL();
                 Menu(bl);
             }
