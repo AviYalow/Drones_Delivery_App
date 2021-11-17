@@ -14,5 +14,18 @@ namespace IBL.BO
         public Priority priority { get; set; }
         public WeightCategories WeightCategories { get; set; }
         public PackageStatus packageStatus { get; set; }
+
+        public override string ToString()
+        {
+            String print = "";
+            print += $"Serial Number: {SerialNumber},\n";
+            print += $"Send Client: {SendClient},\n";
+            print += $"Recived Client: {RecivedClient},\n";
+            print += $"Weight Category: {WeightCategories},\n";
+            print += $"Priority: {priority},\n";
+            print += $"Package Status: {packageStatus},\n";
+            return print;
+        }
+
     }
 }

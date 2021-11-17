@@ -17,7 +17,19 @@ namespace IBL.BO
         public double butrryStatus { get; set; }
         public DroneStatus droneStatus { get; set; }
         public Location location { get; set; }
-        
+        public override string ToString()
+        {
+            String print = "";
+            print += $"Siral Number: {SerialNum},\n";
+            print += $"model: {Model},\n";
+            print+= $"Weight Category: {weightCategory},\n";
+            print += $"Package in transfer: {packageInTransfer.SerialNumber},\n";
+            print += $" Butrry status: {butrryStatus},\n";
+            print += $" Drone status: {droneStatus},\n";
+            print += $"Location: Latitude-{location.Latitude} Longitude-{location.Longitude}\n";
+           
+            return print;
+        }
 
     }
 }

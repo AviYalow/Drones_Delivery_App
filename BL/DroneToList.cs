@@ -17,5 +17,20 @@ namespace IBL.BO
         public Location location { get; set; }
         public uint numPackage { get; set; }
 
+        public override string ToString()
+        {
+            String print = "";
+            print += $"Siral Number: {SerialNumber},\n";
+            print += $"model: {Model},\n";
+            print += $"Weight Category: {weightCategory},\n";
+            print += $" Butrry status: {butrryStatus},\n";
+            print += $" Drone status: {droneStatus},\n";
+            print += $"Location: Latitude-{location.Latitude} Longitude-{location.Longitude},\n";
+            print += $"Number Package: {numPackage}\n";
+
+            return print;
+        }
+
+
     }
 }

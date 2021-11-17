@@ -17,6 +17,15 @@ namespace IBL.BO
         //The receiver for the sender and sender for the receiver
         public ClientInPackage client2 { get; set; }
 
-
-    }
+        public override string ToString()
+        {
+            String print = "";
+            print += $"Serial Number: {SerialNum},\n";
+            print += $"Weight Category: {WeightCatgory},\n";
+            print += $"priority: {Priority},\n";
+            print += $"Package Status: {packageStatus},\n";
+            print += $"The other client in the package: {client2.Name}\n";
+            return print;
+        }
+        }
 }

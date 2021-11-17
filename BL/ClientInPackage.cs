@@ -10,5 +10,14 @@ namespace IBL.BO
     {
         public uint Id { get; set; }
         public string Name { get; set; }
+
+        public override string ToString()
+        {
+            string print = "";
+            print += $"ID: {Id},\n";
+            print += $"Name: {Name}\n";
+    
+            return print;
+        }
     }
 }

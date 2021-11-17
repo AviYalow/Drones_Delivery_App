@@ -596,12 +596,12 @@ namespace ConsoleUI_BL
             void updateDelivery(IBL.IBL bl, out bool check, out uint num)
             {
                 //received the details from the user
-                Console.Write("Enter package number:");
+                Console.Write("Enter drone number:");
                 do
                 {
                     check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
-                //    bl.Package_arrived(num);
+                    bl.PackegArrive(num);
             }
 
             void UpdateClient(IBL.IBL bl, out bool check, out uint id, out string name, out string phone)
@@ -653,13 +653,13 @@ namespace ConsoleUI_BL
 
             void updateCollect(IBL.IBL bl, out bool check, out uint num)
             {
-                Console.Write("Enter package number:");
+                Console.Write("Enter drone number: ");
 
                 do
                 {
                     check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
-                //   bl.Package_collected(num);
+                 bl.CollectPackegForDelivery(num);
             }
 
             void UpdateAssociate(IBL.IBL bl, out bool check, out uint num)

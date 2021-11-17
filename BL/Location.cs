@@ -11,7 +11,14 @@ namespace IBL.BO
         public double Longitude { get; set; }
         public double Latitude { get; set; }
 
-
+        public override string ToString()
+        {
+            string print = "";
+            print += $"Location: Latitude-{Latitude} Longitude-{Longitude}\n";
+            return print;
+        }
+        
+           
 
     }
 }

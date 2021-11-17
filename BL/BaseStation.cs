@@ -14,6 +14,20 @@ namespace IBL.BO
         public Location location { get; set; }
         public uint FreeState { get; set; }
         public List<DroneInCharge> dronesInCharge { get; set; }
+        public override string ToString()
+        {
+            String print= "";
+            print += $"Siral Number is {SerialNum},\n";
+            print += $"The Name is {Name},\n";
+            print += $"Location: Latitude-{location.Latitude} Longitude-{location.Longitude},\n";
+            print += $"Number of free state: {FreeState},\n";
+            print += $"Drone in Charge: {FreeState},\n";
+            foreach(DroneInCharge drone in dronesInCharge)
+            {
+               print += $"Serial number: {drone.SerialNum}, butrry Status: {drone.butrryStatus}\n";
+            }
+            return print;
+        }
 
     }
 }

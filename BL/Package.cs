@@ -27,5 +27,21 @@ namespace IBL.BO
 
         //Time of arrival of the package to the recipient
         public DateTime package_arrived { get; set; }
+        public override string ToString()
+        {
+            String print = "";
+            print += $"Serial Number: {SerialNumber},\n";
+            print += $"Send Client: {SendClient.Name},\n";
+            print += $"Recived Client: {RecivedClient.Name},\n";
+            print += $"Weight Category: {weightCatgory},\n";
+            print += $"priority: {priority},\n";
+            print += $"drone: {drone.SerialNum},\n";
+            print += $"Delivery time create a package: {create_package},\n";
+            print += $"Time to assign: {package_association},\n";
+            print += $"Time Package collection: {collect_package},\n";
+            print += $"Time of arrival: {package_arrived}\n";
+           
+            return print;
+        }
     }
 }
