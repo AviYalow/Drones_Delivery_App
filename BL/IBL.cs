@@ -29,5 +29,25 @@ namespace IBL
         public void ConnctionPackegeToDrone(uint droneNumber);
 
         public double Distans(Location location1, Location location2);
+
+        public IEnumerable<PackageToList> PackageWithNoDroneToLists();
+        public IEnumerable<PackageToList> PackageToLists();
+        public void PackegArrive(uint droneNumber);
+        public void CollectPackegForDelivery(uint droneNumber);
+        public Package ShowPackage(uint number);
+        public void UpdatePackegInDal(Package package);
+        public IEnumerable<DroneToList> DroneToLists();
+
+        public IEnumerable<ClientToList> ClientToLists();
+        public Client GetingClient(uint id);
+        public IEnumerable<BaseStationToList> BaseStationWhitChargeStationsToLists();
+        public IEnumerable<BaseStationToList> BaseStationToLists();
+        public BaseStation BaseByNumber(uint baseNume);
+
+
+
+
+
+
     }
 }
