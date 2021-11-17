@@ -82,8 +82,14 @@ namespace IBL
         {
             try
             {
-                dalObj.AddStation(new IDAL.DO.Base_Station {baseNumber= baseStation.SerialNum,NameBase= baseStation.Name,NumberOfChargingStations= baseStation.FreeState,
-                   latitude= baseStation.location.Latitude,longitude= baseStation.location.Longitude });
+                dalObj.AddStation(new IDAL.DO.Base_Station
+                {
+                    baseNumber = baseStation.SerialNum,
+                    NameBase = baseStation.Name,
+                    NumberOfChargingStations = baseStation.FreeState,
+                    latitude = baseStation.location.Latitude,
+                    longitude = baseStation.location.Longitude
+                });
             }
             catch (IDAL.DO.ItemFoundException ex)
             {
@@ -114,8 +120,39 @@ namespace IBL
             }
         }
 
+        BaseStation convertBaseDalToBaseBl(IDAL.DO.Base_Station baseStation)
+        {
+            return new BaseStation
+            {
+                SerialNum = baseStation.baseNumber,
+                Name = baseStation.NameBase,
+                FreeState = baseStation.NumberOfChargingStations,
+                location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude },
+                dronesInCharge = null
+            };
+        }
 
-
+        public BaseStation BaseByNumber(uint baseNume)
+        {
+            try
+            {
+                var baseStation = dalObj.BaseStationByNumber(baseNume);
+                var baseReturn = new BaseStation { SerialNum = baseNume, location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude }, Name = baseStation.NameBase };
+                var droneInCharge = dalObj.ChargingDroneList().ToList().FindAll(x => x.idBaseStation == baseNume);
+                baseReturn.dronesInCharge = new List<DroneInCharge>();
+                foreach (var drone in droneInCharge)
+                {
+                    var butrry = (SpecificDrone(drone.IdDrone).butrryStatus + DroneChrgingAlredy(drone.EntringDrone, DateTime.Now));
+                    butrry = (butrry > 100) ? 100 : butrry;
+                    baseReturn.dronesInCharge.Add(new DroneInCharge { SerialNum = drone.IdDrone, butrryStatus =butrry  });
+                }
+                return baseReturn;
+            }
+            catch (IDAL.DO.ItemNotFoundException ex)
+            {
+                throw new ItemNotFoundException(ex);
+            }
+        }
 
     }
 }

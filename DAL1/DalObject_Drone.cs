@@ -28,7 +28,7 @@ namespace DalObject
             {
                 SerialNumber = drone.SerialNumber,
                 Model =drone.Model,
-                WeightCategory = (Weight_categories)drone.WeightCategory
+                WeightCategory = (WeightCategories)drone.WeightCategory
             });
 
         }

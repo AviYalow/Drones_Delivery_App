@@ -26,18 +26,18 @@ namespace IBL
 
             distans = Distans(geting_location, sending_location);
 
-            switch ((Weight_categories)package.WeightCatgory)//להשלים פונקציה ע"י חישוב לכל משקל
+            switch ((WeightCategories)package.WeightCatgory)//להשלים פונקציה ע"י חישוב לכל משקל
             {
-                case Weight_categories.Easy:
-                    battery_drop = ((distans / (double)Speed_drone.Easy) / (double)butrryPer__.Minute);
+                case WeightCategories.Easy:
+                    battery_drop = ((distans / (double)SpeedDrone.Easy) / (double)ButrryPer.Minute);
                     battery_drop *= elctricity[1];
                     break;
-                case Weight_categories.Medium:
-                    battery_drop = ((distans / (double)Speed_drone.Medium) / (double)butrryPer__.Minute);
+                case WeightCategories.Medium:
+                    battery_drop = ((distans / (double)SpeedDrone.Medium) / (double)ButrryPer.Minute);
                     battery_drop *= elctricity[2];
                     break;
-                case Weight_categories.Heavy:
-                    battery_drop = ((distans / (double)Speed_drone.Heavy) / (double)butrryPer__.Minute);
+                case WeightCategories.Heavy:
+                    battery_drop = ((distans / (double)SpeedDrone.Heavy) / (double)ButrryPer.Minute);
                     battery_drop *= elctricity[3];
                     break;
                 default:
@@ -57,7 +57,7 @@ namespace IBL
         {
             double[] elctricity = dalObj.Elctrtricity();
             double distans = Distans(fromLocation, toLocation);
-            double buttry = ((distans / (double)Speed_drone.Free) / (double)butrryPer__.Minute) * elctricity[0];
+            double buttry = ((distans / (double)SpeedDrone.Free) / (double)ButrryPer.Minute) * elctricity[0];
             return buttry;
         }
         /// <summary>
@@ -65,16 +65,17 @@ namespace IBL
         /// </summary>
         /// <param name="dronenumber"></param>
         /// <param name="base_"></param>
-        public void DroneToCharge(uint dronenumber)
+        public void DroneToCharge(uint dronenumber )
         {
 
 
             var drone = SpecificDrone(dronenumber);
-            if (drone.droneStatus != Drone_status.Free)
+            BaseStation baseStation = CllosetBase(drone.location);
+            if (drone.droneStatus != DroneStatus.Free)
             {
                 throw new DroneCantSendToChargeException();
             }
-            var baseStation = CllosetBase(drone.location);
+           // var baseStation = CllosetBase(drone.location);
             double buttry = buttryDownWithNoPackege(drone.location, baseStation.location);
             if (drone.butrryStatus - buttry < 0)
             {
@@ -128,7 +129,7 @@ namespace IBL
             double buttry = DroneChrgingAlredy(information.EntringDrone, information.EntringDrone.AddMinutes(timeInCharge));
 
             drone.butrryStatus = buttry > 100 ? 100 : buttry+drone.butrryStatus;
-            drone.droneStatus = Drone_status.Free;
+            drone.droneStatus = DroneStatus.Free;
             var baseStation = dalObj.BaseStationByNumber(information.idBaseStation);
             baseStation.NumberOfChargingStations++;
             dalObj.UpdateBase(baseStation);

@@ -467,7 +467,7 @@ namespace ConsoleUI_BL
                     check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
                 // add new package
-                bl.AddPackege(new Package { SendClient = id, RecivedClient = num1, weightCatgory = (Weight_categories)num2, priority = (Priority)num });
+                bl.AddPackege(new Package { SendClient=id,RecivedClient=num1,weightCatgory=(WeightCategories)num2,priority=(Priority)num});
             }
 
             void AddDrone(IBL.IBL bl, out bool check, out uint num, out uint id, out uint num1, out string name)
@@ -496,8 +496,8 @@ namespace ConsoleUI_BL
                 {
                     SerialNum = id,
                     Model = name,
-                    weightCategory = (Weight_categories)num,
-
+                    weightCategory = (WeightCategories)num,
+             
                 };
 
                 //add new drone
@@ -592,6 +592,7 @@ namespace ConsoleUI_BL
 
                 bl.FreeDroneFromCharging(serial, timeInCharge);
             }
+
             void updateCharge(IBL.IBL bl, out bool check, out uint serial)
             {
                 Console.Write("Enter sireal number:");

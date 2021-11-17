@@ -11,11 +11,11 @@ namespace IBL.BO
         public uint SerialNum { get; init; }
         public string Model { get; set; }
 
-        public Weight_categories weightCategory { get; set; }
-        public double packageInTransfer { get; set; }
+        public WeightCategories weightCategory { get; set; }
+        public uint packageInTransfer { get; set; }
 
         public double butrryStatus { get; set; }
-        public Drone_status droneStatus { get; set; }
+        public DroneStatus droneStatus { get; set; }
         public Location location { get; set; }
         
 

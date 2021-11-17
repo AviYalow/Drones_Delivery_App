@@ -9,9 +9,9 @@ namespace IBL.BO
     public class PackageAtClient
     {
         public int SerialNum { get; set; }
-        public Weight_categories WeightCatgory { get; set; }
+        public WeightCategories WeightCatgory { get; set; }
         public Priority Priority { get; set; }
-        public Package_status packageStatus { get; set; }
+        public PackageStatus packageStatus { get; set; }
        
         //The other client in the package.
         //The receiver for the sender and sender for the receiver
