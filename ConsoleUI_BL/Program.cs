@@ -467,7 +467,7 @@ namespace ConsoleUI_BL
                 bl.AddPackage(id, num1, num2, num);
             }
 
-            void Add_Drone(BL.BL bl, out bool check, out uint num, out uint id, out uint num1, out double doubleNum1, out string name)
+            void Add_Drone(BL.BL bl, out bool check, out uint num, out uint id, out uint num1, out string name)
             {
                 Console.Write("Enter sireal number:");
                 do
