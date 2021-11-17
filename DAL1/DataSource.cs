@@ -107,7 +107,7 @@ namespace DalObject
                 {
                     SerialNumber = (uint)rand.Next(10000),
                     Model = randomName(rand, rand.Next(3, 7)),
-                    WeightCategory = (Weight_categories)rand.Next(0, 3),
+                    WeightCategory = (WeightCategories)rand.Next(0, 3),
                    
                 });
 
@@ -140,7 +140,7 @@ namespace DalObject
 
                 package.SendClient = clients[j].Id;
                 package.GetingClient = idSnding(clients, clients[j].Id);
-                package.WeightCatgory = (Weight_categories)rand.Next(0, 3);
+                package.WeightCatgory = (WeightCategories)rand.Next(0, 3);
                 package.Priority = (Priority)rand.Next(0, 3);
                 package.OperatorSkimmerId = (rand.Next(2) != 0) ? drones[rand.Next(5)].SerialNumber : 0;
                 package.ReceivingDelivery = DateTime.Now.AddMinutes(rand.Next(-300, -150));

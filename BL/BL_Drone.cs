@@ -26,18 +26,19 @@ namespace IBL
             {
                 throw (new ItemNotFoundException(ex));
             }
-            drone.droneStatus = Drone_status.Maintenance;
+            drone.droneStatus = DroneStatus.Maintenance;
 
             Random random = new Random();
             try
             {
-                dalObj.AddDrone(new IDAL.DO.Drone {SerialNumber= drone.SerialNum,Model= drone.Model,WeightCategory=(IDAL.DO.Weight_categories)drone.weightCategory });
+                dalObj.AddDrone(new IDAL.DO.Drone {SerialNumber= drone.SerialNum,Model= drone.Model,WeightCategory=(IDAL.DO.WeightCategories)drone.weightCategory });
             }
             catch (IDAL.DO.ItemFoundException ex)
             {
                 throw (new ItemFoundExeption(ex));
             }
             drone.butrryStatus = random.Next(20, 41);
+           
             DroneToCharge(drone.SerialNum);
             dronesListInBl.Add(drone);
 

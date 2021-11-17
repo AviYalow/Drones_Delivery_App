@@ -11,6 +11,6 @@ namespace IBL.BO
         public int SerialNumber { get; set; }
         public string SendClient { get; set; }
         public string RecivedClient { get; set; }
-        public Package_status packageStatus { get; set; }
+        public PackageStatus packageStatus { get; set; }
     }
 }

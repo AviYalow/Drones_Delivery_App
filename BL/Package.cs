@@ -12,9 +12,9 @@ namespace IBL.BO
         public uint SendClient { get; set; }
         
         public uint RecivedClient { get; set; }
-        public Weight_categories weightCatgory { get; set; }
+        public WeightCategories weightCatgory { get; set; }
         public Priority priority { get; set; }
-        public DroneInPackage drone { get; set; }
+        public uint drone { get; set; }
 
         //Delivery time create a package
         public DateTime create_package { get; set; }

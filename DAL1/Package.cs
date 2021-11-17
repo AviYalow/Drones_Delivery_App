@@ -12,7 +12,7 @@ namespace IDAL
             public uint SerialNumber { get; init; }
             public uint SendClient { get; set; }
             public uint GetingClient { get; set; }
-            public Weight_categories WeightCatgory { get; set; }
+            public WeightCategories WeightCatgory { get; set; }
             public Priority Priority { get; set; }
             public uint OperatorSkimmerId { get; set; }
            

@@ -22,7 +22,7 @@ namespace IBL
             {
                 //data from dorn list in data source
                 Drone new_drone = new Drone { SerialNum = drone.SerialNumber };
-                new_drone.weightCategory = (Weight_categories)drone.WeightCategory;
+                new_drone.weightCategory = (WeightCategories)drone.WeightCategory;
                 new_drone.Model = drone.Model;
 
                 //chcking for pacege connection to this drone
@@ -37,12 +37,12 @@ namespace IBL
                         {
                             new_drone.packageInTransfer = chcking_packege.SerialNumber;
                             package = chcking_packege;
-                            new_drone.droneStatus = Drone_status.Work;
+                            new_drone.droneStatus = DroneStatus.Work;
                             break;
                         }
                     }
                 }
-                if (new_drone.droneStatus == Drone_status.Work)
+                if (new_drone.droneStatus == DroneStatus.Work)
                 {
 
                     double min_butrry;
@@ -72,25 +72,32 @@ namespace IBL
                 }
                 else
                 {
-                    new_drone.droneStatus = (Drone_status)random.Next(2);
+                    new_drone.droneStatus = (DroneStatus)random.Next(2);
                     //dorne lottery in mainteance
-                    if (new_drone.droneStatus == Drone_status.Maintenance)
+                    if (new_drone.droneStatus == DroneStatus.Maintenance)
                     {
                         new_drone.butrryStatus = random.Next(21);
                         int i = random.Next(2);
+
+                        
                         foreach (IDAL.DO.Base_Station base_ in dalObj.BaseStationList())
                         {
                             if (i == 0)
                             {
+                                var updateBase = base_;
+                                updateBase.NumberOfChargingStations--;
+                                dalObj.UpdateBase(updateBase);
                                 new_drone.packageInTransfer = 0;
                                 new_drone.location = BaseLocation(base_.baseNumber);
                                 break;
                             }
                             i--;
                         }
+                        
+                       
                     }
                     //drone lottery in free
-                    if (new_drone.droneStatus == Drone_status.Free)
+                    if (new_drone.droneStatus == DroneStatus.Free)
                     {
                         //lottry drone what is lost shipment
                         int i = random.Next(10);
@@ -133,6 +140,8 @@ namespace IBL
         {
             return dalObj.PointToDegree(point);
         }
+
+        
      
     }
 }

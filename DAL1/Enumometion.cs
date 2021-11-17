@@ -11,10 +11,10 @@ namespace IDAL
         /// <enumometion>
         /// the enums that required for the various entity
         /// </enumometion>
-        public enum Weight_categories { Easy, Medium, Heavy }
-        public enum Drone_status { Free, Maintenance, Work }
+        public enum WeightCategories { Easy, Medium, Heavy }
+        public enum DroneStatus { Free, Maintenance, Work }
         public enum Priority { Immediate, quick, Regular }
-        public enum Drone_in_charge { Add,Delete}
+        public enum DroneInCharge { Add,Delete}
         public enum ButturyLoad { Free, Easy,Medium, Heavy, Charging}
     }
 
