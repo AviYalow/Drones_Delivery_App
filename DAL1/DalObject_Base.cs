@@ -69,10 +69,7 @@ namespace DalObject
         /// the values ​​of all the base stations so we can print them</param>
         public IEnumerable<Base_Station> BaseStationList()
         {
-            if(DataSource.base_Stations.Count==0)
-            {
-                throw (new ListEmptyException("Base Station"));
-            }
+            
             return DataSource.base_Stations.ToList<Base_Station>();
         }
 
@@ -84,8 +81,7 @@ namespace DalObject
         /// the values so we can print them</param>
         public IEnumerable<Base_Station> BaseStationListWithChargeStates()
         {
-            if (DataSource.base_Stations.Count == 0)
-                throw (new NoItemWhitThisConditionException());
+            
             return DataSource.base_Stations.FindAll(x => x.NumberOfChargingStations > 0);
 
         }

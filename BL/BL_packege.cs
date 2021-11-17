@@ -18,10 +18,12 @@ namespace IBL
             uint packegeNum = 0;
             try
             {
+                
+
                 packegeNum = dalObj.AddPackage(new IDAL.DO.Package
                 {
-                    SendClient = dalObj.CilentByNumber(package.SendClient).Id,
-                    GetingClient = dalObj.CilentByNumber(package.RecivedClient).Id,
+                    SendClient =package.SendClient.Id,
+                    GetingClient =package.RecivedClient.Id,
                     Priority = (IDAL.DO.Priority)package.priority,
                     WeightCatgory = (IDAL.DO.WeightCategories)package.weightCatgory,
                     PackageArrived = package.create_package
@@ -82,40 +84,42 @@ namespace IBL
             var finalpackeg = cloosetPackege(drone.location, packege);
             //cheking if the buttry enough for a dlivery
             var buttry = batteryCalculationForFullShipping(drone.location, finalpackeg);
-                
+
             if (drone.butrryStatus - buttry <= 0)
                 throw new NoButrryToTripException(buttry);
             //update number packege in drone
             drone.packageInTransfer = ShowPackage(finalpackeg.SerialNumber);
             drone.droneStatus = DroneStatus.Work;
             //update the packege
-            finalpackeg.drone = drone.SerialNum;
+            finalpackeg.drone = drone;
             finalpackeg.package_association = DateTime.Now;
-            updatePackegInDal(finalpackeg);
+            UpdatePackegInDal(finalpackeg);
 
         }
-        double batteryCalculationForFullShipping(Location drone,Package package)
+
+        double batteryCalculationForFullShipping(Location drone, Package package)
         {
-            return buttryDownWithNoPackege(drone, ClientLocation(package.SendClient)) + buttryDownPackegeDelivery(package.SerialNumber) +
-                buttryDownWithNoPackege(drone, ClientLocation(package.RecivedClient));
+            return buttryDownWithNoPackege(drone, ClientLocation(package.SendClient.Id)) + buttryDownPackegeDelivery(package.SerialNumber) +
+                buttryDownWithNoPackege(drone, ClientLocation(package.RecivedClient.Id));
         }
 
-        public void updatePackegInDal(Package package)
+        public void UpdatePackegInDal(Package package)
         {
             dalObj.UpdatePackege(new IDAL.DO.Package
             {
                 SerialNumber = package.SerialNumber,
-                SendClient = package.SendClient,
+                SendClient = package.SendClient.Id,
                 CollectPackageForShipment = package.collect_package,
                 ReceivingDelivery = package.create_package,
-                OperatorSkimmerId = package.drone,
+                OperatorSkimmerId = package.drone.SerialNum,
                 PackageArrived = package.package_arrived,
                 PackageAssociation = package.package_association,
                 Priority = (IDAL.DO.Priority)package.priority,
-                GetingClient = package.RecivedClient,
+                GetingClient = package.RecivedClient.Id,
                 WeightCatgory = (IDAL.DO.WeightCategories)package.weightCatgory
             });
         }
+
         Package cloosetPackege(Location location, IEnumerable<IDAL.DO.Package> packages = null)
         {
             Package package = new Package();
@@ -125,14 +129,14 @@ namespace IBL
                 Location location1 = ClientLocation(packages.ToList()[0].SendClient);
 
 
-                for (int i = 1; i < packages.ToList().Count(); i++)
-                {
-                    uint sendig = packages.ToList()[i].SendClient;
+                foreach(var packege1 in packages)
+                { 
+                    uint sendig = packege1.SendClient;
                     Location location2 = ClientLocation(sendig);
                     if (Distans(location, location1) > Distans(location, location2))
                     {
                         location1 = location2;
-                        package.SendClient = sendig;
+                        package = convertToPackegeBl(packege1);
                     }
 
                 }
@@ -141,6 +145,7 @@ namespace IBL
             return package;
 
         }
+
         public Package ShowPackage(uint number)
         {
             Package package;
@@ -150,14 +155,14 @@ namespace IBL
                 package = new Package
                 {
                     SerialNumber = dataPackege.SerialNumber,
-                    SendClient = dataPackege.SendClient,
+                    SendClient = clientInPackageFromDal(dataPackege.SendClient),
                     collect_package = dataPackege.CollectPackageForShipment,
                     create_package = dataPackege.ReceivingDelivery,
-                    drone = dataPackege.OperatorSkimmerId,
+                    drone = SpecificDrone( dataPackege.OperatorSkimmerId),
                     package_arrived = dataPackege.PackageArrived,
                     package_association = dataPackege.PackageAssociation,
                     priority = (Priority)dataPackege.Priority,
-                    RecivedClient = dataPackege.GetingClient,
+                    RecivedClient = clientInPackageFromDal( dataPackege.GetingClient),
                     weightCatgory = (WeightCategories)dataPackege.WeightCatgory
                 };
             }
@@ -167,41 +172,43 @@ namespace IBL
             }
             return package;
         }
+
         Package convertToPackegeBl(IDAL.DO.Package dataPackege)
         {
             return new Package
             {
                 SerialNumber = dataPackege.SerialNumber,
-                SendClient = dataPackege.SendClient,
+                SendClient = clientInPackageFromDal(dataPackege.SendClient),
                 collect_package = dataPackege.CollectPackageForShipment,
                 create_package = dataPackege.ReceivingDelivery,
-                drone = dataPackege.OperatorSkimmerId,
+                drone =SpecificDrone( dataPackege.OperatorSkimmerId),
                 package_arrived = dataPackege.PackageArrived,
                 package_association = dataPackege.PackageAssociation,
                 priority = (Priority)dataPackege.Priority,
-                RecivedClient = dataPackege.GetingClient,
+                RecivedClient = clientInPackageFromDal(dataPackege.GetingClient),
                 weightCatgory = (WeightCategories)dataPackege.WeightCatgory
             };
         }
+
         //drone start delivery
         public void CollectPackegForDelivery(uint droneNumber)
         {
             var drone = dronesListInBl.Find(x => x.SerialNum == droneNumber);
             if (drone == null)
                 throw new ItemNotFoundException("Drone", droneNumber);
-            var pacege =ShowPackage(droneNumber);
+            var pacege = ShowPackage(droneNumber);
             if (pacege.collect_package != new DateTime())
             { new FunctionErrorException("ShowPackage||AddPackege"); }
 
-            Location location = ClientLocation(pacege.SendClient);
-            drone.butrryStatus -= buttryDownWithNoPackege(drone.location,location );
+            Location location = ClientLocation(pacege.SendClient.Id);
+            drone.butrryStatus -= buttryDownWithNoPackege(drone.location, location);
 
-            if (drone.butrryStatus<0)
+            if (drone.butrryStatus < 0)
             { new FunctionErrorException("BatteryCalculationForFullShipping"); }
-
+            
             drone.location = location;
-            pacege.collect_package = DateTime.Now;
-            updatePackegInDal(pacege);
+            
+            dalObj.PackageCollected(pacege.SerialNumber);
             dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNum == droneNumber)] = drone;
 
 
@@ -218,13 +225,72 @@ namespace IBL
             drone.butrryStatus -= buttryDownPackegeDelivery(packege.SerialNumber);
             if (drone.butrryStatus < 0)
                 throw new FunctionErrorException("batteryCalculationForFullShipping");
-            drone.location = ClientLocation(packege.RecivedClient);
+            drone.location = ClientLocation(packege.RecivedClient.Id);
             drone.droneStatus = DroneStatus.Free;
             drone.packageInTransfer = null;
             packege.package_arrived = DateTime.Now;
-            updatePackegInDal(packege);
+            UpdatePackegInDal(packege);
             dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNum == droneNumber)] = drone;
 
         }
+
+        public IEnumerable<PackageToList> PackageToLists()
+        {
+            if (dalObj.PackegeList().ToList().Count() == 0)
+                throw new TheListIsEmptyException();
+            List<PackageToList> packageToLists = new List<PackageToList>();
+            PackageStatus packageStatus;
+            foreach (var packege in dalObj.PackegeList())
+            {
+                if (packege.PackageArrived != new DateTime())
+                    packageStatus = PackageStatus.Arrived;
+                else if (packege.CollectPackageForShipment != new DateTime())
+                    packageStatus = PackageStatus.Collected;
+                else if (packege.PackageAssociation != new DateTime())
+                    packageStatus = PackageStatus.Assign;
+                else
+                    packageStatus = PackageStatus.Create;
+                packageToLists.Add(new PackageToList
+                {
+                    packageStatus = packageStatus,
+                    RecivedClient = dalObj.CilentByNumber(packege.GetingClient).Name,
+                    SendClient = dalObj.CilentByNumber(packege.SendClient).Name,
+                    SerialNumber = packege.SerialNumber,
+                    priority = (Priority)packege.Priority,
+                    WeightCategories = (WeightCategories)packege.WeightCatgory
+
+
+                });
+
+            }
+            return packageToLists;
+        }
+
+        public IEnumerable<PackageToList> PackageWithNoDroneToLists()
+        {
+            if (dalObj.PackegeListWithNoDrone().ToList().Count() == 0)
+                throw new TheListIsEmptyException();
+            List<PackageToList> packageToLists = new List<PackageToList>();
+            PackageStatus packageStatus;
+            foreach (var packege in dalObj.PackegeListWithNoDrone())
+            {
+
+                packageStatus = PackageStatus.Create;
+                packageToLists.Add(new PackageToList
+                {
+                    packageStatus = packageStatus,
+                    RecivedClient = dalObj.CilentByNumber(packege.GetingClient).Name,
+                    SendClient = dalObj.CilentByNumber(packege.SendClient).Name,
+                    SerialNumber = packege.SerialNumber,
+                    priority = (Priority)packege.Priority,
+                    WeightCategories = (WeightCategories)packege.WeightCatgory
+
+
+                });
+
+            }
+            return packageToLists;
+        }
+
     }
 }
