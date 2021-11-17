@@ -11,7 +11,7 @@ namespace ConsoleUI_BL
         #region
         enum Options { Exit, Add, Update, ShowDetails, ShowList }
         enum Entities { Exit, Client, Base_station, Drone, Package }
-        enum UpdatesOptions { Exit,DroneName,Base_station,Client, Associate, Collect, Delivery, Charge, UnCharge }
+        enum UpdatesOptions { Exit, DroneName, Base_station, Client, Associate, Collect, Delivery, Charge, UnCharge }
         enum Show { Exit, Client, Base_station, Drone, Package, ShowDistance, ShoeDegree }
         enum ShowList { Exit, Base_station, Drones, Clients, Package, FreePackage, FreeBaseStation }
         enum Distans_2_point { base_station = 1, client }
@@ -152,8 +152,8 @@ namespace ConsoleUI_BL
                             switch (updatesOption)
                             {
                                 case UpdatesOptions.DroneName:
-                                  
-                                    UpdateDroneName(bl,out check, out num, out name);
+
+                                    UpdateDroneName(bl, out check, out num, out name);
                                     break;
 
                                 case UpdatesOptions.Base_station:
@@ -196,7 +196,7 @@ namespace ConsoleUI_BL
                                     updateDelivery(bl, out check, out num);
                                     break;
 
-                                
+
                                 case UpdatesOptions.Exit:
                                     break;
 
@@ -221,7 +221,7 @@ namespace ConsoleUI_BL
                             {
                                 case Show.Client:
 
-                                    clientById(bl, out check, out num);
+                                    clientById(bl, out check, out id);
                                     break;
                                 case Show.Base_station:
 
@@ -265,22 +265,22 @@ namespace ConsoleUI_BL
                             switch (showList)
                             {
                                 case ShowList.Base_station:
-                                    listOfBass(bl);
+                                    bl.BaseStationToLists();
                                     break;
                                 case ShowList.Drones:
-                                    listOfDrone(bl);
+                                    bl.DroneToLists();
                                     break;
                                 case ShowList.Clients:
-                                    listOfClinet(bl);
+                                    bl.ClientToLists();
                                     break;
                                 case ShowList.Package:
-                                    listOfPackage(bl);
+                                    bl.PackageToLists();
                                     break;
                                 case ShowList.FreePackage:
-                                    packegeWhitNoDrone(bl);
+                                    bl.PackageWithNoDroneToLists();
                                     break;
                                 case ShowList.FreeBaseStation:
-                                    baseWhitFreeChargeStation(bl);
+                                    bl.BaseStationWhitChargeStationsToLists();
                                     break;
                                 case ShowList.Exit:
                                     break;
@@ -302,129 +302,49 @@ namespace ConsoleUI_BL
             } while (option != Options.Exit);
 
 
-
-            void baseWhitFreeChargeStation(IBL.IBL bl)
-            {
-
-                //  foreach (IDAL.DO.Base_Station print in bl.Base_station_list_with_charge_states())
-                //   Console.WriteLine(print);
-            }
-
-            void packegeWhitNoDrone(IBL.IBL bl)
-            {
-
-                //   foreach (IDAL.DO.Package print in bl.packege_list_with_no_drone())
-                //       Console.WriteLine(print);
-            }
-
-            void listOfPackage(IBL.IBL bl)
-            {
-
-                //  foreach (IDAL.DO.Package print in bl.packege_list())
-                //      Console.WriteLine(print);
-            }
-
-            void listOfClinet(IBL.IBL bl)
-            {
-
-                //     foreach (IDAL.DO.Client print in bl.cilent_list())
-                //       Console.WriteLine(print);
-            }
-
-            void listOfDrone(IBL.IBL bl)
-            {
-
-
-                //   foreach (IDAL.DO.Drone print in list)
-                //   Console.WriteLine(print);
-            }
-
-            void listOfBass(IBL.IBL bl)
-            {
-
-
-                //   foreach (var print in bl.Base_station_list())
-                //    Console.WriteLine(print);
-
-
-            }
-
-            /* void pointToDegree(IBL.IBL bl, out bool check, out double point2)
-             {
-                 Console.Write("Enter a longitude or latitude to ge it in degree :");
-                 do
-                 {
-                     check = double.TryParse(Console.ReadLine(), out point2);
-                 } while (!check);
-                 Console.WriteLine(bl.Point_to_degree(point2));
-             }*/
-
-            void distanceBetween2points(IBL.IBL bl, out bool check, out uint num1, out double doubleNum1, out double doubleNum2, out double point1, out double point2)
-            {
-                num1 = 0;
-                double[] points = new double[4];
-
-                //received the details from the user
-                Console.Write("Insert the latitude of the first point:");
-                do
-                {
-                    check = double.TryParse(Console.ReadLine(), out doubleNum1);
-                } while (!check);
-                Console.Write("Enter a longitude of the first point:");
-                do
-                {
-                    check = double.TryParse(Console.ReadLine(), out doubleNum2);
-                } while (!check);
-                Console.Write("Enter a latitude of the second point:");
-                do
-                {
-                    check = double.TryParse(Console.ReadLine(), out point1);
-                } while (!check);
-                Console.Write("Enter a longitude of the second point:");
-                do
-                {
-                    check = double.TryParse(Console.ReadLine(), out point2);
-                } while (!check);
-                Location location = new Location { Latitude = doubleNum1, Longitude = doubleNum2 };
-                Location location1 = new Location { Latitude = point1, Longitude = point2 };
-                Console.WriteLine($"the distance is: {0}KM", bl.Distans(location, location1));
-            }
-
             void packageByNumber(IBL.IBL bl, out bool check, out uint num)
             {
                 Console.Write("Enter packege number:");
-                check = uint.TryParse(Console.ReadLine(), out num);
-                // Console.WriteLine(bl.packege_by_number(num));
+                do
+                {
+                    check = uint.TryParse(Console.ReadLine(), out num);
+                } while (!check);
+
+                bl.ShowPackage(num);
+            }
+
+            void clientById(IBL.IBL bl, out bool check, out uint id)
+            {
+                //received the details from the user
+                Console.Write("Enter ID:");
+                do
+                {
+                    check = uint.TryParse(Console.ReadLine(), out id);
+                } while (!check);
+                bl.GetingClient(id);
             }
 
             void droneBySirialNumber(IBL.IBL bl, out bool check, out uint num)
             {
                 Console.Write("Enter drone number:");
-                check = uint.TryParse(Console.ReadLine(), out num);
-                //  Console.WriteLine(bl.Drone_by_number(num));
+                do
+                {
+                    check = uint.TryParse(Console.ReadLine(), out num);
+                } while (!check);
+                bl.SpecificDrone(num);
             }
 
             void baseByNumber(IBL.IBL bl, out bool check, out uint num)
             {
                 //received the details from the user
                 Console.Write("Enter base number:");
-                check = uint.TryParse(Console.ReadLine(), out num);
-                //  Console.WriteLine(bl.Base_station_by_number(num));
+                do
+                {
+                    check = uint.TryParse(Console.ReadLine(), out num);
+                } while (!check);
+                bl.BaseByNumber(num);
             }
 
-            void clientById(IBL.IBL bl, out bool check, out uint num)
-            {
-                //received the details from the user
-                Console.Write("Enter ID:");
-                check = uint.TryParse(Console.ReadLine(), out num);
-                //   Console.WriteLine(bl.cilent_by_number(num));
-            }
-
-            
-            
-
-            ///the needed function
-            ///
             void AddPackage(IBL.IBL bl, out bool check, out uint num, out uint id, out uint num1, out uint num2)
             {
                 //received the details from the user
@@ -480,7 +400,7 @@ namespace ConsoleUI_BL
                     SerialNum = id,
                     Model = name,
                     weightCategory = (WeightCategories)num,
-             
+
                 };
 
                 //add new drone
@@ -558,7 +478,7 @@ namespace ConsoleUI_BL
                 };
                 bl.AddClient(client);
             }
-            
+
             void UpdateBase(IBL.IBL bl, out bool check, out uint id, out string name, out int amount)
             {
                 Console.Write("Enter base number:");
@@ -592,7 +512,7 @@ namespace ConsoleUI_BL
                     bl.UpdateBase(id, name, amount);
 
             }
-           
+
             void updateDelivery(IBL.IBL bl, out bool check, out uint num)
             {
                 //received the details from the user
@@ -601,7 +521,7 @@ namespace ConsoleUI_BL
                 {
                     check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
-                    bl.PackegArrive(num);
+                bl.PackegArrive(num);
             }
 
             void UpdateClient(IBL.IBL bl, out bool check, out uint id, out string name, out string phone)
@@ -659,13 +579,13 @@ namespace ConsoleUI_BL
                 {
                     check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
-                 bl.CollectPackegForDelivery(num);
+                bl.CollectPackegForDelivery(num);
             }
 
             void UpdateAssociate(IBL.IBL bl, out bool check, out uint num)
             {
                 //received the details from the user
-               
+
                 Console.Write("Enter drone number:");
                 do
                 {
@@ -725,3 +645,36 @@ namespace ConsoleUI_BL
         }
     }
 }
+
+
+//void distanceBetween2points(IBL.IBL bl, out bool check, out uint num1, out double doubleNum1, out double doubleNum2, out double point1, out double point2)
+//{
+//    num1 = 0;
+//    double[] points = new double[4];
+
+//    //received the details from the user
+//    Console.Write("Insert the latitude of the first point:");
+//    do
+//    {
+//        check = double.TryParse(Console.ReadLine(), out doubleNum1);
+//    } while (!check);
+//    Console.Write("Enter a longitude of the first point:");
+//    do
+//    {
+//        check = double.TryParse(Console.ReadLine(), out doubleNum2);
+//    } while (!check);
+//    Console.Write("Enter a latitude of the second point:");
+//    do
+//    {
+//        check = double.TryParse(Console.ReadLine(), out point1);
+//    } while (!check);
+//    Console.Write("Enter a longitude of the second point:");
+//    do
+//    {
+//        check = double.TryParse(Console.ReadLine(), out point2);
+//    } while (!check);
+//    Location location = new Location { Latitude = doubleNum1, Longitude = doubleNum2 };
+//    Location location1 = new Location { Latitude = point1, Longitude = point2 };
+//    Console.WriteLine($"the distance is: {0}KM", bl.Distans(location, location1));
+//}
+
