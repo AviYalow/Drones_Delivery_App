@@ -14,9 +14,6 @@ namespace IBL
         public void DroneToCharge(uint dronenumber);
         public double FreeDroneFromCharging(uint droneNumber, uint timeInCharge);
         public IEnumerable<DroneInCharge> FreeBaseFromDrone(uint baseNumber, int number);
-        
-
-
         public BaseStation CllosetBase(Location location);
         public Location BaseLocation(uint base_number);
         public void AddBase(BaseStation baseStation);

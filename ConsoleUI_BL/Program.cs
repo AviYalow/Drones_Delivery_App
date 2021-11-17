@@ -11,7 +11,7 @@ namespace ConsoleUI_BL
         #region
         enum Options { Exit, Add, Update, ShowDetails, ShowList }
         enum Entities { Exit, Client, Base_station, Drone, Package }
-        enum UpdatesOptions { Exit, Associate, Collect, Delivery, Charge, UnCharge }
+        enum UpdatesOptions { Exit,DroneName,Base_station, Associate, Collect, Delivery, Charge, UnCharge }
         enum Show { Exit, Client, Base_station, Drone, Package, ShowDistance, ShoeDegree }
         enum ShowList { Exit, Base_station, Drones, Clients, Package, FreePackage, FreeBaseStation }
         enum Distans_2_point { base_station = 1, client }
@@ -57,6 +57,7 @@ namespace ConsoleUI_BL
             {
                 bool check;
                 uint num, id, num1, num2;
+                int amount;
                 double doubleNum1, doubleNum2, point1, point2;
                 string str, name, phone;
 
@@ -150,7 +151,15 @@ namespace ConsoleUI_BL
                         {
                             switch (updatesOption)
                             {
-                                //option to connect package to drone
+                                case UpdatesOptions.DroneName:
+                                  
+                                    UpdateDroneName(bl,out check, out num, out name);
+                                    break;
+                                case UpdatesOptions.Base_station:
+
+                                    UpdateBase(bl, out check, out id, out name, out amount);
+                                    //option to connect package to drone
+                              
                                 case UpdatesOptions.Associate:
 
                                     updateAssociate(bl, out check, out num, out num1);
@@ -442,6 +451,18 @@ namespace ConsoleUI_BL
                 //  bl.ConnectPackageToDrone(num, num1);
             }
 
+            void UpdateDroneName(IBL.IBL bl, out bool check, out uint num, out string name)
+            {
+                //received the details from the user
+                Console.Write("Enter serial number: ");
+                do
+                {
+                    check = uint.TryParse(Console.ReadLine(), out num);
+                } while (!check);
+                Console.Write("Enter model: ");
+                name = Console.ReadLine();
+                bl.UpdateDroneName(num, name);
+            }
             void AddPackage(IBL.IBL bl, out bool check, out uint num, out uint id, out uint num1, out uint num2)
             {
                 //received the details from the user
@@ -470,6 +491,31 @@ namespace ConsoleUI_BL
                 bl.AddPackege(new Package { SendClient=id,RecivedClient=num1,weightCatgory=(WeightCategories)num2,priority=(Priority)num});
             }
 
+            void UpdateBase(IBL.IBL bl, out bool check, out uint id, out string name, out int amount)
+             {
+                Console.Write("Enter base number:");
+                do
+                {
+                    check = uint.TryParse(Console.ReadLine(), out id);
+                } while (!check);
+
+                Console.Write("Enter base name:");
+                name = Console.ReadLine();
+
+                Console.Write("Enter Number of charging stations:");
+                string temp;
+                do
+                {
+                    temp = Console.ReadLine();
+                    if(temp=="")
+                    {
+                        amount = -1;
+                    }
+                    check = int.TryParse(Console.ReadLine(), out amount);
+                } while (!check);
+
+                bl.UpdateBase(id,);
+            }
             void AddDrone(IBL.IBL bl, out bool check, out uint num, out uint id, out uint num1, out string name)
             {
                 Console.Write("Enter sireal number:");
