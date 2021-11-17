@@ -11,7 +11,7 @@ namespace ConsoleUI_BL
         #region
         enum Options { Exit, Add, Update, ShowDetails, ShowList }
         enum Entities { Exit, Client, Base_station, Drone, Package }
-        enum UpdatesOptions { Exit,DroneName,Base_station, Associate, Collect, Delivery, Charge, UnCharge }
+        enum UpdatesOptions { Exit,DroneName,Base_station,Client, Associate, Collect, Delivery, Charge, UnCharge }
         enum Show { Exit, Client, Base_station, Drone, Package, ShowDistance, ShoeDegree }
         enum ShowList { Exit, Base_station, Drones, Clients, Package, FreePackage, FreeBaseStation }
         enum Distans_2_point { base_station = 1, client }
@@ -155,14 +155,32 @@ namespace ConsoleUI_BL
                                   
                                     UpdateDroneName(bl,out check, out num, out name);
                                     break;
+
                                 case UpdatesOptions.Base_station:
 
                                     UpdateBase(bl, out check, out id, out name, out amount);
                                     //option to connect package to drone
-                              
+                                    break;
+
+                                case UpdatesOptions.Client:
+                                    UpdateClient(bl, out check, out id, out name, out phone);
+                                    break;
+
+                                //sent drone to a free charging station
+                                case UpdatesOptions.Charge:
+
+                                    updateCharge(bl, out check, out num);
+                                    break;
+
+                                // Release drone from charging position
+                                case UpdatesOptions.UnCharge:
+
+                                    UpdateUnCharge(bl, out check, out num, out num1);
+                                    break;
+
                                 case UpdatesOptions.Associate:
 
-                                    updateAssociate(bl, out check, out num, out num1);
+                                    UpdateAssociate(bl, out check, out num);
                                     break;
 
                                 // update that the package is collected
@@ -178,18 +196,7 @@ namespace ConsoleUI_BL
                                     updateDelivery(bl, out check, out num);
                                     break;
 
-                                //sent drone to a free charging station
-                                case UpdatesOptions.Charge:
-
-                                    updateCharge(bl, out check, out num);
-                                    break;
-
-                                // Release drone from charging position
-                                case UpdatesOptions.UnCharge:
-
-                                    releaseDrone(bl, out check, out num, out num1);
-                                    break;
-
+                                
                                 case UpdatesOptions.Exit:
                                     break;
 
@@ -413,56 +420,11 @@ namespace ConsoleUI_BL
                 //   Console.WriteLine(bl.cilent_by_number(num));
             }
 
-            void updateDelivery(IBL.IBL bl, out bool check, out uint num)
-            {
-                //received the details from the user
-                Console.Write("Enter package number:");
-                do
-                {
-                    check = uint.TryParse(Console.ReadLine(), out num);
-                } while (!check);
-                //    bl.Package_arrived(num);
-            }
+            
+            
 
-            void updateCollect(IBL.IBL bl, out bool check, out uint num)
-            {
-                Console.Write("Enter package number:");
-
-                do
-                {
-                    check = uint.TryParse(Console.ReadLine(), out num);
-                } while (!check);
-                //   bl.Package_collected(num);
-            }
-
-            void updateAssociate(IBL.IBL bl, out bool check, out uint num, out uint num1)
-            {
-                //received the details from the user
-                Console.Write("Enter package number:");
-                do
-                {
-                    check = uint.TryParse(Console.ReadLine(), out num);
-                } while (!check);
-                Console.Write("Enter drone number:");
-                do
-                {
-                    check = uint.TryParse(Console.ReadLine(), out num1);
-                } while (!check);
-                //  bl.ConnectPackageToDrone(num, num1);
-            }
-
-            void UpdateDroneName(IBL.IBL bl, out bool check, out uint num, out string name)
-            {
-                //received the details from the user
-                Console.Write("Enter serial number: ");
-                do
-                {
-                    check = uint.TryParse(Console.ReadLine(), out num);
-                } while (!check);
-                Console.Write("Enter model: ");
-                name = Console.ReadLine();
-                bl.UpdateDroneName(num, name);
-            }
+            ///the needed function
+            ///
             void AddPackage(IBL.IBL bl, out bool check, out uint num, out uint id, out uint num1, out uint num2)
             {
                 //received the details from the user
@@ -488,34 +450,9 @@ namespace ConsoleUI_BL
                     check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
                 // add new package
-                bl.AddPackege(new Package { SendClient=id,RecivedClient=num1,weightCatgory=(WeightCategories)num2,priority=(Priority)num});
+                bl.AddPackege(new Package { SendClient = id, RecivedClient = num1, weightCatgory = (WeightCategories)num2, priority = (Priority)num });
             }
 
-            void UpdateBase(IBL.IBL bl, out bool check, out uint id, out string name, out int amount)
-             {
-                Console.Write("Enter base number:");
-                do
-                {
-                    check = uint.TryParse(Console.ReadLine(), out id);
-                } while (!check);
-
-                Console.Write("Enter base name:");
-                name = Console.ReadLine();
-
-                Console.Write("Enter Number of charging stations:");
-                string temp;
-                do
-                {
-                    temp = Console.ReadLine();
-                    if(temp=="")
-                    {
-                        amount = -1;
-                    }
-                    check = int.TryParse(Console.ReadLine(), out amount);
-                } while (!check);
-
-                bl.UpdateBase(id,);
-            }
             void AddDrone(IBL.IBL bl, out bool check, out uint num, out uint id, out uint num1, out string name)
             {
                 Console.Write("Enter sireal number:");
@@ -621,8 +558,148 @@ namespace ConsoleUI_BL
                 };
                 bl.AddClient(client);
             }
+            
+            void UpdateBase(IBL.IBL bl, out bool check, out uint id, out string name, out int amount)
+            {
+                Console.Write("Enter base number:");
+                do
+                {
+                    check = uint.TryParse(Console.ReadLine(), out id);
+                } while (!check);
 
-            void releaseDrone(IBL.IBL bl, out bool check, out uint serial, out uint timeInCharge)
+                Console.Write("Enter base name:");
+                name = Console.ReadLine();
+
+                Console.Write("Enter Number of charging stations:");
+                string temp;
+                do
+                {
+                    temp = Console.ReadLine();
+                    if (temp == "")
+                    {
+                        amount = -1;
+                        break;
+                    }
+                    check = int.TryParse(temp, out amount);
+                } while (!check);
+
+
+                if (name != "" && amount == -1)
+                    bl.UpdateBase(id, name);
+                else if (name == "" && amount != -1)
+                    bl.UpdateBase(id, "", amount);
+                else
+                    bl.UpdateBase(id, name, amount);
+
+            }
+           
+            void updateDelivery(IBL.IBL bl, out bool check, out uint num)
+            {
+                //received the details from the user
+                Console.Write("Enter package number:");
+                do
+                {
+                    check = uint.TryParse(Console.ReadLine(), out num);
+                } while (!check);
+                //    bl.Package_arrived(num);
+            }
+
+            void UpdateClient(IBL.IBL bl, out bool check, out uint id, out string name, out string phone)
+            {
+                Console.Write("Enter ID:");
+                do
+                {
+                    check = uint.TryParse(Console.ReadLine(), out id);
+                } while (!check);
+                Console.Write("Enter name:");
+                name = Console.ReadLine();
+                Console.Write("Enter phone number:");
+                phone = Console.ReadLine();
+
+                Client client;
+                if (name != "" && phone != "")
+                {
+                    client = new Client
+                    {
+                        Id = id,
+                        Name = name,
+                        Phone = phone
+
+                    };
+                }
+                else if (name != "" && phone == "")
+                {
+                    client = new Client
+                    {
+                        Id = id,
+                        Name = name
+
+                    };
+
+                }
+                else
+                {
+                    client = new Client
+                    {
+                        Id = id,
+                        Phone = phone
+
+                    };
+
+                }
+
+                bl.UpdateClient(ref client);
+            }
+
+            void updateCollect(IBL.IBL bl, out bool check, out uint num)
+            {
+                Console.Write("Enter package number:");
+
+                do
+                {
+                    check = uint.TryParse(Console.ReadLine(), out num);
+                } while (!check);
+                //   bl.Package_collected(num);
+            }
+
+            void UpdateAssociate(IBL.IBL bl, out bool check, out uint num)
+            {
+                //received the details from the user
+               
+                Console.Write("Enter drone number:");
+                do
+                {
+                    check = uint.TryParse(Console.ReadLine(), out num);
+                } while (!check);
+
+                bl.ConnectPackegeToDrone(num);
+            }
+
+            void UpdateDroneName(IBL.IBL bl, out bool check, out uint num, out string name)
+            {
+                //received the details from the user
+                Console.Write("Enter serial number: ");
+                do
+                {
+                    check = uint.TryParse(Console.ReadLine(), out num);
+                } while (!check);
+                Console.Write("Enter model: ");
+                name = Console.ReadLine();
+                bl.UpdateDroneName(num, name);
+            }
+
+            void updateCharge(IBL.IBL bl, out bool check, out uint serial)
+            {
+                Console.Write("Enter sireal number:");
+                do
+                {
+                    check = uint.TryParse(Console.ReadLine(), out serial);
+                } while (!check);
+
+                bl.DroneToCharge(serial);
+            }
+
+            void UpdateUnCharge(IBL.IBL bl, out bool check, out uint serial, out uint timeInCharge)
             {
                 Console.Write("Enter sireal number:");
                 do
@@ -637,17 +714,6 @@ namespace ConsoleUI_BL
                 } while (!check);
 
                 bl.FreeDroneFromCharging(serial, timeInCharge);
-            }
-
-            void updateCharge(IBL.IBL bl, out bool check, out uint serial)
-            {
-                Console.Write("Enter sireal number:");
-                do
-                {
-                    check = uint.TryParse(Console.ReadLine(), out serial);
-                } while (!check);
-
-                bl.DroneToCharge(serial);
             }
 
         }

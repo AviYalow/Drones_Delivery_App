@@ -39,7 +39,7 @@ namespace IBL
 
         }
 
-        public void ConnctionPackegeToDrone(uint droneNumber)//אולי כדאי לעבור למיון רשימה ואח"כ לסינון?
+        public void ConnectPackegeToDrone(uint droneNumber)//אולי כדאי לעבור למיון רשימה ואח"כ לסינון?
         {
             var drone = dronesListInBl.Find(x => x.SerialNum == droneNumber);
             if (drone == null)

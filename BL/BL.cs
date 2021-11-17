@@ -52,17 +52,17 @@ namespace IBL
                     {
                         new_drone.location = ClientLocation(package.SendClient);
                         min_butrry = buttryDownPackegeDelivery(package.SerialNumber) +
-                           buttryDownWithNoPackege(CllosetBase(ClientLocation(package.GetingClient)).location, ClientLocation(package.GetingClient));
+                           buttryDownWithNoPackege(ClosestBase(ClientLocation(package.GetingClient)).location, ClientLocation(package.GetingClient));
                         new_drone.butrryStatus = random.Next((int)min_butrry + 1, 100);
                     }
                     //drone need to dliver shipment
                     else if (package.PackageAssociation != new DateTime())
                     {
 
-                        new_drone.location = CllosetBase(ClientLocation(package.SendClient)).location;
+                        new_drone.location = ClosestBase(ClientLocation(package.SendClient)).location;
                         min_butrry = buttryDownWithNoPackege(new_drone.location, ClientLocation(package.SendClient)) +
                             buttryDownPackegeDelivery(package.SerialNumber) +
-                            buttryDownWithNoPackege(CllosetBase(ClientLocation(package.GetingClient)).location, ClientLocation(package.GetingClient));
+                            buttryDownWithNoPackege(ClosestBase(ClientLocation(package.GetingClient)).location, ClientLocation(package.GetingClient));
                         new_drone.butrryStatus = random.Next((int)min_butrry + 1, 100);
 
                     }
@@ -110,7 +110,7 @@ namespace IBL
                                 {
                                     new_drone.packageInTransfer = ShowPackage(package1.SerialNumber);
                                     new_drone.location = ClientLocation(package1.GetingClient);
-                                    random.Next((int)buttryDownWithNoPackege(new_drone.location, CllosetBase(ClientLocation(package1.GetingClient)).location) + 1, 100);
+                                    random.Next((int)buttryDownWithNoPackege(new_drone.location, ClosestBase(ClientLocation(package1.GetingClient)).location) + 1, 100);
                                     break;
                                 }
                                 else

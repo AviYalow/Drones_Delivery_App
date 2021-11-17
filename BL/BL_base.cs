@@ -15,7 +15,7 @@ namespace IBL
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        public BaseStation CllosetBase(Location location)
+        public BaseStation ClosestBase(Location location)
         {
             BaseStation baseStation = new BaseStation();
             baseStation.location = new Location();

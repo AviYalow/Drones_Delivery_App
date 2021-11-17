@@ -70,7 +70,7 @@ namespace IBL
 
 
             var drone = SpecificDrone(dronenumber);
-            BaseStation baseStation = CllosetBase(drone.location);
+            BaseStation baseStation = ClosestBase(drone.location);
             if (drone.droneStatus != DroneStatus.Free)
             {
                 throw new DroneCantSendToChargeException();
