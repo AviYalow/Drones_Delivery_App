@@ -12,7 +12,7 @@ namespace IBL.BO
         public string Model { get; set; }
 
         public WeightCategories weightCategory { get; set; }
-        public uint packageInTransfer { get; set; }
+        public Package packageInTransfer { get; set; }
 
         public double butrryStatus { get; set; }
         public DroneStatus droneStatus { get; set; }

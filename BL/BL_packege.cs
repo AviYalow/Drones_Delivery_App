@@ -86,7 +86,7 @@ namespace IBL
             if (drone.butrryStatus - buttry <= 0)
                 throw new NoButrryToTripException(buttry);
             //update number packege in drone
-            drone.packageInTransfer = finalpackeg.SerialNumber;
+            drone.packageInTransfer = ShowPackage(finalpackeg.SerialNumber);
             drone.droneStatus = DroneStatus.Work;
             //update the packege
             finalpackeg.drone = drone.SerialNum;
@@ -167,6 +167,22 @@ namespace IBL
             }
             return package;
         }
+        Package convertToPackegeBl(IDAL.DO.Package dataPackege)
+        {
+            return new Package
+            {
+                SerialNumber = dataPackege.SerialNumber,
+                SendClient = dataPackege.SendClient,
+                collect_package = dataPackege.CollectPackageForShipment,
+                create_package = dataPackege.ReceivingDelivery,
+                drone = dataPackege.OperatorSkimmerId,
+                package_arrived = dataPackege.PackageArrived,
+                package_association = dataPackege.PackageAssociation,
+                priority = (Priority)dataPackege.Priority,
+                RecivedClient = dataPackege.GetingClient,
+                weightCatgory = (WeightCategories)dataPackege.WeightCatgory
+            };
+        }
         //drone start delivery
         public void CollectPackegForDelivery(uint droneNumber)
         {
@@ -196,7 +212,7 @@ namespace IBL
             var drone = dronesListInBl.Find(x => x.SerialNum == droneNumber);
             if (drone == null)
                 throw new ItemNotFoundException("Drone", droneNumber);
-            var packege = ShowPackage(drone.packageInTransfer);
+            var packege = drone.packageInTransfer;
             if (packege.package_arrived != new DateTime())
                 throw new FunctionErrorException("AddPackege||ShowPackage||updatePackegInDal||PackegArrive");
             drone.butrryStatus -= buttryDownPackegeDelivery(packege.SerialNumber);
@@ -204,7 +220,7 @@ namespace IBL
                 throw new FunctionErrorException("batteryCalculationForFullShipping");
             drone.location = ClientLocation(packege.RecivedClient);
             drone.droneStatus = DroneStatus.Free;
-            drone.packageInTransfer = 0;
+            drone.packageInTransfer = null;
             packege.package_arrived = DateTime.Now;
             updatePackegInDal(packege);
             dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNum == droneNumber)] = drone;

@@ -35,7 +35,7 @@ namespace IBL
                         //cheak if drone in middel  trnsfer
                         if (chcking_packege.PackageArrived != new DateTime())
                         {
-                            new_drone.packageInTransfer = chcking_packege.SerialNumber;
+                            new_drone.packageInTransfer = ShowPackage( chcking_packege.SerialNumber);
                             package = chcking_packege;
                             new_drone.droneStatus = DroneStatus.Work;
                             break;
@@ -87,7 +87,7 @@ namespace IBL
                                 var updateBase = base_;
                                 updateBase.NumberOfChargingStations--;
                                 dalObj.UpdateBase(updateBase);
-                                new_drone.packageInTransfer = 0;
+                                new_drone.packageInTransfer = null;
                                 new_drone.location = BaseLocation(base_.baseNumber);
                                 break;
                             }
@@ -108,7 +108,7 @@ namespace IBL
                             {
                                 if (j == i)
                                 {
-                                    new_drone.packageInTransfer = package1.SerialNumber;
+                                    new_drone.packageInTransfer = ShowPackage(package1.SerialNumber);
                                     new_drone.location = ClientLocation(package1.GetingClient);
                                     random.Next((int)buttryDownWithNoPackege(new_drone.location, CllosetBase(ClientLocation(package1.GetingClient)).location) + 1, 100);
                                     break;

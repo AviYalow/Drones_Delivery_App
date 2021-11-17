@@ -43,7 +43,7 @@ namespace IBL
             { throw new NumberMoreException(); }
             //chcing phon number
             chekingFon(client.Phone);
-           
+
             try
             {
                 dalObj.AddClient(new IDAL.DO.Client
@@ -76,7 +76,7 @@ namespace IBL
             fon = fon.Insert(7, "-");
 
         }
-       public void UpdateClient(ref Client client)
+        public void UpdateClient(ref Client client)
         {
             //chcinkg id
             if (client.Id < 100000000)
@@ -87,8 +87,54 @@ namespace IBL
             chekingFon(client.Phone);
             dalObj.UpdateClient(new IDAL.DO.Client { Id = client.Id, Name = client.Name, PhoneNumber = client.Phone, Latitude = client.Location.Latitude, Longitude = client.Location.Longitude });
         }
+        public Client GetingClient(uint id)
+        {
+            try
+            {
+                var client = dalObj.CilentByNumber(id);
+                var returnClient = new Client { Id = client.Id, Name = client.Name, Phone = client.PhoneNumber };
+                returnClient.ToClient = new List<Package>();
+                var packege = dalObj.PackegeList().ToList().FindAll(x => x.SendClient == id);
+                foreach (var packegeInList in packege)
+                {
+                    returnClient.ToClient.Add(convertToPackegeBl(packegeInList));
+                }
+                returnClient.FromClient = new List<Package>();
+                 packege = dalObj.PackegeList().ToList().FindAll(x => x.GetingClient == id);
+                foreach (var packegeInList in packege)
+                {
+                    returnClient.ToClient.Add(convertToPackegeBl(packegeInList));
+                }
+                return returnClient;
+            }
+            catch (IDAL.DO.ItemNotFoundException ex)
+            {
+                throw new ItemNotFoundException(ex);
+            }
 
-       
+
+        }
+        public IEnumerable<ClientToList> ClientToLists()
+        {
+            List<ClientToList> clientToLists = new List<ClientToList>();
+            foreach (var clientInDal in dalObj.cilentList())
+            {
+                clientToLists.Add(new ClientToList
+                {
+                    ID = clientInDal.Id,
+                    Name = clientInDal.Name,
+                    Phone = clientInDal.PhoneNumber,
+                    Arrived = (uint)dalObj.PackagesArriveList().Count(x => x.SendClient == clientInDal.Id && x.PackageArrived != new DateTime()),
+                    NotArrived = (uint)dalObj.PackagesArriveList().Count(x => x.SendClient == clientInDal.Id && x.PackageArrived == new DateTime() && x.CollectPackageForShipment != new DateTime()),
+                    OnTheWay = (uint)dalObj.PackagesArriveList().Count(x => x.GetingClient == clientInDal.Id && x.PackageArrived == new DateTime() && x.CollectPackageForShipment != new DateTime()),
+                    received = (uint)dalObj.PackagesArriveList().Count(x => x.GetingClient == clientInDal.Id && x.PackageArrived != new DateTime())
+                });
+
+            }
+            return clientToLists;
+        }
+
+
 
     }
 }

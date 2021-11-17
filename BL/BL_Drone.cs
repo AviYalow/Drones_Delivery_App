@@ -91,7 +91,28 @@ namespace IBL
 
         }
 
-        
+        public IEnumerable<DroneToList> DroneToLists()
+        {
+            if (dronesListInBl.Count == 0)
+                throw new TheListIsEmptyException();
+            List<DroneToList> droneToLists = new List<DroneToList>();
+            foreach (var drone in dronesListInBl)
+            {
+                droneToLists.Add(new DroneToList
+                {
+                    butrryStatus = drone.butrryStatus,
+                    droneStatus = drone.droneStatus,
+                    location = drone.location,
+                    Model = drone.Model,
+                    numPackage = drone.packageInTransfer.SerialNumber,
+                    SerialNumber = drone.SerialNum,
+                    weightCategory = drone.weightCategory
+
+
+                });
+            }
+            return droneToLists;
+        }
 
     }
 }

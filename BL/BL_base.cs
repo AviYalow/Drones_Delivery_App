@@ -98,12 +98,12 @@ namespace IBL
             baseStation.dronesInCharge.Clear();
         }
 
-        public void UpdateBase(string newName = "", int newNumber = -1)
+        public void UpdateBase(uint base_,string newName = "", int newNumber = -1)
         {
             var baseUpdat = new IDAL.DO.Base_Station();
             try
             {
-                baseUpdat = dalObj.BaseStationByNumber((uint)newNumber);
+                baseUpdat = dalObj.BaseStationByNumber(base_);
             }
             catch (IDAL.DO.ItemNotFoundException ex)
             {
@@ -118,6 +118,7 @@ namespace IBL
                     (uint)newNumber : throw new UpdateChargingPositionsException(droneInCharge);
 
             }
+            dalObj.UpdateBase(baseUpdat);
         }
 
         BaseStation convertBaseDalToBaseBl(IDAL.DO.Base_Station baseStation)
@@ -152,6 +153,31 @@ namespace IBL
             {
                 throw new ItemNotFoundException(ex);
             }
+        }
+
+        public IEnumerable<BaseStationToList> BaseStationToLists()
+        {
+            List<BaseStationToList> baseStationToLists = new List<BaseStationToList>();
+            if (dalObj.BaseStationList().Count() == 0)
+                throw new TheListIsEmptyException();
+            uint i = 0;
+            foreach(var baseStationFromDal in dalObj.BaseStationList())
+            {
+                i = 0;
+                foreach(var chargePerBase in dalObj.ChargingDroneList())
+                {
+                    if (chargePerBase.idBaseStation == baseStationFromDal.baseNumber)
+                        i++;
+                }
+                baseStationToLists.Add(new BaseStationToList
+                {
+                    SerialNum = baseStationFromDal.baseNumber,
+                    Name = baseStationFromDal.NameBase,
+                    BusyState = i,
+                    FreeState = baseStationFromDal.NumberOfChargingStations
+                });
+            }
+            return baseStationToLists;
         }
 
     }
