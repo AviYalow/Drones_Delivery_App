@@ -9,12 +9,12 @@ namespace IBL.BO
     public class Package
     {
         public uint SerialNumber { get; init; }
-        public uint SendClient { get; set; }
+        public ClientInPackage SendClient { get; set; }
         
-        public uint RecivedClient { get; set; }
+        public ClientInPackage RecivedClient { get; set; }
         public WeightCategories weightCatgory { get; set; }
         public Priority priority { get; set; }
-        public uint drone { get; set; }
+        public Drone drone { get; set; }
 
         //Delivery time create a package
         public DateTime create_package { get; set; }

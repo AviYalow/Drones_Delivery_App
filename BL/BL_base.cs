@@ -180,5 +180,30 @@ namespace IBL
             return baseStationToLists;
         }
 
+        public IEnumerable<BaseStationToList> BaseStationWhitChargeStationsToLists()
+        {
+            List<BaseStationToList> baseStationToLists = new List<BaseStationToList>();
+            if (dalObj.BaseStationList().Count() == 0)
+                throw new TheListIsEmptyException();
+            uint i = 0;
+            foreach (var baseStationFromDal in dalObj.BaseStationListWithChargeStates())
+            {
+                i = 0;
+                foreach (var chargePerBase in dalObj.ChargingDroneList())
+                {
+                    if (chargePerBase.idBaseStation == baseStationFromDal.baseNumber)
+                        i++;
+                }
+                baseStationToLists.Add(new BaseStationToList
+                {
+                    SerialNum = baseStationFromDal.baseNumber,
+                    Name = baseStationFromDal.NameBase,
+                    BusyState = i,
+                    FreeState = baseStationFromDal.NumberOfChargingStations
+                });
+            }
+            return baseStationToLists;
+        }
+
     }
 }

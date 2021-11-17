@@ -8,9 +8,11 @@ namespace IBL.BO
 {
     public class PackageToList
     {
-        public int SerialNumber { get; set; }
+        public uint SerialNumber { get; set; }
         public string SendClient { get; set; }
         public string RecivedClient { get; set; }
+        public Priority priority { get; set; }
+        public WeightCategories WeightCategories { get; set; }
         public PackageStatus packageStatus { get; set; }
     }
 }
