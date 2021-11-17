@@ -23,7 +23,7 @@ namespace IBL
         public void AddDrone(Drone drone, uint base_);
         public void AddClient(Client client);
         public uint AddPackege(Package package);
-        public void UpdateBase(string newName = "", int newNumber = -1); 
+        public void UpdateBase(uint base_,string newName = "", int newNumber = -1); 
         public void UpdateDronelocation(uint drone, Location location);
         public void UpdateDroneName(uint droneId, string newName);
           public void UpdateClient(ref Client client);
