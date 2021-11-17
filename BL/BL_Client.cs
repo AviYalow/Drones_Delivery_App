@@ -7,7 +7,7 @@ using IBL.BO;
 
 namespace IBL
 {
-    partial class BL:IBL
+    partial class BL : IBL
     {
         /// <summary>
         /// poll out the client location
@@ -21,7 +21,7 @@ namespace IBL
             {
                 client = dalObj.CilentByNumber(id);
             }
-            catch(IDAL.DO.ItemNotFoundException ex)
+            catch (IDAL.DO.ItemNotFoundException ex)
             {
                 throw (new ItemNotFoundException(ex));
             }
@@ -37,17 +37,25 @@ namespace IBL
         public void AddClient(Client client)
         {
             //chcinkg id
-            if(client.Id<1000000000)
+            if (client.Id < 100000000)
             { throw new NumberNotEnoughException(9); }
+            if (client.Id > 999999999)
+            { throw new NumberMoreException(); }
             //chcing phon number
-            chkingFon(client.Phone);
-            
+            chekingFon(client.Phone);
+
             try
             {
-                dalObj.AddClient(new IDAL.DO.Client {Id=client.Id,Latitude= client.Location.Latitude,Longitude= client.Location.Longitude,
-                    Name= client.Name,PhoneNumber= client.Phone});
+                dalObj.AddClient(new IDAL.DO.Client
+                {
+                    Id = client.Id,
+                    Latitude = client.Location.Latitude,
+                    Longitude = client.Location.Longitude,
+                    Name = client.Name,
+                    PhoneNumber = client.Phone
+                });
             }
-            catch(IDAL.DO.ItemFoundException ex)
+            catch (IDAL.DO.ItemFoundException ex)
             {
                 throw (new ItemFoundExeption(ex));
             }
@@ -56,18 +64,31 @@ namespace IBL
         /// help mathod to chack phonumber
         /// </summary>
         /// <param name="fon"></param>
-        void chkingFon( string fon)
+        void chekingFon(string fon)
         {
-            if(fon.Count()<10)
+            if (fon.Count() < 10)
             { throw new NumberNotEnoughException(10); }
-            if (fon[0]!='0'||fon[1]!='5')
+            if (fon[0] != '0' || fon[1] != '5')
             { throw new StartingException("0,5"); }
-            if (fon.Any(c=>c<'0'||c>'9'))
+            if (fon.Any(c => c < '0' || c > '9'))
             { throw new IllegalDigitsException(); }
             fon = fon.Insert(3, "-");
             fon = fon.Insert(7, "-");
 
         }
+       public void UpdateClient(Client client)
+        {
+            //chcinkg id
+            if (client.Id < 100000000)
+            { throw new NumberNotEnoughException(9); }
+            if (client.Id > 999999999)
+            { throw new NumberMoreException(); }
+            //chcing phon number
+            chekingFon(client.Phone);
+            dalObj.UpdateClient(new IDAL.DO.Client { Id = client.Id, Name = client.Name, PhoneNumber = client.Phone, Latitude = client.Location.Latitude, Longitude = client.Location.Longitude });
+        }
+
+       
 
     }
 }

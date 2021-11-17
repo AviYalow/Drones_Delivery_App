@@ -10,7 +10,7 @@ namespace IBL
     public partial class BL : IBL
     {
         public IDal dalObj;
-        public List<Drone> drones = new List<Drone>();
+         List<Drone> dronesListInBl = new List<Drone>();
         /// <summary>
         /// ctor
         /// </summary>
@@ -113,28 +113,11 @@ namespace IBL
 
                 }
 
-                drones.Add(new_drone);
+                dronesListInBl.Add(new_drone);
 
             }
         }
 
-        public void AddClient(uint id, string name, string phone, double latitude, double londitude)
-        {
-            throw new NotImplementedException();
-        }
-
-     
-        public uint AddPackage(uint idsend, uint idget, uint kg, uint priorityByUser)
-        {
-            throw new NotImplementedException();
-        }
-
-        
-
-        public void ConnectPackageToDrone(uint packageNumber, uint drone_sirial_number)
-        {
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         /// cacolete distand betwen two points
@@ -147,24 +130,6 @@ namespace IBL
             return dalObj.Distance(location1.Longitude, location1.Latitude, location2.Longitude, location2.Latitude);
         }
 
-        public void DroneToCharge(uint serial)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Package_arrived(uint packageNumber)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Package_collected(uint packageNumber)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ReleaseDroneFromCharge(uint serial, uint timeInCharge)
-        {
-            throw new NotImplementedException();
-        }
+     
     }
 }

@@ -82,7 +82,8 @@ namespace IBL
         {
             try
             {
-                dalObj.AddStation(baseStation.SerialNum, baseStation.Name, baseStation.FreeState, baseStation.location.Latitude, baseStation.location.Longitude);
+                dalObj.AddStation(new IDAL.DO.Base_Station {baseNumber= baseStation.SerialNum,NameBase= baseStation.Name,NumberOfChargingStations= baseStation.FreeState,
+                   latitude= baseStation.location.Latitude,longitude= baseStation.location.Longitude });
             }
             catch (IDAL.DO.ItemFoundException ex)
             {
@@ -112,6 +113,8 @@ namespace IBL
 
             }
         }
+
+
 
 
     }

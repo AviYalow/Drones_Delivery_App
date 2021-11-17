@@ -15,20 +15,20 @@ namespace DalObject
         /// <summary>
         /// Adding a new drone
         /// </summary>
-        /// <param name="siralNumber">Serial number of the drone</param>
+        /// <param name="drone">Serial number of the drone</param>
         /// <param name="model">The name of the modek </param>
         /// <param name="category"> Easy / Medium / Heavy</param>
         /// <param name="butrry">Battery status</param>
         /// <param name="statos"> Free/ Maintenance/ Work</param>
-        public void AddDrone(uint siralNumber, string model, uint category)
+        public void AddDrone( Drone drone)
         {
-              if (DataSource.drones.Any(x=>x.SerialNumber==siralNumber))
-             throw (new ItemFoundException("drone", siralNumber));
+              if (DataSource.drones.Any(x=>x.SerialNumber==drone.SerialNumber))
+             throw (new ItemFoundException("drone", drone.SerialNumber));
             DataSource.drones.Add(new Drone()
             {
-                SerialNumber = siralNumber,
-                Model = model,
-                WeightCategory = (Weight_categories)category
+                SerialNumber = drone.SerialNumber,
+                Model =drone.Model,
+                WeightCategory = (Weight_categories)drone.WeightCategory
             });
 
         }
@@ -74,6 +74,11 @@ namespace DalObject
             {
                 throw (new ItemNotFoundException("base station", base_));
             }
+            if (DataSource.droneInCharge.Any(x => x.IdDrone == drone))
+                throw new ItemFoundException("drone", drone);
+            if (DataSource.droneInCharge.Any(x => x.idBaseStation == base_))
+                throw new ItemFoundException("BaseStation", base_);
+
             DataSource.droneInCharge.Add(new BatteryLoad { IdDrone = drone, idBaseStation = base_, EntringDrone = DateTime.Now });
             
         }

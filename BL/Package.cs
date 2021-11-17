@@ -10,6 +10,7 @@ namespace IBL.BO
     {
         public uint SerialNumber { get; init; }
         public uint SendClient { get; set; }
+        
         public uint RecivedClient { get; set; }
         public Weight_categories weightCatgory { get; set; }
         public Priority priority { get; set; }

@@ -20,25 +20,20 @@ namespace DalObject
         /// <param name="kg">Weight categories</param>
         /// <param name="priorityByUser">Priority: Immediate/ quick/ Regular </param>
         /// <returns>Returns the serial number of the created package</returns>
-        public uint AddPackage(uint idsend, uint idget, uint kg, uint priorityByUser)
+        public uint AddPackage(Package package)
         {
 
 
+           
             DataSource.Config.package_num++;
-            Package package = new Package
-            {
-                SerialNumber = DataSource.Config.package_num,
-                ReceivingDelivery = DateTime.Now,
-                SendClient = idsend,
-                GetingClient = idget,
-                WeightCatgory = (Weight_categories)kg,
-                Priority = (Priority)priorityByUser
-                
-            };
+            package.ReceivingDelivery = DateTime.Now;
             package.CollectPackageForShipment = new DateTime();
             package.PackageArrived = new DateTime();
             package.PackageAssociation = new DateTime();
-            DataSource.packages.Add(package);
+            DataSource.packages.Add(new Package { SerialNumber= DataSource.Config.package_num,SendClient=package.SendClient,GetingClient= package.GetingClient,
+                 Priority= package.Priority,ReceivingDelivery=package.ReceivingDelivery,WeightCatgory=package.WeightCatgory,OperatorSkimmerId=0,
+                CollectPackageForShipment= package.CollectPackageForShipment,PackageArrived= package.PackageArrived,PackageAssociation= package.PackageAssociation
+            });
             return DataSource.Config.package_num;
         }
 

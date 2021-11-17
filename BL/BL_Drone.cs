@@ -31,7 +31,7 @@ namespace IBL
             Random random = new Random();
             try
             {
-                dalObj.AddDrone(drone.SerialNum, drone.Model, (uint)drone.weightCategory);
+                dalObj.AddDrone(new IDAL.DO.Drone {SerialNumber= drone.SerialNum,Model= drone.Model,WeightCategory=(IDAL.DO.Weight_categories)drone.weightCategory });
             }
             catch (IDAL.DO.ItemFoundException ex)
             {
@@ -39,7 +39,7 @@ namespace IBL
             }
             drone.butrryStatus = random.Next(20, 41);
             DroneToCharge(drone.SerialNum, base_);
-            drones.Add(drone);
+            dronesListInBl.Add(drone);
 
         }
         /// <summary>
@@ -50,10 +50,10 @@ namespace IBL
         public void UpdateDronelocation(  uint drone, Location location)
         {
             
-            int i = drones.FindIndex(x => x.SerialNum == drone);
+            int i = dronesListInBl.FindIndex(x => x.SerialNum == drone);
             if (i == -1)
                 throw (new ItemNotFoundException("Drone", drone));
-            drones[i].location = location;
+            dronesListInBl[i].location = location;
             
         }
         /// <summary>
@@ -73,22 +73,24 @@ namespace IBL
             {
                 throw new ItemNotFoundException(ex);
             }
-            int i = drones.FindIndex(x => x.SerialNum == droneId);
+            int i = dronesListInBl.FindIndex(x => x.SerialNum == droneId);
             if (i == -1)
                 throw new ItemNotFoundException("Drone", droneId);
-            drones[i].Model = newName;
+            dronesListInBl[i].Model = newName;
             droneInData.Model = newName;
             dalObj.UpdateDrone(droneInData);
         }
 
-        public Drone SpsiciSpecificDrone(uint siralNuber)
+        public Drone SpecificDrone(uint siralNuber)
         {
-            var drone = drones.Find(x => x.SerialNum == siralNuber);
+            var drone = dronesListInBl.Find(x => x.SerialNum == siralNuber);
             if (drone == null)
                 throw new ItemNotFoundException("drone", siralNuber);
             return drone;
 
         }
+
+        
 
     }
 }
