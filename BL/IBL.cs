@@ -20,18 +20,15 @@ namespace IBL
         public BaseStation CllosetBase(Location location);
         public Location BaseLocation(uint base_number);
         public void AddBase(BaseStation baseStation);
-        public void UpdateBase(string newName = "", int newNumber = -1);
-
         public void AddDrone(Drone drone, uint base_);
+        public void AddClient(Client client);
+        public uint AddPackege(Package package);
+        public void UpdateBase(string newName = "", int newNumber = -1); 
         public void UpdateDronelocation(uint drone, Location location);
         public void UpdateDroneName(uint droneId, string newName);
+          public void UpdateClient(ref Client client);
         public Drone SpecificDrone(uint siralNuber);
-
         public Location ClientLocation(uint id);
-        public void AddClient(Client client);
-        public void UpdateClient(ref Client client);
-
-        public uint AddPackege(Package package);
         public void ConnctionPackegeToDrone(uint droneNumber);
 
         public double Distans(Location location1, Location location2);

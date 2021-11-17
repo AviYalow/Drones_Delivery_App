@@ -59,7 +59,7 @@ namespace ConsoleUI_BL
                 uint num, id, num1, num2;
                 double doubleNum1, doubleNum2, point1, point2;
                 string str, name, phone;
-               
+
 
                 str = "Choose one of the following:\n" +
                     " 1-Add,\n 2-Update,\n 3-Show Details,\n 4-Show List,\n 0-Exit";
@@ -70,7 +70,7 @@ namespace ConsoleUI_BL
                 switch (option)
                 {
                     case Options.Add:
-                       #region
+                        #region
                         str = "Choose an entity:\n " +
                              "1-Client,\n 2-Base station,\n 3- Drone,\n 4- Package";
                         num = getChoose(str);
@@ -98,7 +98,7 @@ namespace ConsoleUI_BL
                                     {
                                         AddDrone(bl, out check, out num, out id, out num1, out name);
                                     }
-                                   
+
                                     catch (IBL.BO.ItemFoundExeption exception)
                                     {
                                         Console.WriteLine(exception);
@@ -110,7 +110,7 @@ namespace ConsoleUI_BL
                                     //received the details from the user
                                     try
                                     {
-                                        Add_Client(bl, out check, out num, out doubleNum1, out doubleNum2, out name, out phone);
+                                        AddClient(bl, out check, out num, out doubleNum1, out doubleNum2, out name, out phone);
                                     }
                                     catch (IBL.BO.ItemFoundExeption exception)
                                     {
@@ -118,12 +118,12 @@ namespace ConsoleUI_BL
                                     }
                                     break;
                                 }
-                           
+
                             case Entities.Package:
                                 {
                                     try
                                     {
-                                        addPackage(bl, out check, out num, out id, out num1, out num2);
+                                        AddPackage(bl, out check, out num, out id, out num1, out num2);
                                     }
                                     catch (IBL.BO.ItemFoundExeption exception)
                                     {
@@ -134,7 +134,7 @@ namespace ConsoleUI_BL
                             case Entities.Exit:
                                 break;
                         }
-                       
+
                         break;
                     #endregion
 
@@ -150,8 +150,6 @@ namespace ConsoleUI_BL
                         {
                             switch (updatesOption)
                             {
-
-
                                 //option to connect package to drone
                                 case UpdatesOptions.Associate:
 
@@ -180,12 +178,11 @@ namespace ConsoleUI_BL
                                 // Release drone from charging position
                                 case UpdatesOptions.UnCharge:
 
-                                    releaseDrone(bl, out check, out num,out num1);
+                                    releaseDrone(bl, out check, out num, out num1);
                                     break;
 
                                 case UpdatesOptions.Exit:
                                     break;
-
 
                             }
                         }
@@ -229,7 +226,7 @@ namespace ConsoleUI_BL
                                         break;
                                     }
                                 case Show.ShoeDegree:
-                                  //  pointToDegree(bl, out check, out point2);
+                                    //  pointToDegree(bl, out check, out point2);
                                     break;
                                 case Show.Exit:
                                     break;
@@ -293,58 +290,58 @@ namespace ConsoleUI_BL
             void baseWhitFreeChargeStation(IBL.IBL bl)
             {
 
-              //  foreach (IDAL.DO.Base_Station print in bl.Base_station_list_with_charge_states())
-                 //   Console.WriteLine(print);
+                //  foreach (IDAL.DO.Base_Station print in bl.Base_station_list_with_charge_states())
+                //   Console.WriteLine(print);
             }
 
             void packegeWhitNoDrone(IBL.IBL bl)
             {
 
-             //   foreach (IDAL.DO.Package print in bl.packege_list_with_no_drone())
-             //       Console.WriteLine(print);
+                //   foreach (IDAL.DO.Package print in bl.packege_list_with_no_drone())
+                //       Console.WriteLine(print);
             }
 
             void listOfPackage(IBL.IBL bl)
             {
 
-              //  foreach (IDAL.DO.Package print in bl.packege_list())
-              //      Console.WriteLine(print);
+                //  foreach (IDAL.DO.Package print in bl.packege_list())
+                //      Console.WriteLine(print);
             }
 
             void listOfClinet(IBL.IBL bl)
             {
 
-           //     foreach (IDAL.DO.Client print in bl.cilent_list())
-             //       Console.WriteLine(print);
+                //     foreach (IDAL.DO.Client print in bl.cilent_list())
+                //       Console.WriteLine(print);
             }
 
             void listOfDrone(IBL.IBL bl)
             {
 
-               
-             //   foreach (IDAL.DO.Drone print in list)
-                 //   Console.WriteLine(print);
+
+                //   foreach (IDAL.DO.Drone print in list)
+                //   Console.WriteLine(print);
             }
 
             void listOfBass(IBL.IBL bl)
             {
 
 
-             //   foreach (var print in bl.Base_station_list())
+                //   foreach (var print in bl.Base_station_list())
                 //    Console.WriteLine(print);
 
 
             }
 
-           /* void pointToDegree(IBL.IBL bl, out bool check, out double point2)
-            {
-                Console.Write("Enter a longitude or latitude to ge it in degree :");
-                do
-                {
-                    check = double.TryParse(Console.ReadLine(), out point2);
-                } while (!check);
-                Console.WriteLine(bl.Point_to_degree(point2));
-            }*/
+            /* void pointToDegree(IBL.IBL bl, out bool check, out double point2)
+             {
+                 Console.Write("Enter a longitude or latitude to ge it in degree :");
+                 do
+                 {
+                     check = double.TryParse(Console.ReadLine(), out point2);
+                 } while (!check);
+                 Console.WriteLine(bl.Point_to_degree(point2));
+             }*/
 
             void distanceBetween2points(IBL.IBL bl, out bool check, out uint num1, out double doubleNum1, out double doubleNum2, out double point1, out double point2)
             {
@@ -373,22 +370,22 @@ namespace ConsoleUI_BL
                     check = double.TryParse(Console.ReadLine(), out point2);
                 } while (!check);
                 Location location = new Location { Latitude = doubleNum1, Longitude = doubleNum2 };
-                Location location1= new Location { Latitude = point1, Longitude = point2 };
-                Console.WriteLine($"the distance is: {0}KM", bl.Distans(location,location1));
+                Location location1 = new Location { Latitude = point1, Longitude = point2 };
+                Console.WriteLine($"the distance is: {0}KM", bl.Distans(location, location1));
             }
 
             void packageByNumber(IBL.IBL bl, out bool check, out uint num)
             {
                 Console.Write("Enter packege number:");
                 check = uint.TryParse(Console.ReadLine(), out num);
-               // Console.WriteLine(bl.packege_by_number(num));
+                // Console.WriteLine(bl.packege_by_number(num));
             }
 
             void droneBySirialNumber(IBL.IBL bl, out bool check, out uint num)
             {
                 Console.Write("Enter drone number:");
                 check = uint.TryParse(Console.ReadLine(), out num);
-              //  Console.WriteLine(bl.Drone_by_number(num));
+                //  Console.WriteLine(bl.Drone_by_number(num));
             }
 
             void baseByNumber(IBL.IBL bl, out bool check, out uint num)
@@ -396,7 +393,7 @@ namespace ConsoleUI_BL
                 //received the details from the user
                 Console.Write("Enter base number:");
                 check = uint.TryParse(Console.ReadLine(), out num);
-              //  Console.WriteLine(bl.Base_station_by_number(num));
+                //  Console.WriteLine(bl.Base_station_by_number(num));
             }
 
             void clientById(IBL.IBL bl, out bool check, out uint num)
@@ -404,9 +401,8 @@ namespace ConsoleUI_BL
                 //received the details from the user
                 Console.Write("Enter ID:");
                 check = uint.TryParse(Console.ReadLine(), out num);
-             //   Console.WriteLine(bl.cilent_by_number(num));
+                //   Console.WriteLine(bl.cilent_by_number(num));
             }
-
 
             void updateDelivery(IBL.IBL bl, out bool check, out uint num)
             {
@@ -416,7 +412,7 @@ namespace ConsoleUI_BL
                 {
                     check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
-            //    bl.Package_arrived(num);
+                //    bl.Package_arrived(num);
             }
 
             void updateCollect(IBL.IBL bl, out bool check, out uint num)
@@ -427,7 +423,7 @@ namespace ConsoleUI_BL
                 {
                     check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
-             //   bl.Package_collected(num);
+                //   bl.Package_collected(num);
             }
 
             void updateAssociate(IBL.IBL bl, out bool check, out uint num, out uint num1)
@@ -443,13 +439,13 @@ namespace ConsoleUI_BL
                 {
                     check = uint.TryParse(Console.ReadLine(), out num1);
                 } while (!check);
-              //  bl.ConnectPackageToDrone(num, num1);
+                //  bl.ConnectPackageToDrone(num, num1);
             }
 
-            void addPackage(IBL.IBL bl, out bool check, out uint num, out uint id, out uint num1, out uint num2)
+            void AddPackage(IBL.IBL bl, out bool check, out uint num, out uint id, out uint num1, out uint num2)
             {
                 //received the details from the user
-                 
+
                 Console.Write("Enter ID of the sender:");
                 do
                 {
@@ -473,7 +469,7 @@ namespace ConsoleUI_BL
                 // add new package
                 bl.AddPackege(new Package { SendClient=id,RecivedClient=num1,weightCatgory=(WeightCategories)num2,priority=(Priority)num});
             }
-            
+
             void AddDrone(IBL.IBL bl, out bool check, out uint num, out uint id, out uint num1, out string name)
             {
                 Console.Write("Enter sireal number:");
@@ -487,7 +483,7 @@ namespace ConsoleUI_BL
                 do
                 {
                     check = uint.TryParse(Console.ReadLine(), out num);
-                    
+
                 } while (!check);
 
                 Console.Write("Enter number of base station for the first charging: ");
@@ -542,10 +538,10 @@ namespace ConsoleUI_BL
                     dronesInCharge = null
                 };
                 // add new Base station
-               bl.AddBase(baseStation);
+                bl.AddBase(baseStation);
             }
 
-            void Add_Client(IBL.IBL bl, out bool check, out uint myId, out double doubleNum1, out double doubleNum2, out string name, out string phone)
+            void AddClient(IBL.IBL bl, out bool check, out uint myId, out double doubleNum1, out double doubleNum2, out string name, out string phone)
             {
                 Console.Write("Enter ID:");
                 do
@@ -575,13 +571,13 @@ namespace ConsoleUI_BL
                     Phone = phone,
                     Location = new Location { Longitude = doubleNum1, Latitude = doubleNum2 },
                     FromClient = null,
-                    ToClient=null
+                    ToClient = null
                 };
                 bl.AddClient(client);
             }
 
-            void releaseDrone(IBL.IBL bl, out bool check, out uint serial,out uint timeInCharge)
-           {
+            void releaseDrone(IBL.IBL bl, out bool check, out uint serial, out uint timeInCharge)
+            {
                 Console.Write("Enter sireal number:");
                 do
                 {
@@ -594,11 +590,11 @@ namespace ConsoleUI_BL
                     check = uint.TryParse(Console.ReadLine(), out timeInCharge);
                 } while (!check);
 
-                bl.FreeDroneFromCharging(serial,timeInCharge);
+                bl.FreeDroneFromCharging(serial, timeInCharge);
             }
 
             void updateCharge(IBL.IBL bl, out bool check, out uint serial)
-                {
+            {
                 Console.Write("Enter sireal number:");
                 do
                 {
@@ -607,16 +603,11 @@ namespace ConsoleUI_BL
 
                 bl.DroneToCharge(serial);
             }
-            
-            
-
 
         }
 
         static void Main(string[] args)
-
         {
-             
             IBL.IBL bl = new BL();
             Menu(bl);
         }
