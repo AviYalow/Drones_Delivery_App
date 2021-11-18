@@ -16,14 +16,21 @@ namespace IBL
         public uint AddPackege(Package package)
         {
             uint packegeNum = 0;
+            var distans = Distans(ClientLocation(package.SendClient.Id), ClientLocation(package.RecivedClient.Id));
+            if (package.weightCatgory == WeightCategories.Heavy && distans > 10)
+                throw new MoreDistasThenMaximomException("10");
+            else if (package.weightCatgory == WeightCategories.Medium && distans > 16.6)
+                throw new MoreDistasThenMaximomException("16.6");
+            else if (package.weightCatgory == WeightCategories.Easy && distans > 33.3)
+                throw new MoreDistasThenMaximomException("33.3");
+
             try
             {
-                
 
                 packegeNum = dalObj.AddPackage(new IDAL.DO.Package
                 {
-                    SendClient =package.SendClient.Id,
-                    GetingClient =package.RecivedClient.Id,
+                    SendClient = package.SendClient.Id,
+                    GetingClient = package.RecivedClient.Id,
                     Priority = (IDAL.DO.Priority)package.priority,
                     WeightCatgory = (IDAL.DO.WeightCategories)package.weightCatgory,
                     PackageArrived = package.create_package
@@ -44,56 +51,38 @@ namespace IBL
         public void ConnectPackegeToDrone(uint droneNumber)//אולי כדאי לעבור למיון רשימה ואח"כ לסינון?
         {
             var drone = dronesListInBl.Find(x => x.SerialNum == droneNumber);
-            if (drone == null)
+            if (drone is null)
             { throw new ItemNotFoundException("Drone", droneNumber); }
             if (drone.droneStatus != DroneStatus.Free)
             { throw new DroneCantMakeDliveryException(); }
-            IEnumerable<IDAL.DO.Package> packege, temp;
+            IEnumerable<IDAL.DO.Package> packege, temp = new List<IDAL.DO.Package>();
             //locking for drone in first priorty 
-            packege = dalObj.PackegeListWithNoDrone().ToList().FindAll(x => x.Priority == IDAL.DO.Priority.Immediate);
-            if (packege == null)
-                packege = dalObj.PackegeListWithNoDrone().ToList().FindAll(x => x.Priority == IDAL.DO.Priority.quick);
-            if (packege == null)
-                packege = dalObj.PackegeListWithNoDrone().ToList().FindAll(x => x.Priority == IDAL.DO.Priority.Regular);
-            //locking for packeges the drone can delivery
-            switch (drone.weightCategory)
+            packege = dalObj.PackegeListWithNoDrone().ToList().FindAll(x => (WeightCategories)x.WeightCatgory <= drone.weightCategory);
+            for (Priority i = Priority.Immediate; i <= Priority.Regular; i++)
             {
-                #region
-                case WeightCategories.Heavy:
-                    temp = packege.ToList().FindAll(x => x.WeightCatgory == IDAL.DO.WeightCategories.Heavy);
-                    if (temp == null)
-                        temp = packege.ToList().FindAll(x => x.WeightCatgory == IDAL.DO.WeightCategories.Medium);
-                    if (temp == null)
-                        temp = packege.ToList().FindAll(x => x.WeightCatgory == IDAL.DO.WeightCategories.Easy);
-                    packege = temp;
-                    break;
-                case WeightCategories.Medium:
-                    temp = packege.ToList().FindAll(x => x.WeightCatgory == IDAL.DO.WeightCategories.Medium);
-                    if (temp == null)
-                        temp = packege.ToList().FindAll(x => x.WeightCatgory == IDAL.DO.WeightCategories.Easy);
-                    packege = temp;
-                    break;
-                case WeightCategories.Easy:
-                    packege = packege.ToList().FindAll(x => x.WeightCatgory == IDAL.DO.WeightCategories.Easy);
-                    break;
-                default:
-                    break;
-                    #endregion
-            }
-            //locking for the most closest package
-            var finalpackeg = cloosetPackege(drone.location, packege);
-            //cheking if the buttry enough for a dlivery
-            var buttry = batteryCalculationForFullShipping(drone.location, finalpackeg);
 
-            if (drone.butrryStatus - buttry <= 0)
-                throw new NoButrryToTripException(buttry);
-            //update number packege in drone
-            drone.packageInTransfer = ShowPackage(finalpackeg.SerialNumber);
-            drone.droneStatus = DroneStatus.Work;
-            //update the packege
-            finalpackeg.drone = drone;
-            finalpackeg.package_association = DateTime.Now;
-            UpdatePackegInDal(finalpackeg);
+                for (WeightCategories j = drone.weightCategory; j <= WeightCategories.Easy; j++)
+                {
+                    temp = (packege.ToList().FindAll(x => (Priority)x.Priority == i && (WeightCategories)x.WeightCatgory == j));
+                    if (temp != null)
+                        break;
+                }
+                if (temp != null)
+                {
+                    var finalpackeg = cloosetPackege(drone.location, temp);
+                    var buttry = batteryCalculationForFullShipping(drone.location, finalpackeg);
+                    if (drone.butrryStatus - buttry > 0)
+                    {
+                        dalObj.ConnectPackageToDrone(finalpackeg.SerialNumber, drone.SerialNum);
+                        return;
+                    }
+                    
+                }
+                
+
+            }
+            throw new DroneCantMakeDliveryException();
+
 
         }
 
@@ -129,8 +118,8 @@ namespace IBL
                 Location location1 = ClientLocation(packages.ToList()[0].SendClient);
 
 
-                foreach(var packege1 in packages)
-                { 
+                foreach (var packege1 in packages)
+                {
                     uint sendig = packege1.SendClient;
                     Location location2 = ClientLocation(sendig);
                     if (Distans(location, location1) > Distans(location, location2))
@@ -148,29 +137,35 @@ namespace IBL
 
         public Package ShowPackage(uint number)
         {
-            Package package;
+
             try
             {
                 var dataPackege = dalObj.packegeByNumber(number);
-                package = new Package
-                {
-                    SerialNumber = dataPackege.SerialNumber,
-                    SendClient = clientInPackageFromDal(dataPackege.SendClient),
-                    collect_package = dataPackege.CollectPackageForShipment,
-                    create_package = dataPackege.ReceivingDelivery,
-                    drone = SpecificDrone( dataPackege.OperatorSkimmerId),
-                    package_arrived = dataPackege.PackageArrived,
-                    package_association = dataPackege.PackageAssociation,
-                    priority = (Priority)dataPackege.Priority,
-                    RecivedClient = clientInPackageFromDal( dataPackege.GetingClient),
-                    weightCatgory = (WeightCategories)dataPackege.WeightCatgory
-                };
+                return convertPackegeDalToBl(dataPackege);
             }
             catch (IDAL.DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }
-            return package;
+
+        }
+
+        Package convertPackegeDalToBl(IDAL.DO.Package dataPackege)
+        {
+            return new Package
+            {
+                SerialNumber = dataPackege.SerialNumber,
+                SendClient = clientInPackageFromDal(dataPackege.SendClient),
+                collect_package = dataPackege.CollectPackageForShipment,
+                create_package = dataPackege.ReceivingDelivery,
+                drone = SpecificDrone(dataPackege.OperatorSkimmerId),
+                package_arrived = dataPackege.PackageArrived,
+                package_association = dataPackege.PackageAssociation,
+                priority = (Priority)dataPackege.Priority,
+                RecivedClient = clientInPackageFromDal(dataPackege.GetingClient),
+                weightCatgory = (WeightCategories)dataPackege.WeightCatgory
+            };
+
         }
 
         Package convertToPackegeBl(IDAL.DO.Package dataPackege)
@@ -181,7 +176,7 @@ namespace IBL
                 SendClient = clientInPackageFromDal(dataPackege.SendClient),
                 collect_package = dataPackege.CollectPackageForShipment,
                 create_package = dataPackege.ReceivingDelivery,
-                drone =SpecificDrone( dataPackege.OperatorSkimmerId),
+                drone = SpecificDrone(dataPackege.OperatorSkimmerId),
                 package_arrived = dataPackege.PackageArrived,
                 package_association = dataPackege.PackageAssociation,
                 priority = (Priority)dataPackege.Priority,
@@ -205,9 +200,9 @@ namespace IBL
 
             if (drone.butrryStatus < 0)
             { new FunctionErrorException("BatteryCalculationForFullShipping"); }
-            
+
             drone.location = location;
-            
+
             dalObj.PackageCollected(pacege.SerialNumber);
             dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNum == droneNumber)] = drone;
 
@@ -291,6 +286,8 @@ namespace IBL
             }
             return packageToLists;
         }
+
+
 
     }
 }

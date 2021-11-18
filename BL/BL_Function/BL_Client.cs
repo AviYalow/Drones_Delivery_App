@@ -41,6 +41,9 @@ namespace IBL
             { throw new NumberNotEnoughException(9); }
             if (client.Id > 999999999)
             { throw new NumberMoreException(); }
+            var distas = Distans(client.Location, ClosestBase(client.Location).location);
+            if (distas > 30)
+                throw new ClientOutOfRangeException();
             //chcing phon number
             chekingFon(client.Phone);
 
@@ -93,17 +96,17 @@ namespace IBL
             {
                 var client = dalObj.CilentByNumber(id);
                 var returnClient = new Client { Id = client.Id, Name = client.Name, Phone = client.PhoneNumber };
-                returnClient.ToClient = new List<Package>();
+                returnClient.ToClient = new List<PackageAtClient>();
                 var packege = dalObj.PackegeList().ToList().FindAll(x => x.SendClient == id);
                 foreach (var packegeInList in packege)
                 {
-                    returnClient.ToClient.Add(convertToPackegeBl(packegeInList));
+                    returnClient.ToClient.Add(convretPackegeDalToPackegeAtClient(packegeInList));
                 }
-                returnClient.FromClient = new List<Package>();
+                returnClient.FromClient = new List<PackageAtClient>();
                  packege = dalObj.PackegeList().ToList().FindAll(x => x.GetingClient == id);
                 foreach (var packegeInList in packege)
                 {
-                    returnClient.ToClient.Add(convertToPackegeBl(packegeInList));
+                    returnClient.ToClient.Add(convretPackegeDalToPackegeAtClient(packegeInList));
                 }
                 return returnClient;
             }

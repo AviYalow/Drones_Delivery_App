@@ -181,5 +181,26 @@ namespace IBL
                 return $"Error in"+ Message+" function";
             }
         }
+
+        public class MoreDistasThenMaximomException : Exception
+        {
+            public MoreDistasThenMaximomException(string message) : base(message) { }
+
+            protected MoreDistasThenMaximomException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
+            public override string ToString()
+            {
+                return $"The maximom Distans The Drone can go is"+Message+"Km!";
+            }
+        }
+        public class ClientOutOfRangeException : Exception
+        {
+
+            public ClientOutOfRangeException() : base() { }
+            protected ClientOutOfRangeException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
+            public override string ToString()
+            {
+                return $"Your location out of are range,we not working in your erea,Sorry! ";
+            }
+        }
     }
 }

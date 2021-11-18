@@ -13,8 +13,8 @@ namespace IBL.BO
         public string Phone { get; set; }
         public Location Location { get; set; }
 
-        public List<Package> FromClient { get; set; }
-        public List<Package> ToClient { get; set; }
+        public List<PackageAtClient> FromClient { get; set; }
+        public List<PackageAtClient> ToClient { get; set; }
 
         public override string ToString()
         {

@@ -8,7 +8,7 @@ namespace IBL.BO
 {
     public class PackageAtClient
     {
-        public int SerialNum { get; set; }
+        public uint SerialNum { get; set; }
         public WeightCategories WeightCatgory { get; set; }
         public Priority Priority { get; set; }
         public PackageStatus packageStatus { get; set; }
