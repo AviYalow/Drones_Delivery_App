@@ -7,7 +7,7 @@ using IBL.BO;
 
 namespace IBL
 {
-    partial class BL : IBL
+    public partial class BL : IBL
     {
         /// <summary>
         /// add drone to list
@@ -85,7 +85,7 @@ namespace IBL
         public Drone SpecificDrone(uint siralNuber)
         {
             var drone = dronesListInBl.Find(x => x.SerialNum == siralNuber);
-            if (drone == null)
+            if (drone is null)
                 throw new ItemNotFoundException("drone", siralNuber);
             return drone;
 
@@ -112,6 +112,11 @@ namespace IBL
                 });
             }
             return droneToLists;
+        }
+
+        Drone droneFromDal(IDAL.DO.Drone drone)
+        {
+            return new Drone { SerialNum = drone.SerialNumber, Model = drone.Model, weightCategory = (WeightCategories)drone.WeightCategory };
         }
 
     }

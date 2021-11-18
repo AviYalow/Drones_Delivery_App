@@ -18,6 +18,10 @@ namespace IBL
         {
             Random random = new Random();
             dalObj = new DalObject.DalObject();
+            foreach(IDAL.DO.Drone drone in dalObj.DroneList())
+            {
+                dronesListInBl.Add(droneFromDal(drone));
+            }
             foreach (IDAL.DO.Drone drone in dalObj.DroneList())
             {
                 //data from dorn list in data source

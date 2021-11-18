@@ -7,7 +7,7 @@ using IBL.BO;
 
 namespace IBL
 {
-    partial class BL : IBL
+    public partial class BL : IBL
     {
 
         PackageAtClient convretPackegeDalToPackegeAtClient(IDAL.DO.Package package)
@@ -30,5 +30,6 @@ namespace IBL
             return convert;
 
         }
+        
     }
 }

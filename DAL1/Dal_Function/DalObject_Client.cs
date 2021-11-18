@@ -40,7 +40,7 @@ namespace DalObject
         /// <returns> string of data </returns>
         public Client CilentByNumber(uint id)
         {
-              if (DataSource.clients.Any(x=>x.Id==id))
+              if (!DataSource.clients.Any(x=>x.Id==id))
              throw (new ItemNotFoundException("client",id));
             return DataSource.clients[DataSource.clients.FindIndex(x => x.Id == id)];
 

@@ -7,7 +7,7 @@ using IBL.BO;
 
 namespace IBL
 {
-    partial class BL : IBL
+    public partial class BL : IBL
     {/// <summary>
      /// add packege to list in data source 
      /// </summary>

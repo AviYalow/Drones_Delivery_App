@@ -8,7 +8,7 @@ using IBL.BO;
 
 namespace IBL
 {
-    partial class BL : IBL
+  public  partial class BL : IBL
     {
         /// <summary>
         /// clculet the most collset base to the cilent
