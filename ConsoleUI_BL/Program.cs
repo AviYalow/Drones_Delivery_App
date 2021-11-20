@@ -11,7 +11,7 @@ namespace ConsoleUI_BL
         #region
         enum Options { Exit, Add, Update, ShowDetails, ShowList }
         enum Entities { Exit, Client, Base_station, Drone, Package }
-        enum UpdatesOptions { Exit, DroneName, Base_station, Client, Associate, Collect, Delivery, Charge, UnCharge }
+        enum UpdatesOptions { Exit, DroneName, Base_station, Client, Charge, UnCharge,Associate, Collect, Delivery }
         enum Show { Exit, Client, Base_station, Drone, Package, ShowDistance, ShoeDegree }
         enum ShowList { Exit, Base_station, Drones, Clients, Package, FreePackage, FreeBaseStation }
         enum Distans_2_point { base_station = 1, client }
@@ -146,9 +146,11 @@ namespace ConsoleUI_BL
                     #region
                     case Options.Update:
                         str = "Choose one of the following updates:\n " +
-                            "1-Associate a package,\n 2-collect a package by drone,\n" +
-                            " 3- Delivering a package to the customer,\n" +
-                            " 4- Send drone to Charge\n 5- free drone from charge";
+                            "1-Drone name\n 2-Base Station\n" +
+                            " 3- Client\n 4- Send drone to Charge\n " +
+                            "5- free drone from charge\n 6-Associate a package\n" +
+                            "7-Collect a package by drone\n 8-Delivering a package to the customer\n";
+
                         num = getChoose(str);
                         updatesOption = (UpdatesOptions)num;
                         try
