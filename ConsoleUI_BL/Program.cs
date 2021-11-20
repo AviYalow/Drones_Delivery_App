@@ -358,7 +358,7 @@ namespace ConsoleUI_BL
 
             void packageByNumber(IBL.IBL bl, out bool check, out uint num)
             {
-                Console.Write("Enter packege number:");
+                Console.Write("Enter packege serial number:");
                 do
                 {
                     check = uint.TryParse(Console.ReadLine(), out num);
@@ -380,7 +380,7 @@ namespace ConsoleUI_BL
 
             void droneBySirialNumber(IBL.IBL bl, out bool check, out uint num)
             {
-                Console.Write("Enter drone number:");
+                Console.Write("Enter drone serial number:");
                 do
                 {
                     check = uint.TryParse(Console.ReadLine(), out num);
@@ -391,7 +391,7 @@ namespace ConsoleUI_BL
             void baseByNumber(IBL.IBL bl, out bool check, out uint num)
             {
                 //received the details from the user
-                Console.Write("Enter base number:");
+                Console.Write("Enter base station serial number:");
                 do
                 {
                     check = uint.TryParse(Console.ReadLine(), out num);
@@ -463,18 +463,14 @@ namespace ConsoleUI_BL
 
             void AddBase(IBL.IBL bL, out bool check, out uint id, out uint num1, out double doubleNum1, out double doubleNum2, out string name)
             {
-                Console.Write("Enter base number:");
+                Console.Write("Enter base station serial number:");
                 do
                 {
                     check = uint.TryParse(Console.ReadLine(), out id);
                 } while (!check);
                 Console.Write("Enter base name:");
                 name = Console.ReadLine();
-                Console.Write("Enter Number of charging stations:");
-                do
-                {
-                    check = uint.TryParse(Console.ReadLine(), out num1);
-                } while (!check);
+                
                 Console.Write("Enter latitude:");
                 do
                 {
@@ -486,7 +482,11 @@ namespace ConsoleUI_BL
 
                     check = double.TryParse(Console.ReadLine(), out doubleNum2);
                 } while (!check);
-
+                Console.Write("Enter Number of charging stations:");
+                do
+                {
+                    check = uint.TryParse(Console.ReadLine(), out num1);
+                } while (!check);
                 BaseStation baseStation = new BaseStation
                 {
                     SerialNum = id,
@@ -535,7 +535,7 @@ namespace ConsoleUI_BL
 
             void UpdateBase(IBL.IBL bl, out bool check, out uint id, out string name, out int amount)
             {
-                Console.Write("Enter base number:");
+                Console.Write("Enter base station serial number:");
                 do
                 {
                     check = uint.TryParse(Console.ReadLine(), out id);
@@ -570,7 +570,7 @@ namespace ConsoleUI_BL
             void updateDelivery(IBL.IBL bl, out bool check, out uint num)
             {
                 //received the details from the user
-                Console.Write("Enter drone number:");
+                Console.Write("Enter drone serial number:");
                 do
                 {
                     check = uint.TryParse(Console.ReadLine(), out num);
@@ -627,7 +627,7 @@ namespace ConsoleUI_BL
 
             void updateCollect(IBL.IBL bl, out bool check, out uint num)
             {
-                Console.Write("Enter drone number: ");
+                Console.Write("Enter drone serial number: ");
 
                 do
                 {
@@ -640,7 +640,7 @@ namespace ConsoleUI_BL
             {
                 //received the details from the user
 
-                Console.Write("Enter drone number:");
+                Console.Write("Enter drone serial number:");
                 do
                 {
                     check = uint.TryParse(Console.ReadLine(), out num);
@@ -664,7 +664,7 @@ namespace ConsoleUI_BL
 
             void updateCharge(IBL.IBL bl, out bool check, out uint serial)
             {
-                Console.Write("Enter sireal number:");
+                Console.Write("Enter drone serial number:");
                 do
                 {
                     check = uint.TryParse(Console.ReadLine(), out serial);
