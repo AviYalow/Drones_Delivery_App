@@ -42,11 +42,11 @@ namespace IDAL
             public override string ToString()
             {
                 string Error_mashge = "";
-                Error_mashge += $"this " + type + "\n";
-                Error_mashge += $"number: {key}\n";
-                Error_mashge += "\nnot found";
-                Error_mashge += $"Please check if {type} number: {key} existing\n";
-                Error_mashge += $"You can check {type} by issuing complete lists\n";
+                Error_mashge += $"this " + type ;
+                Error_mashge += $" number: {key}";
+                Error_mashge += " not found ";
+                Error_mashge += $"Please check if {type} number: {key} existing.\n";
+                Error_mashge += $"You can check {type} by issuing complete lists.\n";
                 return Error_mashge;
 
             }

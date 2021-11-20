@@ -140,10 +140,7 @@ namespace IBL
 
 
 
-            foreach (var a in dronesListInBl)
-            {
-                Console.WriteLine(a);
-            }
+           
 
         }
         /// <summary>
