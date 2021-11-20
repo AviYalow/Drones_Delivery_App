@@ -115,7 +115,7 @@ namespace IBL
             {
                 int droneInCharge = dalObj.ChargingDroneList().Count(x => x.idBaseStation == (uint)newNumber);
                 baseUpdat.NumberOfChargingStations = (droneInCharge <= newNumber) ?
-                    (uint)newNumber : throw new UpdateChargingPositionsException(droneInCharge);
+                    (uint)newNumber : throw new UpdateChargingPositionsException(droneInCharge,base_);
 
             }
             dalObj.UpdateBase(baseUpdat);

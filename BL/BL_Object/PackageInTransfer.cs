@@ -8,7 +8,7 @@ namespace IBL.BO
 {
     public class PackageInTransfer
     {
-        public int SerialNum { get; set; }
+        public uint SerialNum { get; set; }
         public WeightCategories WeightCatgory { get; set; }
         public Priority Priority { get; set; }
         public bool InTheWay { get; set; }//true-in the way,false-waiting to be collected

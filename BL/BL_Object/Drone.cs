@@ -12,7 +12,7 @@ namespace IBL.BO
         public string Model { get; set; }
 
         public WeightCategories weightCategory { get; set; }
-        public Package packageInTransfer { get; set; }
+        public PackageInTransfer packageInTransfer { get; set; }
 
         public double butrryStatus { get; set; }
         public DroneStatus droneStatus { get; set; }
@@ -23,7 +23,7 @@ namespace IBL.BO
             print += $"Siral Number: {SerialNum},\n";
             print += $"model: {Model},\n";
             print+= $"Weight Category: {weightCategory},\n";
-            print += $"Package in transfer: {packageInTransfer.SerialNumber},\n";
+            print += $"Package in transfer: {packageInTransfer},\n";
             print += $" Butrry status: {butrryStatus},\n";
             print += $" Drone status: {droneStatus},\n";
             print += $"Location: Latitude-{location.Latitude} Longitude-{location.Longitude}\n";

@@ -75,7 +75,8 @@ namespace IBL
         public class UpdateChargingPositionsException:Exception
         {
             public int DroneInCharge { get; set; }
-            public UpdateChargingPositionsException(int number) : base() { DroneInCharge = number; }
+            public uint BaseNumber { get; set; }
+            public UpdateChargingPositionsException(int number,uint numberBase) : base() { DroneInCharge = number;BaseNumber = numberBase; }
             protected UpdateChargingPositionsException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
             public override string ToString()
             {
@@ -83,7 +84,9 @@ namespace IBL
                     "Please release skimmers from charging.";
             }
         }
-
+        /// <summary>
+        /// Exception for try to relese more dorne for spsific base 
+        /// </summary>
         public class TryToPullOutMoreDrone:Exception
         {
             public TryToPullOutMoreDrone() : base() { }
@@ -93,7 +96,9 @@ namespace IBL
                 return "Your try to pull out more drone then statins charge! ";
             }
         }
-
+        /// <summary>
+        /// try to send drone in charge or work to charge
+        /// </summary>
         public class DroneCantSendToChargeException : Exception
         {
             public DroneCantSendToChargeException() : base() { }
@@ -103,7 +108,9 @@ namespace IBL
                 return "The drone not in statos to get charge";
             }
         }
-
+        /// <summary>
+        /// try to send drone to delivery with not enough buttry
+        /// </summary>
         public class NoButrryToTripException:Exception
         {
            public double buttry { get; set; }
@@ -115,7 +122,9 @@ namespace IBL
                     $"You should send the skimmer for charging or transfer location " ;
             }
         }
-
+        /// <summary>
+        /// not enough number in in-put
+        /// </summary>
         public class NumberNotEnoughException:Exception
         {
             int amount { get; set; }
@@ -126,7 +135,9 @@ namespace IBL
                 return $"ther his last from {amount} digit number" ;
             }
         }
-
+        /// <summary>
+        /// more number with neccery
+        /// </summary>
         public class NumberMoreException : Exception
         {
 
@@ -137,7 +148,9 @@ namespace IBL
                 return "ther his more then 10 digit number";
             }
         }
-
+        /// <summary>
+        /// illegal digint number in phone number
+        /// </summary>
         public class IllegalDigitsException : Exception
         {
            public IllegalDigitsException() : base() { }
@@ -147,7 +160,9 @@ namespace IBL
                 return "Digits only without signs and letters";
             }
         }
-
+        /// <summary>
+        /// phone number start no with 05
+        /// </summary>
         public class StartingException:Exception
         {
            public string Start { get; set; }
@@ -158,19 +173,25 @@ namespace IBL
                 return "You have to start whit"+Start+"only";
             }
         }
-
+        /// <summary>
+        /// list empty
+        /// </summary>
         public class TheListIsEmptyException:Exception
         {
             public TheListIsEmptyException(string masseg="\a ERROR: This list his empty") : base(masseg) { }
            protected TheListIsEmptyException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute,context) { }
         }
-
+        /// <summary>
+        /// try to send drone for delivery when he still in work or charge
+        /// </summary>
         public class DroneCantMakeDliveryException:Exception
         {
             public DroneCantMakeDliveryException(string masseg = "\a ERROR: Drone not free for  delivery") : base(masseg) { }
             protected DroneCantMakeDliveryException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
         }
-
+/// <summary>
+/// function Error
+/// </summary>
         public class FunctionErrorException:Exception
         {
            
@@ -181,7 +202,9 @@ namespace IBL
                 return $"Error in"+ Message+" function";
             }
         }
-
+        /// <summary>
+        /// Distans is out for the maximom for drone
+        /// </summary>
         public class MoreDistasThenMaximomException : Exception
         {
             public MoreDistasThenMaximomException(string message) : base(message) { }
@@ -192,6 +215,9 @@ namespace IBL
                 return $"The maximom Distans The Drone can go is"+Message+"Km!";
             }
         }
+        /// <summary>
+        /// client out of area the coumpeny work with
+        /// </summary>
         public class ClientOutOfRangeException : Exception
         {
 

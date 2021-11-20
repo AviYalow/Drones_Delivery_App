@@ -179,7 +179,7 @@ namespace ConsoleUI_BL
                                 // Release drone from charging position
                                 case UpdatesOptions.UnCharge:
 
-                                    UpdateUnCharge(bl, out check, out num, out num1);
+                                    UpdateUnCharge(bl, out check, out num);
                                     break;
 
                                 case UpdatesOptions.Associate:
@@ -205,6 +205,51 @@ namespace ConsoleUI_BL
                                     break;
 
                             }
+                        }
+                        catch (IBL.BO.UpdateChargingPositionsException ex)
+                        {
+                            Console.WriteLine(ex);
+                            string chose = "";
+                            do
+                            {
+                                Console.WriteLine("do you want to relse number of drone in this base?\n plese enter yes\\no");
+                                chose = Console.ReadLine();
+                                if (chose == "yes")
+                                {
+                                    Console.WriteLine("How match drone you want to pull out?");
+                                    do
+                                    {
+                                        check = uint.TryParse(Console.ReadLine(), out num);
+                                    } while (!check);
+                                    bl.FreeBaseFromDrone(ex.BaseNumber, (int)num);
+                                }
+                                else if (chose == "no")
+                                {
+                                    break;
+                                }
+                                else
+                                    chose = "";
+                            } while (chose == "");
+                        }
+                        catch (IBL.BO.StartingException ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                        catch (IBL.BO.IllegalDigitsException ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                        catch (IBL.BO.NumberMoreException ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                        catch (IBL.BO.NumberNotEnoughException ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                        catch (IBL.BO.TryToPullOutMoreDrone ex)
+                        {
+                            Console.WriteLine(ex);
                         }
                         catch (IBL.BO.ItemNotFoundException exception)
                         {
@@ -251,6 +296,7 @@ namespace ConsoleUI_BL
                                     break;
                             }
                         }
+
                         catch (ItemNotFoundException exception)
                         {
 
@@ -288,6 +334,11 @@ namespace ConsoleUI_BL
                                 case ShowList.Exit:
                                     break;
                             }
+                        }
+                        catch (TheListIsEmptyException exception)
+                        {
+
+                            Console.WriteLine(exception);
                         }
                         catch (ItemNotFoundException exception)
                         {
@@ -622,8 +673,9 @@ namespace ConsoleUI_BL
                 bl.DroneToCharge(serial);
             }
 
-            void UpdateUnCharge(IBL.IBL bl, out bool check, out uint serial, out uint timeInCharge)
+            void UpdateUnCharge(IBL.IBL bl, out bool check, out uint serial)
             {
+                TimeSpan timeInCharge;
                 Console.Write("Enter sireal number:");
                 do
                 {
@@ -633,7 +685,7 @@ namespace ConsoleUI_BL
                 Console.Write("Enter how long it is in charge:");
                 do
                 {
-                    check = uint.TryParse(Console.ReadLine(), out timeInCharge);
+                    check = TimeSpan.TryParse(Console.ReadLine(), out timeInCharge);
                 } while (!check);
 
                 bl.FreeDroneFromCharging(serial, timeInCharge);

@@ -12,8 +12,8 @@ namespace IBL
     {
         double DroneChrgingAlredy(DateTime dateTime, DateTime newdateTime = default);
         public void DroneToCharge(uint dronenumber);
-        public double FreeDroneFromCharging(uint droneNumber, uint timeInCharge);
-        public IEnumerable<DroneInCharge> FreeBaseFromDrone(uint baseNumber, int number);
+        public double FreeDroneFromCharging(uint droneNumber, TimeSpan timeInCharge);
+        public void FreeBaseFromDrone(uint baseNumber, int number);
         public BaseStation ClosestBase(Location location);
         public Location BaseLocation(uint base_number);
         public void AddBase(BaseStation baseStation);

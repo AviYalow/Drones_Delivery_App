@@ -16,28 +16,23 @@ namespace IBL
         /// </summary>
         /// <param name="packegeNumber"></param>
         /// <returns></returns>
-        double buttryDownPackegeDelivery(uint packegeNumber)
+        double buttryDownPackegeDelivery(PackageInTransfer packageInTransfer)
         {
             double[] elctricity = dalObj.Elctrtricity();
-            double battery_drop = 0, distans = 0;
+            double battery_drop = 0;
 
-            IDAL.DO.Package package = dalObj.packegeByNumber(packegeNumber);
-            Location sending_location = ClientLocation(package.SendClient), geting_location = ClientLocation(package.GetingClient);
-
-            distans = Distans(geting_location, sending_location);
-
-            switch ((WeightCategories)package.WeightCatgory)//להשלים פונקציה ע"י חישוב לכל משקל
+            switch (packageInTransfer.WeightCatgory)//להשלים פונקציה ע"י חישוב לכל משקל
             {
                 case WeightCategories.Easy:
-                    battery_drop = ((distans / (double)SpeedDrone.Easy) / (double)ButrryPer.Minute);
+                    battery_drop = ((packageInTransfer.Distance / (double)SpeedDrone.Easy) / (double)ButrryPer.Minute);
                     battery_drop *= elctricity[1];
                     break;
                 case WeightCategories.Medium:
-                    battery_drop = ((distans / (double)SpeedDrone.Medium) / (double)ButrryPer.Minute);
+                    battery_drop = ((packageInTransfer.Distance / (double)SpeedDrone.Medium) / (double)ButrryPer.Minute);
                     battery_drop *= elctricity[2];
                     break;
                 case WeightCategories.Heavy:
-                    battery_drop = ((distans / (double)SpeedDrone.Heavy) / (double)ButrryPer.Minute);
+                    battery_drop = ((packageInTransfer.Distance / (double)SpeedDrone.Heavy) / (double)ButrryPer.Minute);
                     battery_drop *= elctricity[3];
                     break;
                 default:
@@ -115,7 +110,7 @@ namespace IBL
         /// <param name="droneNumber"></param>
         /// <param name="timeInCharge"></param>
         /// <returns></returns>
-        public double FreeDroneFromCharging(uint droneNumber, uint timeInCharge)
+        public double FreeDroneFromCharging(uint droneNumber, TimeSpan timeInCharge)
         {
             //מחפש את הרחפן
             var drone = dronesListInBl.Find(x => x.SerialNum == droneNumber);
@@ -126,7 +121,7 @@ namespace IBL
             if (information.Equals(new IDAL.DO.BatteryLoad()))
                 throw new ItemNotFoundException("Drone", droneNumber);
             //מחשב כמה הסוללה נטענה
-            double buttry = DroneChrgingAlredy(information.EntringDrone, information.EntringDrone.AddMinutes(timeInCharge));
+            double buttry = DroneChrgingAlredy(information.EntringDrone,DateTime.Now);
 
             drone.butrryStatus = buttry > 100 ? 100 : buttry+drone.butrryStatus;
             drone.droneStatus = DroneStatus.Free;
@@ -147,11 +142,11 @@ namespace IBL
         /// <param name="baseNumber"></param>
         /// <param name="number"></param>
         /// <returns></returns>
-        public IEnumerable<DroneInCharge> FreeBaseFromDrone(uint baseNumber, int number)
+        public void FreeBaseFromDrone(uint baseNumber, int number)
         {
             try
             {
-                if (dalObj.BaseStationByNumber(baseNumber).NumberOfChargingStations - number < 0)
+                if (dalObj.ChargingDroneList().Count(x=>x.idBaseStation==baseNumber) - number < 0)
                 {
                     throw (new TryToPullOutMoreDrone());
                 }
@@ -167,14 +162,14 @@ namespace IBL
             {
                 if (i <= number)
                 {
-                    returnDrone.SerialNum = droneChrging.IdDrone;
-                    returnDrone.butrryStatus = DroneChrgingAlredy(droneChrging.EntringDrone, DateTime.Now);
+                    FreeDroneFromCharging(droneChrging.IdDrone, droneChrging.EntringDrone - DateTime.Now);
                     i++;
-                    dalObj.FreeDroneFromCharge(droneChrging.IdDrone);
-                    list.Add(returnDrone);
+                    
+                    
+                    
                 }
             }
-            return list;
+           
         }
 
         /// <summary>

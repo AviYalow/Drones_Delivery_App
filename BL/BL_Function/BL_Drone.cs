@@ -104,7 +104,7 @@ namespace IBL
                     droneStatus = drone.droneStatus,
                     location = drone.location,
                     Model = drone.Model,
-                    numPackage = drone.packageInTransfer.SerialNumber,
+                    numPackage = drone.packageInTransfer.SerialNum,
                     SerialNumber = drone.SerialNum,
                     weightCategory = drone.weightCategory
 
