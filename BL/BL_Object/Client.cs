@@ -22,7 +22,7 @@ namespace IBL.BO
             print += $"ID: {Id},\n";
             print += $"Name is {Name},\n";
             print += $"Phone: {Phone},\n";
-            print += $"Location: Latitude-{Location.Latitude} Longitude-{Location.Longitude},\n";
+            print += $"Location: Latitude:{Location.Latitude} Longitude:{Location.Longitude},\n";
             
             return print;
         }

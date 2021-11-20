@@ -27,7 +27,7 @@ namespace IBL.BO
             print += $"Send Client: {SendClient.Name},\n";
             print += $"Recived Client: {RecivedClient.Name},\n";
             print += $"Source Location: Latitude-{Source.Latitude} Longitude-{Source.Longitude}\n";
-            print += $"Destination Location: Latitude-{Destination.Latitude} Longitude-{Destination.Longitude}\n";
+            print += $"Destination Location: Latitude:{Destination.Latitude} Longitude:{Destination.Longitude}\n";
             print += $"Distance: {Distance}\n";
             return print;
         }

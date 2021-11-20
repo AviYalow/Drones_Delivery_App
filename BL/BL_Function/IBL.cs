@@ -44,8 +44,9 @@ namespace IBL
         public IEnumerable<BaseStationToList> BaseStationToLists();
         public BaseStation BaseByNumber(uint baseNume);
 
+        public string PointToDegree(double point);
 
-        
+
 
 
 

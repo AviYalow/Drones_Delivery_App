@@ -29,7 +29,7 @@ namespace IDAL
 
             //A function that calculates distance at sea given two points
          
-            public static  double Distance(double longitude1, double longitude2,double latitude1, double latitude2)
+            public static  double Distance(double longitude1, double latitude1, double longitude2, double latitude2)
             {
                 var R = 6371; // Radius of the earth in km
                 var dLat = (latitude2 - latitude1) * (Math.PI / 180);

@@ -10,7 +10,7 @@ namespace IBL
     public partial class BL : IBL
     {
         public IDal dalObj;
-         List<Drone> dronesListInBl = new List<Drone>();
+        List<Drone> dronesListInBl = new List<Drone>();
         /// <summary>
         /// ctor
         /// </summary>
@@ -18,15 +18,15 @@ namespace IBL
         {
             Random random = new Random();
             dalObj = new DalObject.DalObject();
-            foreach(IDAL.DO.Drone drone in dalObj.DroneList())
+            foreach (IDAL.DO.Drone drone in dalObj.DroneList())
             {
                 dronesListInBl.Add(droneFromDal(drone));
             }
-            for(int i=0;i<dronesListInBl.Count;i++)
+            for (int i = 0; i < dronesListInBl.Count; i++)
             {
                 //data from dorn list in data source
                 Drone new_drone = dronesListInBl[i];
-                
+
 
                 //chcking for pacege connection to this drone
                 IDAL.DO.Package package = new IDAL.DO.Package();
@@ -38,7 +38,7 @@ namespace IBL
                         //cheak if drone in middel  trnsfer
                         if (chcking_packege.PackageArrived != new DateTime())
                         {
-                            new_drone.packageInTransfer = convertPackegeDalToPackegeInTrnansfer( chcking_packege);
+                            new_drone.packageInTransfer = convertPackegeDalToPackegeInTrnansfer(chcking_packege);
                             package = chcking_packege;
                             new_drone.droneStatus = DroneStatus.Work;
                             break;
@@ -83,7 +83,7 @@ namespace IBL
                         new_drone.butrryStatus = random.Next(21);
                         int k = random.Next(2);
 
-                        
+
                         foreach (IDAL.DO.Base_Station base_ in dalObj.BaseStationList())
                         {
                             if (k == 0)
@@ -94,20 +94,21 @@ namespace IBL
                                 new_drone.packageInTransfer = null;
                                 new_drone.location = BaseLocation(base_.baseNumber);
                                 break;
+
                             }
                             k--;
+
                         }
-                        
-                       
                     }
                     //drone lottery in free
-                    if (new_drone.droneStatus == DroneStatus.Free)
+                    else if (new_drone.droneStatus == DroneStatus.Free)
                     {
                         //lottry drone what is lost shipment
-                        int k = random.Next(10);
+                        //int k = random.Next(10);
+                        int k = 9;
                         int j = 0;
-                        for (; j != i;)
-
+                        bool flag = false;
+                       while(!flag)
                             foreach (IDAL.DO.Package package1 in dalObj.PackagesArriveList())
                             {
                                 if (j == k)
@@ -115,21 +116,36 @@ namespace IBL
                                     new_drone.packageInTransfer = convertPackegeDalToPackegeInTrnansfer(package1);
                                     new_drone.location = ClientLocation(package1.GetingClient);
                                     random.Next((int)buttryDownWithNoPackege(new_drone.location, ClosestBase(ClientLocation(package1.GetingClient)).location) + 1, 100);
+                                    flag = true;
                                     break;
                                 }
-                                else
-                                    j++;
+                                j++;
+
                             }
+                        
                     }
+                    for (int p = 0; p < dronesListInBl.Count; p++)
+                    {
+                        if (dronesListInBl[p].SerialNum == new_drone.SerialNum)
+                            dronesListInBl[p] = new_drone;
+                    }
+
+
+                  
+
 
                 }
 
-                dronesListInBl.Add(new_drone);
-
             }
+
+
+
+            foreach (var a in dronesListInBl)
+            {
+                Console.WriteLine(a);
+            }
+
         }
-
-
         /// <summary>
         /// cacolete distand betwen two points
         /// </summary>
@@ -140,12 +156,11 @@ namespace IBL
         {
             return dalObj.Distance(location1.Longitude, location1.Latitude, location2.Longitude, location2.Latitude);
         }
+
         public string PointToDegree(double point)
         {
             return dalObj.PointToDegree(point);
         }
 
-        
-     
     }
 }
