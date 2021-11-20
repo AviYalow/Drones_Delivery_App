@@ -207,12 +207,15 @@ namespace IBL
         /// </summary>
         public class MoreDistasThenMaximomException : Exception
         {
-            public MoreDistasThenMaximomException(string message) : base(message) { }
+            public uint Send { get; set; }
+            public uint Get { get; set; }
+            public MoreDistasThenMaximomException(uint send, uint get) : base() {   Send= send;  Get= get ; }
 
             protected MoreDistasThenMaximomException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
             public override string ToString()
             {
-                return $"The maximom Distans The Drone can go is"+Message+"Km!";
+
+                return $"Client:{Send} cant send to Client:{Get} packege! ";
             }
         }
         /// <summary>

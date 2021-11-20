@@ -16,13 +16,13 @@ namespace IBL
         public uint AddPackege(Package package)
         {
             uint packegeNum = 0;
-            var distans = Distans(ClientLocation(package.SendClient.Id), ClientLocation(package.RecivedClient.Id));
-            if (package.weightCatgory == WeightCategories.Heavy && distans > 10)
-                throw new MoreDistasThenMaximomException("10");
-            else if (package.weightCatgory == WeightCategories.Medium && distans > 16.6)
-                throw new MoreDistasThenMaximomException("16.6");
-            else if (package.weightCatgory == WeightCategories.Easy && distans > 33.3)
-                throw new MoreDistasThenMaximomException("33.3");
+            Location locationsend = ClientLocation(package.SendClient.Id);
+            Location locationGet= ClientLocation(package.RecivedClient.Id);
+            var butrryWithDelvery = buttryDownPackegeDelivery (convertPackegeBlToPackegeInTrnansfer(package));
+           var butrryFree =buttryDownWithNoPackege( ClosestBase(locationsend).location, locationsend) + buttryDownWithNoPackege (ClosestBase(locationGet).location, locationGet);
+            if (butrryWithDelvery + butrryFree > 100)
+                throw new MoreDistasThenMaximomException(package.SendClient.Id, package.RecivedClient.Id);
+             
 
             try
             {

@@ -24,15 +24,15 @@ namespace IBL
             switch (packageInTransfer.WeightCatgory)//להשלים פונקציה ע"י חישוב לכל משקל
             {
                 case WeightCategories.Easy:
-                    battery_drop = ((packageInTransfer.Distance / (double)SpeedDrone.Easy) / (double)ButrryPer.Minute);
+                    battery_drop = ((packageInTransfer.Distance / (double)SpeedDrone.Easy) * (double)ButrryPer.Minute);
                     battery_drop *= elctricity[1];
                     break;
                 case WeightCategories.Medium:
-                    battery_drop = ((packageInTransfer.Distance / (double)SpeedDrone.Medium) / (double)ButrryPer.Minute);
+                    battery_drop = ((packageInTransfer.Distance / (double)SpeedDrone.Medium) * (double)ButrryPer.Minute);
                     battery_drop *= elctricity[2];
                     break;
                 case WeightCategories.Heavy:
-                    battery_drop = ((packageInTransfer.Distance / (double)SpeedDrone.Heavy) / (double)ButrryPer.Minute);
+                    battery_drop = ((packageInTransfer.Distance / (double)SpeedDrone.Heavy) * (double)ButrryPer.Minute);
                     battery_drop *= elctricity[3];
                     break;
                 default:
@@ -52,7 +52,7 @@ namespace IBL
         {
             double[] elctricity = dalObj.Elctrtricity();
             double distans = Distans(fromLocation, toLocation);
-            double buttry = ((distans / (double)SpeedDrone.Free) / (double)ButrryPer.Minute) * elctricity[0];
+            double buttry = ((distans / (double)SpeedDrone.Free) * (double)ButrryPer.Minute) * elctricity[0];
             return buttry;
         }
         /// <summary>

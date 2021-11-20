@@ -141,7 +141,7 @@ namespace DalObject
 
         public IEnumerable<Package> PackagesArriveList()
         {
-            return DataSource.packages.FindAll(x => x.PackageArrived != new DateTime());
+            return DataSource.packages.FindAll(x => x.PackageArrived != DateTime.MinValue).ToList();
         }
 
         /// <summary>

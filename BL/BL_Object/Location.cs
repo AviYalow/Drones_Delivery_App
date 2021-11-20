@@ -14,7 +14,7 @@ namespace IBL.BO
         public override string ToString()
         {
             string print = "";
-            print += $"Location: Latitude-{Latitude} Longitude-{Longitude}\n";
+            print += $"Location: Latitude:{Latitude} Longitude:{Longitude}\n";
             return print;
         }
         

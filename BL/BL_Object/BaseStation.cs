@@ -19,7 +19,7 @@ namespace IBL.BO
             String print= "";
             print += $"Siral Number is {SerialNum},\n";
             print += $"The Name is {Name},\n";
-            print += $"Location: Latitude-{location.Latitude} Longitude-{location.Longitude},\n";
+            print += $"Location: Latitude:{location.Latitude} Longitude:{location.Longitude},\n";
             print += $"Number of free state: {FreeState},\n";
             print += $"Drone in Charge: {FreeState},\n";
             foreach(DroneInCharge drone in dronesInCharge)
