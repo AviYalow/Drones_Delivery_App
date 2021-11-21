@@ -164,9 +164,7 @@ namespace IBL
                 {
                     FreeDroneFromCharging(droneChrging.IdDrone, droneChrging.EntringDrone - DateTime.Now);
                     i++;
-                    
-                    
-                    
+                             
                 }
             }
            
