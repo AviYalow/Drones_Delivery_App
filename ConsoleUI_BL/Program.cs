@@ -10,8 +10,8 @@ namespace ConsoleUI_BL
         // enumes for the menu options
         #region
         enum Options { Exit, Add, Update, ShowDetails, ShowList }
-        enum Entities { Exit, Client, Base_station, Drone, Package }
-        enum UpdatesOptions { Exit, DroneName, Base_station, Client, Charge, UnCharge,Associate, Collect, Delivery }
+        enum Entities { Exit, Base_station, Drone, Client, Package }
+        enum UpdatesOptions { Exit, DroneName, Base_station, Client, Charge, UnCharge, Associate, Collect, Delivery }
         enum Show { Exit, Client, Base_station, Drone, Package, ShowDistance, ShoeDegree }
         enum ShowList { Exit, Base_station, Drones, Clients, Package, FreePackage, FreeBaseStation }
         enum Distans_2_point { base_station = 1, client }
@@ -37,7 +37,7 @@ namespace ConsoleUI_BL
         }
 
         /// <Menu>
-        /// Selection menu that which show to the customer 
+        /// Selection menu which show to the customer 
         /// when opening the program 
         /// </Menu>
         private static void Menu(IBL.IBL bl)
@@ -74,50 +74,29 @@ namespace ConsoleUI_BL
 
                         #region
                         str = "Choose an entity:\n " +
-                             "1-Client,\n 2-Base station,\n 3- Drone,\n 4- Package";
+                             "1-Base station,\n 2-Drone,\n 3- Client,\n 4- Package";
                         num = getChoose(str);
                         entity = (Entities)num;
                         try
                         {
                             switch (entity)
                             {
-
                                 case Entities.Base_station:
-                                    {
-                                        //received the details from the user
-
-                                        AddBase(bl, out check, out id, out num1, out doubleNum1, out doubleNum2, out name);
-                                        break;
-                                    }
+                                    AddBase(bl, out check, out id, out num1, out doubleNum1, out doubleNum2, out name);
+                                    break;
                                 case Entities.Drone:
-                                    {
-                                        //received the details from the user
-                                        AddDrone(bl, out check, out num, out id, out num1, out name);
-                                        break;
-                                    }
+                                    AddDrone(bl, out check, out num, out id, out num1, out name);
+                                    break;
                                 case Entities.Client:
-                                    {
-                                        //received the details from the user
-
-                                        AddClient(bl, out check, out num, out doubleNum1, out doubleNum2, out name, out phone);
-
-
-                                        break;
-                                    }
-
+                                    AddClient(bl, out check, out num, out doubleNum1, out doubleNum2, out name, out phone);
+                                    break;
                                 case Entities.Package:
-                                    {
+                                    AddPackage(bl, out check, out num, out id, out num1, out num2);
+                                    break;
 
-                                        AddPackage(bl, out check, out num, out id, out num1, out num2);
-
-
-                                        break;
-                                    }
                                 case Entities.Exit:
                                     break;
                             }
-
-
                         }
                         catch (ItemNotFoundException ex)
                         {
@@ -158,51 +137,29 @@ namespace ConsoleUI_BL
                             switch (updatesOption)
                             {
                                 case UpdatesOptions.DroneName:
-
                                     UpdateDroneName(bl, out check, out num, out name);
                                     break;
-
                                 case UpdatesOptions.Base_station:
-
                                     UpdateBase(bl, out check, out id, out name, out amount);
-                                    //option to connect package to drone
                                     break;
-
                                 case UpdatesOptions.Client:
                                     UpdateClient(bl, out check, out id, out name, out phone);
                                     break;
-
-                                //sent drone to a free charging station
                                 case UpdatesOptions.Charge:
-
                                     updateCharge(bl, out check, out num);
                                     break;
-
-                                // Release drone from charging position
                                 case UpdatesOptions.UnCharge:
-
                                     UpdateUnCharge(bl, out check, out num);
                                     break;
-
                                 case UpdatesOptions.Associate:
-
                                     UpdateAssociate(bl, out check, out num);
                                     break;
-
-                                // update that the package is collected
                                 case UpdatesOptions.Collect:
-
-                                    //received the details from the user
                                     updateCollect(bl, out check, out num);
                                     break;
-
-                                // update that the package is arrived to the target
                                 case UpdatesOptions.Delivery:
-
                                     updateDelivery(bl, out check, out num);
                                     break;
-
-
                                 case UpdatesOptions.Exit:
                                     break;
 
@@ -253,11 +210,9 @@ namespace ConsoleUI_BL
                             switch (show)
                             {
                                 case Show.Client:
-
                                     clientById(bl, out check, out id);
                                     break;
                                 case Show.Base_station:
-
                                     baseByNumber(bl, out check, out num);
                                     break;
                                 case Show.Drone:
@@ -266,12 +221,9 @@ namespace ConsoleUI_BL
                                 case Show.Package:
                                     packageByNumber(bl, out check, out num);
                                     break;
-
-                                //option to show distance between two points
                                 case Show.ShowDistance:
                                     Distans(bl, out check, out doubleNum1);
                                     break;
-
                                 case Show.ShoeDegree:
                                     //  pointToDegree(bl, out check, out point2);
                                     break;
@@ -337,12 +289,14 @@ namespace ConsoleUI_BL
                 }
                 #endregion
             } while (option != Options.Exit);
-
-
-
         }
 
-
+        /// <summary>
+        ///Displays specific package details
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="num"> serial number of the package</param>
         public static void packageByNumber(IBL.IBL bl, out bool check, out uint num)
         {
             Console.Write("Enter packege number:");
@@ -354,6 +308,12 @@ namespace ConsoleUI_BL
             bl.ShowPackage(num);
         }
 
+        /// <summary>
+        ///Displays specific client details
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="id"> the id of the client</param>
         public static void clientById(IBL.IBL bl, out bool check, out uint id)
         {
             //received the details from the user
@@ -365,6 +325,12 @@ namespace ConsoleUI_BL
             bl.GetingClient(id);
         }
 
+        /// <summary>
+        ///Displays specific drone details
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="num">serail number of the drone</param>
         public static void droneBySirialNumber(IBL.IBL bl, out bool check, out uint num)
         {
             Console.Write("Enter drone number:");
@@ -375,6 +341,12 @@ namespace ConsoleUI_BL
             bl.SpecificDrone(num);
         }
 
+        /// <summary>
+        ///Displays specific base station  details
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="num"> serial number of the base station</param>
         public static void baseByNumber(IBL.IBL bl, out bool check, out uint num)
         {
             //received the details from the user
@@ -386,6 +358,15 @@ namespace ConsoleUI_BL
             bl.BaseByNumber(num);
         }
 
+        /// <summary>
+        /// add new package
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="num">  priority </param>
+        /// <param name="id">ID of the sender </param>
+        /// <param name="num1">ID of the recipient</param>
+        /// <param name="num2">Weight categorie </param>
         public static void AddPackage(IBL.IBL bl, out bool check, out uint num, out uint id, out uint num1, out uint num2)
         {
             //received the details from the user
@@ -414,6 +395,15 @@ namespace ConsoleUI_BL
             bl.AddPackege(new Package { SendClient = new ClientInPackage { Id = id }, RecivedClient = new ClientInPackage { Id = num1 }, weightCatgory = (WeightCategories)num2, priority = (Priority)num });
         }
 
+        /// <summary>
+        /// add new drone
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="num"> weight Category</param>
+        /// <param name="id">sireal number</param>
+        /// <param name="num1"> serial number of the first base station</param>
+        /// <param name="name"> model</param>
         public static void AddDrone(IBL.IBL bl, out bool check, out uint num, out uint id, out uint num1, out string name)
         {
             Console.Write("Enter sireal number:");
@@ -448,6 +438,16 @@ namespace ConsoleUI_BL
             bl.AddDrone(drone, num1);
         }
 
+        /// <summary>
+        /// add new base station
+        /// </summary>
+        /// <param name="bL"></param>
+        /// <param name="check"></param>
+        /// <param name="id"></param>
+        /// <param name="num1"></param>
+        /// <param name="doubleNum1"></param>
+        /// <param name="doubleNum2"></param>
+        /// <param name="name"></param>
         public static void AddBase(IBL.IBL bL, out bool check, out uint id, out uint num1, out double doubleNum1, out double doubleNum2, out string name)
         {
             Console.Write("Enter base number:");

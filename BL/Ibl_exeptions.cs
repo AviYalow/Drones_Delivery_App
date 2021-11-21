@@ -65,7 +65,7 @@ namespace IBL
             public override string ToString()
             {
                 return $"Time:{DateTime.Now} \nIn this base number:{base_}\nno place for drone! \n" +
-                    $"plase chack the chrging drone list , and relese drone whit full buttry. ";
+                    $"plase chack the charging drone list , and relese drone with full buttry. ";
             }
         }
 
@@ -118,7 +118,7 @@ namespace IBL
             protected NoButrryToTripException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
             public override string ToString()
             {
-                return $"This Drone hes{buttry}. he cant go to this point!" +
+                return $"This Drone hes{buttry}. he can't go to this point!" +
                     $"You should send the skimmer for charging or transfer location " ;
             }
         }
@@ -132,7 +132,7 @@ namespace IBL
             protected NumberNotEnoughException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
             public override string ToString()
             {
-                return $"ther his last from {amount} digit number" ;
+                return $"There is last then {amount} digit number" ;
             }
         }
         /// <summary>
@@ -145,7 +145,7 @@ namespace IBL
             protected NumberMoreException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
             public override string ToString()
             {
-                return "ther his more then 10 digit number";
+                return "There is more then 10 digit number";
             }
         }
         /// <summary>
@@ -178,7 +178,7 @@ namespace IBL
         /// </summary>
         public class TheListIsEmptyException:Exception
         {
-            public TheListIsEmptyException(string masseg="\a ERROR: This list his empty") : base(masseg) { }
+            public TheListIsEmptyException(string masseg="\a ERROR: This list is empty") : base(masseg) { }
            protected TheListIsEmptyException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute,context) { }
         }
         /// <summary>
@@ -186,7 +186,7 @@ namespace IBL
         /// </summary>
         public class DroneCantMakeDliveryException:Exception
         {
-            public DroneCantMakeDliveryException(string masseg = "\a ERROR: Drone not free for  delivery") : base(masseg) { }
+            public DroneCantMakeDliveryException(string masseg = "\a ERROR: Drone not free for delivery") : base(masseg) { }
             protected DroneCantMakeDliveryException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
         }
 /// <summary>
@@ -215,7 +215,7 @@ namespace IBL
             public override string ToString()
             {
 
-                return $"Client:{Send} cant send to Client:{Get} packege! ";
+                return $"Client:{Send} can't send to Client:{Get} packege! ";
             }
         }
         /// <summary>
@@ -228,7 +228,7 @@ namespace IBL
             protected ClientOutOfRangeException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
             public override string ToString()
             {
-                return $"Your location out of are range,we not working in your erea,Sorry! ";
+                return $"Your location out of our range, we not working in your erea,Sorry! ";
             }
         }
     }

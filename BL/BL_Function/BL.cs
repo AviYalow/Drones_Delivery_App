@@ -11,6 +11,7 @@ namespace IBL
     {
         public IDal dalObj;
         List<Drone> dronesListInBl = new List<Drone>();
+       
         /// <summary>
         /// ctor
         /// </summary>
@@ -18,24 +19,29 @@ namespace IBL
         {
             Random random = new Random();
             dalObj = new DalObject.DalObject();
+
+            //Copy the drone list from the data layer to the logic layer
             foreach (IDAL.DO.Drone drone in dalObj.DroneList())
             {
                 dronesListInBl.Add(droneFromDal(drone));
             }
+
             for (int i = 0; i < dronesListInBl.Count; i++)
             {
-                //data from dorn list in data source
+                //data from drone list in data source
                 Drone new_drone = dronesListInBl[i];
 
 
-                //chcking for pacege connection to this drone
+                //Checking for packege connected to this drone
+
                 IDAL.DO.Package package = new IDAL.DO.Package();
                 foreach (IDAL.DO.Package chcking_packege in dalObj.PackagesWithDrone())
                 {
+                    //Check if the package is associated with this drone
                     if (chcking_packege.OperatorSkimmerId == new_drone.SerialNum)
                     {
 
-                        //cheak if drone in middel  trnsfer
+                        //cheak if the drone has not get to its destination yet
                         if (chcking_packege.PackageArrived != new DateTime())
                         {
                             new_drone.packageInTransfer = convertPackegeDalToPackegeInTrnansfer(chcking_packege);
@@ -45,12 +51,14 @@ namespace IBL
                         }
                     }
                 }
+
                 if (new_drone.droneStatus == DroneStatus.Work)
                 {
 
                     double min_butrry;
 
-                    //drone need to collect shipment
+                    //If the package has not been collected yet
+                    //The location of the drone will be at the sender location
                     if (package.CollectPackageForShipment != new DateTime())
                     {
                         new_drone.location = ClientLocation(package.SendClient);
@@ -59,7 +67,9 @@ namespace IBL
                            buttryDownWithNoPackege(ClosestBase(ClientLocation(package.GetingClient)).location, ClientLocation(package.GetingClient));
                         new_drone.butrryStatus = random.Next((int)min_butrry + 1, 100);
                     }
-                    //drone need to dliver shipment
+
+                    //If the package was associated but not collected the location
+                    //Of the drone will be at the station closest to the sender
                     else if (package.PackageAssociation != new DateTime())
                     {
 
@@ -71,18 +81,18 @@ namespace IBL
 
                     }
 
-
-
                 }
+
+                //If the drone doesn't in delivery
                 else
                 {
                     new_drone.droneStatus = (DroneStatus)random.Next(2);
+
                     //dorne lottery in mainteance
                     if (new_drone.droneStatus == DroneStatus.Maintenance)
                     {
                         new_drone.butrryStatus = random.Next(21);
                         int k = random.Next(2);
-
 
                         foreach (IDAL.DO.Base_Station base_ in dalObj.BaseStationList())
                         {
@@ -100,6 +110,7 @@ namespace IBL
 
                         }
                     }
+
                     //drone lottery in free
                     else if (new_drone.droneStatus == DroneStatus.Free)
                     {
@@ -130,21 +141,13 @@ namespace IBL
                             dronesListInBl[p] = new_drone;
                     }
 
-
-                  
-
-
                 }
 
             }
 
-
-
-           
-
         }
         /// <summary>
-        /// cacolete distand betwen two points
+        /// calculate distance between two points
         /// </summary>
         /// <param name="location1"></param>
         /// <param name="location2"></param>
@@ -154,6 +157,11 @@ namespace IBL
             return dalObj.Distance(location1.Longitude, location1.Latitude, location2.Longitude, location2.Latitude);
         }
 
+        /// <summary>
+        /// Returns a point in degree form
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
         public string PointToDegree(double point)
         {
             return dalObj.PointToDegree(point);

@@ -11,7 +11,7 @@ namespace IBL
   public  partial class BL : IBL
     {
         /// <summary>
-        /// clculet the most collset base to the cilent
+        /// calculation the most collset base to the cilent
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
