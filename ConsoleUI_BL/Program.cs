@@ -443,11 +443,11 @@ namespace ConsoleUI_BL
         /// </summary>
         /// <param name="bL"></param>
         /// <param name="check"></param>
-        /// <param name="id"></param>
-        /// <param name="num1"></param>
-        /// <param name="doubleNum1"></param>
-        /// <param name="doubleNum2"></param>
-        /// <param name="name"></param>
+        /// <param name="id"> serail number</param>
+        /// <param name="num1">Number of charging stations</param>
+        /// <param name="doubleNum1">latitude</param>
+        /// <param name="doubleNum2">longitude</param>
+        /// <param name="name">base station name</param>
         public static void AddBase(IBL.IBL bL, out bool check, out uint id, out uint num1, out double doubleNum1, out double doubleNum2, out string name)
         {
             Console.Write("Enter base number:");
@@ -485,7 +485,16 @@ namespace ConsoleUI_BL
             bL.AddBase(baseStation);
 
         }
-
+        /// <summary>
+        /// add new client
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="myId">ID</param>
+        /// <param name="doubleNum1">latitude</param>
+        /// <param name="doubleNum2">londitude</param>
+        /// <param name="name">name</param>
+        /// <param name="phone">phone number</param>
         public static void AddClient(IBL.IBL bl, out bool check, out uint myId, out double doubleNum1, out double doubleNum2, out string name, out string phone)
         {
             Console.Write("Enter ID:");
@@ -521,6 +530,14 @@ namespace ConsoleUI_BL
             bl.AddClient(client);
         }
 
+        /// <summary>
+        /// Update station data
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="id"> serial number</param>
+        /// <param name="name">base name</param>
+        /// <param name="amount"> charging stations</param>
         public static void UpdateBase(IBL.IBL bl, out bool check, out uint id, out string name, out int amount)
         {
             Console.Write("Enter base number:");
@@ -555,6 +572,12 @@ namespace ConsoleUI_BL
 
         }
 
+        /// <summary>
+        /// Drone data update
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="num">serial number</param>
         public static void updateDelivery(IBL.IBL bl, out bool check, out uint num)
         {
             //received the details from the user
@@ -566,6 +589,14 @@ namespace ConsoleUI_BL
             bl.PackegArrive(num);
         }
 
+        /// <summary>
+        /// Client data update
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="id"> ID</param>
+        /// <param name="name"> name</param>
+        /// <param name="phone"> phone number</param>
         public static void UpdateClient(IBL.IBL bl, out bool check, out uint id, out string name, out string phone)
         {
             Console.Write("Enter ID:");
@@ -613,6 +644,12 @@ namespace ConsoleUI_BL
             bl.UpdateClient(ref client);
         }
 
+        /// <summary>
+        /// Update that package has been collected
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="num">drone serial number</param>
         public static void updateCollect(IBL.IBL bl, out bool check, out uint num)
         {
             Console.Write("Enter drone number: ");
@@ -624,6 +661,12 @@ namespace ConsoleUI_BL
             bl.CollectPackegForDelivery(num);
         }
 
+        /// <summary>
+        /// Updated package associated
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="num">drone serial number</param>
         public static void UpdateAssociate(IBL.IBL bl, out bool check, out uint num)
         {
             //received the details from the user
@@ -637,6 +680,13 @@ namespace ConsoleUI_BL
             bl.ConnectPackegeToDrone(num);
         }
 
+        /// <summary>
+        /// Update drone name
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="num">serial number</param>
+        /// <param name="name">model</param>
         public static void UpdateDroneName(IBL.IBL bl, out bool check, out uint num, out string name)
         {
             //received the details from the user
@@ -650,9 +700,15 @@ namespace ConsoleUI_BL
             bl.UpdateDroneName(num, name);
         }
 
+        /// <summary>
+        /// update drone to be in charging
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="serial">serial number</param>
         public static void updateCharge(IBL.IBL bl, out bool check, out uint serial)
         {
-            Console.Write("Enter sireal number:");
+            Console.Write("Enter serial number:");
             do
             {
                 check = uint.TryParse(Console.ReadLine(), out serial);
@@ -661,10 +717,16 @@ namespace ConsoleUI_BL
             bl.DroneToCharge(serial);
         }
 
+        /// <summary>
+        /// update drone to be uncharging
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="serial">serial number</param>
         public static void UpdateUnCharge(IBL.IBL bl, out bool check, out uint serial)
         {
             TimeSpan timeInCharge;
-            Console.Write("Enter sireal number:");
+            Console.Write("Enter serial number:");
             do
             {
                 check = uint.TryParse(Console.ReadLine(), out serial);
@@ -679,6 +741,12 @@ namespace ConsoleUI_BL
             bl.FreeDroneFromCharging(serial, timeInCharge);
         }
 
+        /// <summary>
+        /// Displays a distance between two points
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="doubleNum1">variable for calculating the points</param>
         public static void Distans(IBL.IBL bl, out bool check, out double doubleNum1)
         {
             check = true;
@@ -686,11 +754,11 @@ namespace ConsoleUI_BL
             Location location1 = new Location(), location2 = new Location();
             for (int i = 1; i < 3; i++)
             {
-                Console.WriteLine("plese enter point for location{0}", i);
+                Console.WriteLine("Please enter point for location{0}", i);
                 do
                 {
 
-                    Console.Write("plese enter latitude point");
+                    Console.Write("Please enter latitude point");
                     check = double.TryParse(Console.ReadLine(), out doubleNum1);
                 }
                 while (!check);
@@ -698,7 +766,7 @@ namespace ConsoleUI_BL
                 do
                 {
 
-                    Console.Write("plese enter longitude point");
+                    Console.Write("Please enter longitude point");
                     check = double.TryParse(Console.ReadLine(), out doubleNum1);
                 }
                 while (!check);
@@ -708,6 +776,10 @@ namespace ConsoleUI_BL
             Console.WriteLine("The distans is:{0}KM", bl.Distans(location1, location2));
         }
 
+        /// <summary>
+        /// Base statons list
+        /// </summary>
+        /// <param name="bl"></param>
         public static void ShowBaseList(IBL.IBL bl)
         {
             foreach (var _base in bl.BaseStationToLists())
@@ -715,6 +787,11 @@ namespace ConsoleUI_BL
                 Console.WriteLine(_base);
             }
         }
+
+        /// <summary>
+        ///List of base staions with free states
+        /// </summary>
+        /// <param name="bl"></param>
         public static void ShowFreeBaseStation(IBL.IBL bl)
         {
             foreach (var _base in bl.BaseStationToLists())
@@ -725,6 +802,10 @@ namespace ConsoleUI_BL
 
         }
 
+        /// <summary>
+        /// List of packages that not associated to drone
+        /// </summary>
+        /// <param name="bl"></param>
         public static void ShowFreePackage(IBL.IBL bl)
         {
             foreach (var pack in bl.PackageWithNoDroneToLists())
@@ -733,6 +814,10 @@ namespace ConsoleUI_BL
             }
         }
 
+        /// <summary>
+        /// Package list
+        /// </summary>
+        /// <param name="bl"></param>
         public static void ShowPackageList(IBL.IBL bl)
         {
             foreach (var pack in bl.PackageToLists())
@@ -741,6 +826,10 @@ namespace ConsoleUI_BL
             }
         }
 
+        /// <summary>
+        /// client list
+        /// </summary>
+        /// <param name="bl"></param>
         public static void ShowClientList(IBL.IBL bl)
         {
             foreach (var client in bl.ClientToLists())
@@ -749,6 +838,10 @@ namespace ConsoleUI_BL
             }
         }
 
+        /// <summary>
+        /// drone list
+        /// </summary>
+        /// <param name="bl"></param>
         public static void ShowDroneList(IBL.IBL bl)
         {
             foreach (var drone in bl.DroneToLists())
@@ -756,6 +849,14 @@ namespace ConsoleUI_BL
                 Console.WriteLine(drone);
             }
         }
+
+        /// <summary>
+        /// Releasing drones from a station
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="check"></param>
+        /// <param name="num">base station serial number</param>
+        /// <param name="ex"></param>
         public static void freeBaseFromDrone(IBL.IBL bl, out bool check, ref uint num, UpdateChargingPositionsException ex)
         {
             check = true;
@@ -764,12 +865,12 @@ namespace ConsoleUI_BL
             {
                 do
                 {
-                    Console.WriteLine("do you want to relse number of drone in this base?\n plese enter yes\\no");
+                    Console.WriteLine("Do you want to release number of drone in this base?\n Please enter yes\\no");
                     chose = Console.ReadLine();
 
                     if (chose == "yes")
                     {
-                        Console.WriteLine("How match drone you want to pull out?");
+                        Console.WriteLine("How match drones you want to pull out?");
                         do
                         {
                             check = uint.TryParse(Console.ReadLine(), out num);

@@ -12,7 +12,7 @@ namespace IBL
 
 
         /// <summary>
-        /// clculate how match butrry drone need for dleviry point to point
+        /// calculate how match butrry drone need for delivery point to point
         /// </summary>
         /// <param name="packegeNumber"></param>
         /// <returns></returns>
@@ -43,7 +43,7 @@ namespace IBL
         }
 
         /// <summary>
-        /// clculate how match butrry drone need for to get from base to client or client to base
+        /// calculate how match butrry drone need for to get from base to client or client to base
         /// </summary>
         /// <param name="fromLocation"></param>
         /// <param name="toLocation"></param>
