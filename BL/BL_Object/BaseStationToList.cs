@@ -19,7 +19,7 @@ namespace IBL.BO
             print += $"Siral Number is {SerialNum},\n";
             print += $"The Name is {Name},\n";
             print += $"Number of free state: {FreeState},\n";
-            print += $"Number of busy state: {FreeState}\n";
+            print += $"Number of busy state: {BusyState}\n";
             return print;
         }
     }

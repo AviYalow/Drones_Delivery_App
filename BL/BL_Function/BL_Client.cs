@@ -127,10 +127,10 @@ namespace IBL
                     ID = clientInDal.Id,
                     Name = clientInDal.Name,
                     Phone = clientInDal.PhoneNumber,
-                    Arrived = (uint)dalObj.PackagesArriveList().Count(x => x.SendClient == clientInDal.Id && x.PackageArrived != new DateTime()),
-                    NotArrived = (uint)dalObj.PackagesArriveList().Count(x => x.SendClient == clientInDal.Id && x.PackageArrived == new DateTime() && x.CollectPackageForShipment != new DateTime()),
-                    OnTheWay = (uint)dalObj.PackagesArriveList().Count(x => x.GetingClient == clientInDal.Id && x.PackageArrived == new DateTime() && x.CollectPackageForShipment != new DateTime()),
-                    received = (uint)dalObj.PackagesArriveList().Count(x => x.GetingClient == clientInDal.Id && x.PackageArrived != new DateTime())
+                    Arrived = (uint)dalObj.PackegeList().Count(x => x.SendClient == clientInDal.Id && x.PackageArrived != new DateTime()),
+                    NotArrived = (uint)dalObj.PackegeList().Count(x => x.SendClient == clientInDal.Id && x.PackageArrived == new DateTime() ),
+                    OnTheWay = (uint)dalObj.PackegeList().Count(x => x.GetingClient == clientInDal.Id && x.PackageArrived == new DateTime()),
+                    received = (uint)dalObj.PackegeList().Count(x => x.GetingClient == clientInDal.Id && x.PackageArrived != new DateTime())
                 });
 
             }

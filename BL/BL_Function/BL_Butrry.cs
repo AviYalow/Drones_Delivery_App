@@ -84,14 +84,7 @@ namespace IBL
                     throw (new NoPlaceForChargeException(baseStation.SerialNum));
                 dalObj.DroneToCharge(dronenumber, baseStation.SerialNum);
 
-                dalObj.UpdateBase(new IDAL.DO.Base_Station
-                {
-                    baseNumber = baseStation.SerialNum,
-                    latitude = baseStation.location.Latitude,
-                    longitude = baseStation.location.Longitude,
-                    NameBase = baseStation.Name,
-                    NumberOfChargingStations = baseStation.FreeState - 1
-                });
+            
             }
             catch (IDAL.DO.ItemNotFoundException ex)
             {
@@ -155,10 +148,12 @@ namespace IBL
             {
                 throw new ItemNotFoundException(ex);
             }
+           
+            
             int i = 0;
             var returnDrone = new DroneInCharge();
             List<DroneInCharge> list = new List<DroneInCharge>();
-            foreach (var droneChrging in dalObj.ChargingDroneList().ToList().FindAll(x => x.idBaseStation == baseNumber))
+            foreach (var droneChrging in dalObj.ChargingDroneList().Where(x => x.idBaseStation == baseNumber))
             {
                 if (i <= number)
                 {

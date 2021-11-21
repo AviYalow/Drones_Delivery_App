@@ -53,7 +53,7 @@ namespace IBL
         double batteryCalculationForFullShipping(Location drone, Package package)
         {
             return buttryDownWithNoPackege(drone, ClientLocation(package.SendClient.Id)) + buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package)) +
-                buttryDownWithNoPackege(drone, ClientLocation(package.RecivedClient.Id));
+                buttryDownWithNoPackege(ClosestBase(ClientLocation( package.RecivedClient.Id)).location, ClientLocation(package.RecivedClient.Id));
         }
 
         public void UpdatePackegInDal(Package package)
@@ -73,13 +73,13 @@ namespace IBL
             });
         }
 
-        Package cloosetPackege(Location location, IEnumerable<IDAL.DO.Package> packages = null)
+        Package cloosetPackege(Location location, IEnumerable<IDAL.DO.Package> packages)
         {
             Package package = new Package();
-            if (packages == null)
+            if (packages is null)
                 throw new TheListIsEmptyException();
             {
-                Location location1 = ClientLocation(packages.ToList()[0].SendClient);
+                Location location1 = ClientLocation(packages.First().SendClient);
 
 
                 foreach (var packege1 in packages)

@@ -95,7 +95,7 @@ namespace IBL
             {
                 throw (new ItemFoundExeption(ex));
             }
-            baseStation.dronesInCharge.Clear();
+            
         }
 
         public void UpdateBase(uint base_,string newName = "", int newNumber = -1)
@@ -138,7 +138,7 @@ namespace IBL
             try
             {
                 var baseStation = dalObj.BaseStationByNumber(baseNume);
-                var baseReturn = new BaseStation { SerialNum = baseNume, location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude }, Name = baseStation.NameBase };
+                var baseReturn = new BaseStation { SerialNum = baseNume, location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude }, Name = baseStation.NameBase,FreeState=baseStation.NumberOfChargingStations };
                 var droneInCharge = dalObj.ChargingDroneList().ToList().FindAll(x => x.idBaseStation == baseNume);
                 baseReturn.dronesInCharge = new List<DroneInCharge>();
                 foreach (var drone in droneInCharge)
@@ -185,20 +185,15 @@ namespace IBL
             List<BaseStationToList> baseStationToLists = new List<BaseStationToList>();
             if (dalObj.BaseStationList().Count() == 0)
                 throw new TheListIsEmptyException();
-            uint i = 0;
+           
             foreach (var baseStationFromDal in dalObj.BaseStationListWithChargeStates())
             {
-                i = 0;
-                foreach (var chargePerBase in dalObj.ChargingDroneList())
-                {
-                    if (chargePerBase.idBaseStation == baseStationFromDal.baseNumber)
-                        i++;
-                }
+                
                 baseStationToLists.Add(new BaseStationToList
                 {
                     SerialNum = baseStationFromDal.baseNumber,
                     Name = baseStationFromDal.NameBase,
-                    BusyState = i,
+                    BusyState =(uint) dalObj.ChargingDroneList().Count(x=>x.idBaseStation==baseStationFromDal.baseNumber),
                     FreeState = baseStationFromDal.NumberOfChargingStations
                 });
             }

@@ -84,15 +84,16 @@ namespace IBL
             { throw new ItemNotFoundException("Drone", droneNumber); }
             if (drone.droneStatus != DroneStatus.Free)
             { throw new DroneCantMakeDliveryException(); }
+
             IEnumerable<IDAL.DO.Package> packege, temp = new List<IDAL.DO.Package>();
             //locking for drone in first priorty 
-            packege = dalObj.PackegeListWithNoDrone().ToList().FindAll(x => (WeightCategories)x.WeightCatgory <= drone.weightCategory);
+            packege = dalObj.PackegeListWithNoDrone().Where(x => (WeightCategories)x.WeightCatgory <= drone.weightCategory);
             for (Priority i = Priority.Immediate; i <= Priority.Regular; i++)
             {
 
-                for (WeightCategories j = drone.weightCategory; j <= WeightCategories.Easy; j++)
+                for (WeightCategories j = drone.weightCategory; j >= WeightCategories.Easy; j++)
                 {
-                    temp = (packege.ToList().FindAll(x => (Priority)x.Priority == i && (WeightCategories)x.WeightCatgory == j));
+                    temp = (packege.Where(x => (Priority)x.Priority == i && (WeightCategories)x.WeightCatgory == j));
                     if (temp != null)
                         break;
                 }

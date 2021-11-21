@@ -76,10 +76,18 @@ namespace DalObject
             }
             if (DataSource.droneInCharge.Any(x => x.IdDrone == drone))
                 throw new ItemFoundException("drone", drone);
-            if (DataSource.droneInCharge.Any(x => x.idBaseStation == base_))
-                throw new ItemFoundException("BaseStation", base_);
+           
 
             DataSource.droneInCharge.Add(new BatteryLoad { IdDrone = drone, idBaseStation = base_, EntringDrone = DateTime.Now });
+            for (int i = 0; i < DataSource.base_Stations.Count; i++)
+            {
+                if(DataSource.base_Stations[i].baseNumber==base_)
+                {
+                    var baseNew = DataSource.base_Stations[i];
+                    baseNew.NumberOfChargingStations--;
+                    DataSource.base_Stations[i] = baseNew;
+                }
+            }
             
         }
 

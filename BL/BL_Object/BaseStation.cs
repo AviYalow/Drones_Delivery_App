@@ -21,7 +21,7 @@ namespace IBL.BO
             print += $"The Name is {Name},\n";
             print += $"Location: Latitude:{location.Latitude} Longitude:{location.Longitude},\n";
             print += $"Number of free state: {FreeState},\n";
-            print += $"Drone in Charge: {FreeState},\n";
+            print += $"Drone in Charge: {dronesInCharge.Count},\n";
             foreach(DroneInCharge drone in dronesInCharge)
             {
                print += $"Serial number: {drone.SerialNum}, butrry Status: {drone.butrryStatus}\n";

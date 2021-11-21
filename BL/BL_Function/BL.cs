@@ -11,7 +11,7 @@ namespace IBL
     {
         public IDal dalObj;
         List<Drone> dronesListInBl = new List<Drone>();
-       
+
         /// <summary>
         /// ctor
         /// </summary>
@@ -99,8 +99,7 @@ namespace IBL
                             if (k == 0)
                             {
                                 var updateBase = base_;
-                                updateBase.NumberOfChargingStations--;
-                                dalObj.UpdateBase(updateBase);
+                                dalObj.DroneToCharge(new_drone.SerialNum, base_.baseNumber);
                                 new_drone.packageInTransfer = null;
                                 new_drone.location = BaseLocation(base_.baseNumber);
                                 break;
@@ -115,25 +114,24 @@ namespace IBL
                     else if (new_drone.droneStatus == DroneStatus.Free)
                     {
                         //lottry drone what is lost shipment
-                        //int k = random.Next(10);
-                        int k = 9;
+                        int k = random.Next(10);
                         int j = 0;
                         bool flag = false;
-                       while(!flag)
+                        while (!flag)
                             foreach (IDAL.DO.Package package1 in dalObj.PackagesArriveList())
                             {
                                 if (j == k)
                                 {
                                     new_drone.packageInTransfer = convertPackegeDalToPackegeInTrnansfer(package1);
                                     new_drone.location = ClientLocation(package1.GetingClient);
-                                    random.Next((int)buttryDownWithNoPackege(new_drone.location, ClosestBase(ClientLocation(package1.GetingClient)).location) + 1, 100);
+                                  new_drone.butrryStatus=  random.Next((int)buttryDownWithNoPackege(new_drone.location, ClosestBase(ClientLocation(package1.GetingClient)).location) + 1, 100);
                                     flag = true;
                                     break;
                                 }
                                 j++;
 
                             }
-                        
+
                     }
                     for (int p = 0; p < dronesListInBl.Count; p++)
                     {
