@@ -14,7 +14,7 @@ namespace IBL
         /// </summary>
         /// <param name="drone"></param>
         /// <param name="base_"></param>
-        public void AddDrone(Drone drone, uint base_)
+        public void AddDrone(DroneToList drone, uint base_)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace IBL
             Random random = new Random();
             try
             {
-                dalObj.AddDrone(new IDAL.DO.Drone { SerialNumber = drone.SerialNum, Model = drone.Model, WeightCategory = (IDAL.DO.WeightCategories)drone.weightCategory });
+                dalObj.AddDrone(new IDAL.DO.Drone { SerialNumber = drone.SerialNumber, Model = drone.Model, WeightCategory = (IDAL.DO.WeightCategories)drone.weightCategory });
             }
             catch (IDAL.DO.ItemFoundException ex)
             {
@@ -39,7 +39,7 @@ namespace IBL
             }
             drone.butrryStatus = random.Next(20, 41);
 
-            DroneToCharge(drone.SerialNum);
+            DroneToCharge(drone.SerialNumber);
             dronesListInBl.Add(drone);
 
         }
@@ -51,7 +51,7 @@ namespace IBL
         public void UpdateDronelocation(uint drone, Location location)
         {
 
-            int i = dronesListInBl.FindIndex(x => x.SerialNum == drone);
+            int i = dronesListInBl.FindIndex(x => x.SerialNumber == drone);
             if (i == -1)
                 throw (new ItemNotFoundException("Drone", drone));
             dronesListInBl[i].location = location;
@@ -74,7 +74,7 @@ namespace IBL
             {
                 throw new ItemNotFoundException(ex);
             }
-            int i = dronesListInBl.FindIndex(x => x.SerialNum == droneId);
+            int i = dronesListInBl.FindIndex(x => x.SerialNumber == droneId);
             if (i == -1)
                 throw new ItemNotFoundException("Drone", droneId);
             dronesListInBl[i].Model = newName;
@@ -82,9 +82,9 @@ namespace IBL
             dalObj.UpdateDrone(droneInData);
         }
 
-        public Drone SpecificDrone(uint siralNuber)
+        public DroneToList SpecificDrone(uint siralNuber)
         {
-            var drone = dronesListInBl.Find(x => x.SerialNum == siralNuber);
+            var drone = dronesListInBl.Find(x => x.SerialNumber == siralNuber);
             if (drone is null)
                 throw new ItemNotFoundException("drone", siralNuber);
             return drone;
@@ -95,27 +95,33 @@ namespace IBL
         {
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
-            List<DroneToList> droneToLists = new List<DroneToList>();
-            foreach (var drone in dronesListInBl)
-            {
-                var droneItem = new DroneToList
-                {
-                    butrryStatus = drone.butrryStatus,
-                    droneStatus = drone.droneStatus,
-                    location = drone.location,
-                    Model = drone.Model,
-                    SerialNumber = drone.SerialNum,
-                    weightCategory = drone.weightCategory
-                };
-                droneItem.numPackage = (drone.packageInTransfer != null) ? drone.packageInTransfer.SerialNum : 0;
-                droneToLists.Add(droneItem);
-            }
-            return droneToLists;
+
+            return dronesListInBl.ToList();
         }
 
-        Drone droneFromDal(IDAL.DO.Drone drone)
+        DroneToList droneFromDal(IDAL.DO.Drone drone)
         {
-            return new Drone { SerialNum = drone.SerialNumber, Model = drone.Model, weightCategory = (WeightCategories)drone.WeightCategory };
+            return new DroneToList { SerialNumber = drone.SerialNumber, Model = drone.Model, weightCategory = (WeightCategories)drone.WeightCategory };
+        }
+
+        public Drone GetDrone(uint droneNum)
+        {
+
+            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNum);
+            if (drone is null)
+                throw new ItemNotFoundException("Drone", droneNum);
+            return new Drone {
+                SerialNum = drone.SerialNumber,
+                Model = drone.Model,
+                weightCategory = drone.weightCategory,
+                droneStatus = drone.droneStatus,
+                location = drone.location,
+                butrryStatus = drone.butrryStatus,
+                packageInTransfer = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(droneNum)) };
+
+
+
+
         }
 
     }

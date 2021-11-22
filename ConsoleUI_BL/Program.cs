@@ -33,6 +33,7 @@ namespace ConsoleUI_BL
                     Console.WriteLine("Error!\n");
             }
             while (!success);
+            Console.WriteLine();
             return number;
         }
 
@@ -57,7 +58,7 @@ namespace ConsoleUI_BL
             {
                 bool check;
                 uint num, id, num1, num2;
-                int amount;
+
                 double doubleNum1, doubleNum2;
                 string str, name, phone;
 
@@ -140,7 +141,7 @@ namespace ConsoleUI_BL
                                     UpdateDroneName(bl, out check, out num, out name);
                                     break;
                                 case UpdatesOptions.Base_station:
-                                    UpdateBase(bl, out check, out id, out name, out amount);
+                                    UpdateBase(bl, out check, out id, out name);
                                     break;
                                 case UpdatesOptions.Client:
                                     UpdateClient(bl, out check, out id, out name, out phone);
@@ -164,6 +165,10 @@ namespace ConsoleUI_BL
                                     break;
 
                             }
+                        }
+                        catch (IBL.BO.InputErrorException ex)
+                        {
+                            Console.WriteLine(ex);
                         }
                         catch (IBL.BO.UpdateChargingPositionsException ex)
                         {
@@ -305,7 +310,7 @@ namespace ConsoleUI_BL
                 check = uint.TryParse(Console.ReadLine(), out num);
             } while (!check);
 
-            Console.WriteLine(bl.ShowPackage(num));;
+            Console.WriteLine(bl.ShowPackage(num)); ;
         }
 
         /// <summary>
@@ -338,7 +343,7 @@ namespace ConsoleUI_BL
             {
                 check = uint.TryParse(Console.ReadLine(), out num);
             } while (!check);
-            Console.WriteLine(bl.SpecificDrone(num));;
+            Console.WriteLine(bl.GetDrone(num)); ;
         }
 
         /// <summary>
@@ -355,7 +360,7 @@ namespace ConsoleUI_BL
             {
                 check = uint.TryParse(Console.ReadLine(), out num);
             } while (!check);
-            Console.WriteLine(bl.BaseByNumber(num));  
+            Console.WriteLine(bl.BaseByNumber(num));
         }
 
         /// <summary>
@@ -392,8 +397,8 @@ namespace ConsoleUI_BL
                 check = uint.TryParse(Console.ReadLine(), out num);
             } while (!check);
             // add new package
-          uint i=  bl.AddPackege(new Package { SendClient = new ClientInPackage { Id = id }, RecivedClient = new ClientInPackage { Id = num1 }, weightCatgory = (WeightCategories)num2, priority = (Priority)num });
-            Console.WriteLine("Thank You! your packege number is: {0}",i);
+            uint i = bl.AddPackege(new Package { SendClient = new ClientInPackage { Id = id }, RecivedClient = new ClientInPackage { Id = num1 }, weightCatgory = (WeightCategories)num2, priority = (Priority)num });
+            Console.WriteLine("Thank You! your packege number is: {0}", i);
         }
 
         /// <summary>
@@ -427,9 +432,9 @@ namespace ConsoleUI_BL
                 check = uint.TryParse(Console.ReadLine(), out num1);
             } while (!check);
 
-            Drone drone = new Drone
+            DroneToList drone = new DroneToList
             {
-                SerialNum = id,
+                SerialNumber = id,
                 Model = name,
                 weightCategory = (WeightCategories)num,
 
@@ -480,7 +485,7 @@ namespace ConsoleUI_BL
                 SerialNum = id,
                 Name = name,
                 location = new Location { Longitude = doubleNum1, Latitude = doubleNum2 },
-                FreeState=num1,
+                FreeState = num1,
                 dronesInCharge = null
             };
             // add new Base station
@@ -540,7 +545,7 @@ namespace ConsoleUI_BL
         /// <param name="id"> serial number</param>
         /// <param name="name">base name</param>
         /// <param name="amount"> charging stations</param>
-        public static void UpdateBase(IBL.IBL bl, out bool check, out uint id, out string name, out int amount)
+        public static void UpdateBase(IBL.IBL bl, out bool check, out uint id, out string name)
         {
             Console.Write("Enter base number:");
             do
@@ -552,25 +557,9 @@ namespace ConsoleUI_BL
             name = Console.ReadLine();
 
             Console.Write("Enter Number of charging stations:");
-            string temp;
-            do
-            {
-                temp = Console.ReadLine();
-                if (temp == "")
-                {
-                    amount = -1;
-                    break;
-                }
-                check = int.TryParse(temp, out amount);
-            } while (!check);
+            string temp = Console.ReadLine();
+            bl.UpdateBase(id, name, temp);
 
-
-            if (name != "" && amount == -1)
-                bl.UpdateBase(id, name);
-            else if (name == "" && amount != -1)
-                bl.UpdateBase(id, "", amount);
-            else
-                bl.UpdateBase(id, name, amount);
 
         }
 
@@ -784,10 +773,15 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         public static void ShowBaseList(IBL.IBL bl)
         {
+            int i = 0;
             foreach (var _base in bl.BaseStationToLists())
             {
+                i++;
+                Console.WriteLine("#{0}", i);
                 Console.WriteLine(_base);
+                
             }
+            Console.WriteLine("Total stations on the list:{0}\n", i);
         }
 
         /// <summary>
@@ -796,12 +790,15 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         public static void ShowFreeBaseStation(IBL.IBL bl)
         {
-            foreach (var _base in bl.BaseStationToLists())
+            int i = 0;
+            foreach (var _base in bl.BaseStationWhitChargeStationsToLists())
             {
-                if (_base.FreeState != 0)
-                    Console.WriteLine(_base);
+                i++;
+                Console.WriteLine("#{0}", i);
+                Console.WriteLine(_base);
+                
             }
-
+            Console.WriteLine("Total stations on the list:{0}\n", i);
         }
 
         /// <summary>
@@ -810,10 +807,15 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         public static void ShowFreePackage(IBL.IBL bl)
         {
+            int i = 0;
             foreach (var pack in bl.PackageWithNoDroneToLists())
             {
+                i++;
+                Console.WriteLine("#{0}", i);
                 Console.WriteLine(pack);
+                
             }
+            Console.WriteLine("Total packege with no drone on the list:{0}\n", i);
         }
 
         /// <summary>
@@ -822,10 +824,15 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         public static void ShowPackageList(IBL.IBL bl)
         {
+            int i = 0;
             foreach (var pack in bl.PackageToLists())
             {
+                i++;
+                Console.WriteLine("#{0}", i);
                 Console.WriteLine(pack);
+                
             }
+            Console.WriteLine("Total packeges on the list:{0}\n", i);
         }
 
         /// <summary>
@@ -834,10 +841,15 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         public static void ShowClientList(IBL.IBL bl)
         {
+            int i = 0;
             foreach (var client in bl.ClientToLists())
             {
+                i++;
+                Console.WriteLine("#{0}", i);
                 Console.WriteLine(client);
+               
             }
+            Console.WriteLine("Total client on the list:{0}\n", i);
         }
 
         /// <summary>
@@ -846,10 +858,15 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         public static void ShowDroneList(IBL.IBL bl)
         {
+            int i = 0;
             foreach (var drone in bl.DroneToLists())
             {
+                i++;
+                Console.WriteLine("#{0}", i);
                 Console.WriteLine(drone);
+                
             }
+            Console.WriteLine("Total drones on the list:{0}\n", i);
         }
 
         /// <summary>
@@ -890,7 +907,7 @@ namespace ConsoleUI_BL
                         chose = "";
                 } while (chose == "");
             }
-            catch(IBL.BO.TryToPullOutMoreDrone exc)
+            catch (IBL.BO.TryToPullOutMoreDrone exc)
             {
                 Console.WriteLine(exc);
             }

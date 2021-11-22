@@ -106,7 +106,7 @@ namespace IBL
         public double FreeDroneFromCharging(uint droneNumber, TimeSpan timeInCharge)
         {
             //מחפש את הרחפן
-            var drone = dronesListInBl.Find(x => x.SerialNum == droneNumber);
+            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber);
             if (drone == null)
                 throw new ItemNotFoundException("Drone", droneNumber);
             //מחפש את התא במערך המוטענים
@@ -121,8 +121,8 @@ namespace IBL
             var baseStation = dalObj.BaseStationByNumber(information.idBaseStation);
             baseStation.NumberOfChargingStations++;
             dalObj.UpdateBase(baseStation);
-            dalObj.FreeDroneFromCharge(drone.SerialNum);
-            dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNum == drone.SerialNum)] = drone;
+            dalObj.FreeDroneFromCharge(drone.SerialNumber);
+            dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == drone.SerialNumber)] = drone;
             
 
             return drone.butrryStatus;

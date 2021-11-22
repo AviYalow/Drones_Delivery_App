@@ -10,7 +10,7 @@ namespace IBL
     public partial class BL : IBL
     {
         public IDal dalObj;
-        List<Drone> dronesListInBl = new List<Drone>();
+        List<DroneToList> dronesListInBl = new List<DroneToList>();
 
         /// <summary>
         /// ctor
@@ -29,7 +29,7 @@ namespace IBL
             for (int i = 0; i < dronesListInBl.Count; i++)
             {
                 //data from drone list in data source
-                Drone new_drone = dronesListInBl[i];
+                DroneToList new_drone = dronesListInBl[i];
 
 
                 //Checking for packege connected to this drone
@@ -38,13 +38,13 @@ namespace IBL
                 foreach (IDAL.DO.Package chcking_packege in dalObj.PackagesWithDrone())
                 {
                     //Check if the package is associated with this drone
-                    if (chcking_packege.OperatorSkimmerId == new_drone.SerialNum)
+                    if (chcking_packege.OperatorSkimmerId == new_drone.SerialNumber)
                     {
 
                         //cheak if the drone has not get to its destination yet
                         if (chcking_packege.PackageArrived != new DateTime())
                         {
-                            new_drone.packageInTransfer = convertPackegeDalToPackegeInTrnansfer(chcking_packege);
+                            new_drone.numPackage = chcking_packege.SerialNumber;
                             package = chcking_packege;
                             new_drone.droneStatus = DroneStatus.Work;
                             break;
@@ -56,14 +56,14 @@ namespace IBL
                 {
 
                     double min_butrry;
-
+                    var packegeInTransferObject = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(new_drone.numPackage));
                     //If the package has not been collected yet
                     //The location of the drone will be at the sender location
                     if (package.CollectPackageForShipment != new DateTime())
                     {
                         new_drone.location = ClientLocation(package.SendClient);
-                        new_drone.packageInTransfer = convertPackegeDalToPackegeInTrnansfer(package);
-                        min_butrry = buttryDownPackegeDelivery(new_drone.packageInTransfer) +
+                        new_drone.numPackage = package.SerialNumber;
+                        min_butrry = buttryDownPackegeDelivery(packegeInTransferObject) +
                            buttryDownWithNoPackege(ClosestBase(ClientLocation(package.GetingClient)).location, ClientLocation(package.GetingClient));
                         new_drone.butrryStatus = random.Next((int)min_butrry + 1, 100);
                     }
@@ -75,7 +75,7 @@ namespace IBL
 
                         new_drone.location = ClosestBase(ClientLocation(package.SendClient)).location;
                         min_butrry = buttryDownWithNoPackege(new_drone.location, ClientLocation(package.SendClient)) +
-                            buttryDownPackegeDelivery(new_drone.packageInTransfer) +
+                            buttryDownPackegeDelivery(packegeInTransferObject) +
                             buttryDownWithNoPackege(ClosestBase(ClientLocation(package.GetingClient)).location, ClientLocation(package.GetingClient));
                         new_drone.butrryStatus = random.Next((int)min_butrry + 1, 100);
 
@@ -99,8 +99,8 @@ namespace IBL
                             if (k == 0)
                             {
                                 var updateBase = base_;
-                                dalObj.DroneToCharge(new_drone.SerialNum, base_.baseNumber);
-                                new_drone.packageInTransfer = null;
+                                dalObj.DroneToCharge(new_drone.SerialNumber, base_.baseNumber);
+                                new_drone.numPackage = 0;
                                 new_drone.location = BaseLocation(base_.baseNumber);
                                 break;
 
@@ -122,7 +122,7 @@ namespace IBL
                             {
                                 if (j == k)
                                 {
-                                    new_drone.packageInTransfer = convertPackegeDalToPackegeInTrnansfer(package1);
+                                    new_drone.numPackage = package1.SerialNumber;
                                     new_drone.location = ClientLocation(package1.GetingClient);
                                   new_drone.butrryStatus=  random.Next((int)buttryDownWithNoPackege(new_drone.location, ClosestBase(ClientLocation(package1.GetingClient)).location) + 1, 100);
                                     flag = true;
@@ -135,7 +135,7 @@ namespace IBL
                     }
                     for (int p = 0; p < dronesListInBl.Count; p++)
                     {
-                        if (dronesListInBl[p].SerialNum == new_drone.SerialNum)
+                        if (dronesListInBl[p].SerialNumber == new_drone.SerialNumber)
                             dronesListInBl[p] = new_drone;
                     }
 

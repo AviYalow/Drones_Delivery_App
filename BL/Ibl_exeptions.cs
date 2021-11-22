@@ -59,7 +59,7 @@ namespace IBL
         public class NoPlaceForChargeException:Exception
         {
             uint base_ { get; set; }
-            public NoPlaceForChargeException(uint base_)
+            public NoPlaceForChargeException(uint base_):base()
             { this.base_ = base_; }
             protected NoPlaceForChargeException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
             public override string ToString()
@@ -69,6 +69,17 @@ namespace IBL
             }
         }
 
+        public class InputErrorException : Exception
+        {
+
+            public InputErrorException() : base() { }
+            
+            protected InputErrorException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
+            public override string ToString()
+            {
+                return $"Time:{DateTime.Now} \nInput Error!";
+            }
+        }
         /// <summary>
         /// exception for try down number of charging station whan still have more drone in charge
         /// </summary>

@@ -106,7 +106,7 @@ namespace IBL
         /// <param name="base_"></param>
         /// <param name="newName"> new name</param>
         /// <param name="newNumber"> charging states</param>
-        public void UpdateBase(uint base_,string newName = "", int newNumber = -1)
+        public void UpdateBase(uint base_,string newName, string newNumber )
         {
             var baseUpdat = new IDAL.DO.Base_Station();
             try
@@ -119,11 +119,16 @@ namespace IBL
             }
             if (newName != "")
                 baseUpdat.NameBase = newName;
-            if (newNumber != -1)
+            if (newNumber != "")
             {
-                int droneInCharge = dalObj.ChargingDroneList().Count(x => x.idBaseStation == (uint)newNumber);
-                baseUpdat.NumberOfChargingStations = (droneInCharge <= newNumber) ?
-                    (uint)newNumber : throw new UpdateChargingPositionsException(droneInCharge,base_);
+                uint number;
+                bool flag;
+               flag= uint.TryParse(newNumber, out number);
+                if (!flag)
+                    throw new InputErrorException();
+                int droneInCharge = dalObj.ChargingDroneList().Count(x => x.idBaseStation == number);
+                baseUpdat.NumberOfChargingStations = (droneInCharge <= number) ?
+                    number : throw new UpdateChargingPositionsException(droneInCharge,base_);
 
             }
             dalObj.UpdateBase(baseUpdat);
