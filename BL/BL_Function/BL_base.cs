@@ -231,6 +231,32 @@ namespace IBL
             }
             return baseStationToLists;
         }
+       /// <summary>
+       /// delete base station
+       /// </summary>
+       /// <param name="base_"></param>
+        public void DeleteBase(uint base_)
+        {
+            try
+            {
+                var baseStation = dalObj.BaseStationByNumber(base_);
+                //relese the drone from chrge
+                FreeBaseFromDrone(base_);
+
+                dalObj.DeleteBase(base_);
+                //send the drone to the closset base
+                for (int i = 0; i < dronesListInBl.Count; i++)
+                {
+                    var drone = dronesListInBl[i];
+                    if(drone.location.Latitude==baseStation.latitude&&drone.location.Longitude==baseStation.longitude)
+                    drone.location = ClosestBase(drone.location).location;
+                }
+            }
+            catch (IDAL.DO.ItemNotFoundException ex)
+            {
+                throw new ItemNotFoundException(ex);
+            }
+        }
 
     }
 }

@@ -9,10 +9,10 @@ namespace ConsoleUI_BL
     {
         // enumes for the menu options
         #region
-        enum Options { Exit, Add, Update,Delete, ShowDetails, ShowList }
+        enum Options { Exit, Add, Update, Delete, ShowDetails, ShowList }
         enum Entities { Exit, Base_station, Drone, Client, Package }
         enum UpdatesOptions { Exit, DroneName, Base_station, Client, Charge, UnCharge, Associate, Collect, Delivery }
-        enum DeleteOption { Exit,Drone,BaseStation,Client,Packege}
+        enum DeleteOption { Exit, Drone, BaseStation, Client, Packege }
         enum Show { Exit, Client, Base_station, Drone, Package, ShowDistance, ShoeDegree }
         enum ShowList { Exit, Base_station, Drones, Clients, Package, FreePackage, FreeBaseStation }
         enum Distans_2_point { base_station = 1, client }
@@ -54,7 +54,7 @@ namespace ConsoleUI_BL
             UpdatesOptions updatesOption;
             Show show;
             ShowList showList;
-            DeleteOption deleteOption;
+
 
             do
             {
@@ -170,7 +170,7 @@ namespace ConsoleUI_BL
 
                             }
                         }
-                       
+
                         catch (IBL.BO.InputErrorException ex)
                         {
                             Console.WriteLine(ex);
@@ -228,7 +228,8 @@ namespace ConsoleUI_BL
                                         if (!check)
                                             Console.WriteLine("The input is Error please enter new number.");
                                     } while (!check);
-                                    
+
+                                    bl.DeleteDrone(num);
                                     break;
                                 case DeleteOption.BaseStation:
                                     Console.WriteLine("Please enter base station number to delete:");
@@ -238,6 +239,7 @@ namespace ConsoleUI_BL
                                         if (!check)
                                             Console.WriteLine("The input is Error please enter new number.");
                                     } while (!check);
+                                    bl.DeleteBase(num);
                                     break;
                                 case DeleteOption.Client:
                                     Console.WriteLine("Please enter client number to delete:");
@@ -247,6 +249,7 @@ namespace ConsoleUI_BL
                                         if (!check)
                                             Console.WriteLine("The input is Error please enter new number.");
                                     } while (!check);
+                                    bl.DeleteClient(num);
                                     break;
                                 case DeleteOption.Packege:
                                     Console.WriteLine("Please enter packege number to delete:");
@@ -256,6 +259,14 @@ namespace ConsoleUI_BL
                                         if (!check)
                                             Console.WriteLine("The input is Error please enter new number.");
                                     } while (!check);
+                                    try
+                                    {
+                                        bl.DeletePackege(num);
+                                    }
+                                    catch (IBL.BO.ThePackegeAlredySendException ex)
+                                    {
+                                        Console.WriteLine(ex);
+                                    }
                                     break;
                                 default:
                                     break;
@@ -263,13 +274,20 @@ namespace ConsoleUI_BL
 
 
                         }
-                        catch(IBL.BO.ItemNotFoundException ex)
+                       
+                        catch (IBL.BO.ThePackegeAlredySendException ex)
+                        { Console.WriteLine(ex); }
+                        catch (IBL.BO.DroneStillAtWorkException ex)
+                        { Console.WriteLine(ex); }
+                       
+                      
+                        catch (IBL.BO.ItemNotFoundException ex)
                         {
                             Console.WriteLine(ex);
                         }
-                       
-                            break;
-                        
+
+                        break;
+
                     #region
                     case Options.ShowDetails:
                         str = "Choose one of the following view option:\n " +
@@ -845,7 +863,7 @@ namespace ConsoleUI_BL
                 i++;
                 Console.WriteLine("#{0}", i);
                 Console.WriteLine(_base);
-                
+
             }
             Console.WriteLine("Total stations on the list:{0}\n", i);
         }
@@ -862,7 +880,7 @@ namespace ConsoleUI_BL
                 i++;
                 Console.WriteLine("#{0}", i);
                 Console.WriteLine(_base);
-                
+
             }
             Console.WriteLine("Total stations on the list:{0}\n", i);
         }
@@ -879,7 +897,7 @@ namespace ConsoleUI_BL
                 i++;
                 Console.WriteLine("#{0}", i);
                 Console.WriteLine(pack);
-                
+
             }
             Console.WriteLine("Total packege with no drone on the list:{0}\n", i);
         }
@@ -896,7 +914,7 @@ namespace ConsoleUI_BL
                 i++;
                 Console.WriteLine("#{0}", i);
                 Console.WriteLine(pack);
-                
+
             }
             Console.WriteLine("Total packeges on the list:{0}\n", i);
         }
@@ -913,7 +931,7 @@ namespace ConsoleUI_BL
                 i++;
                 Console.WriteLine("#{0}", i);
                 Console.WriteLine(client);
-               
+
             }
             Console.WriteLine("Total client on the list:{0}\n", i);
         }
@@ -930,7 +948,7 @@ namespace ConsoleUI_BL
                 i++;
                 Console.WriteLine("#{0}", i);
                 Console.WriteLine(drone);
-                
+
             }
             Console.WriteLine("Total drones on the list:{0}\n", i);
         }

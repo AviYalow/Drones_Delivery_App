@@ -17,12 +17,12 @@ namespace IBL
         {
             uint packegeNum = 0;
             Location locationsend = ClientLocation(package.SendClient.Id);
-            Location locationGet= ClientLocation(package.RecivedClient.Id);
-            var butrryWithDelvery = buttryDownPackegeDelivery (convertPackegeBlToPackegeInTrnansfer(package));
-           var butrryFree =buttryDownWithNoPackege( ClosestBase(locationsend).location, locationsend) + buttryDownWithNoPackege (ClosestBase(locationGet).location, locationGet);
+            Location locationGet = ClientLocation(package.RecivedClient.Id);
+            var butrryWithDelvery = buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package));
+            var butrryFree = buttryDownWithNoPackege(ClosestBase(locationsend).location, locationsend) + buttryDownWithNoPackege(ClosestBase(locationGet).location, locationGet);
             if (butrryWithDelvery + butrryFree > 100)
                 throw new MoreDistasThenMaximomException(package.SendClient.Id, package.RecivedClient.Id);
-             
+
 
             try
             {
@@ -48,12 +48,12 @@ namespace IBL
 
         }
 
-      
+
 
         double batteryCalculationForFullShipping(Location drone, Package package)
         {
             return buttryDownWithNoPackege(drone, ClientLocation(package.SendClient.Id)) + buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package)) +
-                buttryDownWithNoPackege(ClosestBase(ClientLocation( package.RecivedClient.Id)).location, ClientLocation(package.RecivedClient.Id));
+                buttryDownWithNoPackege(ClosestBase(ClientLocation(package.RecivedClient.Id)).location, ClientLocation(package.RecivedClient.Id));
         }
 
         public void UpdatePackegInDal(Package package)
@@ -122,7 +122,7 @@ namespace IBL
                 SendClient = clientInPackageFromDal(dataPackege.SendClient),
                 collect_package = dataPackege.CollectPackageForShipment,
                 create_package = dataPackege.ReceivingDelivery,
-                drone =dataPackege.OperatorSkimmerId!=0? convertDroneToListToDrone( SpecificDrone(dataPackege.OperatorSkimmerId)):null,
+                drone = dataPackege.OperatorSkimmerId != 0 ? convertDroneToListToDrone(SpecificDrone(dataPackege.OperatorSkimmerId)) : null,
                 package_arrived = dataPackege.PackageArrived,
                 package_association = dataPackege.PackageAssociation,
                 priority = (Priority)dataPackege.Priority,
@@ -140,7 +140,7 @@ namespace IBL
                 SendClient = clientInPackageFromDal(dataPackege.SendClient),
                 collect_package = dataPackege.CollectPackageForShipment,
                 create_package = dataPackege.ReceivingDelivery,
-                drone = convertDroneToListToDrone( SpecificDrone(dataPackege.OperatorSkimmerId)),
+                drone = convertDroneToListToDrone(SpecificDrone(dataPackege.OperatorSkimmerId)),
                 package_arrived = dataPackege.PackageArrived,
                 package_association = dataPackege.PackageAssociation,
                 priority = (Priority)dataPackege.Priority,
@@ -149,7 +149,7 @@ namespace IBL
             };
         }
 
-        
+
 
         public IEnumerable<PackageToList> PackageToLists()
         {
@@ -208,8 +208,32 @@ namespace IBL
             }
             return packageToLists;
         }
-
-
-
+        /// <summary>
+        /// delete packege 
+        /// </summary>
+        /// <param name="number"></param>
+        public void DeletePackege(uint number)
+        {
+            try
+            {
+                var packege = dalObj.packegeByNumber(number);
+                //cheack the packege not send yet
+                if (packege.CollectPackageForShipment != new DateTime())
+                { throw new ThePackegeAlredySendException(); }
+                var drone = SpecificDrone(packege.OperatorSkimmerId);
+                drone.droneStatus = DroneStatus.Free;
+                drone.numPackage = 0;
+                dalObj.DeletePackege(number);
+                for (int i = 0; i < dronesListInBl.Count; i++)
+                {
+                    if (dronesListInBl[i].SerialNumber == drone.SerialNumber)
+                        dronesListInBl[i] = drone;
+                }
+            }
+            catch (IDAL.DO.ItemNotFoundException ex)
+            {
+                throw new ItemNotFoundException(ex);
+            }
+        }
     }
 }

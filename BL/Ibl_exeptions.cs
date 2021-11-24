@@ -68,7 +68,9 @@ namespace IBL
                     $"plase chack the charging drone list , and relese drone with full buttry. ";
             }
         }
-
+        /// <summary>
+        /// the input is worng
+        /// </summary>
         public class InputErrorException : Exception
         {
 
@@ -110,13 +112,13 @@ namespace IBL
         /// <summary>
         /// try to send drone in charge or work to charge
         /// </summary>
-        public class DroneCantSendToChargeException : Exception
+        public class DroneStillAtWorkException : Exception
         {
-            public DroneCantSendToChargeException() : base() { }
-            protected DroneCantSendToChargeException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
+            public DroneStillAtWorkException() : base() { }
+            protected DroneStillAtWorkException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
             public override string ToString()
             {
-                return "The drone not in statos to get charge";
+                return "The drone still in work";
             }
         }
         /// <summary>
@@ -240,6 +242,19 @@ namespace IBL
             public override string ToString()
             {
                 return $"Your location out of our range, we not working in your erea,Sorry! ";
+            }
+        }
+        /// <summary>
+        /// Exception when tring to delete packege when she sending
+        /// </summary>
+        public class ThePackegeAlredySendException : Exception
+        {
+
+            public ThePackegeAlredySendException() : base() { }
+            protected ThePackegeAlredySendException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
+            public override string ToString()
+            {
+                return $"The packege alredy send to auter client ";
             }
         }
     }

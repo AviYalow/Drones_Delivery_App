@@ -11,12 +11,20 @@ namespace IBL
     {
         public IDal dalObj;
         List<DroneToList> dronesListInBl = new List<DroneToList>();
+        double heaviElctric, mediomElctric, easyElctric, freeElctric, chargingPerMinote;
 
         /// <summary>
         /// ctor
         /// </summary>
         public BL()
         {
+            var electric = dalObj.Elctrtricity();
+            freeElctric = electric[0];
+            easyElctric = electric[1];
+            mediomElctric = electric[2];
+            heaviElctric = electric[3];
+            chargingPerMinote = electric[4];
+
             Random random = new Random();
             dalObj = new DalObject.DalObject();
 

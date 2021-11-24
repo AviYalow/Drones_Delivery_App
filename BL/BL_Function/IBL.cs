@@ -20,6 +20,11 @@ namespace IBL
         public DroneToList SpecificDrone(uint siralNuber);
         public IEnumerable<DroneToList> DroneToLists();
         public Drone GetDrone(uint droneNum);
+        /// <summary>
+        /// delete drone 
+        /// </summary>
+        /// <param name="droneNum"></param>
+        public void DeleteDrone(uint droneNum);
 
         //Charging drone function 
         public double FreeDroneFromCharging(uint droneNumber, TimeSpan timeInCharge);
@@ -33,14 +38,22 @@ namespace IBL
         public IEnumerable<BaseStationToList> BaseStationWhitChargeStationsToLists();
         public IEnumerable<BaseStationToList> BaseStationToLists();
         public BaseStation BaseByNumber(uint baseNume);
-
+        /// <summary>
+        /// delete base station
+        /// </summary>
+        /// <param name="base_"></param>
+        public void DeleteBase(uint base_);
         //Client function
         public void AddClient(Client client);
         public void UpdateClient(ref Client client);
         public Location ClientLocation(uint id);
         public IEnumerable<ClientToList> ClientToLists();
         public Client GetingClient(uint id);
-
+        /// <summary>
+        /// delete client
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteClient(uint id);
         //Packege function
         public uint AddPackege(Package package);
         public void ConnectPackegeToDrone(uint droneNumber);
@@ -50,6 +63,11 @@ namespace IBL
         public void CollectPackegForDelivery(uint droneNumber);
         public Package ShowPackage(uint number);
         public void UpdatePackegInDal(Package package);
+        /// <summary>
+        /// delete packege 
+        /// </summary>
+        /// <param name="number"></param>
+        public void DeletePackege(uint number);
 
         //Function
         public double Distans(Location location1, Location location2);

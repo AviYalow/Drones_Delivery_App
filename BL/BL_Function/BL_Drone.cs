@@ -134,6 +134,25 @@ namespace IBL
 
 
         }
+        /// <summary>
+        /// delete drone 
+        /// </summary>
+        /// <param name="droneNum"></param>
+        public void DeleteDrone(uint droneNum)
+        {
+            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNum);
+            if (drone is null)
+                throw new ItemNotFoundException("Drone", droneNum);
+            //chack the drone not in middel of delivery
+            if (drone.droneStatus == DroneStatus.Work&&dalObj.packegeByNumber(drone.numPackage).CollectPackageForShipment!=new DateTime())
+                throw new DroneStillAtWorkException();
+
+                dalObj.DeleteDrone(droneNum);
+            
+            dronesListInBl.Remove(drone);
+            
+
+        }
 
     }
 }

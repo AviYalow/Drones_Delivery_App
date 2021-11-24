@@ -155,7 +155,38 @@ namespace IBL
             }
             return clientToLists;
         }
+        /// <summary>
+        /// delete client
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteClient (uint id)
+        {
+            try
+            {
+                dalObj.DeleteClient(id);
+                foreach(var packege in dalObj.PackegeList())
+                {
+                    //cancel paceges how dont send yet
+                    if(packege.SendClient==id&&packege.CollectPackageForShipment!=new DateTime())
+                    {
+                        dalObj.DeletePackege(packege.SerialNumber);
+                        for (int i = 0; i < dronesListInBl.Count; i++)
+                        {
+                            var drone = dronesListInBl[i];
+                            drone.droneStatus = DroneStatus.Free;
+                            drone.numPackage = 0;
+                             dronesListInBl[i]= drone;
+                        }
 
+                    }
+                }
+            }
+            catch(IDAL.DO.ItemNotFoundException ex)
+            {
+                throw new ItemNotFoundException(ex);
+            }
+
+        }
 
 
     }
