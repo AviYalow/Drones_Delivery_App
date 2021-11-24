@@ -48,7 +48,7 @@ namespace IBL
                 string exeptionString = "";
                 DateTime time = DateTime.Now;
                 exeptionString += $"\aTime:{time.ToLongTimeString()}\n";
-                exeptionString += exeption.ToString();
+                exeptionString += exeption is null?$"{type} number: {key} not Exisst":exeption;
                 return exeptionString;
             }
         }
@@ -199,8 +199,13 @@ namespace IBL
         /// </summary>
         public class DroneCantMakeDliveryException : Exception
         {
-            public DroneCantMakeDliveryException(string masseg = "\a ERROR: Drone not free for delivery") : base(masseg) { }
+            
+            public DroneCantMakeDliveryException( ) : base() { }
             protected DroneCantMakeDliveryException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
+            public override string ToString()
+            {
+                return "\a ERROR: Drone not free for delivery";
+            }
         }
         /// <summary>
         /// function Error
@@ -255,6 +260,16 @@ namespace IBL
             public override string ToString()
             {
                 return $"The packege alredy send to auter client ";
+            }
+        }
+        public class PackegeNotAssctionOrCollectedException : Exception
+        {
+
+            public PackegeNotAssctionOrCollectedException() : base() { }
+            protected PackegeNotAssctionOrCollectedException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
+            public override string ToString()
+            {
+                return $"The packege not assioction or collected yet ";
             }
         }
     }

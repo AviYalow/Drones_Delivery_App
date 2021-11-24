@@ -30,7 +30,7 @@ namespace IDAL
 
 
         public Drone DroneByNumber(uint droneNum);
-        public double[] Elctrtricity();
+        public IEnumerable<double> Elctrtricity();
         public void UpdateDrone(Drone drone);
         public void DeleteDrone(uint sirial);
         public IEnumerable<Drone> DroneList();

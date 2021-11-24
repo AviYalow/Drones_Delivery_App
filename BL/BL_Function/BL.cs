@@ -18,7 +18,13 @@ namespace IBL
         /// </summary>
         public BL()
         {
-            var electric = dalObj.Elctrtricity();
+            dalObj = new DalObject.DalObject();
+            List<double> electric=new List<double>();
+            foreach(var elctriv in dalObj.Elctrtricity())
+            {
+                electric.Add(elctriv);
+            }
+           
             freeElctric = electric[0];
             easyElctric = electric[1];
             mediomElctric = electric[2];
@@ -26,7 +32,7 @@ namespace IBL
             chargingPerMinote = electric[4];
 
             Random random = new Random();
-            dalObj = new DalObject.DalObject();
+            
 
             //Copy the drone list from the data layer to the logic layer
             foreach (IDAL.DO.Drone drone in dalObj.DroneList())
@@ -50,7 +56,7 @@ namespace IBL
                     {
 
                         //cheak if the drone has not get to its destination yet
-                        if (chcking_packege.PackageArrived != new DateTime())
+                        if (chcking_packege.PackageArrived == new DateTime())
                         {
                             new_drone.numPackage = chcking_packege.SerialNumber;
                             package = chcking_packege;

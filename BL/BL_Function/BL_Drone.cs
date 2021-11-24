@@ -154,5 +154,13 @@ namespace IBL
 
         }
 
+        DroneInPackage droneToDroneInPackage(uint number)
+        {
+            var drone = dronesListInBl.Find(x => x.SerialNumber == number);
+            if (drone is null)
+                throw new ItemNotFoundException("Drone", number);
+            return new DroneInPackage { SerialNum = drone.SerialNumber, butrryStatus = drone.butrryStatus, location = drone.location };
+        }
+
     }
 }

@@ -22,7 +22,7 @@ namespace IBL
                 RecivedClient = clientInPackageFromDal(package.GetingClient)
             };
             returnPackege.Distance = Distans(returnPackege.Source, returnPackege.Destination);
-            returnPackege.InTheWay = (package.PackageArrived != new DateTime()) ? true : false;
+            returnPackege.InTheWay = (package.PackageArrived == new DateTime()) ? true : false;
             return returnPackege;
         }
 
@@ -39,7 +39,7 @@ namespace IBL
             var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber);
             if (drone == null)
                 throw new ItemNotFoundException("Drone", droneNumber);
-            var pacege =convertPackegeDalToPackegeInTrnansfer( dalObj.packegeByNumber( drone.numPackage));
+            var pacege = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.numPackage));
             if (pacege.InTheWay != true)
             { new FunctionErrorException("ShowPackage||AddPackege"); }
 
@@ -62,12 +62,11 @@ namespace IBL
             var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber);
             if (drone == null)
                 throw new ItemNotFoundException("Drone", droneNumber);
-            var packege = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber( drone.numPackage));
+            var packege = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.numPackage));
             if (packege.InTheWay == false)
-                throw new FunctionErrorException("AddPackege||ShowPackage||updatePackegInDal||PackegArrive");
+                throw new PackegeNotAssctionOrCollectedException();
             drone.butrryStatus -= buttryDownPackegeDelivery(packege);
-            if (drone.butrryStatus < 0)
-                throw new FunctionErrorException("batteryCalculationForFullShipping");
+            
             drone.location = ClientLocation(packege.RecivedClient.Id);
             drone.droneStatus = DroneStatus.Free;
             drone.numPackage = 0;
@@ -85,36 +84,31 @@ namespace IBL
             if (drone.droneStatus != DroneStatus.Free)
             { throw new DroneCantMakeDliveryException(); }
 
-            IEnumerable<IDAL.DO.Package> packege, temp = new List<IDAL.DO.Package>();
-            //locking for drone in first priorty 
-            packege = dalObj.PackegeListWithNoDrone().Where(x => (WeightCategories)x.WeightCatgory <= drone.weightCategory);
-            for (Priority i = Priority.Immediate; i <= Priority.Regular; i++)
+          
+            IDAL.DO.Package returnPackege = new IDAL.DO.Package { SerialNumber=0};
+            foreach (var packege in dalObj.PackegeListWithNoDrone())
             {
-
-                for (WeightCategories j = drone.weightCategory; j >= WeightCategories.Easy; j++)
-                {
-                    temp = (packege.Where(x => (Priority)x.Priority == i && (WeightCategories)x.WeightCatgory == j));
-                    if (temp != null)
-                        break;
-                }
-                if (temp != null)
-                {
-                    var finalpackeg = cloosetPackege(drone.location, temp);
-                    var buttry = batteryCalculationForFullShipping(drone.location, finalpackeg);
-                    if (drone.butrryStatus - buttry > 0)
-                    {
-                        dalObj.ConnectPackageToDrone(finalpackeg.SerialNumber, drone.SerialNumber);
-                        drone.numPackage =finalpackeg.SerialNumber;
-                        dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == drone.SerialNumber)] = drone;
-                        return;
-                    }
-
-                }
-
+                if (batteryCalculationForFullShipping(drone.location, convertPackegeDalToBl(packege)) < drone.butrryStatus && (WeightCategories)packege.WeightCatgory <= drone.weightCategory)
+                    if (returnPackege.Priority < packege.Priority)
+                        returnPackege = packege;
+                    else if (returnPackege.Priority == packege.Priority)
+                        if (returnPackege.WeightCatgory < packege.WeightCatgory)
+                            returnPackege = packege;
+                        else if (returnPackege.WeightCatgory == packege.WeightCatgory)
+                            if (Distans(drone.location, ClientLocation(packege.SendClient)) < Distans(drone.location, ClientLocation(returnPackege.SendClient)))
+                                returnPackege = packege;
 
             }
+            if(returnPackege.SerialNumber==0)
             throw new DroneCantMakeDliveryException();
-
+            drone.numPackage = returnPackege.SerialNumber;
+            drone.droneStatus = DroneStatus.Work;
+            dalObj.ConnectPackageToDrone(returnPackege.SerialNumber, droneNumber);
+            for (int i = 0; i < dronesListInBl.Count; i++)
+            {
+                if (dronesListInBl[i].SerialNumber == drone.SerialNumber)
+                    dronesListInBl[i] = drone;
+            }
 
         }
 

@@ -14,7 +14,7 @@ namespace IBL.BO
         public ClientInPackage RecivedClient { get; set; }
         public WeightCategories weightCatgory { get; set; }
         public Priority priority { get; set; }
-        public Drone drone { get; set; }
+        public DroneInPackage drone { get; set; }
 
         //Delivery time create a package
         public DateTime create_package { get; set; }
@@ -35,7 +35,7 @@ namespace IBL.BO
             print += $"Recived Client: {RecivedClient.Name},\n";
             print += $"Weight Category: {weightCatgory},\n";
             print += $"priority: {priority},\n";
-            print +=drone is null?"drone: no drone\n": $"drone: {drone.SerialNum},\n";
+            print +=drone is null?"drone: no drone\n": $"drone: {drone},\n";
             print += $"Delivery time create a package: {create_package},\n";
             print += $"Time to assign:";
             if (package_association != DateTime.MinValue)

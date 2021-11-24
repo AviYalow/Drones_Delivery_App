@@ -48,7 +48,7 @@ namespace DalObject
             int i = DataSource.packages.FindIndex(x=>x.SerialNumber==packageNumber);
             if (i==-1)
                  throw (new ItemNotFoundException("packege",packageNumber));
-             if (DataSource.drones.Any(x => x.SerialNumber == drone_sirial_number))
+             if (!DataSource.drones.Any(x => x.SerialNumber == drone_sirial_number))
                  throw (new ItemNotFoundException("drone",drone_sirial_number));
 
             

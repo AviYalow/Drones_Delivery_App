@@ -97,7 +97,7 @@ namespace DalObject
         /// <param name="sirial"></param>
         public void DeleteDrone(uint sirial)
         {
-            if (DataSource.drones.Any(x=>x.SerialNumber==sirial))
+            if (!DataSource.drones.Any(x=>x.SerialNumber==sirial))
                 throw (new ItemNotFoundException("drone", sirial));
             for (int i = 0; i < DataSource.drones.Count(); i++)
             {
@@ -113,7 +113,7 @@ namespace DalObject
         /// 0. Available, 1. Light weight 2. Medium weight 3. Heavy 4. Charging per minute
         /// </summary>
         /// <returns></returns>
-        public double[] Elctrtricity()
+        public IEnumerable<double> Elctrtricity()
         {
             double[] elctricity = new double[5];
             elctricity[(int)ButturyLoad.Free] = DataSource.Config.free;

@@ -124,6 +124,10 @@ namespace ConsoleUI_BL
                         }
                         catch (MoreDistasThenMaximomException ex)
                         { Console.WriteLine(ex); }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
                         #endregion
                         #endregion
                         break;
@@ -170,6 +174,14 @@ namespace ConsoleUI_BL
 
                             }
                         }
+                        catch(DroneStillAtWorkException ex)
+                        { Console.WriteLine(ex); }
+                        catch(PackegeNotAssctionOrCollectedException ex)
+                        { Console.WriteLine(ex); }
+                        catch(DroneCantMakeDliveryException ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
 
                         catch (IBL.BO.InputErrorException ex)
                         {
@@ -206,13 +218,16 @@ namespace ConsoleUI_BL
 
                             Console.WriteLine(exception);
                         }
-
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
                         break;
                     #endregion
                     case Options.Delete:
 
                         str = "Choose an entity:\n " +
-                           "1-Base station,\n 2-Drone,\n 3- Client,\n 4- Package";
+                           "1-Drone,\n 2-Base station,\n 3- Client,\n 4- Package";
                         num = getChoose(str);
                         try
                         {
@@ -285,7 +300,10 @@ namespace ConsoleUI_BL
                         {
                             Console.WriteLine(ex);
                         }
-
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
                         break;
 
                     #region
@@ -325,6 +343,10 @@ namespace ConsoleUI_BL
                         {
 
                             Console.WriteLine(exception);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
                         }
                         break;
                     case Options.ShowList:
@@ -368,6 +390,10 @@ namespace ConsoleUI_BL
                         {
 
                             Console.WriteLine(exception);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
                         }
                         break;
 

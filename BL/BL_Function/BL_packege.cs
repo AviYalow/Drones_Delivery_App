@@ -122,7 +122,7 @@ namespace IBL
                 SendClient = clientInPackageFromDal(dataPackege.SendClient),
                 collect_package = dataPackege.CollectPackageForShipment,
                 create_package = dataPackege.ReceivingDelivery,
-                drone = dataPackege.OperatorSkimmerId != 0 ? convertDroneToListToDrone(SpecificDrone(dataPackege.OperatorSkimmerId)) : null,
+                drone = dataPackege.OperatorSkimmerId != 0 ? droneToDroneInPackage(dataPackege.OperatorSkimmerId) : null,
                 package_arrived = dataPackege.PackageArrived,
                 package_association = dataPackege.PackageAssociation,
                 priority = (Priority)dataPackege.Priority,
@@ -140,7 +140,7 @@ namespace IBL
                 SendClient = clientInPackageFromDal(dataPackege.SendClient),
                 collect_package = dataPackege.CollectPackageForShipment,
                 create_package = dataPackege.ReceivingDelivery,
-                drone = convertDroneToListToDrone(SpecificDrone(dataPackege.OperatorSkimmerId)),
+                drone = droneToDroneInPackage(dataPackege.OperatorSkimmerId),
                 package_arrived = dataPackege.PackageArrived,
                 package_association = dataPackege.PackageAssociation,
                 priority = (Priority)dataPackege.Priority,
@@ -220,15 +220,19 @@ namespace IBL
                 //cheack the packege not send yet
                 if (packege.CollectPackageForShipment != new DateTime())
                 { throw new ThePackegeAlredySendException(); }
-                var drone = SpecificDrone(packege.OperatorSkimmerId);
-                drone.droneStatus = DroneStatus.Free;
-                drone.numPackage = 0;
-                dalObj.DeletePackege(number);
-                for (int i = 0; i < dronesListInBl.Count; i++)
+                if (packege.OperatorSkimmerId != 0)
                 {
-                    if (dronesListInBl[i].SerialNumber == drone.SerialNumber)
-                        dronesListInBl[i] = drone;
+                    var drone = SpecificDrone(packege.OperatorSkimmerId);
+                    drone.droneStatus = DroneStatus.Free;
+                    drone.numPackage = 0;
+
+                    for (int i = 0; i < dronesListInBl.Count; i++)
+                    {
+                        if (dronesListInBl[i].SerialNumber == drone.SerialNumber)
+                            dronesListInBl[i] = drone;
+                    }
                 }
+                dalObj.DeletePackege(number);
             }
             catch (IDAL.DO.ItemNotFoundException ex)
             {
