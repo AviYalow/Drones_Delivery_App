@@ -39,8 +39,9 @@ namespace IBL
             }
             drone.butrryStatus = random.Next(20, 41);
 
-            DroneToCharge(drone.SerialNumber);
+            
             dronesListInBl.Add(drone);
+            dalObj.DroneToCharge(drone.SerialNumber, base_);
 
         }
         /// <summary>
@@ -112,6 +113,7 @@ namespace IBL
                 throw new ItemNotFoundException("Drone", droneNum);
             try
             {
+                var pacege = drone.numPackage != 0 ? convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.numPackage)) : null;
                 return new Drone
                 {
                     SerialNum = drone.SerialNumber,
@@ -120,7 +122,7 @@ namespace IBL
                     droneStatus = drone.droneStatus,
                     location = drone.location,
                     butrryStatus = drone.butrryStatus,
-                    packageInTransfer = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.numPackage))
+                    packageInTransfer = pacege
                 };
             }
             catch(IDAL.DO.ItemNotFoundException ex)
