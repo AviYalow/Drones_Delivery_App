@@ -42,7 +42,7 @@ namespace IBL
             if (client.Id > 999999999)
             { throw new NumberMoreException(); }
             var distas = Distans(client.Location, ClosestBase(client.Location).location);
-            if (distas > 30)
+            if (distas > 60)
                 throw new ClientOutOfRangeException();
             //chcing phon number
             chekingFon(client.Phone);

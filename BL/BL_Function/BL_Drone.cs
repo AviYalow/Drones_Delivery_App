@@ -110,14 +110,23 @@ namespace IBL
             var drone = dronesListInBl.Find(x => x.SerialNumber == droneNum);
             if (drone is null)
                 throw new ItemNotFoundException("Drone", droneNum);
-            return new Drone {
-                SerialNum = drone.SerialNumber,
-                Model = drone.Model,
-                weightCategory = drone.weightCategory,
-                droneStatus = drone.droneStatus,
-                location = drone.location,
-                butrryStatus = drone.butrryStatus,
-                packageInTransfer = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(droneNum)) };
+            try
+            {
+                return new Drone
+                {
+                    SerialNum = drone.SerialNumber,
+                    Model = drone.Model,
+                    weightCategory = drone.weightCategory,
+                    droneStatus = drone.droneStatus,
+                    location = drone.location,
+                    butrryStatus = drone.butrryStatus,
+                    packageInTransfer = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.numPackage))
+                };
+            }
+            catch(IDAL.DO.ItemNotFoundException ex)
+            {
+                throw new ItemNotFoundException(ex);
+            }
 
 
 

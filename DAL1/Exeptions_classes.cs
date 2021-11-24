@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,13 +18,13 @@ namespace IDAL
                 this.type = type;
                 key = unic_key;
             }
-
+            protected ItemFoundException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
             public override string ToString()
             {
                 string Error_mashge = "";
                 Error_mashge += $"this " + type + "\n";
                 Error_mashge += $"number: {key}\n";
-                Error_mashge += "\nalrdy found";
+                Error_mashge += "alrdy found\n";
                 return Error_mashge;
 
             }
@@ -33,11 +34,12 @@ namespace IDAL
         {
             public string type { get; set; }
             public uint key { get; set; }
-            public ItemNotFoundException(string type, uint unic_key)
+            public ItemNotFoundException(string type, uint unic_key):base(type)
             {
                 this.type = type;
                 key = unic_key;
             }
+            protected ItemNotFoundException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
 
             public override string ToString()
             {
