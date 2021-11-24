@@ -8,7 +8,7 @@ using IBL.BO;
 
 namespace IBL
 {
-  public  partial class BL : IBL
+    public partial class BL : IBL
     {
         /// <summary>
         /// calculation the most collset base to the cilent
@@ -97,7 +97,7 @@ namespace IBL
             {
                 throw (new ItemFoundExeption(ex));
             }
-            
+
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace IBL
         /// <param name="base_"></param>
         /// <param name="newName"> new name</param>
         /// <param name="newNumber"> charging states</param>
-        public void UpdateBase(uint base_,string newName, string newNumber )
+        public void UpdateBase(uint base_, string newName, string newNumber)
         {
             var baseUpdat = new IDAL.DO.Base_Station();
             try
@@ -123,12 +123,12 @@ namespace IBL
             {
                 uint number;
                 bool flag;
-               flag= uint.TryParse(newNumber, out number);
+                flag = uint.TryParse(newNumber, out number);
                 if (!flag)
                     throw new InputErrorException();
-                int droneInCharge = dalObj.ChargingDroneList().Count(x => x.idBaseStation == number);
+                int droneInCharge = dalObj.ChargingDroneList().Count(x => x.idBaseStation == base_);
                 baseUpdat.NumberOfChargingStations = (droneInCharge <= number) ?
-                    number : throw new UpdateChargingPositionsException(droneInCharge,base_);
+                    number : throw new UpdateChargingPositionsException(droneInCharge, base_);
 
             }
             dalObj.UpdateBase(baseUpdat);
@@ -162,14 +162,14 @@ namespace IBL
             try
             {
                 var baseStation = dalObj.BaseStationByNumber(baseNume);
-                var baseReturn = new BaseStation { SerialNum = baseNume, location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude }, Name = baseStation.NameBase,FreeState=baseStation.NumberOfChargingStations };
+                var baseReturn = new BaseStation { SerialNum = baseNume, location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude }, Name = baseStation.NameBase, FreeState = baseStation.NumberOfChargingStations };
                 var droneInCharge = dalObj.ChargingDroneList().ToList().FindAll(x => x.idBaseStation == baseNume);
                 baseReturn.dronesInCharge = new List<DroneInCharge>();
                 foreach (var drone in droneInCharge)
                 {
                     var butrry = (SpecificDrone(drone.IdDrone).butrryStatus + DroneChrgingAlredy(drone.EntringDrone, DateTime.Now));
                     butrry = (butrry > 100) ? 100 : butrry;
-                    baseReturn.dronesInCharge.Add(new DroneInCharge { SerialNum = drone.IdDrone, butrryStatus =butrry  });
+                    baseReturn.dronesInCharge.Add(new DroneInCharge { SerialNum = drone.IdDrone, butrryStatus = butrry });
                 }
                 return baseReturn;
             }
@@ -189,10 +189,10 @@ namespace IBL
             if (dalObj.BaseStationList().Count() == 0)
                 throw new TheListIsEmptyException();
             uint i = 0;
-            foreach(var baseStationFromDal in dalObj.BaseStationList())
+            foreach (var baseStationFromDal in dalObj.BaseStationList())
             {
                 i = 0;
-                foreach(var chargePerBase in dalObj.ChargingDroneList())
+                foreach (var chargePerBase in dalObj.ChargingDroneList())
                 {
                     if (chargePerBase.idBaseStation == baseStationFromDal.baseNumber)
                         i++;
@@ -217,15 +217,15 @@ namespace IBL
             List<BaseStationToList> baseStationToLists = new List<BaseStationToList>();
             if (dalObj.BaseStationList().Count() == 0)
                 throw new TheListIsEmptyException();
-           
+
             foreach (var baseStationFromDal in dalObj.BaseStationListWithChargeStates())
             {
-                
+
                 baseStationToLists.Add(new BaseStationToList
                 {
                     SerialNum = baseStationFromDal.baseNumber,
                     Name = baseStationFromDal.NameBase,
-                    BusyState =(uint) dalObj.ChargingDroneList().Count(x=>x.idBaseStation==baseStationFromDal.baseNumber),
+                    BusyState = (uint)dalObj.ChargingDroneList().Count(x => x.idBaseStation == baseStationFromDal.baseNumber),
                     FreeState = baseStationFromDal.NumberOfChargingStations
                 });
             }

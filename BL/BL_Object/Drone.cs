@@ -27,7 +27,7 @@ namespace IBL.BO
             print +=(packageInTransfer != null)? $" {packageInTransfer}":'0';
             print += $"\n Butrry status: {butrryStatus},\n";
             print += $" Drone status: {droneStatus},\n";
-            print += $"Location: Latitude:{location.Latitude} Longitude:{location.Longitude}\n";
+            print += $"{location}\n";
            
             return print;
         }

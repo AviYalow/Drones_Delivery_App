@@ -25,7 +25,7 @@ namespace DalObject
 
 
            
-            DataSource.Config.package_num++;
+            
             package.ReceivingDelivery = DateTime.Now;
             package.CollectPackageForShipment = new DateTime();
             package.PackageArrived = new DateTime();
@@ -34,7 +34,8 @@ namespace DalObject
                  Priority= package.Priority,ReceivingDelivery=package.ReceivingDelivery,WeightCatgory=package.WeightCatgory,OperatorSkimmerId=0,
                 CollectPackageForShipment= package.CollectPackageForShipment,PackageArrived= package.PackageArrived,PackageAssociation= package.PackageAssociation
             });
-            return DataSource.Config.package_num;
+            DataSource.Config.package_num++;
+            return DataSource.Config.package_num-1;
         }
 
         /// <summary>

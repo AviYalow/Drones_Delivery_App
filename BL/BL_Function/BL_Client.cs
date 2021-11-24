@@ -71,6 +71,8 @@ namespace IBL
         {
             if (fon.Count() < 10)
             { throw new NumberNotEnoughException(10); }
+            if (fon.Count() > 10)
+            { throw new NumberMoreException(); }
             if (fon[0] != '0' || fon[1] != '5')
             { throw new StartingException("0,5"); }
             if (fon.Any(c => c < '0' || c > '9'))
@@ -88,7 +90,20 @@ namespace IBL
             { throw new NumberMoreException(); }
             //chcing phon number
             chekingFon(client.Phone);
-            dalObj.UpdateClient(new IDAL.DO.Client { Id = client.Id, Name = client.Name, PhoneNumber = client.Phone, Latitude = client.Location.Latitude, Longitude = client.Location.Longitude });
+            try
+            {
+                var clientFromDal = dalObj.CilentByNumber(client.Id);
+                if (client.Name != "")
+                    clientFromDal.Name = client.Name;
+                if (client.Phone != "")
+                    clientFromDal.PhoneNumber = client.Phone;
+                dalObj.UpdateClient(clientFromDal);
+            }
+            catch (IDAL.DO.ItemNotFoundException ex)
+            {
+                throw new ItemNotFoundException(ex);
+            }
+
         }
         public Client GetingClient(uint id)
         {
@@ -97,17 +112,21 @@ namespace IBL
                 var client = dalObj.CilentByNumber(id);
                 var returnClient = new Client { Id = client.Id, Name = client.Name, Phone = client.PhoneNumber };
                 returnClient.ToClient = new List<PackageAtClient>();
-                var packege = dalObj.PackegeList().ToList().FindAll(x => x.SendClient == id);
-                foreach (var packegeInList in packege)
-                {
-                    returnClient.ToClient.Add(convretPackegeDalToPackegeAtClient(packegeInList));
-                }
+                var packege = dalObj.PackegeList().Where(x => x.GetingClient == id);
+                
+
+                if (packege.Count() != 0)
+                    foreach (var packegeInList in packege)
+                    {
+                        returnClient.ToClient.Add(convretPackegeDalToPackegeAtClient(packegeInList,packegeInList.GetingClient));
+                    }
                 returnClient.FromClient = new List<PackageAtClient>();
-                 packege = dalObj.PackegeList().ToList().FindAll(x => x.GetingClient == id);
-                foreach (var packegeInList in packege)
-                {
-                    returnClient.ToClient.Add(convretPackegeDalToPackegeAtClient(packegeInList));
-                }
+                packege = dalObj.PackegeList().Where(x => x.SendClient == id);
+                if (packege.Count() != 0)
+                    foreach (var packegeInList in packege)
+                    {
+                        returnClient.FromClient.Add(convretPackegeDalToPackegeAtClient(packegeInList,packegeInList.SendClient));
+                    }
                 return returnClient;
             }
             catch (IDAL.DO.ItemNotFoundException ex)
@@ -128,7 +147,7 @@ namespace IBL
                     Name = clientInDal.Name,
                     Phone = clientInDal.PhoneNumber,
                     Arrived = (uint)dalObj.PackegeList().Count(x => x.SendClient == clientInDal.Id && x.PackageArrived != new DateTime()),
-                    NotArrived = (uint)dalObj.PackegeList().Count(x => x.SendClient == clientInDal.Id && x.PackageArrived == new DateTime() ),
+                    NotArrived = (uint)dalObj.PackegeList().Count(x => x.SendClient == clientInDal.Id && x.PackageArrived == new DateTime()),
                     OnTheWay = (uint)dalObj.PackegeList().Count(x => x.GetingClient == clientInDal.Id && x.PackageArrived == new DateTime()),
                     received = (uint)dalObj.PackegeList().Count(x => x.GetingClient == clientInDal.Id && x.PackageArrived != new DateTime())
                 });

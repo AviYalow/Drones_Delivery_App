@@ -35,11 +35,31 @@ namespace IBL.BO
             print += $"Recived Client: {RecivedClient.Name},\n";
             print += $"Weight Category: {weightCatgory},\n";
             print += $"priority: {priority},\n";
-            print += $"drone: {drone.SerialNum},\n";
+            print +=drone is null?"drone: no drone\n": $"drone: {drone.SerialNum},\n";
             print += $"Delivery time create a package: {create_package},\n";
-            print += $"Time to assign: {package_association},\n";
-            print += $"Time Package collection: {collect_package},\n";
-            print += $"Time of arrival: {package_arrived}\n";
+            print += $"Time to assign:";
+            if (package_association != DateTime.MinValue)
+                print += $"{package_association},\n";
+            else
+            {
+                print += "packege not assoction yet\n";
+                return print;
+            }
+                print += $"Time Package collection:";
+            if (collect_package != DateTime.MinValue)
+                print += $"{collect_package},\n";
+            else
+            {print+= "packege not collect yet\n";return print; }
+
+            
+            print += $"Time of arrival:";
+            if (package_arrived != DateTime.MinValue)
+                print += $"{ package_arrived}\n";
+            else
+            {
+                print += "packege not arrive yet\n";
+                return print;
+            }
            
             return print;
         }

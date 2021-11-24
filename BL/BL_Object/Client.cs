@@ -22,8 +22,20 @@ namespace IBL.BO
             print += $"ID: {Id},\n";
             print += $"Name is {Name},\n";
             print += $"Phone: {Phone},\n";
-            print += $"Location: Latitude:{Location.Latitude} Longitude:{Location.Longitude},\n";
-            
+            print += Location;
+            print += "Packege from this client:\n";
+            if (FromClient != null)
+                foreach (var packege in FromClient)
+                { print += $"{packege}"; }
+            else
+                print += "0\n";
+            print += "Packege to this client:\n";
+            if (ToClient != null)
+                foreach (var packege in ToClient)
+                { print += $"{packege}"; }
+            else
+                print += "0\n";
+
             return print;
         }
 

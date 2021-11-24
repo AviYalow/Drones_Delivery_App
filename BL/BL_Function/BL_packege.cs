@@ -122,7 +122,7 @@ namespace IBL
                 SendClient = clientInPackageFromDal(dataPackege.SendClient),
                 collect_package = dataPackege.CollectPackageForShipment,
                 create_package = dataPackege.ReceivingDelivery,
-                drone = convertDroneToListToDrone( SpecificDrone(dataPackege.OperatorSkimmerId)),
+                drone =dataPackege.OperatorSkimmerId!=0? convertDroneToListToDrone( SpecificDrone(dataPackege.OperatorSkimmerId)):null,
                 package_arrived = dataPackege.PackageArrived,
                 package_association = dataPackege.PackageAssociation,
                 priority = (Priority)dataPackege.Priority,

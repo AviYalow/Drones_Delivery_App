@@ -9,9 +9,10 @@ namespace ConsoleUI_BL
     {
         // enumes for the menu options
         #region
-        enum Options { Exit, Add, Update, ShowDetails, ShowList }
+        enum Options { Exit, Add, Update,Delete, ShowDetails, ShowList }
         enum Entities { Exit, Base_station, Drone, Client, Package }
         enum UpdatesOptions { Exit, DroneName, Base_station, Client, Charge, UnCharge, Associate, Collect, Delivery }
+        enum DeleteOption { Exit,Drone,BaseStation,Client,Packege}
         enum Show { Exit, Client, Base_station, Drone, Package, ShowDistance, ShoeDegree }
         enum ShowList { Exit, Base_station, Drones, Clients, Package, FreePackage, FreeBaseStation }
         enum Distans_2_point { base_station = 1, client }
@@ -53,6 +54,7 @@ namespace ConsoleUI_BL
             UpdatesOptions updatesOption;
             Show show;
             ShowList showList;
+            DeleteOption deleteOption;
 
             do
             {
@@ -64,7 +66,7 @@ namespace ConsoleUI_BL
 
 
                 str = "Choose one of the following:\n" +
-                    " 1-Add,\n 2-Update,\n 3-Show Details,\n 4-Show List,\n 0-Exit";
+                    " 1-Add,\n 2-Update,\n 3-Delete\n 4-Show Details,\n 5-Show List,\n 0-Exit";
 
                 num = getChoose(str);
                 option = (Options)num;
@@ -99,6 +101,7 @@ namespace ConsoleUI_BL
                                     break;
                             }
                         }
+                        #region
                         catch (ItemNotFoundException ex)
                         {
                             Console.WriteLine(ex);
@@ -121,6 +124,7 @@ namespace ConsoleUI_BL
                         }
                         catch (MoreDistasThenMaximomException ex)
                         { Console.WriteLine(ex); }
+                        #endregion
                         #endregion
                         break;
                     #region
@@ -166,6 +170,7 @@ namespace ConsoleUI_BL
 
                             }
                         }
+                       
                         catch (IBL.BO.InputErrorException ex)
                         {
                             Console.WriteLine(ex);
@@ -204,6 +209,67 @@ namespace ConsoleUI_BL
 
                         break;
                     #endregion
+                    case Options.Delete:
+
+                        str = "Choose an entity:\n " +
+                           "1-Base station,\n 2-Drone,\n 3- Client,\n 4- Package";
+                        num = getChoose(str);
+                        try
+                        {
+                            switch ((DeleteOption)num)
+                            {
+                                case DeleteOption.Exit:
+                                    break;
+                                case DeleteOption.Drone:
+                                    Console.WriteLine("Please enter drone number to delete:");
+                                    do
+                                    {
+                                        check = uint.TryParse(Console.ReadLine(), out num);
+                                        if (!check)
+                                            Console.WriteLine("The input is Error please enter new number.");
+                                    } while (!check);
+                                    
+                                    break;
+                                case DeleteOption.BaseStation:
+                                    Console.WriteLine("Please enter base station number to delete:");
+                                    do
+                                    {
+                                        check = uint.TryParse(Console.ReadLine(), out num);
+                                        if (!check)
+                                            Console.WriteLine("The input is Error please enter new number.");
+                                    } while (!check);
+                                    break;
+                                case DeleteOption.Client:
+                                    Console.WriteLine("Please enter client number to delete:");
+                                    do
+                                    {
+                                        check = uint.TryParse(Console.ReadLine(), out num);
+                                        if (!check)
+                                            Console.WriteLine("The input is Error please enter new number.");
+                                    } while (!check);
+                                    break;
+                                case DeleteOption.Packege:
+                                    Console.WriteLine("Please enter packege number to delete:");
+                                    do
+                                    {
+                                        check = uint.TryParse(Console.ReadLine(), out num);
+                                        if (!check)
+                                            Console.WriteLine("The input is Error please enter new number.");
+                                    } while (!check);
+                                    break;
+                                default:
+                                    break;
+                            }
+
+
+                        }
+                        catch(IBL.BO.ItemNotFoundException ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                       
+                            break;
+                        
                     #region
                     case Options.ShowDetails:
                         str = "Choose one of the following view option:\n " +
