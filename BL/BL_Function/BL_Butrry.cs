@@ -180,9 +180,11 @@ namespace IBL
         /// <param name="dateTime"></param>
         /// <param name="newdateTime"></param>
         /// <returns></returns>
-        public double DroneChrgingAlredy(TimeSpan span)
+         double DroneChrgingAlredy(TimeSpan span)
         {
-            return ((span).Seconds) * (chargingPerMinote / 60.0);
+            var a = ((double)(span).TotalMinutes); var b= (chargingPerMinote );
+            a *= b;
+            return a;
         }
 
 

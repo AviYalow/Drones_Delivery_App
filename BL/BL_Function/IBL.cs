@@ -14,7 +14,7 @@ namespace IBL
         //Drone function
 
 
-        double DroneChrgingAlredy(DateTime dateTime, DateTime newdateTime = default);
+     //   double DroneChrgingAlredy(TimeSpan timeSpan);
         public void DroneToCharge(uint dronenumber);
         /// <summary>
         /// add drone to list
@@ -40,7 +40,7 @@ namespace IBL
         /// <param name="siralNuber"> serial number of the drone</param>
         /// <returns> drone founded </returns>
         public DroneToList SpecificDrone(uint siralNuber);
-`       /// <summary>
+       /// <summary>
         /// return list of drones
         /// </summary>
         /// <returns> return list of drones</returns>

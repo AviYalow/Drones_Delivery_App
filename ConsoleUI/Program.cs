@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using IDAL;
 using DalObject;
+using IDAL.DO;
 
 namespace ConsoleUI
 {
@@ -462,7 +463,7 @@ namespace ConsoleUI
                     check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
                 // add new package
-                dalObject.AddPackage(id, num1, num2, num);
+                dalObject.AddPackage(new IDAL.DO.Package { SendClient = id, GetingClient = num1, WeightCatgory = (WeightCategories)num2,Priority= (Priority)num });
             }
 
             void addDrone(DalObject.DalObject dalObject, out bool check, out uint num, out uint id, out uint num1, out double doubleNum1, out string name)
@@ -491,7 +492,7 @@ namespace ConsoleUI
                 } while (!check);
 
                 //add new drone
-                dalObject.AddDrone(id, name, num);
+                dalObject.AddDrone(new Drone { SerialNumber = id, Model = name, WeightCategory = (WeightCategories)num });
             }
 
             void addBase(DalObject.DalObject dalObject, out bool check, out uint id, out uint num1, out double doubleNum1, out double doubleNum2, out string name)
@@ -547,7 +548,7 @@ namespace ConsoleUI
                 } while (!check);
 
                 // add new client
-                dalObject.AddClient(num, name, phone, doubleNum1, doubleNum2);
+                dalObject.AddClient(new Client { Id = num, Name = name, PhoneNumber = phone, Latitude = doubleNum1, Longitude = doubleNum2 });
             }
 
 

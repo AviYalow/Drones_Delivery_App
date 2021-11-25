@@ -167,7 +167,7 @@ namespace IBL
                 baseReturn.dronesInCharge = new List<DroneInCharge>();
                 foreach (var drone in droneInCharge)
                 {
-                    var butrry = (SpecificDrone(drone.IdDrone).butrryStatus + DroneChrgingAlredy(drone.EntringDrone, DateTime.Now));
+                    var butrry = (SpecificDrone(drone.IdDrone).butrryStatus + DroneChrgingAlredy(DateTime.Now-drone.EntringDrone));
                     butrry = (butrry > 100) ? 100 : butrry;
                     baseReturn.dronesInCharge.Add(new DroneInCharge { SerialNum = drone.IdDrone, butrryStatus = butrry });
                 }
