@@ -21,7 +21,7 @@ namespace IBL
             
             double battery_drop = 0;
 
-            switch (packageInTransfer.WeightCatgory
+            switch (packageInTransfer.WeightCatgory)
             {
                 case WeightCategories.Easy:
                     battery_drop = ((packageInTransfer.Distance / (double)SpeedDrone.Easy) * (double)ButrryPer.Minute);
