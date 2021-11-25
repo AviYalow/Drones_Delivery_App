@@ -10,22 +10,13 @@ namespace DalObject
 {
     partial class DalObject : IDAL.IDal
     {
-     
-
         /// <summary>
         /// Adding a new package
         /// </summary>
-        /// <param name="idsend">Sending customer ID</param>
-        /// <param name="idget">Receiving customer ID</param>
-        /// <param name="kg">Weight categories</param>
-        /// <param name="priorityByUser">Priority: Immediate/ quick/ Regular </param>
-        /// <returns>Returns the serial number of the created package</returns>
+        /// <param name="package"></param>
+        /// <returns>Returns the serial number of the new package</returns>
         public uint AddPackage(Package package)
         {
-
-
-           
-            
             package.ReceivingDelivery = DateTime.Now;
             package.CollectPackageForShipment = new DateTime();
             package.PackageArrived = new DateTime();
@@ -97,9 +88,9 @@ namespace DalObject
 
 
         /// <summary>
-        /// Display packege data desired
+        /// Display packege data 
         /// </summary>
-        /// <param name="packageNumbe">Serial number of a particular package</param>
+        /// <param name="packageNumber">Serial number of a particular package</param>
         /// <returns> string of data</returns>
         public Package packegeByNumber(uint packageNumber)
         {
@@ -111,10 +102,8 @@ namespace DalObject
         }
 
         /// <summary>
-        /// Print all the packages
+        /// return the list of all packages
         /// </summary>
-        /// <param name="array">A array list that will contain 
-        /// the values ​​of all the packages so we can print them</param>
         public IEnumerable<Package> PackegeList()
         {
             return DataSource.packages.ToList<Package>();
@@ -122,23 +111,28 @@ namespace DalObject
         }
 
         /// <summary>
-        /// Displays a list of packages that
+        /// return the list of packages that
         /// have not been assigned to a drone yet 
         /// </summary>
 
         public IEnumerable<Package> PackegeListWithNoDrone()
         {
-
             return DataSource.packages.FindAll(x => x.OperatorSkimmerId == 0);
 
-
-
         }
+
+        /// <summary>
+        /// return a list of all package that have been assigned to a drone 
+        /// </summary>
 
         public IEnumerable<Package> PackagesWithDrone()
         {
             return DataSource.packages.FindAll(x => x.OperatorSkimmerId != 0);
         }
+
+        /// <summary>
+        /// return a list of of package that arrived 
+        /// </summary>
 
         public IEnumerable<Package> PackagesArriveList()
         {
@@ -148,7 +142,7 @@ namespace DalObject
         /// <summary>
         /// delete a spsific packege
         /// </summary>
-        /// <param name="sirial"></param>
+        /// <param name="sirial"> package number</param>
         public void DeletePackege(uint sirial)
         {
             int i = DataSource.packages.FindIndex(x => x.SerialNumber == sirial);
@@ -157,6 +151,10 @@ namespace DalObject
             DataSource.packages.Remove(DataSource.packages[i]);
         }
 
+        /// <summary>
+        /// Updating fields of a particular package
+        /// </summary>
+        /// <param name="package">particular package</param>
         public void UpdatePackege(Package package)
         {
             int i = DataSource.packages.FindIndex(x => x.SerialNumber == package.SerialNumber);

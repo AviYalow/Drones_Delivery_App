@@ -13,8 +13,6 @@ namespace IBL
 
         //Drone function
 
-
-       
         /// <summary>
         ///  send drone to charge
         /// </summary>
@@ -65,7 +63,7 @@ namespace IBL
         public void DeleteDrone(uint droneNum);
 
         /// <summary>
-        ///Charging drone function 
+        /// Release a drone from charging
         /// </summary>
         /// <param name="droneNumber">serial number of the drone</param>
         /// <param name="timeInCharge"> the time that the drone in charge </param>

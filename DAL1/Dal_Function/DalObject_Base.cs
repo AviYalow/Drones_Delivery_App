@@ -36,9 +36,12 @@ namespace DalObject
 
             });
 
-
-
         }
+
+        /// <summary>
+        /// Adding a new base station
+        /// </summary>
+        /// <param name="base_Station"> Base Station to add</param>
         public void AddStation(Base_Station base_Station)
         {
             if (DataSource.base_Stations.Any(x => x.baseNumber == base_Station.baseNumber))
@@ -63,10 +66,8 @@ namespace DalObject
 
 
         /// <summary>
-        /// Print all the base stations
+        /// return a list of all the base stations
         /// </summary>
-        /// <param name="array">A array list that will contain 
-        /// the values ​​of all the base stations so we can print them</param>
         public IEnumerable<Base_Station> BaseStationList()
         {
             
@@ -75,10 +76,8 @@ namespace DalObject
 
 
         /// <summary>
-        /// Display of base stations with available charging stations
+        /// return a list of base stations with available charging stations
         /// </summary>
-        /// <param name="array">A array list that will contain 
-        /// the values so we can print them</param>
         public IEnumerable<Base_Station> BaseStationListWithChargeStates()
         {
             
@@ -90,7 +89,7 @@ namespace DalObject
         /// <summary>
         /// delete a spsific base for list
         /// </summary>
-        /// <param name="sirial"></param>
+        /// <param name="sirial"> Base Station number</param>
         public void DeleteBase(uint sirial)
         {
             if (!DataSource.base_Stations.Any(x => x.baseNumber == sirial))
@@ -100,6 +99,10 @@ namespace DalObject
 
         }
 
+        /// <summary>
+        /// update fileds at a given base station
+        /// </summary>
+        /// <param name="base_"> a given base station </param>
         public void UpdateBase(Base_Station base_)
         {
             int i = DataSource.base_Stations.FindIndex(x => x.baseNumber == base_.baseNumber);

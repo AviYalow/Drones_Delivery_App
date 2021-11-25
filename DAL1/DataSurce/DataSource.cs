@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace DalObject
 {
+    /// <summary>
+    /// The database
+    /// </summary>
     internal class DataSource
     {
         //an arrays that contain the various entity
@@ -19,9 +22,7 @@ namespace DalObject
 
 
         /// <Config>
-        /// Inner class that contain a static int
-        /// for indexes of the first free element
-        /// in each of the arrays
+        /// 
         /// </Config>
         internal class Config
         {
@@ -35,8 +36,7 @@ namespace DalObject
         }
 
         /// <Initialize>
-        /// A function that starts with a quick boot of all arrays with
-        /// Data and update fields in the Config class accordingly
+        ///a quick boot of all lists of data 
         /// </Initialize>
         public static void Initialize()
         {
@@ -91,7 +91,7 @@ namespace DalObject
             });
 
 
-            //initializing the drones's array in a randone values
+            //initializing the drones list in a randone values
             for (int i = 0; i < 5; i++)
             {
                 drones.Add(new Drone
@@ -105,7 +105,7 @@ namespace DalObject
 
             }
 
-            //initializing the client's array in a random values
+            //initializing the clients list in a random values
 
             Client client1 = new Client { Id = (uint)rand.Next(100000000, 999999999), Latitude = 31.8780769200329, Longitude = 34.72723782085096, Name = (personalRandomName(rand, rand.Next(3, 7))), PhoneNumber = $"05{rand.Next(0, 6)}-{rand.Next(100, 999)}-{rand.Next(1000, 9999)}" };
             Client client2 = new Client { Id = (uint)rand.Next(100000000, 999999999), Latitude = 31.890176390661207, Longitude = 34.83092321246071, Name = (personalRandomName(rand, rand.Next(3, 7))), PhoneNumber = $"05{rand.Next(0, 6)}-{rand.Next(100, 999)}-{rand.Next(1000, 9999)}" };
@@ -121,6 +121,7 @@ namespace DalObject
             clients.Add(client1); clients.Add(client2); clients.Add(client3); clients.Add(client4); clients.Add(client5); clients.Add(client6); clients.Add(client7); clients.Add(client8); clients.Add(client9); clients.Add(client10);
 
 
+            //initializing the packages list in a random values
 
             Package package1 = new Package { SerialNumber = Config.package_num, Priority = (Priority)rand.Next(0, 3), SendClient = client1.Id, GetingClient = client2.Id, ReceivingDelivery = DateTime.Now.AddDays(rand.Next(-14, -6)) };
             package1.OperatorSkimmerId = drones[0].SerialNumber;
@@ -194,16 +195,6 @@ namespace DalObject
 
 
             DataSource.packages.Add(package1); DataSource.packages.Add(package2); DataSource.packages.Add(package3); DataSource.packages.Add(package4); DataSource.packages.Add(package5); DataSource.packages.Add(package6); DataSource.packages.Add(package7); DataSource.packages.Add(package8); DataSource.packages.Add(package9); DataSource.packages.Add(package10);
-
-
-
-
-
-            //initializing the package's array in a random values
-
-
-
-
 
 
 

@@ -10,16 +10,12 @@ namespace DalObject
 {
      partial class DalObject : IDAL.IDal
     {
-       
+
 
         /// <summary>
         /// Adding a new drone
         /// </summary>
-        /// <param name="drone">Serial number of the drone</param>
-        /// <param name="model">The name of the modek </param>
-        /// <param name="category"> Easy / Medium / Heavy</param>
-        /// <param name="butrry">Battery status</param>
-        /// <param name="statos"> Free/ Maintenance/ Work</param>
+        /// <param name="drone">drone to add</param>
         public void AddDrone( Drone drone)
         {
               if (DataSource.drones.Any(x=>x.SerialNumber==drone.SerialNumber))
@@ -34,9 +30,9 @@ namespace DalObject
         }
 
         /// <summary>
-        /// Display drone data desired   
+        /// Display drone data  
         /// </summary>
-        /// <param name="droneNum">Desired drone number</param>
+        /// <param name="droneNum"> drone number</param>
         /// <returns> String of data</returns>
         public Drone DroneByNumber(uint droneNum)
         {
@@ -55,15 +51,19 @@ namespace DalObject
         }
 
         /// <summary>
-        /// Print all the drones
+        /// return list of the drones
         /// </summary>
-        /// <param name="array">A array list that will contain 
-        /// the values ​​of all the drones so we can print them</param>
+        /// <returns> return list of the drones</returns>
         public IEnumerable<Drone> DroneList()
         {
             return DataSource.drones.ToList<Drone>();
         }
 
+        /// <summary>
+        /// send drone to charge
+        /// </summary>
+        /// <param name="drone"> drone number</param>
+        /// <param name="base_"> Base station number that the drone will be sent to it </param>
         public void DroneToCharge(uint drone,uint base_)
         {
             if(DataSource.drones.All(x=>x.SerialNumber!=drone))
@@ -94,7 +94,7 @@ namespace DalObject
         /// <summary>
         /// delete a spsific drone
         /// </summary>
-        /// <param name="sirial"></param>
+        /// <param name="sirial"> drone number</param>
         public void DeleteDrone(uint sirial)
         {
             if (!DataSource.drones.Any(x=>x.SerialNumber==sirial))
@@ -108,11 +108,11 @@ namespace DalObject
                 }
             }
         }
+
         /// <summary>
         /// Returns how much electricity the drone needs:
         /// 0. Available, 1. Light weight 2. Medium weight 3. Heavy 4. Charging per minute
         /// </summary>
-        /// <returns></returns>
         public IEnumerable<double> Elctrtricity()
         {
             double[] elctricity = new double[5];
@@ -124,6 +124,10 @@ namespace DalObject
             return elctricity;
         }
 
+        /// <summary>
+        /// update fileds at a given drone
+        /// </summary>
+        /// <param name="drone"> a given drone</param>
         public void UpdateDrone(Drone drone)
         {
             int index = DataSource.drones.FindIndex(x => x.SerialNumber == drone.SerialNumber);
@@ -133,6 +137,10 @@ namespace DalObject
                 throw (new IDAL.DO.ItemNotFoundException("drone", drone.SerialNumber));
         }
         
+        /// <summary>
+        /// return how much the drone is in charge
+        /// </summary>
+        /// <param name="drone"> a given drone</param>
         public TimeSpan TimeInCharge(uint drone)
         {
             int i = DataSource.droneInCharge.FindIndex(x => x.IdDrone == drone);
@@ -144,6 +152,10 @@ namespace DalObject
 
         }
 
+        /// <summary>
+        /// Release a drone from charging
+        /// </summary>
+        /// <param name="drone"> drone number</param>
         public void FreeDroneFromCharge(uint drone)
         {
             int i = DataSource.droneInCharge.FindIndex(x => x.IdDrone == drone);

@@ -896,7 +896,7 @@ namespace ConsoleUI_BL
         }
 
         /// <summary>
-        ///List of base staions with free states
+        /// show List of base staions with free states
         /// </summary>
         /// <param name="bl"></param>
         public static void ShowFreeBaseStation(IBL.IBL bl)
@@ -913,7 +913,7 @@ namespace ConsoleUI_BL
         }
 
         /// <summary>
-        /// List of packages that not associated to drone
+        /// show List of packages that not associated to drone
         /// </summary>
         /// <param name="bl"></param>
         public static void ShowFreePackage(IBL.IBL bl)
@@ -930,7 +930,7 @@ namespace ConsoleUI_BL
         }
 
         /// <summary>
-        /// Package list
+        /// show Package list
         /// </summary>
         /// <param name="bl"></param>
         public static void ShowPackageList(IBL.IBL bl)
@@ -947,7 +947,7 @@ namespace ConsoleUI_BL
         }
 
         /// <summary>
-        /// client list
+        /// show client list
         /// </summary>
         /// <param name="bl"></param>
         public static void ShowClientList(IBL.IBL bl)
@@ -964,7 +964,7 @@ namespace ConsoleUI_BL
         }
 
         /// <summary>
-        /// drone list
+        /// show drone list
         /// </summary>
         /// <param name="bl"></param>
         public static void ShowDroneList(IBL.IBL bl)
@@ -986,7 +986,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="check"></param>
         /// <param name="num">base station serial number</param>
-        /// <param name="ex"></param>
+        /// <param name="ex"> Update Charging Positions Exception</param>
         public static void freeBaseFromDrone(IBL.IBL bl, out bool check, ref uint num, UpdateChargingPositionsException ex)
         {
             check = true;
