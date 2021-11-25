@@ -12,8 +12,8 @@ namespace IBL
         /// <summary>
         /// add drone to list
         /// </summary>
-        /// <param name="drone"></param>
-        /// <param name="base_"></param>
+        /// <param name="drone"> drone to add</param>
+        /// <param name="base_"> serial number of base station for first chraging</param>
         public void AddDrone(DroneToList drone, uint base_)
         {
             try
@@ -44,11 +44,12 @@ namespace IBL
             dalObj.DroneToCharge(drone.SerialNumber, base_);
 
         }
+       
         /// <summary>
         /// update new location for drone
         /// </summary>
-        /// <param name="drone"></param>
-        /// <param name="location"></param>
+        /// <param name="drone"> serial number of drone</param>
+        /// <param name="location"> new location</param>
         public void UpdateDronelocation(uint drone, Location location)
         {
 
@@ -58,11 +59,12 @@ namespace IBL
             dronesListInBl[i].location = location;
 
         }
+     
         /// <summary>
         /// update new model for drone
         /// </summary>
-        /// <param name="droneId"></param>
-        /// <param name="newName"></param>
+        /// <param name="droneId"> serial number of the drone</param>
+        /// <param name="newName"> new name to change</param>
         public void UpdateDroneName(uint droneId, string newName)
         {
             IDAL.DO.Drone droneInData;
@@ -83,6 +85,12 @@ namespace IBL
             dalObj.UpdateDrone(droneInData);
         }
 
+
+        /// <summary>
+        /// find specific drone in the list of the drones
+        /// </summary>
+        /// <param name="siralNuber"> serial number of the drone</param>
+        /// <returns> drone founded </returns>
         public DroneToList SpecificDrone(uint siralNuber)
         {
             var drone = dronesListInBl.Find(x => x.SerialNumber == siralNuber);
@@ -92,6 +100,10 @@ namespace IBL
 
         }
 
+        /// <summary>
+        /// return list of drones
+        /// </summary>
+        /// <returns> return list of drones</returns>
         public IEnumerable<DroneToList> DroneToLists()
         {
             if (dronesListInBl.Count == 0)
@@ -100,11 +112,21 @@ namespace IBL
             return dronesListInBl.ToList();
         }
 
+        /// <summary>
+        /// drone request from the data layer
+        /// </summary>
+        /// <param name="drone"> serial number of the  drone</param>
+        /// <returns> drone </returns>
         DroneToList droneFromDal(IDAL.DO.Drone drone)
         {
             return new DroneToList { SerialNumber = drone.SerialNumber, Model = drone.Model, weightCategory = (WeightCategories)drone.WeightCategory };
         }
 
+        /// <summary>
+        /// search a drone by serial number
+        /// </summary>
+        /// <param name="droneNum"> serial number of the drone</param>
+        /// <returns> drone founded</returns>
         public Drone GetDrone(uint droneNum)
         {
 
@@ -134,10 +156,11 @@ namespace IBL
 
 
         }
+
         /// <summary>
         /// delete drone 
         /// </summary>
-        /// <param name="droneNum"></param>
+        /// <param name="droneNum"> serial number of the drone</param>
         public void DeleteDrone(uint droneNum)
         {
             var drone = dronesListInBl.Find(x => x.SerialNumber == droneNum);
@@ -154,6 +177,11 @@ namespace IBL
 
         }
 
+        /// <summary>
+        /// search drone in package
+        /// </summary>
+        /// <param name="number"> serial number of the drone </param>
+        /// <returns>the founded drone</returns>
         DroneInPackage droneToDroneInPackage(uint number)
         {
             var drone = dronesListInBl.Find(x => x.SerialNumber == number);

@@ -10,10 +10,10 @@ namespace IBL
     public partial class BL : IBL
     {
         /// <summary>
-        /// poll out the client location
+        /// return the client location
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id"> id client</param>
+        /// <returns> client location</returns>
         public Location ClientLocation(uint id)
         {
             IDAL.DO.Client client = new IDAL.DO.Client();
@@ -30,13 +30,14 @@ namespace IBL
             location_client.Longitude = client.Longitude;
             return location_client;
         }
+        
         /// <summary>
         /// add client
         /// </summary>
-        /// <param name="client"></param>
+        /// <param name="client"> client to add</param>
         public void AddClient(Client client)
         {
-            //chcinkg id
+            //checking id
             if (client.Id < 100000000)
             { throw new NumberNotEnoughException(9); }
             if (client.Id > 999999999)
@@ -63,10 +64,11 @@ namespace IBL
                 throw (new ItemFoundExeption(ex));
             }
         }
+        
         /// <summary>
-        /// help mathod to chack phonumber
+        /// help mathod to chack phone number
         /// </summary>
-        /// <param name="fon"></param>
+        /// <param name="fon"> phone number</param>
         void chekingFon(string fon)
         {
             if (fon.Count() < 10)
@@ -81,14 +83,19 @@ namespace IBL
             fon = fon.Insert(7, "-");
 
         }
+
+        /// <summary>
+        /// Update fields at a client
+        /// </summary>
+        /// <param name="client"> client </param>
         public void UpdateClient(ref Client client)
         {
-            //chcinkg id
+            //checking id
             if (client.Id < 100000000)
             { throw new NumberNotEnoughException(9); }
             if (client.Id > 999999999)
             { throw new NumberMoreException(); }
-            //chcing phon number
+            //checking phone number
             chekingFon(client.Phone);
             try
             {
@@ -105,6 +112,12 @@ namespace IBL
             }
 
         }
+
+        /// <summary>
+        /// Receiving a client by ID
+        /// </summary>
+        /// <param name="id"> client ID</param>
+        /// <returns> client</returns>
         public Client GetingClient(uint id)
         {
             try
@@ -136,6 +149,11 @@ namespace IBL
 
 
         }
+
+        /// <summary>
+        /// list of clients
+        /// </summary>
+        /// <returns> list of clients</returns>
         public IEnumerable<ClientToList> ClientToLists()
         {
             List<ClientToList> clientToLists = new List<ClientToList>();
@@ -158,7 +176,7 @@ namespace IBL
         /// <summary>
         /// delete client
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id"> client id</param>
         public void DeleteClient (uint id)
         {
             try

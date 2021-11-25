@@ -11,10 +11,10 @@ namespace IBL
     public partial class BL : IBL
     {
         /// <summary>
-        /// calculation the most collset base to the cilent
+        /// calculation the most collset base station to a particular location
         /// </summary>
-        /// <param name="client"></param>
-        /// <returns></returns>
+        /// <param name="location"> particular location</param>
+        /// <returns> the most collset base station </returns>
         public BaseStation ClosestBase(Location location)
         {
             BaseStation baseStation = new BaseStation();
@@ -54,10 +54,10 @@ namespace IBL
         }
 
         /// <summary>
-        /// geting location for specific base
+        /// geting location for specific base station
         /// </summary>
         /// <param name="base_number"> serial number of base station</param>
-        /// <returns></returns>
+        /// <returns> Location of the base station</returns>
         public Location BaseLocation(uint base_number)
         {
             IDAL.DO.Base_Station base_Station = new IDAL.DO.Base_Station();
@@ -79,7 +79,7 @@ namespace IBL
         /// <summary>
         /// add base station
         /// </summary>
-        /// <param name="baseStation"></param>
+        /// <param name="baseStation"> serial number of the base station</param>
         public void AddBase(BaseStation baseStation)
         {
             try
@@ -103,7 +103,7 @@ namespace IBL
         /// <summary>
         /// update base station
         /// </summary>
-        /// <param name="base_"></param>
+        /// <param name="base_">serial number of the base station</param>
         /// <param name="newName"> new name</param>
         /// <param name="newNumber"> charging states</param>
         public void UpdateBase(uint base_, string newName, string newNumber)
@@ -135,11 +135,11 @@ namespace IBL
         }
 
         /// <summary>
-        /// Auxiliary function that converts an object from
-        /// the data layer to an object from the logical layer
+        /// Auxiliary function that converts a base station object from
+        /// the data layer to a base station object on the logical layer
         /// </summary>
-        /// <param name="baseStation"></param>
-        /// <returns></returns>
+        /// <param name="baseStation">serial number of the base station</param>
+        /// <returns> base station on logical layer </returns>
         BaseStation convertBaseDalToBaseBl(IDAL.DO.Base_Station baseStation)
         {
             return new BaseStation
@@ -153,10 +153,10 @@ namespace IBL
         }
 
         /// <summary>
-        /// View of a specific station
+        /// search a specific station
         /// </summary>
         /// <param name="baseNume"> serial number</param>
-        /// <returns></returns>
+        /// <returns> base station </returns>
         public BaseStation BaseByNumber(uint baseNume)
         {
             try
@@ -182,7 +182,7 @@ namespace IBL
         /// <summary>
         /// show base station list 
         /// </summary>
-        /// <returns></returns>
+        /// <returns> base station list </returns>
         public IEnumerable<BaseStationToList> BaseStationToLists()
         {
             List<BaseStationToList> baseStationToLists = new List<BaseStationToList>();
@@ -211,7 +211,7 @@ namespace IBL
         /// <summary>
         /// List of base staions with free states
         /// </summary>
-        /// <returns></returns>
+        /// <returns> List of base staions with free states</returns>
         public IEnumerable<BaseStationToList> BaseStationWhitChargeStationsToLists()
         {
             List<BaseStationToList> baseStationToLists = new List<BaseStationToList>();
@@ -231,10 +231,10 @@ namespace IBL
             }
             return baseStationToLists;
         }
-       /// <summary>
-       /// delete base station
-       /// </summary>
-       /// <param name="base_"></param>
+        /// <summary>
+        /// delete base station
+        /// </summary>
+        /// <param name="base_">serial number</param>
         public void DeleteBase(uint base_)
         {
             try
