@@ -8,7 +8,8 @@ using IBL.BO;
 namespace IBL
 {
     public partial class BL : IBL
-    {/// <summary>
+    {
+        /// <summary>
      /// add packege to list in data source 
      /// </summary>
      /// <param name="package"></param>
