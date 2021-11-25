@@ -14,7 +14,7 @@ namespace IBL
         //Drone function
 
 
-        double DroneChrgingAlredy(DateTime dateTime, DateTime newdateTime = default);
+       
         /// <summary>
         ///  send drone to charge
         /// </summary>
