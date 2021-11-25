@@ -204,7 +204,7 @@ namespace IBL
             protected DroneCantMakeDliveryException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
             public override string ToString()
             {
-                return "\a ERROR: Drone not free for delivery";
+                return "\a ERROR: Drone cant make the delivery";
             }
         }
         /// <summary>

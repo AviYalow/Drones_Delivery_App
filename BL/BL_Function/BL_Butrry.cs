@@ -59,13 +59,13 @@ namespace IBL
         /// <summary>
         ///  send drone to charge
         /// </summary>
-        /// <param name="dronenumber">serial number of drone</param>
-       
-        public void DroneToCharge(uint dronenumber )
+        /// <param name="droneNumber"></param>
+        /// <param name="base_"></param>
+        public void DroneToCharge(uint droneNumber )
         {
 
 
-            var drone = SpecificDrone(dronenumber);
+            var drone = SpecificDrone(droneNumber);
             BaseStation baseStation = ClosestBase(drone.location);
             if (drone.droneStatus != DroneStatus.Free)
             {
@@ -83,7 +83,10 @@ namespace IBL
 
                 if (baseStation.FreeState <= 0)
                     throw (new NoPlaceForChargeException(baseStation.SerialNum));
-                dalObj.DroneToCharge(dronenumber, baseStation.SerialNum);
+                dalObj.DroneToCharge(droneNumber, baseStation.SerialNum);
+                drone.droneStatus = DroneStatus.Maintenance;
+                drone.location = baseStation.location;
+                dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == droneNumber)] = drone;
 
             
             }
@@ -111,12 +114,12 @@ namespace IBL
             if (drone == null)
                 throw new ItemNotFoundException("Drone", droneNumber);
             //locking the drone in charge
-            var information = dalObj.ChargingDroneList().First(x => x.IdDrone == droneNumber);
-            
+            var information = dalObj.ChargingDroneList().ToList(). First(x => x.IdDrone == droneNumber);
+           
             if (information.Equals(new IDAL.DO.BatteryLoad()))
                 throw new ItemNotFoundException("Drone", droneNumber);
             //calcoulet how mach he chraging alredy
-            double buttry = DroneChrgingAlredy(information.EntringDrone,DateTime.Now);
+            double buttry = DroneChrgingAlredy(timeInCharge);
 
             drone.butrryStatus = buttry > 100 ? 100 : buttry+drone.butrryStatus;
             drone.droneStatus = DroneStatus.Free;
@@ -178,9 +181,9 @@ namespace IBL
         /// <param name="dateTime"></param>
         /// <param name="newdateTime"></param>
         /// <returns></returns>
-        public double DroneChrgingAlredy(DateTime dateTime, DateTime newdateTime=default)
+        public double DroneChrgingAlredy(TimeSpan span)
         {
-            return ((newdateTime - dateTime).Seconds) * (chargingPerMinote / 60.0);
+            return ((span).Seconds) * (chargingPerMinote / 60.0);
         }
 
 
