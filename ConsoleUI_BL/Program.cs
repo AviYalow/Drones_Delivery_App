@@ -158,7 +158,7 @@ namespace ConsoleUI_BL
                                     updateCharge(bl, out check, out num);
                                     break;
                                 case UpdatesOptions.UnCharge:
-                                    UpdateUnCharge(bl, out check, out num);
+                                    UpdateUnCharge(bl, out check, out num,out doubleNum1);
                                     break;
                                 case UpdatesOptions.Associate:
                                     UpdateAssociate(bl, out check, out num);
@@ -824,7 +824,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="check"></param>
         /// <param name="serial">serial number</param>
-        public static void UpdateUnCharge(IBL.IBL bl, out bool check, out uint serial)
+        public static void UpdateUnCharge(IBL.IBL bl, out bool check, out uint serial,out double time)
         {
             TimeSpan timeInCharge;
             Console.Write("Enter serial number:");
@@ -833,10 +833,11 @@ namespace ConsoleUI_BL
                 check = uint.TryParse(Console.ReadLine(), out serial);
             } while (!check);
 
-            Console.Write("Enter how long it is in charge:");
+            Console.Write("Enter how long it is in charge in haours:");
             do
             {
-                check = TimeSpan.TryParse(Console.ReadLine(), out timeInCharge);
+                check = double.TryParse(Console.ReadLine(), out time);
+                   timeInCharge= TimeSpan.FromHours(time);
             } while (!check);
 
             bl.FreeDroneFromCharging(serial, timeInCharge);

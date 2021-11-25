@@ -23,7 +23,8 @@ namespace IBL.BO
             print += $"Serial Number: {SerialNum},\n";
             print += $"Weight Category: {WeightCatgory},\n";
             print += $"priority: {Priority},\n";
-            print += InTheWay ? "in the way\n" : "waiting to be collected\n";
+            print += "in the way:";
+            print += InTheWay ? "yes\n" : "no\n";
             print += $"Send Client: {SendClient.Name},\n";
             print += $"Recived Client: {RecivedClient.Name},\n";
             print += $"Source Location: Latitude-{Source.Latitude} Longitude-{Source.Longitude}\n";
