@@ -8,7 +8,7 @@ using IDAL.DO;
 
 namespace DalObject
 {
-     partial class DalObject : IDAL.IDal
+   public  partial class DalObject : IDAL.IDal
     {
 
 
@@ -18,7 +18,7 @@ namespace DalObject
         /// <param name="drone">drone to add</param>
         public void AddDrone( Drone drone)
         {
-              if (DataSource.drones.Any(x=>x.SerialNumber==drone.SerialNumber&&x.Active))
+              if (DataSource.drones.Any(x=>x.SerialNumber==drone.SerialNumber))
              throw (new ItemFoundException("drone", drone.SerialNumber));
             int i = DataSource.drones.FindIndex(x => x.SerialNumber == drone.SerialNumber);
             if (i != -1)

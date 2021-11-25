@@ -16,6 +16,8 @@ namespace IBL
         /// <returns> serial number of the packege</returns>
         public uint AddPackege(Package package)
         {
+            if (package.priority > Priority.Regular || package.weightCatgory > WeightCategories.Heavy)
+                throw new InputErrorException();
             uint packegeNum = 0;
             var send = dalObj.CilentByNumber(package.SendClient.Id);
             if (!send.Active)
