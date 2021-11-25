@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
+    /// <summary>
+    /// Drone In Package
+    /// </summary>
     public class DroneInPackage
     {
         public uint SerialNum { get; set; }

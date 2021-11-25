@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
+    /// <summary>
+    /// Package To List
+    /// </summary>
     public class PackageToList
     {
         public uint SerialNumber { get; set; }

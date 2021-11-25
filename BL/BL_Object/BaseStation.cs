@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
+    /// <summary>
+    /// base station
+    /// </summary>
   public  class BaseStation
     {
 

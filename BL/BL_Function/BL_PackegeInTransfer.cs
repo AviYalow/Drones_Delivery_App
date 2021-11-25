@@ -9,6 +9,11 @@ namespace IBL
 {
     public partial class BL : IBL
     {
+        /// <summary>
+        ///  convert packege in data layer to packegeInTrnansfer object in the logical layer
+        /// </summary>
+        /// <param name="package"> packege in data layer</param>
+        /// <returns> packegeInTrnansfer object in the logical layer</returns>
         PackageInTransfer convertPackegeDalToPackegeInTrnansfer(IDAL.DO.Package package)
         {
             var returnPackege = new PackageInTransfer
@@ -25,7 +30,11 @@ namespace IBL
             returnPackege.InTheWay = (package.PackageArrived == new DateTime()) ? true : false;
             return returnPackege;
         }
-
+        /// <summary>
+        /// convert Packege object to PackegeInTrnansfer object
+        /// </summary>
+        /// <param name="package">Packege object </param>
+        /// <returns> PackegeInTrnansfer object</returns>
         PackageInTransfer convertPackegeBlToPackegeInTrnansfer(Package package)
         {
             var returnPackege = new PackageInTransfer { Priority = package.priority, SendClient = package.SendClient, RecivedClient = package.RecivedClient, SerialNum = package.SerialNumber, WeightCatgory = package.weightCatgory, Source = ClientLocation(package.SendClient.Id), Destination = ClientLocation(package.RecivedClient.Id) };
@@ -34,6 +43,11 @@ namespace IBL
             return returnPackege;
         }
         //drone start delivery
+
+        /// <summary>
+        /// A package is collected by a drone
+        /// </summary>
+        /// <param name="droneNumber">A drone number that collects the package</param>
         public void CollectPackegForDelivery(uint droneNumber)
         {
             var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber);
@@ -54,9 +68,12 @@ namespace IBL
             dalObj.PackageCollected(pacege.SerialNum);
             dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == droneNumber)] = drone;
 
-
         }
 
+        /// <summary>
+        /// A package that arrived at the destination
+        /// </summary>
+        /// <param name="droneNumber">A drone number that takes the package</param>
         public void PackegArrive(uint droneNumber)
         {
             var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber);
@@ -76,6 +93,10 @@ namespace IBL
 
         }
 
+        /// <summary>
+        /// Assignment between a package and a drone
+        /// </summary>
+        /// <param name="droneNumber"> serial number of a drone</param>
         public void ConnectPackegeToDrone(uint droneNumber)
         {
             var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber);

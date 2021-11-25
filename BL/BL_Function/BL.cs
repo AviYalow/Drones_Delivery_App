@@ -158,22 +158,23 @@ namespace IBL
             }
 
         }
+
         /// <summary>
-        /// calculate distance between two points
+        /// show the distance between 2 locations
         /// </summary>
-        /// <param name="location1"></param>
-        /// <param name="location2"></param>
-        /// <returns></returns>
+        /// <param name="location1">the first location</param>
+        /// <param name="location2"> the second location</param>
+        /// <returns> distance </returns>
         public double Distans(Location location1, Location location2)
         {
             return dalObj.Distance(location1.Longitude, location1.Latitude, location2.Longitude, location2.Latitude);
         }
 
         /// <summary>
-        /// Returns a point in degree form
+        /// Returns a point in the form of degrees
         /// </summary>
-        /// <param name="point"></param>
-        /// <returns></returns>
+        /// <param name="point"> a point</param>
+        /// <returns>point in the form of degrees</returns>
         public string PointToDegree(double point)
         {
             return dalObj.PointToDegree(point);

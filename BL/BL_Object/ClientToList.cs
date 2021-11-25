@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
+    /// <summary>
+    /// Client To List
+    /// </summary>
     public class ClientToList
     {
 

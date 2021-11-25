@@ -56,11 +56,11 @@ namespace IBL
             return buttry;
         }
 
+        
         /// <summary>
-        ///  send drone to charge
+        /// send drone to charge
         /// </summary>
-        /// <param name="droneNumber"></param>
-        /// <param name="base_"></param>
+        /// <param name="droneNumber">serial number of drone</param>
         public void DroneToCharge(uint droneNumber )
         {
 
@@ -101,12 +101,13 @@ namespace IBL
 
 
         }
+
         /// <summary>
-        /// free drone from charge
+        ///Charging drone function 
         /// </summary>
-        /// <param name="droneNumber"></param>
-        /// <param name="timeInCharge"></param>
-        /// <returns></returns>
+        /// <param name="droneNumber">serial number of the drone</param>
+        /// <param name="timeInCharge"> the time that the drone in charge </param>
+        /// <returns> butrry Status of the  drone</returns>
         public double FreeDroneFromCharging(uint droneNumber, TimeSpan timeInCharge)
         {
             //locking for drone
@@ -135,11 +136,10 @@ namespace IBL
         }
 
         /// <summary>
-        /// free all drone in charge in spsifice base
+        /// Release a drone from a charger at a particular base station
         /// </summary>
-        /// <param name="baseNumber"></param>
-        /// <param name="number"></param>
-        /// <returns></returns>
+        /// <param name="baseNumber"> serial number of the base station</param>
+        /// <param name="number"> amount of drone to release</param>
         public void FreeBaseFromDrone(uint baseNumber, int number=-1)
         {
             if(number!=-1)
@@ -178,12 +178,11 @@ namespace IBL
         }
 
         /// <summary>
-        /// Some drone has already been charged 
+        /// Calculates the percentage of battery of the drone based on the charging time it was
         /// </summary>
-        /// <param name="dateTime"></param>
-        /// <param name="newdateTime"></param>
-        /// <returns></returns>
-         double DroneChrgingAlredy(TimeSpan span)
+        /// <param name="span">charging time the drone was</param>
+        /// <returns> percentage of battery</returns>
+        double DroneChrgingAlredy(TimeSpan span)
         {
             var a = ((double)(span).TotalMinutes); var b= (chargingPerMinote );
             a *= b;

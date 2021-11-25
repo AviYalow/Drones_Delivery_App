@@ -9,6 +9,11 @@ namespace IBL
 {
     public partial class BL:IBL
     {
+        /// <summary>
+        /// Request a client object from the data layer
+        /// </summary>
+        /// <param name="id">ID of the client</param>
+        /// <returns>client object on the logical layer</returns>
         ClientInPackage clientInPackageFromDal(uint id)
         {
             IDAL.DO.Client client;
