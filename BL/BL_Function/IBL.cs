@@ -15,6 +15,11 @@ namespace IBL
 
 
         double DroneChrgingAlredy(DateTime dateTime, DateTime newdateTime = default);
+        /// <summary>
+        ///  send drone to charge
+        /// </summary>
+        /// <param name="dronenumber">serial number of drone</param>
+
         public void DroneToCharge(uint dronenumber);
         /// <summary>
         /// add drone to list
@@ -169,21 +174,51 @@ namespace IBL
         /// </summary>
         /// <param name="id"> client id</param>
         public void DeleteClient(uint id);
-        
-        
+
+
         //Packege function
+
+
+        /// <summary>
+        /// add packege
+        /// </summary>
+        /// <param name="package"> packege to add</param>
+        /// <returns> serial number of the packege</returns>
         public uint AddPackege(Package package);
+
         public void ConnectPackegeToDrone(uint droneNumber);
+        /// <summary>
+        /// list of packages that don't have a drone
+        /// </summary>
+        /// <returns> list of packages that don't have a drone</returns>
         public IEnumerable<PackageToList> PackageWithNoDroneToLists();
+        /// <summary>
+        /// list of packages
+        /// </summary>
+        /// <returns>list of packages</returns>
         public IEnumerable<PackageToList> PackageToLists();
+
+
         public void PackegArrive(uint droneNumber);
+
+
         public void CollectPackegForDelivery(uint droneNumber);
+
+        /// <summary>
+        ///  view a package
+        /// </summary>
+        /// <param name="number">serial number of package</param>
+        /// <returns> package in the logical layer</returns>
         public Package ShowPackage(uint number);
+        /// <summary>
+        /// Updating fields of a particular package in the data layer
+        /// </summary>
+        /// <param name="package"> particular package</param>
         public void UpdatePackegInDal(Package package);
         /// <summary>
         /// delete packege 
         /// </summary>
-        /// <param name="number"></param>
+        /// <param name="number"> serial nummber of package</param>
         public void DeletePackege(uint number);
 
         //Function

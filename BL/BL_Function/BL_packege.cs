@@ -10,10 +10,10 @@ namespace IBL
     public partial class BL : IBL
     {
         /// <summary>
-     /// add packege to list in data source 
-     /// </summary>
-     /// <param name="package"></param>
-     /// <returns></returns>
+        /// add packege
+        /// </summary>
+        /// <param name="package"> packege to add</param>
+        /// <returns> serial number of the packege</returns>
         public uint AddPackege(Package package)
         {
             uint packegeNum = 0;
@@ -49,7 +49,12 @@ namespace IBL
 
         }
 
-
+        /// <summary>
+        /// Calculate how much percentage of battery the drone will need for full shipping
+        /// </summary>
+        /// <param name="drone"> drone</param>
+        /// <param name="package"> package</param>
+        /// <returns> percentage of battery </returns>
 
         double batteryCalculationForFullShipping(Location drone, Package package)
         {
@@ -57,6 +62,10 @@ namespace IBL
                 buttryDownWithNoPackege(ClosestBase(ClientLocation(package.RecivedClient.Id)).location, ClientLocation(package.RecivedClient.Id));
         }
 
+        /// <summary>
+        /// Updating fields of a particular package in the data layer
+        /// </summary>
+        /// <param name="package"> particular package</param>
         public void UpdatePackegInDal(Package package)
         {
             dalObj.UpdatePackege(new IDAL.DO.Package
@@ -74,6 +83,13 @@ namespace IBL
             });
         }
 
+
+        /// <summary>
+        /// Calculate the closest package to a given location
+        /// </summary>
+        /// <param name="location">given location</param>
+        /// <param name="packages"> a list of package</param>
+        /// <returns> the closest package to the location</returns>
         Package cloosetPackege(Location location, IEnumerable<IDAL.DO.Package> packages)
         {
             Package package = new Package();
@@ -100,6 +116,11 @@ namespace IBL
 
         }
 
+        /// <summary>
+        ///  view a package
+        /// </summary>
+        /// <param name="number">serial number of package</param>
+        /// <returns> package in the logical layer</returns>
         public Package ShowPackage(uint number)
         {
 
@@ -115,6 +136,11 @@ namespace IBL
 
         }
 
+        /// <summary>
+        /// convert packege from the data layer to the logical layer
+        /// </summary>
+        /// <param name="dataPackege"> package in the data layer </param>
+        /// <returns>  package in the logical layer</returns>
         Package convertPackegeDalToBl(IDAL.DO.Package dataPackege)
         {
             return new Package
@@ -133,6 +159,11 @@ namespace IBL
 
         }
 
+        /// <summary>
+        /// convert packege from the data layer to the logical layer
+        /// </summary>
+        /// <param name="dataPackege"> package in the data layer </param>
+        /// <returns>  package in the logical layer</returns>
         Package convertToPackegeBl(IDAL.DO.Package dataPackege)
         {
             return new Package
@@ -150,7 +181,10 @@ namespace IBL
             };
         }
 
-
+        /// <summary>
+        /// list of packages
+        /// </summary>
+        /// <returns>list of packages</returns>
 
         public IEnumerable<PackageToList> PackageToLists()
         {
@@ -184,6 +218,10 @@ namespace IBL
             return packageToLists;
         }
 
+        /// <summary>
+        /// list of packages that don't have a drone
+        /// </summary>
+        /// <returns> list of packages that don't have a drone</returns>
         public IEnumerable<PackageToList> PackageWithNoDroneToLists()
         {
             if (dalObj.PackegeListWithNoDrone().ToList().Count() == 0)
@@ -212,7 +250,7 @@ namespace IBL
         /// <summary>
         /// delete packege 
         /// </summary>
-        /// <param name="number"></param>
+        /// <param name="number"> serial nummber of package</param>
         public void DeletePackege(uint number)
         {
             try

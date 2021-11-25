@@ -12,16 +12,16 @@ namespace IBL
 
 
         /// <summary>
-        /// calculate how match butrry drone need for delivery point to point
+        /// Calculate how much percentage of battery is needed to delivery a package
         /// </summary>
-        /// <param name="packegeNumber"></param>
-        /// <returns></returns>
+        /// <param name="packageInTransfer"> package</param>
+        /// <returns> percentage of battery needed</returns>
         double buttryDownPackegeDelivery(PackageInTransfer packageInTransfer)
         {
             
             double battery_drop = 0;
 
-            switch (packageInTransfer.WeightCatgory)//להשלים פונקציה ע"י חישוב לכל משקל
+            switch (packageInTransfer.WeightCatgory
             {
                 case WeightCategories.Easy:
                     battery_drop = ((packageInTransfer.Distance / (double)SpeedDrone.Easy) * (double)ButrryPer.Minute);
@@ -43,11 +43,11 @@ namespace IBL
         }
 
         /// <summary>
-        /// calculate how match butrry drone need for to get from base to client or client to base
+        /// calculate how match butrry drone need to get from base to client or client to base
         /// </summary>
-        /// <param name="fromLocation"></param>
-        /// <param name="toLocation"></param>
-        /// <returns></returns>
+        /// <param name="fromLocation"> source location</param>
+        /// <param name="toLocation"> destination location</param>
+        /// <returns> percentage of battery needed</returns>
         double buttryDownWithNoPackege(Location fromLocation, Location toLocation)
         {
             
@@ -55,11 +55,12 @@ namespace IBL
             double buttry = ((distans / (double)SpeedDrone.Free) * (double)ButrryPer.Minute) * freeElctric;
             return buttry;
         }
+
         /// <summary>
-        /// send drone to charge
+        ///  send drone to charge
         /// </summary>
-        /// <param name="dronenumber"></param>
-        /// <param name="base_"></param>
+        /// <param name="dronenumber">serial number of drone</param>
+       
         public void DroneToCharge(uint dronenumber )
         {
 
