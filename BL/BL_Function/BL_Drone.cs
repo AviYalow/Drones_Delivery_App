@@ -112,7 +112,7 @@ namespace IBL
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
 
-            return dronesListInBl.ToList();
+            return dronesListInBl.ToList().FindAll(x=>x.droneStatus!=DroneStatus.Delete);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace IBL
         public Drone GetDrone(uint droneNum)
         {
 
-            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNum && x.droneStatus != DroneStatus.Delete);
+            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNum);
             if (drone is null)
                 throw new ItemNotFoundException("Drone", droneNum);
             try
