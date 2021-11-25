@@ -123,6 +123,7 @@ namespace IBL
             try
             {
                 var client = dalObj.CilentByNumber(id);
+                
                 var returnClient = new Client { Id = client.Id, Name = client.Name, Phone = client.PhoneNumber };
                 returnClient.ToClient = new List<PackageAtClient>();
                 var packege = dalObj.PackegeList().Where(x => x.GetingClient == id);
@@ -157,7 +158,7 @@ namespace IBL
         public IEnumerable<ClientToList> ClientToLists()
         {
             List<ClientToList> clientToLists = new List<ClientToList>();
-            foreach (var clientInDal in dalObj.cilentList())
+            foreach (var clientInDal in dalObj.cilentList().Where(x=>x.Active))
             {
                 clientToLists.Add(new ClientToList
                 {

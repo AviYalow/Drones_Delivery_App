@@ -162,15 +162,17 @@ namespace IBL
             List<DroneInCharge> list = new List<DroneInCharge>();
             foreach (var droneChrging in dalObj.ChargingDroneList().Where(x => x.idBaseStation == baseNumber))
             {
-                if(number!=-1)
-                if (i <= number)
+                if (number != -1)
                 {
-                    FreeDroneFromCharging(droneChrging.IdDrone, droneChrging.EntringDrone - DateTime.Now);
-                    i++;
-                             
+                    if (i <= number)
+                    {
+                        FreeDroneFromCharging(droneChrging.IdDrone, droneChrging.EntringDrone - DateTime.Now);
+                        i++;
+
+                    }
                 }
                 else
-                        FreeDroneFromCharging(droneChrging.IdDrone, droneChrging.EntringDrone - DateTime.Now);
+                    FreeDroneFromCharging(droneChrging.IdDrone, droneChrging.EntringDrone - DateTime.Now);
             }
            
         }

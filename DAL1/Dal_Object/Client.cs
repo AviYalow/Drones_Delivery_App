@@ -17,6 +17,7 @@ namespace IDAL
             public String PhoneNumber { get; set; }
             public double Longitude { get; set; }
             public double Latitude { get; set; }
+            public bool Active { get; set; }
 
            
 

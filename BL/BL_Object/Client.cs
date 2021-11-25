@@ -15,6 +15,7 @@ namespace IBL.BO
 
         public List<PackageAtClient> FromClient { get; set; }
         public List<PackageAtClient> ToClient { get; set; }
+        public bool Active { get; set; }
 
         public override string ToString()
         {
@@ -23,6 +24,8 @@ namespace IBL.BO
             print += $"Name is {Name},\n";
             print += $"Phone: {Phone},\n";
             print += Location;
+            print += $"Statos client";
+            print += Active ? "Active\n" : "Not active\n";
             print += "Packege from this client:\n";
             if (FromClient != null)
                 foreach (var packege in FromClient)
