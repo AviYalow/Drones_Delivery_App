@@ -175,7 +175,7 @@ namespace IBL
         /// </summary>
         /// <param name="point"> a point</param>
         /// <returns>point in the form of degrees</returns>
-        public string PointToDegree(double point)
+        public  string PointToDegree(double point)
         {
             return dalObj.PointToDegree(point);
         }

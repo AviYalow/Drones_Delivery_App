@@ -20,6 +20,8 @@ namespace IBL
             {
 
                 drone.location = BaseLocation(base_);
+                if (drone.weightCategory > WeightCategories.Heavy)
+                    throw new InputErrorException();
 
             }
             catch (IDAL.DO.ItemNotFoundException ex)
@@ -39,11 +41,9 @@ namespace IBL
             }
             drone.butrryStatus = random.Next(20, 41);
 
-            int i = dronesListInBl.FindIndex(x => x.SerialNumber == drone.SerialNumber && x.droneStatus != DroneStatus.Delete);
-            if (i != -1)
+            
                 dronesListInBl.Add(drone);
-            else
-                dronesListInBl[i] = drone;
+            
             dalObj.DroneToCharge(drone.SerialNumber, base_);
 
         }

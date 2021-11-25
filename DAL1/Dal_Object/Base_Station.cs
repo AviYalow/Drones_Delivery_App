@@ -1,4 +1,5 @@
 ﻿using System;
+using DalObject;
 
 namespace IDAL
 {
@@ -16,7 +17,7 @@ namespace IDAL
             public double longitude { get; set; }
             public double latitude { get; set; }
             
-
+            
 
 
             public override string ToString()
@@ -25,10 +26,10 @@ namespace IDAL
                 print_Base_Station += $"Base Number: {baseNumber},\n";
                 print_Base_Station += $"Name Base: {NameBase},\n";
                 print_Base_Station += $"Number of charging stations: {NumberOfChargingStations},\n";
-
+                
                 //A view based on a sexagesimal of the coordinate values
-                print_Base_Station += $"Longitude Status: {(longitude)},\n";
-                print_Base_Station += $"Latitude Status: {(latitude)}\n";
+                print_Base_Station += $"Longitude Status: {Point.Degree(longitude)},\n";
+                print_Base_Station += $"Latitude Status: {Point.Degree(latitude)}\n";
                 return print_Base_Station;
             }
 
