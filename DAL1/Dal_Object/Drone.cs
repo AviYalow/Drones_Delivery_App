@@ -24,9 +24,9 @@ namespace IDAL
             {
                 String printDrown = "";
                 printDrown += $"Siral Number is {SerialNumber},\n";
+                printDrown += $"Model {Model}\n";
                 printDrown += $"Weight Category is {WeightCategory},\n";
-                /* printDrown += $"Butrry Statos is {butrryStatus},\n";
-                 printDrown += $"Drown Statos is {drownStatus}\n";*/
+                
                 return printDrown;
             }
 

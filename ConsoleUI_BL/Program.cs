@@ -496,7 +496,7 @@ namespace ConsoleUI_BL
             {
                 check = uint.TryParse(Console.ReadLine(), out num1);
             } while (!check);
-            Console.Write("Enter Weight categories 0 for easy,1 for mediom,2 for haevy:");
+            Console.Write("Enter Weight categories 0 for easy 0-12Kg,1 for mediom 12-20Kg,2 for haevy 20-28Kg:");
             do
             {
                 check = uint.TryParse(Console.ReadLine(), out num2);
@@ -529,7 +529,7 @@ namespace ConsoleUI_BL
             } while (!check);
             Console.Write("Enter model:");
             name = Console.ReadLine();
-            Console.Write("Enter weight Category:0 for easy,1 for mediom,2 for heavy:");
+            Console.Write("Enter weight Category:0 for easy 0-12Kg,1 for mediom 12-20Kg,2 for heavy 20-28Kg:");
             do
             {
                 check = uint.TryParse(Console.ReadLine(), out num);

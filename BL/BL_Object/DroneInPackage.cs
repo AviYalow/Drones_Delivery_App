@@ -20,7 +20,7 @@ namespace IBL.BO
             String print = "";
             print += $"Siral Number: {SerialNum},\n";
             print += $"Butrry Status: {butrryStatus}\n";
-            print += $"Location: Latitude:{location.Latitude} Longitude:{location.Longitude}\n";
+            print += location;
             return print;
 
         }

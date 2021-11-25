@@ -28,7 +28,7 @@ namespace IBL.BO
             print += $"Weight Category: {weightCategory},\n";
             print += $" Butrry status: {butrryStatus},\n";
             print += $" Drone status: {droneStatus},\n";
-            print += $"Location: Latitude:{location.Latitude} Longitude:{location.Longitude},\n";
+            print += location;
             print += $"Number Package: {numPackage}\n";
 
             return print;

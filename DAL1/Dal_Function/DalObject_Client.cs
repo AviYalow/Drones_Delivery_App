@@ -8,7 +8,7 @@ using IDAL.DO;
 
 namespace DalObject
 {
-    partial class DalObject : IDAL.IDal
+   public partial class DalObject : IDAL.IDal
     {
 
 

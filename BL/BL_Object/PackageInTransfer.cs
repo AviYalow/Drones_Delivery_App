@@ -30,9 +30,9 @@ namespace IBL.BO
             print += InTheWay ? "yes\n" : "no\n";
             print += $"Send Client: {SendClient.Name},\n";
             print += $"Recived Client: {RecivedClient.Name},\n";
-            print += $"Source Location: Latitude-{Source.Latitude} Longitude-{Source.Longitude}\n";
-            print += $"Destination Location: Latitude:{Destination.Latitude} Longitude:{Destination.Longitude}\n";
-            print += $"Distance: {Distance}\n";
+            print += $"Source {Source}" ;
+            print += $"Destination {Destination}";
+            print += $"Distance: {Distance} KM\n";
             return print;
         }
 
