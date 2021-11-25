@@ -13,6 +13,7 @@ namespace IDAL
             public uint SerialNumber { get; init; }
             public string Model { get; set; }
             public WeightCategories WeightCategory { get; set; }
+            public bool Active { get; set; }
             
             
 

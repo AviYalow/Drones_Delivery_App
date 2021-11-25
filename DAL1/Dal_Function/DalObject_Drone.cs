@@ -18,14 +18,18 @@ namespace DalObject
         /// <param name="drone">drone to add</param>
         public void AddDrone( Drone drone)
         {
-              if (DataSource.drones.Any(x=>x.SerialNumber==drone.SerialNumber))
+              if (DataSource.drones.Any(x=>x.SerialNumber==drone.SerialNumber&&x.Active))
              throw (new ItemFoundException("drone", drone.SerialNumber));
-            DataSource.drones.Add(new Drone()
-            {
-                SerialNumber = drone.SerialNumber,
-                Model =drone.Model,
-                WeightCategory = (WeightCategories)drone.WeightCategory
-            });
+            int i = DataSource.drones.FindIndex(x => x.SerialNumber == drone.SerialNumber);
+            if (i != -1)
+                DataSource.drones.Add(new Drone()
+                {
+                    SerialNumber = drone.SerialNumber,
+                    Model = drone.Model,
+                    WeightCategory = (WeightCategories)drone.WeightCategory
+                });
+            else
+                DataSource.drones[i] = drone;
 
         }
 
@@ -36,7 +40,7 @@ namespace DalObject
         /// <returns> String of data</returns>
         public Drone DroneByNumber(uint droneNum)
         {
-            if (!DataSource.drones.Any(x=>x.SerialNumber==droneNum))
+            if (!DataSource.drones.Any(x=>x.SerialNumber==droneNum&&x.Active))
                 throw (new ItemNotFoundException("drone", droneNum));
 
             foreach (Drone item in DataSource.drones)
@@ -66,7 +70,7 @@ namespace DalObject
         /// <param name="base_"> Base station number that the drone will be sent to it </param>
         public void DroneToCharge(uint drone,uint base_)
         {
-            if(DataSource.drones.All(x=>x.SerialNumber!=drone))
+            if(!DataSource.drones.Any(x=>x.SerialNumber==drone&&x.Active))
             {
                 throw (new ItemNotFoundException("drone", drone));
             }
@@ -103,7 +107,9 @@ namespace DalObject
             {
                 if (DataSource.drones[i].SerialNumber == sirial)
                 {
-                    DataSource.drones.Remove(DataSource.drones[i]);
+                   var drone= DataSource.drones[i];
+                    drone.Active = false;
+                    DataSource.drones[i] = drone;
                     return;
                 }
             }
@@ -130,7 +136,7 @@ namespace DalObject
         /// <param name="drone"> a given drone</param>
         public void UpdateDrone(Drone drone)
         {
-            int index = DataSource.drones.FindIndex(x => x.SerialNumber == drone.SerialNumber);
+            int index = DataSource.drones.FindIndex(x => x.SerialNumber == drone.SerialNumber&&x.Active);
             if (index != -1)
                 DataSource.drones[index] = drone;
             else

@@ -39,8 +39,11 @@ namespace IBL
             }
             drone.butrryStatus = random.Next(20, 41);
 
-
-            dronesListInBl.Add(drone);
+            int i = dronesListInBl.FindIndex(x => x.SerialNumber == drone.SerialNumber && x.droneStatus != DroneStatus.Delete);
+            if (i != -1)
+                dronesListInBl.Add(drone);
+            else
+                dronesListInBl[i] = drone;
             dalObj.DroneToCharge(drone.SerialNumber, base_);
 
         }
@@ -53,7 +56,7 @@ namespace IBL
         public void UpdateDronelocation(uint drone, Location location)
         {
 
-            int i = dronesListInBl.FindIndex(x => x.SerialNumber == drone);
+            int i = dronesListInBl.FindIndex(x => x.SerialNumber == drone&&x.droneStatus!=DroneStatus.Delete);
             if (i == -1)
                 throw (new ItemNotFoundException("Drone", drone));
             dronesListInBl[i].location = location;
@@ -77,7 +80,7 @@ namespace IBL
             {
                 throw new ItemNotFoundException(ex);
             }
-            int i = dronesListInBl.FindIndex(x => x.SerialNumber == droneId);
+            int i = dronesListInBl.FindIndex(x => x.SerialNumber == droneId&&x.droneStatus != DroneStatus.Delete);
             if (i == -1)
                 throw new ItemNotFoundException("Drone", droneId);
             dronesListInBl[i].Model = newName;
@@ -93,7 +96,7 @@ namespace IBL
         /// <returns> drone founded </returns>
         public DroneToList SpecificDrone(uint siralNuber)
         {
-            var drone = dronesListInBl.Find(x => x.SerialNumber == siralNuber);
+            var drone = dronesListInBl.Find(x => x.SerialNumber == siralNuber&&x.droneStatus != DroneStatus.Delete);
             if (drone is null)
                 throw new ItemNotFoundException("drone", siralNuber);
             return drone;
@@ -109,7 +112,7 @@ namespace IBL
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
 
-            return dronesListInBl.ToList();
+            return dronesListInBl.ToList().FindAll(x=>x.droneStatus!=DroneStatus.Delete);
         }
 
         /// <summary>
@@ -161,16 +164,24 @@ namespace IBL
         /// <param name="droneNum"> serial number of the drone</param>
         public void DeleteDrone(uint droneNum)
         {
-            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNum);
+            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNum && x.droneStatus != DroneStatus.Delete);
             if (drone is null)
                 throw new ItemNotFoundException("Drone", droneNum);
             //chack the drone not in middel of delivery
             if (drone.droneStatus == DroneStatus.Work && dalObj.packegeByNumber(drone.numPackage).CollectPackageForShipment != new DateTime())
                 throw new DroneStillAtWorkException();
 
-            dalObj.DeleteDrone(droneNum);
+                dalObj.DeleteDrone(droneNum);
 
-            dronesListInBl.Remove(drone);
+            for (int i = 0; i < dronesListInBl.Count; i++)
+            {
+                if(dronesListInBl[i].SerialNumber==droneNum)
+                {
+                    drone.droneStatus = DroneStatus.Delete;
+                    dronesListInBl[i] = drone;
+                }
+            }
+            
 
         }
 

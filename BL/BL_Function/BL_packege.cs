@@ -17,7 +17,10 @@ namespace IBL
         public uint AddPackege(Package package)
         {
             uint packegeNum = 0;
-            Location locationsend = ClientLocation(package.SendClient.Id);
+            var send = dalObj.CilentByNumber(package.SendClient.Id);
+            if (!send.Active)
+                throw new ItemNotFoundException("Client", package.SendClient.Id);
+            Location locationsend = new Location { Latitude = send.Latitude, Longitude = send.Longitude };
             Location locationGet = ClientLocation(package.RecivedClient.Id);
             var butrryWithDelvery = buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package));
             var butrryFree = buttryDownWithNoPackege(ClosestBase(locationsend).location, locationsend) + buttryDownWithNoPackege(ClosestBase(locationGet).location, locationGet);
@@ -84,37 +87,7 @@ namespace IBL
         }
 
 
-        /// <summary>
-        /// Calculate the closest package to a given location
-        /// </summary>
-        /// <param name="location">given location</param>
-        /// <param name="packages"> a list of package</param>
-        /// <returns> the closest package to the location</returns>
-        Package cloosetPackege(Location location, IEnumerable<IDAL.DO.Package> packages)
-        {
-            Package package = new Package();
-            if (packages is null)
-                throw new TheListIsEmptyException();
-            {
-                Location location1 = ClientLocation(packages.First().SendClient);
-
-
-                foreach (var packege1 in packages)
-                {
-                    uint sendig = packege1.SendClient;
-                    Location location2 = ClientLocation(sendig);
-                    if (Distans(location, location1) > Distans(location, location2))
-                    {
-                        location1 = location2;
-                        package = convertPackegeDalToBl(packege1);
-                    }
-
-                }
-
-            }
-            return package;
-
-        }
+  
 
         /// <summary>
         ///  view a package

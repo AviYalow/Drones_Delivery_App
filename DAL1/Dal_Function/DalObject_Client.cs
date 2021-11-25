@@ -20,8 +20,8 @@ namespace DalObject
         public void AddClient(Client client)
         {
 
-
-            if (DataSource.clients.Any(x => x.Id == client.Id))
+          
+            if (DataSource.clients.Any(x=>x.Id==client.Id&&x.Active))
                 throw (new ItemFoundException("Client", client.Id));
             DataSource.clients.Add(client);
 
@@ -57,10 +57,18 @@ namespace DalObject
         /// <param name="id"></param>
         public void DeleteClient(uint id)
         {
-            if (!DataSource.clients.Any(x => x.Id == id))
+            if (!DataSource.clients.Any(x=>x.Id==id&&x.Active))
                 throw (new ItemNotFoundException("client", id));
 
-            DataSource.clients.Remove(DataSource.clients[DataSource.clients.FindIndex(x => x.Id == id)]);
+            for (int i = 0; i < DataSource.clients.Count; i++)
+            {
+                if(DataSource.clients[i].Id==id)
+                {
+                    var client = DataSource.clients[i];
+                    client.Active = false;
+                    DataSource.clients[i] = client;
+                }    
+            }
 
 
         }
@@ -71,7 +79,7 @@ namespace DalObject
         /// <param name="client"> a given client </param>
         public void UpdateClient(Client client)
         {
-            int index = DataSource.clients.FindIndex(x => x.Id == client.Id);
+            int index = DataSource.clients.FindIndex(x => x.Id == client.Id&&x.Active);
             if (index != -1)
                 DataSource.clients[index] = client;
             else
