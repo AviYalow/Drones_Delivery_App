@@ -106,7 +106,7 @@ namespace IBL
                     if (Distans(location, location1) > Distans(location, location2))
                     {
                         location1 = location2;
-                        package = convertToPackegeBl(packege1);
+                        package = convertPackegeDalToBl(packege1);
                     }
 
                 }
@@ -159,28 +159,7 @@ namespace IBL
 
         }
 
-        /// <summary>
-        /// convert packege from the data layer to the logical layer
-        /// </summary>
-        /// <param name="dataPackege"> package in the data layer </param>
-        /// <returns>  package in the logical layer</returns>
-        Package convertToPackegeBl(IDAL.DO.Package dataPackege)
-        {
-            return new Package
-            {
-                SerialNumber = dataPackege.SerialNumber,
-                SendClient = clientInPackageFromDal(dataPackege.SendClient),
-                collect_package = dataPackege.CollectPackageForShipment,
-                create_package = dataPackege.ReceivingDelivery,
-                drone = droneToDroneInPackage(dataPackege.OperatorSkimmerId),
-                package_arrived = dataPackege.PackageArrived,
-                package_association = dataPackege.PackageAssociation,
-                priority = (Priority)dataPackege.Priority,
-                RecivedClient = clientInPackageFromDal(dataPackege.GetingClient),
-                weightCatgory = (WeightCategories)dataPackege.WeightCatgory
-            };
-        }
-
+     
         /// <summary>
         /// list of packages
         /// </summary>
