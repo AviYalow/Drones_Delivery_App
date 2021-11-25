@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
+    /// <summary>
+    /// base station to list
+    /// </summary>
     public class BaseStationToList
     {
         public uint SerialNum { get; init; }

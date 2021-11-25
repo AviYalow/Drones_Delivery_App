@@ -68,6 +68,7 @@ namespace IBL
                     $"plase chack the charging drone list , and relese drone with full buttry. ";
             }
         }
+       
         /// <summary>
         /// the input is worng
         /// </summary>
@@ -82,6 +83,7 @@ namespace IBL
                 return $"Time:{DateTime.Now} \nInput Error!";
             }
         }
+       
         /// <summary>
         /// exception for try down number of charging station whan still have more drone in charge
         /// </summary>
@@ -97,6 +99,7 @@ namespace IBL
                     "Please release skimmers from charging.";
             }
         }
+       
         /// <summary>
         /// Exception for try to relese more dorne for spsific base 
         /// </summary>
@@ -109,10 +112,11 @@ namespace IBL
                 return "Your try to pull out more drone then statins charge! ";
             }
         }
+       
         /// <summary>
         /// try to send drone in charge or work to charge
         /// </summary>
-        public class DroneStillAtWorkException : Exception
+         public class DroneStillAtWorkException : Exception
         {
             public DroneStillAtWorkException() : base() { }
             protected DroneStillAtWorkException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
@@ -121,6 +125,7 @@ namespace IBL
                 return "The drone still in work";
             }
         }
+     
         /// <summary>
         /// try to send drone to delivery with not enough buttry
         /// </summary>
@@ -135,6 +140,7 @@ namespace IBL
                     $"You should send the skimmer for charging or transfer location ";
             }
         }
+       
         /// <summary>
         /// not enough number in in-put
         /// </summary>
@@ -262,6 +268,10 @@ namespace IBL
                 return $"The packege alredy send to auter client ";
             }
         }
+
+        /// <summary>
+        ///  Exception when the packege not assioction or collected yet 
+        /// </summary>
         public class PackegeNotAssctionOrCollectedException : Exception
         {
 

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
+    /// <summary>
+    /// Client In Package
+    /// </summary>
     public class ClientInPackage
     {
         public uint Id { get; set; }

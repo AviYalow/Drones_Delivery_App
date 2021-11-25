@@ -19,7 +19,6 @@ namespace IBL
         ///  send drone to charge
         /// </summary>
         /// <param name="dronenumber">serial number of drone</param>
-
         public void DroneToCharge(uint dronenumber);
         /// <summary>
         /// add drone to list
@@ -186,6 +185,10 @@ namespace IBL
         /// <returns> serial number of the packege</returns>
         public uint AddPackege(Package package);
 
+        /// <summary>
+        /// Assignment between a package and a drone
+        /// </summary>
+        /// <param name="droneNumber"> serial number of a drone</param>
         public void ConnectPackegeToDrone(uint droneNumber);
         /// <summary>
         /// list of packages that don't have a drone
@@ -198,10 +201,16 @@ namespace IBL
         /// <returns>list of packages</returns>
         public IEnumerable<PackageToList> PackageToLists();
 
-
+        /// <summary>
+        /// A package that arrived at the destination
+        /// </summary>
+        /// <param name="droneNumber">A drone number that takes the package</param>
         public void PackegArrive(uint droneNumber);
 
-
+        /// <summary>
+        /// A package is collected by a drone
+        /// </summary>
+        /// <param name="droneNumber">A drone number that collects the package</param>
         public void CollectPackegForDelivery(uint droneNumber);
 
         /// <summary>
@@ -222,7 +231,20 @@ namespace IBL
         public void DeletePackege(uint number);
 
         //Function
+
+        /// <summary>
+        /// show the distance between 2 locations
+        /// </summary>
+        /// <param name="location1">the first location</param>
+        /// <param name="location2"> the second location</param>
+        /// <returns> distance </returns>
         public double Distans(Location location1, Location location2);
+
+        /// <summary>
+        /// Returns a point in the form of degrees
+        /// </summary>
+        /// <param name="point"> a point</param>
+        /// <returns>point in the form of degrees</returns>
         public string PointToDegree(double point);
 
 

@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace IBL.BO
 {
+
+    /// <summary>
+    /// Package At Client
+    /// </summary>
     public class PackageAtClient
     {
         public uint SerialNum { get; set; }

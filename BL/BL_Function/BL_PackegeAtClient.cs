@@ -9,8 +9,13 @@ namespace IBL
 {
     public partial class BL : IBL
     {
-
-        PackageAtClient convretPackegeDalToPackegeAtClient(IDAL.DO.Package package,uint client1)
+        /// <summary>
+        /// convret Packege in the data layer to PackegeAtClient object in the logical layer
+        /// </summary>
+        /// <param name="package">Packege in the data layer </param>
+        /// <param name="client1"> id of the client at the pacage</param>
+        /// <returns> PackegeAtClient object</returns>
+        PackageAtClient convretPackegeDalToPackegeAtClient(IDAL.DO.Package package ,uint client1)
         {
             var convert = new PackageAtClient
             {

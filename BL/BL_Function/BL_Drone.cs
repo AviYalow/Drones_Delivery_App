@@ -39,12 +39,12 @@ namespace IBL
             }
             drone.butrryStatus = random.Next(20, 41);
 
-            
+
             dronesListInBl.Add(drone);
             dalObj.DroneToCharge(drone.SerialNumber, base_);
 
         }
-       
+
         /// <summary>
         /// update new location for drone
         /// </summary>
@@ -59,7 +59,7 @@ namespace IBL
             dronesListInBl[i].location = location;
 
         }
-     
+
         /// <summary>
         /// update new model for drone
         /// </summary>
@@ -147,12 +147,10 @@ namespace IBL
                     packageInTransfer = pacege
                 };
             }
-            catch(IDAL.DO.ItemNotFoundException ex)
+            catch (IDAL.DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }
-
-
 
 
         }
@@ -167,13 +165,12 @@ namespace IBL
             if (drone is null)
                 throw new ItemNotFoundException("Drone", droneNum);
             //chack the drone not in middel of delivery
-            if (drone.droneStatus == DroneStatus.Work&&dalObj.packegeByNumber(drone.numPackage).CollectPackageForShipment!=new DateTime())
+            if (drone.droneStatus == DroneStatus.Work && dalObj.packegeByNumber(drone.numPackage).CollectPackageForShipment != new DateTime())
                 throw new DroneStillAtWorkException();
 
-                dalObj.DeleteDrone(droneNum);
-            
+            dalObj.DeleteDrone(droneNum);
+
             dronesListInBl.Remove(drone);
-            
 
         }
 
