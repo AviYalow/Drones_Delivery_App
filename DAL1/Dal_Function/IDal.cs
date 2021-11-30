@@ -61,21 +61,8 @@ namespace IDAL
         /// <summary>
         /// return the list of all packages
         /// </summary>
-        public IEnumerable<Package> PackegeList();
-        /// <summary>
-        /// return the list of packages that
-        /// have not been assigned to a drone yet 
-        /// </summary>
-        public IEnumerable<Package> PackegeListWithNoDrone();
-
-        /// <summary>
-        /// return a list of all package that have been assigned to a drone 
-        /// </summary>
-        public IEnumerable<Package> PackagesWithDrone();
-        /// <summary>
-        /// return a list of of package that arrived 
-        /// </summary>
-        public IEnumerable<Package> PackagesArriveList();
+        public IEnumerable<Package> PackegeList(Predicate<Package> predicate);
+      
 
         /// <summary>
         /// Updating fields of a particular package
@@ -132,11 +119,8 @@ namespace IDAL
         /// <summary>
         /// return a list of all the base stations
         /// </summary>
-        public IEnumerable<Base_Station> BaseStationList();
-        /// <summary>
-        /// return a list of base stations with available charging stations
-        /// </summary>
-        public IEnumerable<Base_Station> BaseStationListWithChargeStates();
+        public IEnumerable<Base_Station> BaseStationList(Predicate<Base_Station> predicate);
+       
         /// <summary>
         /// Display base station data desired   
         /// </summary>

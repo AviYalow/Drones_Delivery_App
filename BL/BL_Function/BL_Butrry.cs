@@ -115,7 +115,7 @@ namespace IBL
             if (drone == null)
                 throw new ItemNotFoundException("Drone", droneNumber);
             //locking the drone in charge
-            var information = dalObj.ChargingDroneList().ToList(). First(x => x.IdDrone == droneNumber);
+            var information = dalObj.ChargingDroneList(). FirstOrDefault(x => x.IdDrone == droneNumber);
            
             if (information.Equals(new IDAL.DO.BatteryLoad()))
                 throw new ItemNotFoundException("Drone", droneNumber);

@@ -107,12 +107,12 @@ namespace IBL
         /// return list of drones
         /// </summary>
         /// <returns> return list of drones</returns>
-        public IEnumerable<DroneToList> DroneToLists()
+        public IEnumerable<DroneToList> DroneToLists(Predicate<DroneToList> predicate)
         {
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
 
-            return dronesListInBl.ToList().FindAll(x=>x.droneStatus!=DroneStatus.Delete);
+            return dronesListInBl.FindAll(predicate);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace IBL
             if (drone is null)
                 throw new ItemNotFoundException("Drone", droneNum);
             //chack the drone not in middel of delivery
-            if (drone.droneStatus == DroneStatus.Work && dalObj.packegeByNumber(drone.numPackage).CollectPackageForShipment != new DateTime())
+            if (drone.droneStatus == DroneStatus.Work && !(dalObj.packegeByNumber(drone.numPackage).CollectPackageForShipment is null))
                 throw new DroneStillAtWorkException();
 
                 dalObj.DeleteDrone(droneNum);

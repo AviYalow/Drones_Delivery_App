@@ -24,13 +24,13 @@ namespace IBL
 
                 Location base_location = new Location();
 
-                double distans = -5, distans2;
-                foreach (IDAL.DO.Base_Station base_ in dalObj.BaseStationList())
+                double? distans = null, distans2;
+                foreach (IDAL.DO.Base_Station base_ in dalObj.BaseStationList(x=>true))
                 {
                     base_location.Latitude = base_.latitude;
                     base_location.Longitude = base_.longitude;
                     distans2 = Distans(location, base_location);
-                    if (distans > distans2 || distans == -5)
+                    if (distans > distans2 || distans == null)
                     {
 
                         distans = distans2;
@@ -183,13 +183,13 @@ namespace IBL
         /// show base station list 
         /// </summary>
         /// <returns> base station list </returns>
-        public IEnumerable<BaseStationToList> BaseStationToLists()
+        public IEnumerable<BaseStationToList> BaseStationToLists(Predicate<BaseStationToList> predicate)
         {
             List<BaseStationToList> baseStationToLists = new List<BaseStationToList>();
-            if (dalObj.BaseStationList().Count() == 0)
+            if (dalObj.BaseStationList(x=>true).Count() == 0)
                 throw new TheListIsEmptyException();
             uint i = 0;
-            foreach (var baseStationFromDal in dalObj.BaseStationList())
+            foreach (var baseStationFromDal in dalObj.BaseStationList(x => true))
             {
                 i = 0;
                 foreach (var chargePerBase in dalObj.ChargingDroneList())
@@ -205,32 +205,11 @@ namespace IBL
                     FreeState = baseStationFromDal.NumberOfChargingStations
                 });
             }
+            baseStationToLists = baseStationToLists.FindAll(predicate);
             return baseStationToLists;
         }
 
-        /// <summary>
-        /// List of base staions with free states
-        /// </summary>
-        /// <returns> List of base staions with free states</returns>
-        public IEnumerable<BaseStationToList> BaseStationWhitChargeStationsToLists()
-        {
-            List<BaseStationToList> baseStationToLists = new List<BaseStationToList>();
-            if (dalObj.BaseStationList().Count() == 0)
-                throw new TheListIsEmptyException();
-
-            foreach (var baseStationFromDal in dalObj.BaseStationListWithChargeStates())
-            {
-
-                baseStationToLists.Add(new BaseStationToList
-                {
-                    SerialNum = baseStationFromDal.baseNumber,
-                    Name = baseStationFromDal.NameBase,
-                    BusyState = (uint)dalObj.ChargingDroneList().Count(x => x.idBaseStation == baseStationFromDal.baseNumber),
-                    FreeState = baseStationFromDal.NumberOfChargingStations
-                });
-            }
-            return baseStationToLists;
-        }
+     
         /// <summary>
         /// delete base station
         /// </summary>

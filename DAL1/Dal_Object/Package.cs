@@ -19,16 +19,16 @@ namespace IDAL
 
 
             //Delivery time create a package
-            public DateTime ReceivingDelivery { get; set; }
+            public DateTime? ReceivingDelivery { get; set; }
 
             //Time to assign the package to a drone
-            public DateTime PackageAssociation { get; set; }
+            public DateTime? PackageAssociation { get; set; }
 
             //Package collection time from the sender
-            public DateTime CollectPackageForShipment { get; set; }
+            public DateTime? CollectPackageForShipment { get; set; }
 
             //Time of arrival of the package to the recipient
-            public DateTime PackageArrived { get; set; }
+            public DateTime? PackageArrived { get; set; }
 
 
 

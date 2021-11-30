@@ -20,16 +20,16 @@ namespace IBL.BO
         public DroneInPackage drone { get; set; }
 
         //Delivery time create a package
-        public DateTime create_package { get; set; }
+        public DateTime? create_package { get; set; }
 
         //Time to assign the package to a drone
-        public DateTime package_association { get; set; }
+        public DateTime? package_association { get; set; }
 
         //Package collection time from the sender
-        public DateTime collect_package { get; set; }
+        public DateTime? collect_package { get; set; }
 
         //Time of arrival of the package to the recipient
-        public DateTime package_arrived { get; set; }
+        public DateTime? package_arrived { get; set; }
         public override string ToString()
         {
             String print = "";

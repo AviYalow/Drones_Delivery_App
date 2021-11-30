@@ -126,7 +126,7 @@ namespace IBL
                 
                 var returnClient = new Client { Id = client.Id, Name = client.Name, Phone = client.PhoneNumber };
                 returnClient.ToClient = new List<PackageAtClient>();
-                var packege = dalObj.PackegeList().Where(x => x.GetingClient == id);
+                var packege = dalObj.PackegeList(x => x.GetingClient == id);
                 
 
                 if (packege.Count() != 0)
@@ -135,7 +135,7 @@ namespace IBL
                         returnClient.ToClient.Add(convretPackegeDalToPackegeAtClient(packegeInList,packegeInList.GetingClient));
                     }
                 returnClient.FromClient = new List<PackageAtClient>();
-                packege = dalObj.PackegeList().Where(x => x.SendClient == id);
+                packege = dalObj.PackegeList(x => x.SendClient == id);
                 if (packege.Count() != 0)
                     foreach (var packegeInList in packege)
                     {
@@ -155,7 +155,7 @@ namespace IBL
         /// list of clients
         /// </summary>
         /// <returns> list of clients</returns>
-        public IEnumerable<ClientToList> ClientToLists()
+        public IEnumerable<ClientToList> ClientToLists(Predicate<ClientToList> predicate)
         {
             List<ClientToList> clientToLists = new List<ClientToList>();
             foreach (var clientInDal in dalObj.cilentList().Where(x=>x.Active))
@@ -165,13 +165,14 @@ namespace IBL
                     ID = clientInDal.Id,
                     Name = clientInDal.Name,
                     Phone = clientInDal.PhoneNumber,
-                    Arrived = (uint)dalObj.PackegeList().Count(x => x.SendClient == clientInDal.Id && x.PackageArrived != new DateTime()),
-                    NotArrived = (uint)dalObj.PackegeList().Count(x => x.SendClient == clientInDal.Id && x.PackageArrived == new DateTime()),
-                    OnTheWay = (uint)dalObj.PackegeList().Count(x => x.GetingClient == clientInDal.Id && x.PackageArrived == new DateTime()),
-                    received = (uint)dalObj.PackegeList().Count(x => x.GetingClient == clientInDal.Id && x.PackageArrived != new DateTime())
+                    Arrived = (uint)dalObj.PackegeList(x => x.SendClient == clientInDal.Id && x.PackageArrived != null).Count(),
+                    NotArrived = (uint)dalObj.PackegeList(x => x.SendClient == clientInDal.Id && x.PackageArrived == null).Count(),
+                    OnTheWay = (uint)dalObj.PackegeList(x => x.GetingClient == clientInDal.Id && x.PackageArrived == null).Count(),
+                    received = (uint)dalObj.PackegeList(x => x.GetingClient == clientInDal.Id && x.PackageArrived != null).Count()
                 });
 
             }
+            clientToLists = clientToLists.FindAll(predicate);
             return clientToLists;
         }
         /// <summary>
@@ -183,10 +184,10 @@ namespace IBL
             try
             {
                 dalObj.DeleteClient(id);
-                foreach(var packege in dalObj.PackegeList())
+                foreach(var packege in dalObj.PackegeList(x=>true))
                 {
                     //cancel paceges how dont send yet
-                    if(packege.SendClient==id&&packege.CollectPackageForShipment!=new DateTime())
+                    if(packege.SendClient==id&&packege.CollectPackageForShipment!=null)
                     {
                         dalObj.DeletePackege(packege.SerialNumber);
                         for (int i = 0; i < dronesListInBl.Count; i++)

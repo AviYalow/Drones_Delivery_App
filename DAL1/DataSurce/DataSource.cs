@@ -127,52 +127,53 @@ namespace DalObject
             Package package1 = new Package { SerialNumber = Config.package_num, Priority = (Priority)rand.Next(0, 3), SendClient = client1.Id, GetingClient = client2.Id, ReceivingDelivery = DateTime.Now.AddDays(rand.Next(-14, -6)) };
             package1.OperatorSkimmerId = drones[0].SerialNumber;
             package1.WeightCatgory = (WeightCategories)rand.Next((int)drones[0].WeightCategory + 1);
-            package1.PackageAssociation = package1.ReceivingDelivery.AddMinutes(30);
-            package1.CollectPackageForShipment = package1.PackageAssociation.AddHours(rand.Next(5));
-            package1.PackageArrived = package1.CollectPackageForShipment.AddHours(3);
+            package1.PackageAssociation = package1.ReceivingDelivery.Value.AddMinutes(30);
+            
+            package1.CollectPackageForShipment = package1.PackageAssociation.Value.AddHours(rand.Next(5));
+            package1.PackageArrived = package1.CollectPackageForShipment.Value.AddHours(3);
             Config.package_num++;
 
             Package package2 = new Package { SerialNumber = Config.package_num, Priority = (Priority)rand.Next(0, 3), SendClient = client3.Id, GetingClient = client4.Id, ReceivingDelivery = DateTime.Now.AddDays(rand.Next(-10, -8)).AddHours(rand.Next(-15, 6)) };
             package2.OperatorSkimmerId = drones[1].SerialNumber;
             package2.WeightCatgory = (WeightCategories)rand.Next((int)drones[1].WeightCategory + 1);
-            package2.PackageAssociation = package2.ReceivingDelivery.AddMinutes(30);
-            package2.CollectPackageForShipment = package2.PackageAssociation.AddHours(rand.Next(5));
-            package2.PackageArrived = package2.CollectPackageForShipment.AddHours(3);
+            package2.PackageAssociation = package2.ReceivingDelivery.Value.AddMinutes(30);
+            package2.CollectPackageForShipment = package2.PackageAssociation.Value.AddHours(rand.Next(5));
+            package2.PackageArrived = package2.CollectPackageForShipment.Value.AddHours(3);
             Config.package_num++;
 
             Package package3 = new Package { SerialNumber = Config.package_num, Priority = (Priority)rand.Next(0, 3), SendClient = client5.Id, GetingClient = client6.Id, ReceivingDelivery = DateTime.Now.AddDays(rand.Next(-11, -5)).AddHours(rand.Next(-20, 4)).AddMinutes(rand.Next(-59, 60)) };
             package3.OperatorSkimmerId = drones[2].SerialNumber;
             package3.WeightCatgory = (WeightCategories)rand.Next((int)drones[2].WeightCategory + 1);
-            package3.PackageAssociation = package3.ReceivingDelivery.AddMinutes(30);
-            package3.CollectPackageForShipment = package3.PackageAssociation.AddHours(rand.Next(5));
-            package3.PackageArrived = package3.CollectPackageForShipment.AddHours(3);
+            package3.PackageAssociation = package3.ReceivingDelivery.Value.AddMinutes(30);
+            package3.CollectPackageForShipment = package3.PackageAssociation.Value.AddHours(rand.Next(5));
+            package3.PackageArrived = package3.CollectPackageForShipment.Value.AddHours(3);
             Config.package_num++;
 
             Package package4 = new Package { SerialNumber = Config.package_num, Priority = (Priority)rand.Next(0, 3), SendClient = client5.Id, GetingClient = client2.Id, ReceivingDelivery = DateTime.Now.AddDays(rand.Next(-14, -6)).AddHours(rand.Next(-20, 4)).AddMinutes(rand.Next(-59, 60)) };
             package4.OperatorSkimmerId = drones[3].SerialNumber;
             package4.WeightCatgory = (WeightCategories)rand.Next((int)drones[3].WeightCategory + 1);
-            package4.PackageAssociation = package4.ReceivingDelivery.AddMinutes(30);
+            package4.PackageAssociation = package4.ReceivingDelivery.Value.AddMinutes(30);
 
             Config.package_num++;
 
             Package package5 = new Package { SerialNumber = Config.package_num, Priority = (Priority)rand.Next(0, 3), SendClient = client6.Id, GetingClient = client10.Id, ReceivingDelivery = DateTime.Now.AddDays(rand.Next(-19, -6)).AddHours(rand.Next(-20, 4)).AddMinutes(rand.Next(-59, 60)) };
             package5.OperatorSkimmerId = drones[4].SerialNumber;
             package5.WeightCatgory = (WeightCategories)rand.Next((int)drones[4].WeightCategory + 1);
-            package5.PackageAssociation = package5.ReceivingDelivery.AddMinutes(30);
+            package5.PackageAssociation = package5.ReceivingDelivery.Value.AddMinutes(30);
 
             Config.package_num++;
 
             Package package6 = new Package { SerialNumber = Config.package_num, Priority = (Priority)rand.Next(0, 3), SendClient = client9.Id, GetingClient = client1.Id, ReceivingDelivery = DateTime.Now.AddDays(rand.Next(-17, -6)).AddHours(rand.Next(-20, 4)).AddMinutes(rand.Next(-59, 60)) };
             package6.OperatorSkimmerId = drones[1].SerialNumber;
             package6.WeightCatgory = (WeightCategories)rand.Next((int)drones[1].WeightCategory + 1);
-            package6.PackageAssociation = package6.ReceivingDelivery.AddMinutes(30);
+            package6.PackageAssociation = package6.ReceivingDelivery.Value.AddMinutes(30);
             Config.package_num++;
 
             Package package7 = new Package { SerialNumber = Config.package_num, Priority = (Priority)rand.Next(0, 3), SendClient = client10.Id, GetingClient = client2.Id, ReceivingDelivery = DateTime.Now.AddDays(rand.Next(-20, -6)).AddHours(rand.Next(-20, 4)).AddMinutes(rand.Next(-59, 60)) };
             package7.OperatorSkimmerId = drones[2].SerialNumber;
             package7.WeightCatgory = (WeightCategories)rand.Next((int)drones[2].WeightCategory + 1);
-            package7.PackageAssociation = package7.ReceivingDelivery.AddMinutes(30);
-            package7.CollectPackageForShipment = package7.PackageAssociation.AddHours(rand.Next(5));
+            package7.PackageAssociation = package7.ReceivingDelivery.Value.AddMinutes(30);
+            package7.CollectPackageForShipment = package7.PackageAssociation.Value.AddHours(rand.Next(5));
             
             Config.package_num++;
 

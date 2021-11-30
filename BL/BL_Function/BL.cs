@@ -49,14 +49,14 @@ namespace IBL
                 //Checking for packege connected to this drone
 
                 IDAL.DO.Package package = new IDAL.DO.Package();
-                foreach (IDAL.DO.Package chcking_packege in dalObj.PackagesWithDrone())
+                foreach (IDAL.DO.Package chcking_packege in dalObj.PackegeList(x=>x.OperatorSkimmerId>0))
                 {
                     //Check if the package is associated with this drone
                     if (chcking_packege.OperatorSkimmerId == new_drone.SerialNumber)
                     {
 
                         //cheak if the drone has not get to its destination yet
-                        if (chcking_packege.PackageArrived == new DateTime())
+                        if (chcking_packege.PackageArrived == null)
                         {
                             new_drone.numPackage = chcking_packege.SerialNumber;
                             package = chcking_packege;
@@ -73,7 +73,7 @@ namespace IBL
                     var packegeInTransferObject = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(new_drone.numPackage));
                     //If the package has not been collected yet
                     //The location of the drone will be at the sender location
-                    if (package.CollectPackageForShipment != new DateTime())
+                    if (package.CollectPackageForShipment != null)
                     {
                         new_drone.location = ClientLocation(package.SendClient);
                         new_drone.numPackage = package.SerialNumber;
@@ -108,7 +108,7 @@ namespace IBL
                         new_drone.butrryStatus = random.Next(21);
                         int k = random.Next(2);
 
-                        foreach (IDAL.DO.Base_Station base_ in dalObj.BaseStationList())
+                        foreach (IDAL.DO.Base_Station base_ in dalObj.BaseStationList(x=>true))
                         {
                             if (k == 0)
                             {
@@ -132,7 +132,7 @@ namespace IBL
                         int j = 0;
                         bool flag = false;
                         while (!flag)
-                            foreach (IDAL.DO.Package package1 in dalObj.PackagesArriveList())
+                            foreach (IDAL.DO.Package package1 in dalObj.PackegeList(x=>x.PackageArrived!=null))
                             {
                                 if (j == k)
                                 {

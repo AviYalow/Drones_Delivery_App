@@ -18,9 +18,9 @@ namespace DalObject
         public uint AddPackage(Package package)
         {
             package.ReceivingDelivery = DateTime.Now;
-            package.CollectPackageForShipment = new DateTime();
-            package.PackageArrived = new DateTime();
-            package.PackageAssociation = new DateTime();
+            package.CollectPackageForShipment =null;
+            package.PackageArrived = null;
+            package.PackageAssociation = null;
             DataSource.packages.Add(new Package { SerialNumber= DataSource.Config.package_num,SendClient=package.SendClient,GetingClient= package.GetingClient,
                  Priority= package.Priority,ReceivingDelivery=package.ReceivingDelivery,WeightCatgory=package.WeightCatgory,OperatorSkimmerId=0,
                 CollectPackageForShipment= package.CollectPackageForShipment,PackageArrived= package.PackageArrived,PackageAssociation= package.PackageAssociation
@@ -104,40 +104,13 @@ namespace DalObject
         /// <summary>
         /// return the list of all packages
         /// </summary>
-        public IEnumerable<Package> PackegeList()
+        public IEnumerable<Package> PackegeList(Predicate<Package> predicate)
         {
-            return DataSource.packages.ToList<Package>();
+            return DataSource.packages.FindAll(predicate);
 
         }
 
-        /// <summary>
-        /// return the list of packages that
-        /// have not been assigned to a drone yet 
-        /// </summary>
-
-        public IEnumerable<Package> PackegeListWithNoDrone()
-        {
-            return DataSource.packages.FindAll(x => x.OperatorSkimmerId == 0);
-
-        }
-
-        /// <summary>
-        /// return a list of all package that have been assigned to a drone 
-        /// </summary>
-
-        public IEnumerable<Package> PackagesWithDrone()
-        {
-            return DataSource.packages.FindAll(x => x.OperatorSkimmerId != 0);
-        }
-
-        /// <summary>
-        /// return a list of of package that arrived 
-        /// </summary>
-
-        public IEnumerable<Package> PackagesArriveList()
-        {
-            return DataSource.packages.FindAll(x => x.PackageArrived != DateTime.MinValue).ToList();
-        }
+  
 
         /// <summary>
         /// delete a spsific packege

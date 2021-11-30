@@ -29,11 +29,11 @@ namespace IBL
             else
                 convert.client2 = clientInPackageFromDal(package.SendClient);
 
-            if (package.PackageArrived != new DateTime())
+            if (package.PackageArrived != null)
                 convert.packageStatus = PackageStatus.Arrived;
-            else if(package.CollectPackageForShipment != new DateTime())
+            else if(package.CollectPackageForShipment != null)
                 convert.packageStatus = PackageStatus.Collected;
-            else if (package.PackageAssociation != new DateTime())
+            else if (package.PackageAssociation !=null)
                 convert.packageStatus = PackageStatus.Assign;
             else
                 convert.packageStatus = PackageStatus.Create;

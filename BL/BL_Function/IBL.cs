@@ -46,7 +46,7 @@ namespace IBL
         /// return list of drones
         /// </summary>
         /// <returns> return list of drones</returns>
-        public IEnumerable<DroneToList> DroneToLists();
+        public IEnumerable<DroneToList> DroneToLists(Predicate<DroneToList> predicate);
 
         /// <summary>
         /// search a drone by serial number
@@ -107,17 +107,12 @@ namespace IBL
         /// <param name="newName"> new name</param>
         /// <param name="newNumber"> charging states</param>
         public void UpdateBase(uint base_, string newName , string newNumber );
-        /// <summary>
-        /// List of base staions with free states
-        /// </summary>
-        /// <returns> List of base staions with free states</returns>
-
-        public IEnumerable<BaseStationToList> BaseStationWhitChargeStationsToLists();
+      
         /// <summary>
         /// show base station list 
         /// </summary>
         /// <returns> base station list </returns>
-        public IEnumerable<BaseStationToList> BaseStationToLists();
+        public IEnumerable<BaseStationToList> BaseStationToLists(Predicate<BaseStationToList> predicate);
         
         /// <summary>
         /// search a specific station
@@ -158,7 +153,7 @@ namespace IBL
         /// list of clients
         /// </summary>
         /// <returns> list of clients</returns>
-        public IEnumerable<ClientToList> ClientToLists();
+        public IEnumerable<ClientToList> ClientToLists(Predicate<ClientToList> predicate);
         /// <summary>
         /// Receiving a client by ID
         /// </summary>
@@ -188,16 +183,12 @@ namespace IBL
         /// </summary>
         /// <param name="droneNumber"> serial number of a drone</param>
         public void ConnectPackegeToDrone(uint droneNumber);
-        /// <summary>
-        /// list of packages that don't have a drone
-        /// </summary>
-        /// <returns> list of packages that don't have a drone</returns>
-        public IEnumerable<PackageToList> PackageWithNoDroneToLists();
+        
         /// <summary>
         /// list of packages
         /// </summary>
         /// <returns>list of packages</returns>
-        public IEnumerable<PackageToList> PackageToLists();
+        public IEnumerable<PackageToList> PackageToLists(Predicate<PackageToList> predicate);
 
         /// <summary>
         /// A package that arrived at the destination

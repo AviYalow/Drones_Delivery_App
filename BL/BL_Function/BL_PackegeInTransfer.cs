@@ -120,7 +120,7 @@ namespace IBL
 
           
             IDAL.DO.Package returnPackege = new IDAL.DO.Package { SerialNumber=0};
-            foreach (var packege in dalObj.PackegeListWithNoDrone())
+            foreach (var packege in dalObj.PackegeList(x=>x.OperatorSkimmerId!=0))
             {
                 if (batteryCalculationForFullShipping(drone.location, convertPackegeDalToBl(packege)) < drone.butrryStatus && (WeightCategories)packege.WeightCatgory <= drone.weightCategory)
                     if (returnPackege.Priority < packege.Priority)

@@ -140,67 +140,48 @@ namespace IBL
         /// </summary>
         /// <returns>list of packages</returns>
 
-        public IEnumerable<PackageToList> PackageToLists()
+        public IEnumerable<PackageToList> PackageToLists(Predicate<PackageToList> predicate)
         {
-            if (dalObj.PackegeList().ToList().Count() == 0)
+            if (dalObj.PackegeList(x=>true).Count() == 0)
                 throw new TheListIsEmptyException();
+            
             List<PackageToList> packageToLists = new List<PackageToList>();
-            PackageStatus packageStatus;
-            foreach (var packege in dalObj.PackegeList())
+            
+            foreach (var packege in dalObj.PackegeList(x=>true))
             {
-                if (packege.PackageArrived != new DateTime())
-                    packageStatus = PackageStatus.Arrived;
-                else if (packege.CollectPackageForShipment != new DateTime())
-                    packageStatus = PackageStatus.Collected;
-                else if (packege.PackageAssociation != new DateTime())
-                    packageStatus = PackageStatus.Assign;
-                else
-                    packageStatus = PackageStatus.Create;
-                packageToLists.Add(new PackageToList
-                {
-                    packageStatus = packageStatus,
-                    RecivedClient = dalObj.CilentByNumber(packege.GetingClient).Name,
-                    SendClient = dalObj.CilentByNumber(packege.SendClient).Name,
-                    SerialNumber = packege.SerialNumber,
-                    priority = (Priority)packege.Priority,
-                    WeightCategories = (WeightCategories)packege.WeightCatgory
-
-
-                });
+                packageToLists.Add(convertPackegeDalToList(packege));
 
             }
+            packageToLists = packageToLists.FindAll(predicate);
             return packageToLists;
         }
 
-        /// <summary>
-        /// list of packages that don't have a drone
-        /// </summary>
-        /// <returns> list of packages that don't have a drone</returns>
-        public IEnumerable<PackageToList> PackageWithNoDroneToLists()
+        PackageToList convertPackegeDalToList(IDAL.DO.Package package)
         {
-            if (dalObj.PackegeListWithNoDrone().ToList().Count() == 0)
-                throw new TheListIsEmptyException();
-            List<PackageToList> packageToLists = new List<PackageToList>();
             PackageStatus packageStatus;
-            foreach (var packege in dalObj.PackegeListWithNoDrone())
-            {
-
+            if (package.PackageArrived != null)
+                packageStatus = PackageStatus.Arrived;
+            else if (package.CollectPackageForShipment != null)
+                packageStatus = PackageStatus.Collected;
+            else if (package.PackageAssociation != null)
+                packageStatus = PackageStatus.Assign;
+            else
                 packageStatus = PackageStatus.Create;
-                packageToLists.Add(new PackageToList
-                {
-                    packageStatus = packageStatus,
-                    RecivedClient = dalObj.CilentByNumber(packege.GetingClient).Name,
-                    SendClient = dalObj.CilentByNumber(packege.SendClient).Name,
-                    SerialNumber = packege.SerialNumber,
-                    priority = (Priority)packege.Priority,
-                    WeightCategories = (WeightCategories)packege.WeightCatgory
 
+         return  new PackageToList
+            {
+                packageStatus = packageStatus,
+                RecivedClient = dalObj.CilentByNumber(package.GetingClient).Name,
+                SendClient = dalObj.CilentByNumber(package.SendClient).Name,
+                SerialNumber = package.SerialNumber,
+                priority = (Priority)package.Priority,
+                WeightCategories = (WeightCategories)package.WeightCatgory
 
-                });
-
-            }
-            return packageToLists;
+            };
+           
         }
+
+      
         /// <summary>
         /// delete packege 
         /// </summary>
@@ -211,7 +192,7 @@ namespace IBL
             {
                 var packege = dalObj.packegeByNumber(number);
                 //cheack the packege not send yet
-                if (packege.CollectPackageForShipment != new DateTime())
+                if (packege.CollectPackageForShipment != null)
                 { throw new ThePackegeAlredySendException(); }
                 if (packege.OperatorSkimmerId != 0)
                 {

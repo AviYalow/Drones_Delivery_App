@@ -68,23 +68,14 @@ namespace DalObject
         /// <summary>
         /// return a list of all the base stations
         /// </summary>
-        public IEnumerable<Base_Station> BaseStationList()
+        public IEnumerable<Base_Station> BaseStationList(Predicate<Base_Station> predicate)
         {
             
-            return DataSource.base_Stations.ToList<Base_Station>();
+            return DataSource.base_Stations.FindAll(predicate);
         }
 
 
-        /// <summary>
-        /// return a list of base stations with available charging stations
-        /// </summary>
-        public IEnumerable<Base_Station> BaseStationListWithChargeStates()
-        {
-            
-            return DataSource.base_Stations.FindAll(x => x.NumberOfChargingStations > 0);
-
-        }
-
+       
 
         /// <summary>
         /// delete a spsific base for list

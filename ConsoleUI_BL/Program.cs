@@ -885,7 +885,7 @@ namespace ConsoleUI_BL
         public static void ShowBaseList(IBL.IBL bl)
         {
             int i = 0;
-            foreach (var _base in bl.BaseStationToLists())
+            foreach (var _base in bl.BaseStationToLists(x=>true))
             {
                 i++;
                 Console.WriteLine("#{0}", i);
@@ -902,7 +902,7 @@ namespace ConsoleUI_BL
         public static void ShowFreeBaseStation(IBL.IBL bl)
         {
             int i = 0;
-            foreach (var _base in bl.BaseStationWhitChargeStationsToLists())
+            foreach (var _base in bl.BaseStationToLists(x=>x.FreeState>0))
             {
                 i++;
                 Console.WriteLine("#{0}", i);
@@ -919,7 +919,7 @@ namespace ConsoleUI_BL
         public static void ShowFreePackage(IBL.IBL bl)
         {
             int i = 0;
-            foreach (var pack in bl.PackageWithNoDroneToLists())
+            foreach (var pack in bl.PackageToLists(x=>x.packageStatus==PackageStatus.Create))
             {
                 i++;
                 Console.WriteLine("#{0}", i);
@@ -936,7 +936,7 @@ namespace ConsoleUI_BL
         public static void ShowPackageList(IBL.IBL bl)
         {
             int i = 0;
-            foreach (var pack in bl.PackageToLists())
+            foreach (var pack in bl.PackageToLists(x=>true))
             {
                 i++;
                 Console.WriteLine("#{0}", i);
@@ -953,7 +953,7 @@ namespace ConsoleUI_BL
         public static void ShowClientList(IBL.IBL bl)
         {
             int i = 0;
-            foreach (var client in bl.ClientToLists())
+            foreach (var client in bl.ClientToLists(x=>true))
             {
                 i++;
                 Console.WriteLine("#{0}", i);
@@ -970,7 +970,7 @@ namespace ConsoleUI_BL
         public static void ShowDroneList(IBL.IBL bl)
         {
             int i = 0;
-            foreach (var drone in bl.DroneToLists())
+            foreach (var drone in bl.DroneToLists(x=>x.droneStatus!=DroneStatus.Delete))
             {
                 i++;
                 Console.WriteLine("#{0}", i);
