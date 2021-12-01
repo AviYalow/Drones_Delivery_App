@@ -112,7 +112,7 @@ namespace IBL
         /// show base station list 
         /// </summary>
         /// <returns> base station list </returns>
-        public IEnumerable<BaseStationToList> BaseStationToLists(Predicate<BaseStationToList> predicate);
+        public IEnumerable<BaseStationToList> BaseStationToLists();
         
         /// <summary>
         /// search a specific station

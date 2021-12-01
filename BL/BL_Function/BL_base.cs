@@ -152,6 +152,18 @@ namespace IBL
             };
         }
 
+        BaseStationToList convertBaseInDalToBaseStationList(IDAL.DO.Base_Station base_Station)
+        {
+            var base_ = new BaseStationToList
+            {
+                SerialNum = base_Station.baseNumber,
+                FreeState = base_Station.NumberOfChargingStations,
+                Name = base_Station.NameBase
+            };
+            base_.BusyState = (uint)dalObj.ChargingDroneList().Count(x => x.idBaseStation == base_Station.baseNumber);
+            return base_;
+        }
+
         /// <summary>
         /// search a specific station
         /// </summary>
@@ -179,37 +191,6 @@ namespace IBL
             }
         }
 
-        /// <summary>
-        /// show base station list 
-        /// </summary>
-        /// <returns> base station list </returns>
-        public IEnumerable<BaseStationToList> BaseStationToLists(Predicate<BaseStationToList> predicate)
-        {
-            List<BaseStationToList> baseStationToLists = new List<BaseStationToList>();
-            if (dalObj.BaseStationList(x=>true).Count() == 0)
-                throw new TheListIsEmptyException();
-            uint i = 0;
-            foreach (var baseStationFromDal in dalObj.BaseStationList(x => true))
-            {
-                i = 0;
-                foreach (var chargePerBase in dalObj.ChargingDroneList())
-                {
-                    if (chargePerBase.idBaseStation == baseStationFromDal.baseNumber)
-                        i++;
-                }
-                baseStationToLists.Add(new BaseStationToList
-                {
-                    SerialNum = baseStationFromDal.baseNumber,
-                    Name = baseStationFromDal.NameBase,
-                    BusyState = i,
-                    FreeState = baseStationFromDal.NumberOfChargingStations
-                });
-            }
-            baseStationToLists = baseStationToLists.FindAll(predicate);
-            return baseStationToLists;
-        }
-
-     
         /// <summary>
         /// delete base station
         /// </summary>

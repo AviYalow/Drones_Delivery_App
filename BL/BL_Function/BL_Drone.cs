@@ -103,17 +103,7 @@ namespace IBL
 
         }
 
-        /// <summary>
-        /// return list of drones
-        /// </summary>
-        /// <returns> return list of drones</returns>
-        public IEnumerable<DroneToList> DroneToLists(Predicate<DroneToList> predicate)
-        {
-            if (dronesListInBl.Count == 0)
-                throw new TheListIsEmptyException();
-
-            return dronesListInBl.FindAll(predicate);
-        }
+     
 
         /// <summary>
         /// drone request from the data layer

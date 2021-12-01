@@ -42,7 +42,7 @@ namespace IBL
             returnPackege.InTheWay = (package.package_arrived != new DateTime()) ? true : false;
             return returnPackege;
         }
-        //drone start delivery
+    
 
         /// <summary>
         /// A package is collected by a drone

@@ -140,21 +140,7 @@ namespace IBL
         /// </summary>
         /// <returns>list of packages</returns>
 
-        public IEnumerable<PackageToList> PackageToLists(Predicate<PackageToList> predicate)
-        {
-            if (dalObj.PackegeList(x=>true).Count() == 0)
-                throw new TheListIsEmptyException();
-            
-            List<PackageToList> packageToLists = new List<PackageToList>();
-            
-            foreach (var packege in dalObj.PackegeList(x=>true))
-            {
-                packageToLists.Add(convertPackegeDalToList(packege));
-
-            }
-            packageToLists = packageToLists.FindAll(predicate);
-            return packageToLists;
-        }
+   
 
         PackageToList convertPackegeDalToList(IDAL.DO.Package package)
         {
