@@ -46,7 +46,22 @@ namespace IBL
         /// return list of drones
         /// </summary>
         /// <returns> return list of drones</returns>
-        public IEnumerable<DroneToList> DroneToLists(Predicate<DroneToList> predicate);
+        public IEnumerable<DroneToList> DroneToLists();
+        /// <summary>
+        /// return list of drones by they can make delivery for packege
+        /// </summary>
+        /// <returns> return list of drones</returns>
+        public IEnumerable<DroneToList> DroneToListPasibalForPackege(Package package);
+        /// <summary>
+        /// return list of drones by maximum weight
+        /// </summary>
+        /// <returns> return list of drones</returns>
+        public IEnumerable<DroneToList> DroneToListsByWhight(WeightCategories weight);
+        /// <summary>
+        /// return list of drones by spsific status
+        /// </summary>
+        /// <returns> return list of drones</returns>
+        public IEnumerable<DroneToList> DroneToListsByStatus(DroneStatus droneStatus);
 
         /// <summary>
         /// search a drone by serial number
@@ -113,7 +128,12 @@ namespace IBL
         /// </summary>
         /// <returns> base station list </returns>
         public IEnumerable<BaseStationToList> BaseStationToLists();
-        
+        /// <summary>
+        /// return base station with free place for drone
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<BaseStationToList> BaseStationWhitFreeChargingStationToLists();
+
         /// <summary>
         /// search a specific station
         /// </summary>
@@ -153,7 +173,42 @@ namespace IBL
         /// list of clients
         /// </summary>
         /// <returns> list of clients</returns>
-        public IEnumerable<ClientToList> ClientToLists(Predicate<ClientToList> predicate);
+        public IEnumerable<ClientToList> ClientToLists();
+        /// <summary>
+        /// list of clients activ
+        /// </summary>
+        /// <returns> list of clients</returns>
+        public IEnumerable<ClientToList> ClientActiveToLists();
+        /// <summary>
+        /// IEnumerable of client how need to get packege and they not get 
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ClientToList> ClientActiveHowGetingPackegesToLists();
+        /// <summary>
+        /// IEnumerable of client how need to get packege and they get 
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndArriveToLists();
+        /// <summary>
+        /// IEnumerable of client how need to get packege 
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndNotArriveToLists();
+        /// <summary>
+        /// IEnumerable of client how send packege and not arrive
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ClientToList> ClientActiveHowSendPackegesAndNotArriveToLists();
+        /// <summary>
+        /// IEnumerable of client how send packege and arrive
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ClientToList> ClientActiveHowSendAndArrivePackegesToLists();
+        /// <summary>
+        /// IEnumerable of client how send packege
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ClientToList> ClientActiveHowSendPackegesToLists();
         /// <summary>
         /// Receiving a client by ID
         /// </summary>
@@ -188,7 +243,27 @@ namespace IBL
         /// list of packages
         /// </summary>
         /// <returns>list of packages</returns>
-        public IEnumerable<PackageToList> PackageToLists(Predicate<PackageToList> predicate);
+        public IEnumerable<PackageToList> PackageToLists();
+        /// <summary>
+        /// packege thet connect to drone but not collected
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<PackageToList> PackageConnectedButNutCollectedLists();
+        /// <summary>
+        /// packege thier collected but not arrive
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<PackageToList> PackageCollectedButNotArriveLists();
+        /// <summary>
+        /// packege they get to the resive client
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<PackageToList> PackageArriveLists();
+        /// <summary>
+        /// packeges thir only crate
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<PackageToList> PackageWithNoDroneToLists();
 
         /// <summary>
         /// A package that arrived at the destination

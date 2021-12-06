@@ -11,44 +11,31 @@ namespace IBL
     public partial class BL : IBL
     {
 
-        /* /// <summary>
-         /// show base station list 
-         /// </summary>
-         /// <returns> base station list </returns>
-         public IEnumerable<BaseStationToList> BaseStationToLists(Predicate<BaseStationToList> predicate)
-         {
-             List<BaseStationToList> baseStationToLists = new List<BaseStationToList>();
-             if (dalObj.BaseStationList(x => true).Count() == 0)
-                 throw new TheListIsEmptyException();
-             uint i = 0;
-             foreach (var baseStationFromDal in dalObj.BaseStationList(x => true))
-             {
-                 i = 0;
-                 foreach (var chargePerBase in dalObj.ChargingDroneList())
-                 {
-                     if (chargePerBase.idBaseStation == baseStationFromDal.baseNumber)
-                         i++;
-                 }
-                 baseStationToLists.Add(new BaseStationToList
-                 {
-                     SerialNum = baseStationFromDal.baseNumber,
-                     Name = baseStationFromDal.NameBase,
-                     BusyState = i,
-                     FreeState = baseStationFromDal.NumberOfChargingStations
-                 });
-             }
-             baseStationToLists = baseStationToLists.FindAll(predicate);
-             return baseStationToLists;
-         }*/
 
+        /// <summary>
+        /// show base station list 
+        /// </summary>
+        /// <returns> base station list </returns>
         public IEnumerable<BaseStationToList> BaseStationToLists()
         {
-            return dalObj.BaseStationList(x => true).ToList().ConvertAll(convertBaseInDalToBaseStationList);
+            var base_= dalObj.BaseStationList(x => true).ToList().ConvertAll(convertBaseInDalToBaseStationList);
+            if (base_.Count == 0)
+                throw new TheListIsEmptyException();
+            return base_;
+        }
+        /// <summary>
+        /// return base station with free place for drone
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<BaseStationToList> BaseStationWhitFreeChargingStationToLists()
+        {
+            var base_ = dalObj.BaseStationList(x => x.NumberOfChargingStations>0).ToList().ConvertAll(convertBaseInDalToBaseStationList);
+            if (base_.Count == 0)
+                throw new TheListIsEmptyException();
+            return base_;
         }
 
-
-
-
+      
 
 
     }
