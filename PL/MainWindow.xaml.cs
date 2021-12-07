@@ -12,8 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using IBL;
 using IBL.BO;
+using IBL;
 
 namespace PL
 {
@@ -22,10 +22,16 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        IBL.BL bL;
         public MainWindow()
         {
-            IBL.IBL bL = new BL();
+            bL = new IBL.BL();
             InitializeComponent();
+        }
+
+        private void DroneMainButton_Click(object sender, RoutedEventArgs e)
+        {
+            new DronesListWindow(bL).Show();
         }
     }
 }

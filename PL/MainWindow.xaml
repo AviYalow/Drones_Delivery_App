@@ -6,7 +6,20 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="640" Width="800">
-    <Grid>
-
+    <Grid Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="400*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <Grid/>
+        <Button x:Name="DroneMainButton" Content="Drone" HorizontalAlignment="Center" Margin="0,115,0,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="DroneMainButton_Click"/>
     </Grid>
 </Window>

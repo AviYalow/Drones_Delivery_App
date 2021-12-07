@@ -5,8 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DroneWindow" Height="600" Width="800">
-    <Grid Name="DroneWindowMain">
-        
+        Title="DroneWindow" Height="450" Width="800">
+    <Grid Name="MainGrid">
+        <Grid x:Name="AddDroneGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400*"/>
+                <ColumnDefinition Width="400*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Label Name="AddDroneLabel" Content="Add Drone" Height="100" VerticalAlignment="Top" FontSize="72" Margin="200,-10,235,0" Grid.ColumnSpan="2"/>
+            <Label Name="SirialNumberLabel" Content="Sirial Number:" HorizontalAlignment="Left" Height="30" Margin="10,0,0,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Width="90"/>
+            <Label Name="ModelLabel" Content="Model:" HorizontalAlignment="Left" Height="40" Margin="10,10,0,0" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Width="72"/>
+            <ComboBox Name="WeightChoseCombo" Text="Wight category"  HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" Width="120" IsEditable="True"/>
+            <ComboBox Name="BaseChosingCombo" Grid.Column="0" Text="First Base station" HorizontalAlignment="Left" Height="33" Margin="10,10,0,0" Grid.Row="6" VerticalAlignment="Top" Width="120" IsEditable="True"/>
+            <Label Name="ErrorMassegeLabel"  Content="Your input Worng!" HorizontalAlignment="Left" Margin="17,48,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="2" Width="218" Visibility="Hidden"    />
+            <Button Name="OkButton"  HorizontalAlignment="Left" Margin="55,10,0,0" Grid.Row="7" VerticalAlignment="Top" Height="60" Grid.RowSpan="2" Width="162"/>
+
+
+        </Grid>
+
     </Grid>
 </Window>
