@@ -77,10 +77,7 @@ namespace PL
             new DroneWindow((IBL.BO.DroneToList)sender).Show();
         }
 
-        private void DronesListView_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-
-        }
+       
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow(bl).Show();
