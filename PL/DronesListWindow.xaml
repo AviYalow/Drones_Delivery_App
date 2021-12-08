@@ -26,9 +26,9 @@
         <Grid/>
 
 
-        <ListBox x:Name="DronesListView" Margin="400,0,0,0" Grid.RowSpan="2" SelectionChanged="DronesListView_SelectionChanged" MouseDoubleClick="ChoseDrone"  />
-        <Button Content="Add Drone" HorizontalAlignment="Left" Height="78" Margin="82,19,0,0" Grid.Row="1" VerticalAlignment="Top" Width="207" Click="Button_Click"/>
-
+        <!--<ListBox x:Name="DronesListView" Margin="400,0,0,0" Grid.RowSpan="2" SelectionChanged="DronesListView_SelectionChanged" MouseDoubleClick="ChoseDrone"  />-->
+        <Button Content="Add Drone" HorizontalAlignment="Left" Height="78" Margin="570,0,0,0" VerticalAlignment="Center" Width="206" Click="Button_Click"/>
+        <ListView x:Name="DronesListView" Margin="0,120,0,0" Grid.RowSpan="2"  SelectionChanged="DronesListView_SelectionChanged" MouseDoubleClick="ChoseDrone" />
 
     </Grid>
 </Window>

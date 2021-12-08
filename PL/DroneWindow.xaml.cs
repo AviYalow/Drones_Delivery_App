@@ -22,10 +22,14 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
+        IBL.IBL bl;
         DroneToList Drone;
-        public DroneWindow()
+
+        public DroneWindow(IBL.IBL bl)
         {
+            
             InitializeComponent();
+            this.bl = bl;
             OkButton.Content = "Add Drone";
             
         }

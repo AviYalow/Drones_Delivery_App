@@ -28,15 +28,15 @@ namespace PL
             InitializeComponent();
             dronesIenumrble= bl.DroneToLists();
             this.bl = bl;
-           
+
             WeightSelctor.Items.Add("");
             StatusSelector.Items.Add("");
             foreach (var item in Enum.GetValues(typeof(IBL.BO.WeightCategories)))
-            WeightSelctor.Items.Add( item  );
+                WeightSelctor.Items.Add(item);
             foreach (var item in Enum.GetValues(typeof(IBL.BO.DroneStatus)))
                 StatusSelector.Items.Add(item);
             DronesListView.ItemsSource = dronesIenumrble;
-            
+          
         }
 
        
@@ -77,9 +77,13 @@ namespace PL
             new DroneWindow((IBL.BO.DroneToList)sender).Show();
         }
 
+        private void DronesListView_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow().Show();
+            new DroneWindow(bl).Show();
         }
     }
 }
