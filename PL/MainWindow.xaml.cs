@@ -23,6 +23,7 @@ namespace PL
     public partial class MainWindow : Window
     {
         IBL.BL bL;
+       
         public MainWindow()
         {
             bL = new IBL.BL();
@@ -31,7 +32,7 @@ namespace PL
 
         private void DroneMainButton_Click(object sender, RoutedEventArgs e)
         {
-            new DronesListWindow(bL).Show();
+            new DronesListWindow(bL).ShowDialog();
         }
     }
 }
