@@ -74,7 +74,11 @@ namespace PL
 
         private void ChoseDrone(object sender, MouseButtonEventArgs e)
         {
-            new DroneWindow((IBL.BO.DroneToList)sender).Show();
+
+            IBL.BO.DroneToList drone = (IBL.BO.DroneToList)DronesListView.SelectedItem;
+        
+            new DroneWindow(drone).Show();
+
         }
 
        

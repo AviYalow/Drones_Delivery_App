@@ -29,6 +29,7 @@ namespace PL
         {
             
             InitializeComponent();
+            showDrone.Visibility = Visibility.Collapsed;
             this.bl = bl;
             OkButton.Content = "Add Drone";
             
@@ -37,6 +38,7 @@ namespace PL
         {
             InitializeComponent();
             Drone = drone;
+            droneToShow.Content = Drone;
             OkButton.Content = "Update";
         }
     }
