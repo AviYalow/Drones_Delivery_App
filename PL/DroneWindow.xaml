@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DroneWindow" Height="450" Width="800">
+        Title="DroneWindow" Height="450" Width="800"
+         Icon="C:\Users\דוד אוחנה\Desktop\מכללה\dotNet5782_3417_6094\dotNet5782_3417_6094\imege\DroneIcon.png">
     <Grid Name="MainGrid">
         <Grid x:Name="AddDroneGrid">
             <Grid.ColumnDefinitions>
@@ -23,14 +24,19 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
-            <Label Name="AddDroneLabel" Content="Add Drone" Height="100" VerticalAlignment="Top" FontSize="72" Margin="200,-10,235,0" Grid.ColumnSpan="2"/>
-            <Label Name="SirialNumberLabel" Content="Sirial Number:" HorizontalAlignment="Left" Height="30" Margin="10,0,0,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Width="90"/>
-            <Label Name="ModelLabel" Content="Model:" HorizontalAlignment="Left" Height="40" Margin="10,10,0,0" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Width="72"/>
-            <ComboBox Name="WeightChoseCombo" Text="Wight category"  HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" Width="120" IsEditable="True"/>
-            <ComboBox Name="BaseChosingCombo" Grid.Column="0" Text="First Base station" HorizontalAlignment="Left" Height="33" Margin="10,10,0,0" Grid.Row="6" VerticalAlignment="Top" Width="120" IsEditable="True"/>
-            <Label Name="ErrorMassegeLabel"  Content="Your input Worng!" HorizontalAlignment="Left" Margin="17,48,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="2" Width="218" Visibility="Hidden"    />
-            <Button Name="OkButton"  HorizontalAlignment="Left" Margin="55,10,0,0" Grid.Row="7" VerticalAlignment="Top" Height="60" Grid.RowSpan="2" Width="162"/>
+            <Label Name="TitelDroneLabel" Content="Add Drone" Height="100" VerticalAlignment="Top" FontSize="72" Margin="200,-10,235,0" Grid.ColumnSpan="2"/>
 
+            <Label Name="ModelLabel" Content="Model:" HorizontalAlignment="Left" Height="40" Margin="10,10,0,0" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Width="72"/>
+            <ComboBox Name="WeightChoseCombo" Text="Wight category"   HorizontalAlignment="Left" Margin="116,3,0,0" Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" Width="120" IsEditable="True"/>
+            <ComboBox Name="BaseChosingCombo" Grid.Column="0" Text="First Base station" HorizontalAlignment="Left" Height="33" Margin="115,0,0,0" Grid.Row="6" VerticalAlignment="Top" Width="120" IsEditable="True"/>
+            <Label Name="ErrorMassegeLabel"  Content="Your input Worng!" HorizontalAlignment="Left" Margin="17,48,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="2" Width="218" Visibility="Hidden"    />
+            <Button Name="OkButton"  HorizontalAlignment="Left" Margin="55,10,0,0" Grid.Row="7" VerticalAlignment="Top" Height="60" Grid.RowSpan="2" Width="162" Click="OkButton_Click"/>
+
+            <TextBox x:Name="SirialNumberTextBox"   Text="{Binding SerialNumber, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Height="24"  TextWrapping="Wrap" Width="129" Margin="116,13,155,13" Grid.Row="1"   />
+            <Label x:Name="SirialNumberLabel" Content="Sirial Number:" Height="30" Width="90" HorizontalAlignment="Left" Margin="1,13,0,7" Grid.Row="1"/>
+            <Label Name="LocationLabel" Content="Location:" HorizontalAlignment="Left" Height="23" Margin="17,0,0,0" Grid.Row="6" VerticalAlignment="Top" Width="74"/>
+            <Label Name="WeightCategoryLabel" Content="Weight Category:" HorizontalAlignment="Left" Margin="6,1,0,0" Grid.Row="5" VerticalAlignment="Top" Width="105"/>
+            <TextBox Name="ModelTextBox" HorizontalAlignment="Left" Height="30" Margin="115,0,0,0" Grid.Row="3" Text="{Binding Model, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" TextWrapping="Wrap" VerticalAlignment="Center" Width="130"/>
 
         </Grid>
 

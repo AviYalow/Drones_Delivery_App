@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DronesListWindow" Height="450" Width="800"
-        Closing="Window_Closing">
+        Closing="Window_Closing" 
+         Icon="C:\Users\דוד אוחנה\Desktop\מכללה\dotNet5782_3417_6094\dotNet5782_3417_6094\imege\DroneIcon.png">
 
 
     <Grid>
@@ -29,17 +30,31 @@
         <Grid/>
 
         <Button x:Name="AddDroneButton" Content="Add Drone" HorizontalAlignment="Left" Height="78" Margin="36,183,0,0" VerticalAlignment="Top" Width="206" Click="Button_Click" Grid.Row="1"/>
-        <ListView x:Name="DronesListView" Margin="0,120,0,136" Grid.RowSpan="2"  MouseDoubleClick="ChoseDrone" />
-        
+
+        <ListView x:Name="DronesListView" Margin="0,120,0,136" Grid.RowSpan="2"  MouseDoubleClick="ChoseDrone">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNumber}" x:Name="Serial" Header="Serial" />
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=Model}" x:Name="Model" Header="Serial" />
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=WeightCategory}" x:Name="WeightCategory" Header="WeightCategory" />
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=ButrryStatus}" x:Name="ButrryStatus" Header="ButrryStatus" />
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=DroneStatus}" x:Name="DroneStatus" Header="DroneStatus" />
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=Location}" x:Name="Location" Header="Location" />
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=NumPackage}" x:Name="NumPackage" Header="NumPackage" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
         <Button x:Name="ReturnButton" Click="Button_Return_Click"  HorizontalAlignment="Left" Margin="588,183,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="108" >
             <Button.Content>
-                
+
                 <StackPanel Orientation="Horizontal">
                     <Image x:Name="ReturnImage" Source="C:\Users\דוד אוחנה\Desktop\מכללה\dotNet5782_3417_6094\dotNet5782_3417_6094\imege\return.png" Height="82" Width="108" RenderTransformOrigin="0.62,0.5"  />
                 </StackPanel>
             </Button.Content>
         </Button>
-      
+
 
     </Grid>
 </Window>

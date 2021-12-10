@@ -22,21 +22,22 @@ namespace PL
         IBL.IBL bl;
         IEnumerable<IBL.BO.DroneToList> dronesSelectByStatusIenumrble;
         IEnumerable<IBL.BO.DroneToList> dronesSelectByWeightIenumrble;
-        bool flag;
+        IBL.BO.DroneToList drone;
         public DronesListWindow(IBL.IBL bl)
         {
             InitializeComponent();
 
             this.bl = bl;
-            flag = false;
+           
             WeightSelctor.Items.Add("");
             StatusSelector.Items.Add("");
             foreach (var item in Enum.GetValues(typeof(IBL.BO.WeightCategories)))
                 WeightSelctor.Items.Add(item);
             foreach (var item in Enum.GetValues(typeof(IBL.BO.DroneStatus)))
                 StatusSelector.Items.Add(item);
+            drone = new IBL.BO.DroneToList();
             DronesListView.ItemsSource = dronesSelectByStatusIenumrble= dronesSelectByWeightIenumrble= bl.DroneToLists();
-          
+            DronesListView.DataContext = drone;
         }
 
 
@@ -72,7 +73,9 @@ namespace PL
 
         private void ChoseDrone(object sender, MouseButtonEventArgs e)
         {
-            new DroneWindow((IBL.BO.DroneToList)sender).ShowDialog();
+           
+            
+            new DroneWindow( bl, (IBL.BO.DroneToList)DronesListView.SelectedItem).ShowDialog();
         }
 
 

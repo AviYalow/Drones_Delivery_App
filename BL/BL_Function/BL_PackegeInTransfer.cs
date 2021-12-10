@@ -50,22 +50,22 @@ namespace IBL
         /// <param name="droneNumber">A drone number that collects the package</param>
         public void CollectPackegForDelivery(uint droneNumber)
         {
-            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber && x.droneStatus != DroneStatus.Delete);
+            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber && x.DroneStatus != DroneStatus.Delete);
             if (drone == null)
                 throw new ItemNotFoundException("Drone", droneNumber);
             try
             {
-                var pacege = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.numPackage));
+                var pacege = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.NumPackage));
                 if (pacege.InTheWay != true)
                 { new FunctionErrorException("ShowPackage||AddPackege"); }
 
                 Location location = ClientLocation(pacege.SendClient.Id);
-                drone.butrryStatus -= buttryDownWithNoPackege(drone.location, location);
+                drone.ButrryStatus -= buttryDownWithNoPackege(drone.Location, location);
 
-                if (drone.butrryStatus < 0)
+                if (drone.ButrryStatus < 0)
                 { new FunctionErrorException("BatteryCalculationForFullShipping"); }
 
-                drone.location = location;
+                drone.Location = location;
 
                 dalObj.PackageCollected(pacege.SerialNum);
                 dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == droneNumber)] = drone;
@@ -82,19 +82,19 @@ namespace IBL
         /// <param name="droneNumber">A drone number that takes the package</param>
         public void PackegArrive(uint droneNumber)
         {
-            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber && x.droneStatus != DroneStatus.Delete);
+            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber && x.DroneStatus != DroneStatus.Delete);
             if (drone == null)
                 throw new ItemNotFoundException("Drone", droneNumber);
             try
             {
-                var packege = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.numPackage));
+                var packege = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.NumPackage));
                 if (packege.InTheWay == false)
                     throw new PackegeNotAssctionOrCollectedException();
-                drone.butrryStatus -= buttryDownPackegeDelivery(packege);
+                drone.ButrryStatus -= buttryDownPackegeDelivery(packege);
 
-                drone.location = ClientLocation(packege.RecivedClient.Id);
-                drone.droneStatus = DroneStatus.Free;
-                drone.numPackage = 0;
+                drone.Location = ClientLocation(packege.RecivedClient.Id);
+                drone.DroneStatus = DroneStatus.Free;
+                drone.NumPackage = 0;
                 packege.InTheWay = false;
                 dalObj.PackageArrived(packege.SerialNum);
                 dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == droneNumber)] = drone;
@@ -112,31 +112,31 @@ namespace IBL
         /// <param name="droneNumber"> serial number of a drone</param>
         public void ConnectPackegeToDrone(uint droneNumber)
         {
-            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber&&x.droneStatus!=DroneStatus.Delete);
+            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber&&x.DroneStatus!=DroneStatus.Delete);
             if (drone is null)
             { throw new ItemNotFoundException("Drone", droneNumber); }
-            if (drone.droneStatus != DroneStatus.Free)
+            if (drone.DroneStatus != DroneStatus.Free)
             { throw new DroneCantMakeDliveryException(); }
 
           
             IDAL.DO.Package returnPackege = new IDAL.DO.Package { SerialNumber=0};
             foreach (var packege in dalObj.PackegeList(x=>x.OperatorSkimmerId!=0))
             {
-                if (batteryCalculationForFullShipping(drone.location, convertPackegeDalToBl(packege)) < drone.butrryStatus && (WeightCategories)packege.WeightCatgory <= drone.weightCategory)
+                if (batteryCalculationForFullShipping(drone.Location, convertPackegeDalToBl(packege)) < drone.ButrryStatus && (WeightCategories)packege.WeightCatgory <= drone.WeightCategory)
                     if (returnPackege.Priority < packege.Priority)
                         returnPackege = packege;
                     else if (returnPackege.Priority == packege.Priority)
                         if (returnPackege.WeightCatgory < packege.WeightCatgory)
                             returnPackege = packege;
                         else if (returnPackege.WeightCatgory == packege.WeightCatgory)
-                            if (Distans(drone.location, ClientLocation(packege.SendClient)) < Distans(drone.location, ClientLocation(returnPackege.SendClient)))
+                            if (Distans(drone.Location, ClientLocation(packege.SendClient)) < Distans(drone.Location, ClientLocation(returnPackege.SendClient)))
                                 returnPackege = packege;
 
             }
             if(returnPackege.SerialNumber==0)
             throw new DroneCantMakeDliveryException();
-            drone.numPackage = returnPackege.SerialNumber;
-            drone.droneStatus = DroneStatus.Work;
+            drone.NumPackage = returnPackege.SerialNumber;
+            drone.DroneStatus = DroneStatus.Work;
             dalObj.ConnectPackageToDrone(returnPackege.SerialNumber, droneNumber);
             for (int i = 0; i < dronesListInBl.Count; i++)
             {

@@ -170,8 +170,8 @@ namespace IBL
                         for (int i = 0; i < dronesListInBl.Count; i++)
                         {
                             var drone = dronesListInBl[i];
-                            drone.droneStatus = DroneStatus.Free;
-                            drone.numPackage = 0;
+                            drone.DroneStatus = DroneStatus.Free;
+                            drone.NumPackage = 0;
                              dronesListInBl[i]= drone;
                         }
 
