@@ -27,16 +27,17 @@
             <Label Name="TitelDroneLabel" Content="Add Drone" Height="100" VerticalAlignment="Top" FontSize="72" Margin="200,-10,235,0" Grid.ColumnSpan="2"/>
 
             <Label Name="ModelLabel" Content="Model:" HorizontalAlignment="Left" Height="40" Margin="10,10,0,0" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Width="72"/>
-            <ComboBox Name="WeightChoseCombo" Text="Wight category"   HorizontalAlignment="Left" Margin="116,3,0,0" Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" Width="120" IsEditable="True"/>
-            <ComboBox Name="BaseChosingCombo" Grid.Column="0" Text="First Base station" HorizontalAlignment="Left" Height="33" Margin="115,0,0,0" Grid.Row="6" VerticalAlignment="Top" Width="120" IsEditable="True"/>
+            <ComboBox Name="WeightChoseCombo" Text="Wight category"   HorizontalAlignment="Left" Margin="116,3,0,0" Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" Width="120" IsEditable="True" SelectionChanged="WeightChoseCombo_SelectionChanged"/>
+            <ComboBox Name="BaseChosingCombo"  Grid.Column="0" Text="First Base station" HorizontalAlignment="Left" Height="33" Margin="115,0,0,0" Grid.Row="6" VerticalAlignment="Top" Width="120" IsEditable="True" />
             <Label Name="ErrorMassegeLabel"  Content="Your input Worng!" HorizontalAlignment="Left" Margin="17,48,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="2" Width="218" Visibility="Hidden"    />
-            <Button Name="OkButton"  HorizontalAlignment="Left" Margin="55,10,0,0" Grid.Row="7" VerticalAlignment="Top" Height="60" Grid.RowSpan="2" Width="162" Click="OkButton_Click"/>
+            <Button  Name="OkButton"  HorizontalAlignment="Left" Margin="55,10,0,0" Grid.Row="7" VerticalAlignment="Top" Height="60" Grid.RowSpan="2" Width="162" Click="OkButton_Click"/>
 
-            <TextBox x:Name="SirialNumberTextBox"   Text="{Binding SerialNumber, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Height="24"  TextWrapping="Wrap" Width="129" Margin="116,13,155,13" Grid.Row="1"   />
+            <TextBox x:Name="SirialNumberTextBox"    Text="{Binding SerialNumber, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Height="24"  TextWrapping="Wrap" Width="129" Margin="116,13,155,13" Grid.Row="1" PreviewKeyUp="SirialNumberTextBox_PreviewKeyUp"   />
             <Label x:Name="SirialNumberLabel" Content="Sirial Number:" Height="30" Width="90" HorizontalAlignment="Left" Margin="1,13,0,7" Grid.Row="1"/>
             <Label Name="LocationLabel" Content="Location:" HorizontalAlignment="Left" Height="23" Margin="17,0,0,0" Grid.Row="6" VerticalAlignment="Top" Width="74"/>
-            <Label Name="WeightCategoryLabel" Content="Weight Category:" HorizontalAlignment="Left" Margin="6,1,0,0" Grid.Row="5" VerticalAlignment="Top" Width="105"/>
+            <Label Name="WeightCategoryLabel"  Content="Weight Category:" HorizontalAlignment="Left" Margin="6,1,0,0" Grid.Row="5" VerticalAlignment="Top" Width="105"/>
             <TextBox Name="ModelTextBox" HorizontalAlignment="Left" Height="30" Margin="115,0,0,0" Grid.Row="3" Text="{Binding Model, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" TextWrapping="Wrap" VerticalAlignment="Center" Width="130"/>
+            <Label Name="DroneLabel" Content="Label" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Height="308" Grid.RowSpan="8" Width="auto" Margin="74,0,0,0"/>
 
         </Grid>
 
