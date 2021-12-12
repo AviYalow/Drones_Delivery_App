@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DronesListWindow" Height="450" Width="800"
-        Closing="Window_Closing" 
-         Icon="C:\Users\דוד אוחנה\Desktop\מכללה\dotNet5782_3417_6094\dotNet5782_3417_6094\imege\DroneIcon.png">
+        Closing="Window_Closing" >
+   <!-- Icon="C:\Users\דוד אוחנה\Desktop\מכללה\dotNet5782_3417_6094\dotNet5782_3417_6094\imege\DroneIcon.png">-->
 
 
     <Grid>
@@ -50,7 +50,7 @@
             <Button.Content>
 
                 <StackPanel Orientation="Horizontal">
-                    <Image x:Name="ReturnImage" Source="C:\Users\דוד אוחנה\Desktop\מכללה\dotNet5782_3417_6094\dotNet5782_3417_6094\imege\return.png" Height="82" Width="108" RenderTransformOrigin="0.62,0.5"  />
+                   <!-- <Image x:Name="ReturnImage" Source="C:\Users\דוד אוחנה\Desktop\מכללה\dotNet5782_3417_6094\dotNet5782_3417_6094\imege\return.png" Height="82" Width="108" RenderTransformOrigin="0.62,0.5"  />-->
                 </StackPanel>
             </Button.Content>
         </Button>
