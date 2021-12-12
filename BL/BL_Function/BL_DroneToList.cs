@@ -17,7 +17,7 @@ namespace IBL
         /// <returns> drone object </returns>
         Drone convertDroneToListToDrone(DroneToList droneToList)
         {
-            return new Drone { SerialNum = droneToList.SerialNumber, butrryStatus = droneToList.butrryStatus, droneStatus = droneToList.droneStatus, location = droneToList.location, Model = droneToList.Model, weightCategory = droneToList.weightCategory, packageInTransfer = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(droneToList.numPackage)) };
+            return new Drone { SerialNum = droneToList.SerialNumber, butrryStatus = droneToList.ButrryStatus, droneStatus = droneToList.DroneStatus, location = droneToList.Location, Model = droneToList.Model, weightCategory = droneToList.WeightCategory, packageInTransfer = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(droneToList.NumPackage)) };
         }
     }
 }

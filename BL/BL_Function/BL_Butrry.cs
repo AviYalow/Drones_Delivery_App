@@ -66,14 +66,14 @@ namespace IBL
 
 
             var drone = SpecificDrone(droneNumber);
-            BaseStation baseStation = ClosestBase(drone.location);
-            if (drone.droneStatus != DroneStatus.Free)
+            BaseStation baseStation = ClosestBase(drone.Location);
+            if (drone.DroneStatus != DroneStatus.Free)
             {
                 throw new DroneStillAtWorkException();
             }
            // var baseStation = CllosetBase(drone.location);
-            double buttry = buttryDownWithNoPackege(drone.location, baseStation.location);
-            if (drone.butrryStatus - buttry < 0)
+            double buttry = buttryDownWithNoPackege(drone.Location, baseStation.location);
+            if (drone.ButrryStatus - buttry < 0)
             {
                 throw new NoButrryToTripException(buttry);
             }
@@ -84,8 +84,8 @@ namespace IBL
                 if (baseStation.FreeState <= 0)
                     throw (new NoPlaceForChargeException(baseStation.SerialNum));
                 dalObj.DroneToCharge(droneNumber, baseStation.SerialNum);
-                drone.droneStatus = DroneStatus.Maintenance;
-                drone.location = baseStation.location;
+                drone.DroneStatus = DroneStatus.Maintenance;
+                drone.Location = baseStation.location;
                 dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == droneNumber)] = drone;
 
             
@@ -122,8 +122,8 @@ namespace IBL
             //calcoulet how mach he chraging alredy
             double buttry = DroneChrgingAlredy(timeInCharge);
 
-            drone.butrryStatus = buttry > 100 ? 100 : buttry+drone.butrryStatus;
-            drone.droneStatus = DroneStatus.Free;
+            drone.ButrryStatus = buttry > 100 ? 100 : buttry+drone.ButrryStatus;
+            drone.DroneStatus = DroneStatus.Free;
             var baseStation = dalObj.BaseStationByNumber(information.idBaseStation);
             baseStation.NumberOfChargingStations++;
             dalObj.UpdateBase(baseStation);
@@ -131,7 +131,7 @@ namespace IBL
             dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == drone.SerialNumber)] = drone;
             
 
-            return drone.butrryStatus;
+            return drone.ButrryStatus;
 
         }
 

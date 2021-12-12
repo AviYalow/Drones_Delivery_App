@@ -183,8 +183,8 @@ namespace IBL
                 if (packege.OperatorSkimmerId != 0)
                 {
                     var drone = SpecificDrone(packege.OperatorSkimmerId);
-                    drone.droneStatus = DroneStatus.Free;
-                    drone.numPackage = 0;
+                    drone.DroneStatus = DroneStatus.Free;
+                    drone.NumPackage = 0;
 
                     for (int i = 0; i < dronesListInBl.Count; i++)
                     {

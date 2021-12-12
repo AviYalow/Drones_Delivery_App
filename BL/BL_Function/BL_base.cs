@@ -183,7 +183,7 @@ namespace IBL
                 baseReturn.dronesInCharge = new List<DroneInCharge>();
                 foreach (var drone in droneInCharge)
                 {
-                    var butrry = (SpecificDrone(drone.IdDrone).butrryStatus + DroneChrgingAlredy(DateTime.Now-drone.EntringDrone));
+                    var butrry = (SpecificDrone(drone.IdDrone).ButrryStatus + DroneChrgingAlredy(DateTime.Now-drone.EntringDrone));
                     butrry = (butrry > 100) ? 100 : butrry;
                     baseReturn.dronesInCharge.Add(new DroneInCharge { SerialNum = drone.IdDrone, butrryStatus = butrry });
                 }
@@ -212,8 +212,8 @@ namespace IBL
                 for (int i = 0; i < dronesListInBl.Count; i++)
                 {
                     var drone = dronesListInBl[i];
-                    if(drone.location.Latitude==baseStation.latitude&&drone.location.Longitude==baseStation.longitude)
-                    drone.location = ClosestBase(drone.location).location;
+                    if(drone.Location.Latitude==baseStation.latitude&&drone.Location.Longitude==baseStation.longitude)
+                    drone.Location = ClosestBase(drone.Location).location;
                 }
             }
             catch (IDAL.DO.ItemNotFoundException ex)

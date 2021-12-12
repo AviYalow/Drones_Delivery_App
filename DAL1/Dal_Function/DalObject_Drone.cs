@@ -18,15 +18,17 @@ namespace DalObject
         /// <param name="drone">drone to add</param>
         public void AddDrone( Drone drone)
         {
-              if (DataSource.drones.Any(x=>x.SerialNumber==drone.SerialNumber))
+            if (DataSource.drones.Any(x=>x.SerialNumber==drone.SerialNumber))
              throw (new ItemFoundException("drone", drone.SerialNumber));
             int i = DataSource.drones.FindIndex(x => x.SerialNumber == drone.SerialNumber);
-            if (i != -1)
+            if (i == -1)
                 DataSource.drones.Add(new Drone()
                 {
                     SerialNumber = drone.SerialNumber,
                     Model = drone.Model,
-                    WeightCategory = (WeightCategories)drone.WeightCategory
+                    WeightCategory = (WeightCategories)drone.WeightCategory,
+                    Active=true
+                    
                 });
             else
                 DataSource.drones[i] = drone;

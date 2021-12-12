@@ -58,28 +58,28 @@ namespace IBL
                         //cheak if the drone has not get to its destination yet
                         if (chcking_packege.PackageArrived == null)
                         {
-                            new_drone.numPackage = chcking_packege.SerialNumber;
+                            new_drone.NumPackage = chcking_packege.SerialNumber;
                             package = chcking_packege;
-                            new_drone.droneStatus = DroneStatus.Work;
+                            new_drone.DroneStatus = DroneStatus.Work;
                             break;
                         }
                     }
                 }
 
-                if (new_drone.droneStatus == DroneStatus.Work)
+                if (new_drone.DroneStatus == DroneStatus.Work)
                 {
 
                     double min_butrry;
-                    var packegeInTransferObject = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(new_drone.numPackage));
+                    var packegeInTransferObject = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(new_drone.NumPackage));
                     //If the package has not been collected yet
                     //The location of the drone will be at the sender location
                     if (package.CollectPackageForShipment != null)
                     {
-                        new_drone.location = ClientLocation(package.SendClient);
-                        new_drone.numPackage = package.SerialNumber;
+                        new_drone.Location = ClientLocation(package.SendClient);
+                        new_drone.NumPackage = package.SerialNumber;
                         min_butrry = buttryDownPackegeDelivery(packegeInTransferObject) +
                            buttryDownWithNoPackege(ClosestBase(ClientLocation(package.GetingClient)).location, ClientLocation(package.GetingClient));
-                        new_drone.butrryStatus = random.Next((int)min_butrry + 1, 100);
+                        new_drone.ButrryStatus = random.Next((int)min_butrry + 1, 100);
                     }
 
                     //If the package was associated but not collected the location
@@ -87,11 +87,11 @@ namespace IBL
                     else if (package.PackageAssociation != new DateTime())
                     {
 
-                        new_drone.location = ClosestBase(ClientLocation(package.SendClient)).location;
-                        min_butrry = buttryDownWithNoPackege(new_drone.location, ClientLocation(package.SendClient)) +
+                        new_drone.Location = ClosestBase(ClientLocation(package.SendClient)).location;
+                        min_butrry = buttryDownWithNoPackege(new_drone.Location, ClientLocation(package.SendClient)) +
                             buttryDownPackegeDelivery(packegeInTransferObject) +
                             buttryDownWithNoPackege(ClosestBase(ClientLocation(package.GetingClient)).location, ClientLocation(package.GetingClient));
-                        new_drone.butrryStatus = random.Next((int)min_butrry + 1, 100);
+                        new_drone.ButrryStatus = random.Next((int)min_butrry + 1, 100);
 
                     }
 
@@ -100,12 +100,12 @@ namespace IBL
                 //If the drone doesn't in delivery
                 else
                 {
-                    new_drone.droneStatus = (DroneStatus)random.Next(2);
+                    new_drone.DroneStatus = (DroneStatus)random.Next(2);
 
                     //dorne lottery in mainteance
-                    if (new_drone.droneStatus == DroneStatus.Maintenance)
+                    if (new_drone.DroneStatus == DroneStatus.Maintenance)
                     {
-                        new_drone.butrryStatus = random.Next(21);
+                        new_drone.ButrryStatus = random.Next(21);
                         int k = random.Next(2);
 
                         foreach (IDAL.DO.Base_Station base_ in dalObj.BaseStationList(x=>true))
@@ -114,8 +114,8 @@ namespace IBL
                             {
                                 var updateBase = base_;
                                 dalObj.DroneToCharge(new_drone.SerialNumber, base_.baseNumber);
-                                new_drone.numPackage = 0;
-                                new_drone.location = BaseLocation(base_.baseNumber);
+                                new_drone.NumPackage = 0;
+                                new_drone.Location = BaseLocation(base_.baseNumber);
                                 break;
 
                             }
@@ -125,7 +125,7 @@ namespace IBL
                     }
 
                     //drone lottery in free
-                    else if (new_drone.droneStatus == DroneStatus.Free)
+                    else if (new_drone.DroneStatus == DroneStatus.Free)
                     {
                         //lottry drone what is lost shipment
                         int k = random.Next(10);
@@ -136,9 +136,9 @@ namespace IBL
                             {
                                 if (j == k)
                                 {
-                                    new_drone.numPackage = package1.SerialNumber;
-                                    new_drone.location = ClientLocation(package1.GetingClient);
-                                  new_drone.butrryStatus=  random.Next((int)buttryDownWithNoPackege(new_drone.location, ClosestBase(ClientLocation(package1.GetingClient)).location) + 1, 100);
+                                    new_drone.NumPackage = package1.SerialNumber;
+                                    new_drone.Location = ClientLocation(package1.GetingClient);
+                                  new_drone.ButrryStatus=  random.Next((int)buttryDownWithNoPackege(new_drone.Location, ClosestBase(ClientLocation(package1.GetingClient)).location) + 1, 100);
                                     flag = true;
                                     break;
                                 }

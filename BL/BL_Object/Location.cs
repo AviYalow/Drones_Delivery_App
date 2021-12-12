@@ -18,7 +18,10 @@ namespace IBL.BO
         {
 
             string print = "";
-            print += $"Location: Latitude:{IDAL.DO.Point.Degree( Latitude)} Longitude:{IDAL.DO.Point.Degree(Longitude)}\n";
+            print += $"{IDAL.DO.Point.Degree(Latitude)} ";
+            print += Latitude >= 0 ? "N " : "S ";
+            print += $"{IDAL.DO.Point.Degree(Longitude)}\n";
+            print += Longitude >= 0 ? "E " : "W ";
             return print;
         }
         

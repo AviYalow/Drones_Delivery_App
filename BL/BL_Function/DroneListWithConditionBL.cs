@@ -19,7 +19,7 @@ namespace IBL
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
 
-            return dronesListInBl.FindAll(x=>x.droneStatus!=DroneStatus.Delete);
+            return dronesListInBl.FindAll(x=>x.DroneStatus!=DroneStatus.Delete);
         }
         /// <summary>
         /// return list of drones by spsific status
@@ -30,7 +30,7 @@ namespace IBL
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
 
-            return dronesListInBl.FindAll(x=>x.droneStatus==droneStatus);
+            return dronesListInBl.FindAll(x=>x.DroneStatus==droneStatus);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace IBL
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
 
-            return dronesListInBl.FindAll(x => x.weightCategory <=weight);
+            return dronesListInBl.FindAll(x => x.WeightCategory <=weight);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace IBL
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
            
-            return dronesListInBl.FindAll(x => x.weightCategory >=package.weightCatgory&&x.droneStatus==DroneStatus.Free&&x.butrryStatus>batteryCalculationForFullShipping(x.location,package));
+            return dronesListInBl.FindAll(x => x.WeightCategory >=package.weightCatgory&&x.DroneStatus==DroneStatus.Free&&x.ButrryStatus>batteryCalculationForFullShipping(x.Location,package));
         }
     }
 }

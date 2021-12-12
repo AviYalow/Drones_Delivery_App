@@ -33,7 +33,9 @@ namespace PL
 
         private void DroneMainButton_Click(object sender, RoutedEventArgs e)
         {
+            
             new DronesListWindow(bL).ShowDialog();
+            
         }
     }
 }

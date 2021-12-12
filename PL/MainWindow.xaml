@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        Icon="C:\Users\דוד אוחנה\Desktop\מכללה\dotNet5782_3417_6094\dotNet5782_3417_6094\imege\DroneIcon.png"
+        
         Title="MainWindow" Height="640" Width="800">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
