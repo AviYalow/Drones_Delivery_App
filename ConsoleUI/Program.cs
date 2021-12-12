@@ -1,7 +1,7 @@
 ﻿/*
  we add the bonus function
  */
-/*
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -177,7 +177,7 @@ namespace ConsoleUI
 
                                                                 releaseDrone( dalObject, out check, out num);
                                                                 break;
-                                                                *//*
+                                                                */
                                 case UpdatesOptions.Exit:
                                     break;
 
@@ -280,8 +280,8 @@ namespace ConsoleUI
 
                 }
             } while (option != Options.Exit);
-            */
-            /*
+
+
 
             void baseWhitFreeChargeStation(DalObject.DalObject dalObject)
             {
@@ -549,9 +549,9 @@ namespace ConsoleUI
 
                 // add new client
                 dalObject.AddClient(new Client { Id = num, Name = name, PhoneNumber = phone, Latitude = doubleNum1, Longitude = doubleNum2 });
-            }*/
+            }
 
-/*
+
 
             static void Main(string[] args)
             {
@@ -563,4 +563,3 @@ namespace ConsoleUI
         }
     }
 }
-*/

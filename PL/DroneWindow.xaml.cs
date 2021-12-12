@@ -55,6 +55,16 @@ namespace PL
             BaseChosingCombo.Visibility=Visibility.Collapsed;
             sitoation = false;
             DroneLabel.Content = bl.GetDrone(drone.SerialNumber);
+            if (Drone.DroneStatus == DroneStatus.Free)
+            {
+                connectPackage.Visibility = Visibility.Visible;
+                Charge.Visibility = Visibility.Visible;
+            }
+            else if (Drone.DroneStatus == DroneStatus.Maintenance)
+            {
+                Charge.Content = "Release from charge";
+                Charge.Visibility = Visibility.Visible;
+            }
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
@@ -120,7 +130,25 @@ namespace PL
 
         private void WeightChoseCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+           
             Drone.WeightCategory =(IBL.BO.WeightCategories) WeightChoseCombo.SelectedItem;
+            
+
+        }
+
+        private void Charge_Click(object sender, RoutedEventArgs e)
+        {
+            if (Drone.DroneStatus == DroneStatus.Free)
+                bl.DroneToCharge(Drone.SerialNumber);
+            else if(Drone.DroneStatus == DroneStatus.Maintenance)
+                bl.FreeDroneFromCharging(Drone.SerialNumber)
+
+
+        }
+
+        private void connectPackage_Click(object sender, RoutedEventArgs e)
+        {
+            bl.ConnectPackegeToDrone(Drone.SerialNumber);
         }
     }
 }
