@@ -120,7 +120,7 @@ namespace IBL
             if (information.Equals(new IDAL.DO.BatteryLoad()))
                 throw new ItemNotFoundException("Drone", droneNumber);
             //calcoulet how mach he chraging alredy
-            double buttry = DroneChrgingAlredy(timeInCharge);
+            double buttry = DroneChrgingAlredy(DateTime.Now-information.EntringDrone);
 
             drone.ButrryStatus = buttry > 100 ? 100 : buttry+drone.ButrryStatus;
             drone.DroneStatus = DroneStatus.Free;
