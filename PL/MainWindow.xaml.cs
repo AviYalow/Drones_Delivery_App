@@ -23,6 +23,7 @@ namespace PL
     public partial class MainWindow : Window
     {
         IBL.BL bL;
+        int a;
        
         public MainWindow()
         {
