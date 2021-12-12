@@ -108,7 +108,7 @@ namespace IBL
         /// <param name="droneNumber">serial number of the drone</param>
         /// <param name="timeInCharge"> the time that the drone in charge </param>
         /// <returns> butrry Status of the  drone</returns>
-        public double FreeDroneFromCharging(uint droneNumber, TimeSpan timeInCharge)
+        public double FreeDroneFromCharging(uint droneNumber)
         {
             //locking for drone
             var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber);
