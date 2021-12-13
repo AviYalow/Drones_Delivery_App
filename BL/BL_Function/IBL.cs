@@ -83,7 +83,7 @@ namespace IBL
         /// <param name="droneNumber">serial number of the drone</param>
         /// <param name="timeInCharge"> the time that the drone in charge </param>
         /// <returns> butrry Status of the  drone</returns>
-        public double FreeDroneFromCharging(uint droneNumber, TimeSpan timeInCharge);
+        public double FreeDroneFromCharging(uint droneNumber, int number = -1);
 
         /// <summary>
         /// Release a drone from a charger at a particular base station

@@ -72,6 +72,67 @@ namespace PL
             if (!sitoation)
             {
                 bl.UpdateDroneName(Drone.SerialNumber, Drone.Model);
+                
+                if (connectPackage.IsChecked == true)
+                {
+                    try
+                    {
+                        bl.ConnectPackegeToDrone(Drone.SerialNumber);
+                        MessageBox.Show("Connection Succeeded!", "succesful");
+                    }
+                    catch (IBL.BO.DroneCantMakeDliveryException ex)
+                    {
+
+                        MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    catch (IBL.BO.ItemNotFoundException ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
+                }
+
+                if(Charge.IsChecked==true)
+                {
+                    try
+                    {
+                        if (Charge.Content == "Send to charge")
+                        {
+                            bl.DroneToCharge(Drone.SerialNumber);
+                            MessageBox.Show("Sending to Charge Succeeded!", "succesful");
+                            
+                        }
+                        else
+                        {
+                            bl.FreeDroneFromCharging(Drone.SerialNumber);
+                            MessageBox.Show("Release from Charge Succeeded!", "succesful");
+                        }
+
+                    }
+                    catch (IBL.BO.DroneStillAtWorkException ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    catch (IBL.BO.NoButrryToTripException ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    catch (IBL.BO.NoPlaceForChargeException ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    catch (IBL.BO.ItemNotFoundException ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    catch (IBL.BO.ItemFoundExeption ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
+
+                }
+                    
                 MessageBox.Show(Drone.ToString() + "\n update list!", "succesful");
             }
             else
@@ -120,7 +181,8 @@ namespace PL
                 if (!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightAlt)))
                     return; //let this key be written inside the textbox
 
-            //forbid letters and signs (#,$, %, ...)
+            //forbid letters a
+            //nd signs (#,$, %, ...)
             ErrorMassegeLabel.Visibility = Visibility.Visible;
             SirialNumberTextBox.Background = Brushes.Red;
             OkButton.IsEnabled = false;
@@ -136,19 +198,6 @@ namespace PL
 
         }
 
-        private void Charge_Click(object sender, RoutedEventArgs e)
-        {
-            if (Drone.DroneStatus == DroneStatus.Free)
-                bl.DroneToCharge(Drone.SerialNumber);
-            else if(Drone.DroneStatus == DroneStatus.Maintenance)
-                bl.FreeDroneFromCharging(Drone.SerialNumber)
-
-
-        }
-
-        private void connectPackage_Click(object sender, RoutedEventArgs e)
-        {
-            bl.ConnectPackegeToDrone(Drone.SerialNumber);
-        }
+       
     }
 }

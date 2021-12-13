@@ -293,7 +293,9 @@ namespace ConsoleUI_BL
                         catch (IBL.BO.ThePackegeAlredySendException ex)
                         { Console.WriteLine(ex); }
                         catch (IBL.BO.DroneStillAtWorkException ex)
-                        { Console.WriteLine(ex); }
+                        { 
+                            Console.WriteLine(ex);
+                        }
                        
                       
                         catch (IBL.BO.ItemNotFoundException ex)

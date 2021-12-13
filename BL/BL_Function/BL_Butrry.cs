@@ -108,7 +108,7 @@ namespace IBL
         /// <param name="droneNumber">serial number of the drone</param>
         /// <param name="timeInCharge"> the time that the drone in charge </param>
         /// <returns> butrry Status of the  drone</returns>
-        public double FreeDroneFromCharging(uint droneNumber)
+        public double FreeDroneFromCharging(uint droneNumber, int number = -1)
         {
             //locking for drone
             var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber);
@@ -166,23 +166,24 @@ namespace IBL
                 {
                     if (i <= number)
                     {
-                        FreeDroneFromCharging(droneChrging.IdDrone, droneChrging.EntringDrone - DateTime.Now);
+                        //FreeDroneFromCharging(droneChrging.IdDrone, droneChrging.EntringDrone - DateTime.Now);
+                        FreeDroneFromCharging(droneChrging.IdDrone);
                         i++;
 
                     }
                 }
                 else
-                    FreeDroneFromCharging(droneChrging.IdDrone, droneChrging.EntringDrone - DateTime.Now);
-            }
-           
-        }
+                    //FreeDroneFromCharging(droneChrging.IdDrone, droneChrging.EntringDrone - DateTime.Now);
+                    FreeDroneFromCharging(droneChrging.IdDrone);            }
 
-        /// <summary>
-        /// Calculates the percentage of battery of the drone based on the charging time it was
-        /// </summary>
-        /// <param name="span">charging time the drone was</param>
-        /// <returns> percentage of battery</returns>
-        double DroneChrgingAlredy(TimeSpan span)
+            }
+
+            /// <summary>
+            /// Calculates the percentage of battery of the drone based on the charging time it was
+            /// </summary>
+            /// <param name="span">charging time the drone was</param>
+            /// <returns> percentage of battery</returns>
+            double DroneChrgingAlredy(TimeSpan span)
         {
             var a = ((double)(span).TotalMinutes); var b= (chargingPerMinote );
             a *= b;
