@@ -10,38 +10,39 @@
     <Grid Name="MainGrid">
         <Grid x:Name="AddDroneGrid" Margin="0,0,10,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="400*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
 
                 <!--<ColumnDefinition Width="400*"/>-->
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+
             </Grid.RowDefinitions>
-            <Label Name="TitelDroneLabel" Content="Add Drone" Height="100" VerticalAlignment="Top" FontSize="72" Margin="200,-10,235,0" Grid.ColumnSpan="2"/>
-
-            <Label Name="ModelLabel" Content="Model:" HorizontalAlignment="Left" Height="40" Margin="10,10,0,0" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Width="72"/>
-            <ComboBox Name="WeightChoseCombo" Text="Wight category"   HorizontalAlignment="Left" Margin="116,3,0,0" Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" Width="120" IsEditable="True" SelectionChanged="WeightChoseCombo_SelectionChanged"/>
-            <ComboBox Name="BaseChosingCombo"  Grid.Column="0" Text="First Base station" HorizontalAlignment="Left" Height="33" Margin="115,0,0,0" Grid.Row="6" VerticalAlignment="Top" Width="120" IsEditable="True" />
+            <Label Name="TitelDroneLabel" Content="Add Drone" FontSize="15" Foreground="#FF1432F0" Background="Transparent"/>
+            <TextBox x:Name="SirialNumberTextBox" Margin="115,0,14,2" Height="20"  Text="{Binding SerialNumber, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}"   TextWrapping="Wrap" Grid.Row="1" Width="130"  PreviewKeyUp="SirialNumberTextBox_PreviewKeyUp" HorizontalAlignment="Left"    />
+            <Label x:Name="SirialNumberLabel" Content="Sirial Number:"  HorizontalAlignment="Left" Grid.Row="1"/>
+            <Label Name="ModelLabel" Content="Model:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Width="72" HorizontalAlignment="Left"/>
+            <TextBox Name="ModelTextBox" HorizontalAlignment="Left" Height="20" Margin="115,2,0,0" Grid.Row="2" Text="{Binding Model, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
+            <Label Name="WeightCategoryLabel"  Content="Weight Category:" Grid.Row="3" VerticalAlignment="Center" Width="105" HorizontalAlignment="Left"/>
+            <ComboBox Name="WeightChoseCombo" Text="Wight category"   HorizontalAlignment="Left" Margin="114,3,0,0" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Width="130" IsEditable="True" SelectionChanged="WeightChoseCombo_SelectionChanged"/>
             <Label Name="ErrorMassegeLabel"  Content="Your input Worng!" HorizontalAlignment="Left" Margin="17,48,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="2" Width="218" Visibility="Hidden"    />
-            <Button  Name="OkButton"  HorizontalAlignment="Left" Margin="18,25,0,0" Grid.Row="7" VerticalAlignment="Top" Height="50" Width="162" Click="OkButton_Click" Grid.RowSpan="2"/>
+            <Button  Name="OkButton"    Grid.Row="7"   VerticalAlignment="Center" Height="50" Width="162" Click="OkButton_Click" Grid.RowSpan="2" Margin="24,9,0,0"/>
 
-            <TextBox x:Name="SirialNumberTextBox"    Text="{Binding SerialNumber, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Height="24"  TextWrapping="Wrap" Width="129" Margin="106,19,555,7" Grid.Row="1" PreviewKeyUp="SirialNumberTextBox_PreviewKeyUp"   />
-            <Label x:Name="SirialNumberLabel" Content="Sirial Number:" Height="30" Width="90" HorizontalAlignment="Left" Margin="1,13,0,7" Grid.Row="1"/>
-            <Label Name="LocationLabel" Content="Location:" HorizontalAlignment="Left" Height="23" Margin="17,0,0,0" Grid.Row="6" VerticalAlignment="Top" Width="74"/>
-            <Label Name="WeightCategoryLabel"  Content="Weight Category:" HorizontalAlignment="Left" Margin="6,1,0,0" Grid.Row="5" VerticalAlignment="Top" Width="105"/>
-            <TextBox Name="ModelTextBox" HorizontalAlignment="Left" Height="30" Margin="115,0,0,0" Grid.Row="3" Text="{Binding Model, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" TextWrapping="Wrap" VerticalAlignment="Center" Width="130"/>
-            <Label Name="DroneLabel" Content="Label" VerticalAlignment="Top" Height="328" Grid.RowSpan="9" Margin="488,75,10,0"/>
-            <RadioButton x:Name="Charge" Content="Send to charge" HorizontalAlignment="Left" Margin="222,20,0,0" Grid.Row="7" VerticalAlignment="Top" Visibility="Hidden" />
-            <RadioButton Name="connectPackage" Content="Assignment to package" HorizontalAlignment="Left" Margin="325,20,0,0" Grid.Row="7" VerticalAlignment="Top"  Visibility="Hidden" />
-           
+            <Label Name="LocationLabel" Content="Location:" HorizontalAlignment="Left"  Grid.Row="4" VerticalAlignment="Center" Width="74"/>
+            <ComboBox Name="BaseChosingCombo"  Text="First Base station" HorizontalAlignment="Left" Height="21" Margin="115,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="127" IsEditable="True" />
+            <Label Name="DroneLabel" Content="Label" VerticalAlignment="Center"  Grid.Column="1"  Grid.Row="0"  Grid.RowSpan="4" />
+            <RadioButton x:Name="Charge" Content="Send to charge" HorizontalAlignment="Left"  Grid.Row="5" VerticalAlignment="Center" Visibility="Hidden" />
+            <RadioButton Name="connectPackage" Content="Assignment to package" HorizontalAlignment="Left"  Grid.Row="6" VerticalAlignment="Center" Visibility="Hidden"  />
+
         </Grid>
 
     </Grid>

@@ -39,6 +39,7 @@ namespace PL
             
             BaseChosingCombo.ItemsSource = bl.BaseStationWhitFreeChargingStationToLists();
             sitoation = true;
+            DroneLabel.Visibility = Visibility.Hidden;
         }
         public DroneWindow(IBL.IBL bl, DroneToList drone)
         {
@@ -52,7 +53,7 @@ namespace PL
             SirialNumberTextBox.Text = Drone.SerialNumber.ToString();
             WeightChoseCombo.IsEnabled = false;
             WeightChoseCombo.Text = drone.WeightCategory.ToString();
-            BaseChosingCombo.Visibility=Visibility.Collapsed;
+            BaseChosingCombo.IsEnabled = false;
             sitoation = false;
             DroneLabel.Content = bl.GetDrone(drone.SerialNumber);
             if (Drone.DroneStatus == DroneStatus.Free)
@@ -102,7 +103,7 @@ namespace PL
                             MessageBox.Show("Sending to Charge Succeeded!", "succesful");
                         }
 
-                        else
+                       else if(Drone.DroneStatus == DroneStatus.Maintenance)
                         {
                             bl.FreeDroneFromCharging(Drone.SerialNumber);
                             MessageBox.Show("Release from Charge Succeeded!", "succesful");
@@ -140,6 +141,8 @@ namespace PL
                 bl.AddDrone(Drone, ((IBL.BO.BaseStationToList)BaseChosingCombo.SelectedItem).SerialNum);
                 MessageBox.Show(Drone.ToString() + "\n add to list!", "succesful");
             }
+
+            this.Close();
         }
 
        

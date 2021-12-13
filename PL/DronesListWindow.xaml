@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="DronesListWindow" Height="450" Width="800"
         Closing="Window_Closing" >
-   <!-- Icon="C:\Users\דוד אוחנה\Desktop\מכללה\dotNet5782_3417_6094\dotNet5782_3417_6094\imege\DroneIcon.png">-->
+    <!-- Icon="C:\Users\דוד אוחנה\Desktop\מכללה\dotNet5782_3417_6094\dotNet5782_3417_6094\imege\DroneIcon.png">-->
 
 
     <Grid>
@@ -25,7 +25,7 @@
             <ComboBox Name="WeightSelctor" Margin="0,64,0,0"  IsEditable="True" SelectionChanged="WeightSelctor_SelectionChanged" Grid.Column="1" />
             <ComboBox Name="StatusSelector" Margin="10,64,0,0" IsEditable="True" SelectionChanged="StatusSelector_SelectionChanged" Grid.Column="0" />
             <Label Name="StatusSelectorLabel" Content="Status" HorizontalAlignment="Stretch" Margin="35,28,0,0" VerticalAlignment="Top" Width="78" FontSize="24" Height="37" Grid.Column="0" />
-            <Label Name="WeightSelectorLabel" Content="Weight" Margin="56,28,58,0" VerticalAlignment="Top" FontSize="24" Grid.Column="1"/>
+            <Label Name="WeightSelectorLabel" Content="Weight" Margin="48,28,0,0"  FontSize="24" Grid.Column="1" HorizontalAlignment="Left"/>
         </Grid>
         <Grid/>
 
@@ -50,7 +50,7 @@
             <Button.Content>
 
                 <StackPanel Orientation="Horizontal">
-                   <!-- <Image x:Name="ReturnImage" Source="C:\Users\דוד אוחנה\Desktop\מכללה\dotNet5782_3417_6094\dotNet5782_3417_6094\imege\return.png" Height="82" Width="108" RenderTransformOrigin="0.62,0.5"  />-->
+                    <!-- <Image x:Name="ReturnImage" Source="C:\Users\דוד אוחנה\Desktop\מכללה\dotNet5782_3417_6094\dotNet5782_3417_6094\imege\return.png" Height="82" Width="108" RenderTransformOrigin="0.62,0.5"  />-->
                 </StackPanel>
             </Button.Content>
         </Button>
