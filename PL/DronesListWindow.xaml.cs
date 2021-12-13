@@ -86,27 +86,14 @@ namespace PL
            
             
             new DroneWindow( bl, (IBL.BO.DroneToList)DronesListView.SelectedItem).ShowDialog();
+            updateListView();
         }
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow(bl).ShowDialog();
-            if (WeightSelctor.SelectedItem != null)
-                if (WeightSelctor.SelectedItem != WeightSelctor.Items[0])
-                    dronesSelectByWeightIenumrble = bl.DroneToListsByWhight((IBL.BO.WeightCategories)WeightSelctor.SelectedItem);
-                else
-                    dronesSelectByWeightIenumrble = bl.DroneToLists();
-            else
-                dronesSelectByWeightIenumrble = bl.DroneToLists();
-            if (StatusSelector.SelectedItem != null)
-                if (StatusSelector.SelectedItem != StatusSelector.Items[0])
-                dronesSelectByStatusIenumrble = bl.DroneToListsByStatus((IBL.BO.DroneStatus)WeightSelctor.SelectedItem);
-                else
-                    dronesSelectByStatusIenumrble = bl.DroneToLists();
-            else
-                dronesSelectByStatusIenumrble = bl.DroneToLists();
-            DronesListView.ItemsSource = dronesSelectByStatusIenumrble.Intersect(dronesSelectByWeightIenumrble);
+            updateListView();
         }
 
         private void Button_Return_Click(object sender, RoutedEventArgs e)
@@ -126,6 +113,24 @@ namespace PL
 
         }
 
+        private void updateListView()
+        {
+            if (WeightSelctor.SelectedItem != null)
+                if (WeightSelctor.SelectedItem != WeightSelctor.Items[0])
+                    dronesSelectByWeightIenumrble = bl.DroneToListsByWhight((IBL.BO.WeightCategories)WeightSelctor.SelectedItem);
+                else
+                    dronesSelectByWeightIenumrble = bl.DroneToLists();
+            else
+                dronesSelectByWeightIenumrble = bl.DroneToLists();
+            if (StatusSelector.SelectedItem != null)
+                if (StatusSelector.SelectedItem != StatusSelector.Items[0])
+                    dronesSelectByStatusIenumrble = bl.DroneToListsByStatus((IBL.BO.DroneStatus)WeightSelctor.SelectedItem);
+                else
+                    dronesSelectByStatusIenumrble = bl.DroneToLists();
+            else
+                dronesSelectByStatusIenumrble = bl.DroneToLists();
+            DronesListView.ItemsSource = dronesSelectByStatusIenumrble.Intersect(dronesSelectByWeightIenumrble);
+        }
        
     }
 }

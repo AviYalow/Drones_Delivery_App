@@ -96,12 +96,12 @@ namespace PL
                 {
                     try
                     {
-                        if (Charge.Content == "Send to charge")
+                        if (Drone.DroneStatus == DroneStatus.Free)
                         {
                             bl.DroneToCharge(Drone.SerialNumber);
                             MessageBox.Show("Sending to Charge Succeeded!", "succesful");
-                            
                         }
+
                         else
                         {
                             bl.FreeDroneFromCharging(Drone.SerialNumber);

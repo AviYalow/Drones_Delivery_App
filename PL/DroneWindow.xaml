@@ -40,7 +40,7 @@
             <TextBox Name="ModelTextBox" HorizontalAlignment="Left" Height="30" Margin="115,0,0,0" Grid.Row="3" Text="{Binding Model, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" TextWrapping="Wrap" VerticalAlignment="Center" Width="130"/>
             <Label Name="DroneLabel" Content="Label" VerticalAlignment="Top" Height="328" Grid.RowSpan="9" Margin="488,75,10,0"/>
             <RadioButton x:Name="Charge" Content="Send to charge" HorizontalAlignment="Left" Margin="222,20,0,0" Grid.Row="7" VerticalAlignment="Top" Visibility="Hidden" />
-            <RadioButton x:Name="connectPackage" Content="Assignment to package" HorizontalAlignment="Left" Margin="325,20,0,0" Grid.Row="7" VerticalAlignment="Top"  Visibility="Hidden" />
+            <RadioButton Name="connectPackage" Content="Assignment to package" HorizontalAlignment="Left" Margin="325,20,0,0" Grid.Row="7" VerticalAlignment="Top"  Visibility="Hidden" />
            
         </Grid>
 
