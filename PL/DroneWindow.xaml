@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DroneWindow" Height="450" Width="800">
-    <!--Icon="C:\Users\דוד אוחנה\Desktop\מכללה\dotNet5782_3417_6094\dotNet5782_3417_6094\imege\DroneIcon.png">-->
+        Title="DroneWindow" Height="450" Width="800"
+   Icon="/DroneIcon.png">
     <Grid Name="MainGrid">
         <Grid x:Name="AddDroneGrid" Margin="0,0,10,0">
             <Grid.ColumnDefinitions>

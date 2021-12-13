@@ -84,7 +84,7 @@ namespace IBL
 
                     //If the package was associated but not collected the location
                     //Of the drone will be at the station closest to the sender
-                    else if (package.PackageAssociation != new DateTime())
+                    else if (package.PackageAssociation != null)
                     {
 
                         new_drone.Location = ClosestBase(ClientLocation(package.SendClient)).location;

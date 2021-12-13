@@ -6,10 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DronesListWindow" Height="450" Width="800"
-        Closing="Window_Closing" >
-    <!-- Icon="C:\Users\דוד אוחנה\Desktop\מכללה\dotNet5782_3417_6094\dotNet5782_3417_6094\imege\DroneIcon.png">-->
-
-
+        Closing="Window_Closing" Icon="/DroneIcon.png" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60*"/>
@@ -45,15 +42,12 @@
             </ListView.View>
         </ListView>
 
-
-        <Button x:Name="ReturnButton" Click="Button_Return_Click"  HorizontalAlignment="Left" Margin="588,183,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="108" >
-            <Button.Content>
-
-                <StackPanel Orientation="Horizontal">
-                    <!-- <Image x:Name="ReturnImage" Source="C:\Users\דוד אוחנה\Desktop\מכללה\dotNet5782_3417_6094\dotNet5782_3417_6094\imege\return.png" Height="82" Width="108" RenderTransformOrigin="0.62,0.5"  />-->
-                </StackPanel>
-            </Button.Content>
+        <Button   x:Name="ReturnButton" Click="Button_Return_Click"  HorizontalAlignment="Left" Margin="588,183,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="108" >
+            <StackPanel>
+                <Image Name="ReturnImage" Height="78" Stretch="Fill" Visibility="Visible" Source="/return.png" Width="97" VerticalAlignment="Top" />
+            </StackPanel>
         </Button>
+      
 
 
     </Grid>

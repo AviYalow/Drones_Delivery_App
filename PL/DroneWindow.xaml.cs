@@ -72,6 +72,7 @@ namespace PL
         {
             if (!sitoation)
             {
+                if(ModelTextBox.Text!=Drone.Model)
                 bl.UpdateDroneName(Drone.SerialNumber, Drone.Model);
                 
                 if (connectPackage.IsChecked == true)

@@ -131,6 +131,7 @@ namespace PL
                 dronesSelectByStatusIenumrble = bl.DroneToLists();
             DronesListView.ItemsSource = dronesSelectByStatusIenumrble.Intersect(dronesSelectByWeightIenumrble);
         }
-       
+
+     
     }
 }
