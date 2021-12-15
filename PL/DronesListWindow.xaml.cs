@@ -81,12 +81,16 @@ namespace PL
             DronesListView.ItemsSource = dronesSelectByStatusIenumrble.Intersect(dronesSelectByWeightIenumrble);
         }
 
+
         private void ChoseDrone(object sender, MouseButtonEventArgs e)
         {
-           
-            
-            new DroneWindow( bl, (IBL.BO.DroneToList)DronesListView.SelectedItem).ShowDialog();
-            updateListView();
+
+            if (DronesListView.SelectedItem != null)
+            {
+                new DroneWindow(bl, (IBL.BO.DroneToList)DronesListView.SelectedItem).ShowDialog();
+                updateListView();
+            }
+
         }
 
 
@@ -132,6 +136,6 @@ namespace PL
             DronesListView.ItemsSource = dronesSelectByStatusIenumrble.Intersect(dronesSelectByWeightIenumrble);
         }
 
-     
+       
     }
 }
