@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DronesListWindow" Height="450" Width="800"
+        Background="LightGreen"
         Closing="Window_Closing" Icon="/DroneIcon.png" >
     <Grid>
         <Grid.RowDefinitions>
@@ -28,11 +29,12 @@
 
         <Button x:Name="AddDroneButton" Content="Add Drone" HorizontalAlignment="Left" Height="78" Margin="36,183,0,0" VerticalAlignment="Top" Width="206" Click="Button_Click" Grid.Row="1"/>
 
-        <ListView x:Name="DronesListView" Margin="0,120,0,136" Grid.RowSpan="2"  MouseDoubleClick="ChoseDrone">
+        <ListView x:Name="DronesListView" Margin="0,120,0,136" Grid.RowSpan="2" Background="LightGreen" MouseDoubleClick="ChoseDrone">
             <ListView.View>
-                <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
-                    <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNumber}" x:Name="Serial" Header="Serial" />
-                    <GridViewColumn  DisplayMemberBinding="{Binding Path=Model}" x:Name="Model" Header="Serial" />
+                <GridView x:Name="a"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
+                    
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNumber}" x:Name="Serial" Header="Serial"  />
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=Model}" x:Name="Model" Header="Model" />
                     <GridViewColumn  DisplayMemberBinding="{Binding Path=WeightCategory}" x:Name="WeightCategory" Header="WeightCategory" />
                     <GridViewColumn  DisplayMemberBinding="{Binding Path=ButrryStatus}" x:Name="ButrryStatus" Header="ButrryStatus" />
                     <GridViewColumn  DisplayMemberBinding="{Binding Path=DroneStatus}" x:Name="DroneStatus" Header="DroneStatus" />

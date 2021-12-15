@@ -41,6 +41,7 @@ namespace PL
             sitoation = true;
             DroneLabel.Visibility = Visibility.Hidden;
         }
+
         public DroneWindow(IBL.IBL bl, DroneToList drone)
         {
             InitializeComponent();
@@ -66,6 +67,18 @@ namespace PL
                 Charge.Content = "Release from charge";
                 Charge.Visibility = Visibility.Visible;
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+
+        }
+
+
+        private void DronesWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = false;
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
@@ -131,18 +144,38 @@ namespace PL
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-
+                    
 
                 }
                     
                 MessageBox.Show(Drone.ToString() + "\n update list!", "succesful");
             }
+
             else
             {
-                bl.AddDrone(Drone, ((IBL.BO.BaseStationToList)BaseChosingCombo.SelectedItem).SerialNum);
-                MessageBox.Show(Drone.ToString() + "\n add to list!", "succesful");
+                try
+                {
+
+                    
+
+                    bl.AddDrone(Drone, ((IBL.BO.BaseStationToList)BaseChosingCombo.SelectedItem).SerialNum);
+                    MessageBox.Show(Drone.ToString() + "\n add to list!", "succesful");
+                }
+                catch(IBL.BO.InputErrorException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (IBL.BO.ItemNotFoundException ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (IBL.BO.ItemFoundExeption ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
 
+            this.Closing += DronesWindow_Closing;
             this.Close();
         }
 
