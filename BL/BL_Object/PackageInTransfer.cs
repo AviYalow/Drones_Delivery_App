@@ -30,8 +30,8 @@ namespace IBL.BO
             print += InTheWay ? "yes\n" : "no\n";
             print += $"Send Client: {SendClient.Name},\n";
             print += $"Recived Client: {RecivedClient.Name},\n";
-            print += $"Source {Source}" ;
-            print += $"Destination {Destination}";
+            print += $"Source:\n {Source,5}\n" ;
+            print += $"Destination:\n {Destination}\n";
             print += $"Distance: {Distance} KM\n";
             return print;
         }

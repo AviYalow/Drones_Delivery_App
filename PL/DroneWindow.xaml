@@ -8,12 +8,16 @@
         Title="DroneWindow" Height="450" Width="800"
    Icon="/DroneIcon.png">
     <Grid Name="MainGrid">
-        <Grid x:Name="AddDroneGrid" Margin="0,0,10,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="557*"/>
+            <ColumnDefinition Width="243*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="AddDroneGrid" Margin="0,0,10,0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
 
-                <!--<ColumnDefinition Width="400*"/>-->
+
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
@@ -28,20 +32,47 @@
 
             </Grid.RowDefinitions>
             <Label Name="TitelDroneLabel" Content="Add Drone" FontSize="15" Foreground="#FF1432F0" Background="Transparent"/>
-            <TextBox x:Name="SirialNumberTextBox" Margin="115,0,14,2" Height="20"  Text="{Binding SerialNumber, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}"   TextWrapping="Wrap" Grid.Row="1" Width="130"  PreviewKeyUp="SirialNumberTextBox_PreviewKeyUp" HorizontalAlignment="Left"    />
-            <Label x:Name="SirialNumberLabel" Content="Sirial Number:"  HorizontalAlignment="Left" Grid.Row="1"/>
-            <Label Name="ModelLabel" Content="Model:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Width="72" HorizontalAlignment="Left"/>
-            <TextBox Name="ModelTextBox" HorizontalAlignment="Left" Height="20" Margin="115,2,0,0" Grid.Row="2" Text="{Binding Model, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
-            <Label Name="WeightCategoryLabel"  Content="Weight Category:" Grid.Row="3" VerticalAlignment="Center" Width="105" HorizontalAlignment="Left"/>
-            <ComboBox Name="WeightChoseCombo" Text="Wight category"   HorizontalAlignment="Left" Margin="114,3,0,0" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Width="130" IsEditable="True" SelectionChanged="WeightChoseCombo_SelectionChanged"/>
-            <Label Name="ErrorMassegeLabel"  Content="Your input Worng!" HorizontalAlignment="Left" Margin="17,48,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="2" Width="218" Visibility="Hidden"    />
-            <Button  Name="OkButton"    Grid.Row="7"   VerticalAlignment="Center" Height="50" Width="162" Click="OkButton_Click" Grid.RowSpan="2" Margin="24,9,0,0"/>
+            <TextBox x:Name="SirialNumberTextBox" Margin="126,48,0,28" Height="20"  Text="{Binding SerialNumber, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}"   TextWrapping="Wrap" Width="130"  PreviewKeyUp="SirialNumberTextBox_PreviewKeyUp" HorizontalAlignment="Left" Grid.RowSpan="2" BorderBrush="#FF0E1015"   />
+            <Label x:Name="SirialNumberLabel" Content="Sirial Number:"  HorizontalAlignment="Left" Grid.Row="1" FontWeight="Bold" FontStyle="Normal"/>
+            <Label Name="ModelLabel" Content="Model:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Width="72" HorizontalAlignment="Left" FontWeight="Bold"/>
+            <TextBox Name="ModelTextBox" HorizontalAlignment="Left" Height="20" Margin="126,5,0,0" Grid.Row="2" Text="{Binding Model, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" BorderBrush="#FF141517"/>
+            <Label Name="WeightCategoryLabel"  Content="Weight Category:" Grid.Row="3" VerticalAlignment="Center" Width="105" HorizontalAlignment="Left" FontWeight="Bold"/>
+            <ComboBox Name="WeightChoseCombo" Text="Wight category"   HorizontalAlignment="Left" Margin="126,0,0,0" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Width="130" IsEditable="True" SelectionChanged="WeightChoseCombo_SelectionChanged" BorderBrush="#FFA01414" Foreground="Black" IsReadOnly="True">
+                <ComboBox.ItemContainerStyle>
+                    <Style x:Name="stylecombo" TargetType="ComboBoxItem">
+                        <Setter Property="Background" Value="Yellow"/>
+                        <Setter Property="BorderBrush" Value="Yellow"/>
+                        <Setter Property="Foreground" Value="Chocolate"/>
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+                
 
-            <Label Name="LocationLabel" Content="Location:" HorizontalAlignment="Left"  Grid.Row="4" VerticalAlignment="Center" Width="74"/>
-            <ComboBox Name="BaseChosingCombo"  Text="First Base station" HorizontalAlignment="Left" Height="21" Margin="115,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="127" IsEditable="True" />
-            <Label Name="DroneLabel" Content="Label" VerticalAlignment="Center"  Grid.Column="1"  Grid.Row="0"  Grid.RowSpan="4" />
+            </ComboBox>
+            <Label Name="ErrorMassegeLabel"  Content="Your input Worng!" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="118" Visibility="Collapsed" Foreground="#FFF13C3C" Margin="132,19,0,0"     />
+            <Button  Name="OkButton"    Grid.Row="6"   VerticalAlignment="Top" Height="50" Click="OkButton_Click" Grid.RowSpan="2" Margin="156,24,169,0" >
+                <Button.Background>
+                    <ImageBrush ImageSource="/ok.jpg"/>
+                </Button.Background>
+            </Button>
+
+
+            <Label Name="LocationLabel" Content="Location:" HorizontalAlignment="Left"  Grid.Row="4" VerticalAlignment="Center" Width="74" FontWeight="Bold"/>
+            <ComboBox Name="BaseChosingCombo"  Text="First Base station" HorizontalAlignment="Left" Height="21" Margin="129,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="127" IsEditable="True" >
+                <ComboBox.ItemContainerStyle>
+                <Style TargetType="ComboBoxItem">
+                    <Setter Property="Background" Value="{StaticResource ppp}"/>
+                </Style>
+                </ComboBox.ItemContainerStyle>
+            </ComboBox>
+            <Label Name="DroneLabel"   VerticalAlignment="Top"   Grid.RowSpan="9" Width="auto" Height="387" Grid.Column="1" Margin="5,14,-5,0" >
+
+            </Label>
+
             <RadioButton x:Name="Charge" Content="Send to charge" HorizontalAlignment="Left"  Grid.Row="5" VerticalAlignment="Center" Visibility="Hidden" />
             <RadioButton Name="connectPackage" Content="Assignment to package" HorizontalAlignment="Left"  Grid.Row="6" VerticalAlignment="Center" Visibility="Hidden"  />
+            <Label Name="AllFieldsArerequiredLabel" Content="All fields are required!"  HorizontalAlignment="Left" Margin="90,29,0,0" Grid.Row="7" VerticalAlignment="Top" Height="34" Grid.RowSpan="2" Width="145" Foreground="#FFDC3434" Visibility="Collapsed">
+
+            </Label>
 
         </Grid>
 

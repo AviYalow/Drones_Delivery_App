@@ -16,6 +16,7 @@ using IBL;
 using IBL.BO;
 
 
+
 namespace PL
 {
     /// <summary>
@@ -26,17 +27,21 @@ namespace PL
         IBL.IBL bl;
         DroneToList Drone;
         bool sitoation;
-        
+
         public DroneWindow(IBL.IBL bl)
         {
-            
+
             InitializeComponent();
+            
+
+
+
             Drone = new DroneToList();
             this.DataContext = Drone;
             this.bl = bl;
             WeightChoseCombo.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategories));
-            OkButton.Content = "Add Drone";
-            
+
+
             BaseChosingCombo.ItemsSource = bl.BaseStationWhitFreeChargingStationToLists();
             sitoation = true;
             DroneLabel.Visibility = Visibility.Hidden;
@@ -46,7 +51,7 @@ namespace PL
             InitializeComponent();
             Drone = drone;
             this.bl = bl;
-            OkButton.Content = "Update";
+
             this.DataContext = Drone;
             TitelDroneLabel.Content = "Updte Drone Window";
             SirialNumberTextBox.IsEnabled = false;
@@ -56,6 +61,7 @@ namespace PL
             BaseChosingCombo.IsEnabled = false;
             sitoation = false;
             DroneLabel.Content = bl.GetDrone(drone.SerialNumber);
+            DroneLabel.DataContext = bl.GetDrone(drone.SerialNumber);
             if (Drone.DroneStatus == DroneStatus.Free)
             {
                 connectPackage.Visibility = Visibility.Visible;
@@ -72,9 +78,9 @@ namespace PL
         {
             if (!sitoation)
             {
-                if(ModelTextBox.Text!=Drone.Model)
-                bl.UpdateDroneName(Drone.SerialNumber, Drone.Model);
-                
+                if (ModelTextBox.Text != Drone.Model)
+                    bl.UpdateDroneName(Drone.SerialNumber, Drone.Model);
+
                 if (connectPackage.IsChecked == true)
                 {
                     try
@@ -94,7 +100,7 @@ namespace PL
 
                 }
 
-                if(Charge.IsChecked==true)
+                if (Charge.IsChecked == true)
                 {
                     try
                     {
@@ -104,7 +110,7 @@ namespace PL
                             MessageBox.Show("Sending to Charge Succeeded!", "succesful");
                         }
 
-                       else if(Drone.DroneStatus == DroneStatus.Maintenance)
+                        else if (Drone.DroneStatus == DroneStatus.Maintenance)
                         {
                             bl.FreeDroneFromCharging(Drone.SerialNumber);
                             MessageBox.Show("Release from Charge Succeeded!", "succesful");
@@ -134,21 +140,54 @@ namespace PL
 
 
                 }
-                    
+
                 MessageBox.Show(Drone.ToString() + "\n update list!", "succesful");
             }
             else
             {
-                bl.AddDrone(Drone, ((IBL.BO.BaseStationToList)BaseChosingCombo.SelectedItem).SerialNum);
-                MessageBox.Show(Drone.ToString() + "\n add to list!", "succesful");
+                bool flag = true;
+                if (SirialNumberTextBox.Text == "0")
+                {
+                    SirialNumberTextBox.BorderBrush = Brushes.Red;
+                    flag = false;
+                }
+                if (ModelTextBox.Text == "")
+                {
+                    ModelTextBox.BorderBrush = Brushes.Red;
+                    flag = false;
+                }
+                if (WeightChoseCombo.SelectedItem is null)
+                {
+                  
+                    flag = false;
+                }
+                if (BaseChosingCombo.SelectedItem is null)
+                {
+                    BaseChosingCombo.BorderBrush = Brushes.Red;
+                    flag = false;
+                };
+
+                if (!flag)
+                    return;
+
+                try
+                {
+                    bl.AddDrone(Drone, ((IBL.BO.BaseStationToList)BaseChosingCombo.SelectedItem).SerialNum);
+
+                    MessageBox.Show(Drone.ToString() + "\n add to list!", "succesful");
+                }
+                catch (IBL.BO.ItemFoundExeption ex)
+                {
+                    MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
 
             this.Close();
         }
 
-       
 
-       
+
+
 
         private void SirialNumberTextBox_PreviewKeyUp(object sender, KeyEventArgs e)
         {
@@ -196,12 +235,12 @@ namespace PL
 
         private void WeightChoseCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           
-            Drone.WeightCategory =(IBL.BO.WeightCategories) WeightChoseCombo.SelectedItem;
-            
+
+            Drone.WeightCategory = (IBL.BO.WeightCategories)WeightChoseCombo.SelectedItem;
+
 
         }
 
-       
+
     }
 }

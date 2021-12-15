@@ -42,13 +42,13 @@
             </ListView.View>
         </ListView>
 
-        <Button   x:Name="ReturnButton" Click="Button_Return_Click"  HorizontalAlignment="Left" Margin="588,183,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="108" >
-            <StackPanel>
-                <Image Name="ReturnImage" Height="78" Stretch="Fill" Visibility="Visible" Source="/return.png" Width="97" VerticalAlignment="Top" />
-            </StackPanel>
-        </Button>
-      
+        <Button   x:Name="ReturnButton" Click="Button_Return_Click"  HorizontalAlignment="Left"  Margin="588,183,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="108" >
 
+            <Button.Background>
+                <ImageBrush ImageSource="/return.png" />
+            </Button.Background>
+          
 
+            </Button>
     </Grid>
 </Window>

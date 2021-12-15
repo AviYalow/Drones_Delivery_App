@@ -27,10 +27,10 @@ namespace IBL.BO
             print += $"model: {Model},\n";
             print+= $"Weight Category: {weightCategory},\n";
             print += $"Package in transfer:\n";
-            print +=(packageInTransfer != null)? $" {packageInTransfer}":'0';
-            print += $"\n Butrry status: {butrryStatus},\n";
-            print += $" Drone status: {droneStatus},\n";
-            print += $"{location}\n";
+            print +=(packageInTransfer != null)?  $" {packageInTransfer,3}":'0';
+            print += $"Butrry status: {butrryStatus},\n";
+            print += $"Drone status: {droneStatus},\n";
+            print += $"Location:\n{location}\n";
            
             return print;
         }
