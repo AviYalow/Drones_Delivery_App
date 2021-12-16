@@ -313,13 +313,13 @@ namespace IBL
 
 
 
+        public IEnumerable<DroneToList> DroneSortListBySiral(string obj,IEnumerable<DroneToList> drones = null);
 
 
-
-
-
-
-
+        public IEnumerable<DroneToList> DroneSortListByModel(IEnumerable<DroneToList> drones = null);
+        public IEnumerable<DroneToList> DroneSortListByWeight(IEnumerable<DroneToList> drones = null);
+        public IEnumerable<DroneToList> DroneSortListByStatus(IEnumerable<DroneToList> drones = null);
+        public IEnumerable<DroneToList> DroneSortListByButtry(IEnumerable<DroneToList> drones = null);
 
 
 

@@ -31,15 +31,42 @@
 
         <ListView x:Name="DronesListView" Margin="0,120,0,136" Grid.RowSpan="2" Background="LightGreen" MouseDoubleClick="ChoseDrone">
             <ListView.View>
-                <GridView x:Name="a"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
-                    
-                    <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNumber}" x:Name="Serial" Header="Serial"  />
-                    <GridViewColumn  DisplayMemberBinding="{Binding Path=Model}" x:Name="Model" Header="Model" />
-                    <GridViewColumn  DisplayMemberBinding="{Binding Path=WeightCategory}" x:Name="WeightCategory" Header="WeightCategory" />
-                    <GridViewColumn  DisplayMemberBinding="{Binding Path=ButrryStatus}" x:Name="ButrryStatus" Header="ButrryStatus" />
-                    <GridViewColumn  DisplayMemberBinding="{Binding Path=DroneStatus}" x:Name="DroneStatus" Header="DroneStatus" />
-                    <GridViewColumn  DisplayMemberBinding="{Binding Path=Location}" x:Name="Location" Header="Location" />
-                    <GridViewColumn  DisplayMemberBinding="{Binding Path=NumPackage}" x:Name="NumPackage" Header="NumPackage" />
+                <GridView x:Name="ListviewGridToDroneList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNumber}" x:Name="Serial"   >
+                        <HeaderedContentControl x:Name="SerialNumber"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                            <TextBox Text="Serial" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=Model}" x:Name="ModelGrid" >
+                        <HeaderedContentControl x:Name="Model"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                            <TextBox Text="Model" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=WeightCategory}" x:Name="WeightCategoryGrid"  >
+                        <HeaderedContentControl x:Name="WeightCategory"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                            <TextBox Text="WeightCategory" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=ButrryStatus}" x:Name="ButrryStatusGrid"  >
+                        <HeaderedContentControl x:Name="ButrryStatus"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                            <TextBox Text="ButrryStatus" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=DroneStatus}" x:Name="DroneStatusGrid" >
+                        <HeaderedContentControl x:Name="DroneStatus"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                            <TextBox Text="DroneStatus" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=Location}" x:Name="LocationGrid"  >
+                        <HeaderedContentControl x:Name="Location"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                            <TextBox Text="Location" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=NumPackage}" x:Name="NumPackageGrid"  >
+                        <HeaderedContentControl x:Name="NumPackage"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                            <TextBox Text="NumPackage" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -49,8 +76,8 @@
             <Button.Background>
                 <ImageBrush ImageSource="/return.png" />
             </Button.Background>
-          
 
-            </Button>
+
+        </Button>
     </Grid>
 </Window>

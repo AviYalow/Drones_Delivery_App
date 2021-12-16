@@ -136,6 +136,15 @@ namespace PL
             DronesListView.ItemsSource = dronesSelectByStatusIenumrble.Intersect(dronesSelectByWeightIenumrble);
         }
 
-       
+        private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            HeaderedContentControl control = sender as HeaderedContentControl;
+            
+            DronesListView.ItemsSource = bl.DroneSortListBySiral(control.Name, dronesSelectByStatusIenumrble.Intersect(dronesSelectByWeightIenumrble));
+
+
+        }
+
+    
     }
 }
