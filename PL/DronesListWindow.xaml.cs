@@ -65,20 +65,21 @@ namespace PL
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (StatusSelector.SelectedItem == StatusSelector.Items[0])
-            {
-               
-                dronesSelectByStatusIenumrble = bl.DroneToLists();
+            /*  if (StatusSelector.SelectedItem == StatusSelector.Items[0])
+              {
 
-            }
-            else
-            {
-                
-                dronesSelectByStatusIenumrble = (bl.DroneToListsByStatus((IBL.BO.DroneStatus)StatusSelector.SelectedItem));
+                  dronesSelectByStatusIenumrble = bl.DroneToLists();
+
+              }
+              else
+              {
+
+                  dronesSelectByStatusIenumrble = (bl.DroneToListsByStatus((IBL.BO.DroneStatus)StatusSelector.SelectedItem));
 
 
-            }
-            DronesListView.ItemsSource = dronesSelectByStatusIenumrble.Intersect(dronesSelectByWeightIenumrble);
+              }
+              DronesListView.ItemsSource = dronesSelectByStatusIenumrble.Intersect(dronesSelectByWeightIenumrble);*/
+            DronesListView.ItemsSource = bl.DroneToListsByStatus((IBL.BO.DroneStatus)StatusSelector.SelectedItem);
         }
 
 

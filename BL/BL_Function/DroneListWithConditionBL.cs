@@ -29,8 +29,11 @@ namespace IBL
         {
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
+            droneToListFilter += x => x.DroneStatus == droneStatus;
+            return filterDrones();
 
-            return dronesListInBl.FindAll(x => x.DroneStatus == droneStatus);
+
+          //  return dronesListInBl.FindAll(x => x.DroneStatus == droneStatus);
         }
 
         /// <summary>
@@ -83,61 +86,15 @@ namespace IBL
             }
            
         }
-        public IEnumerable<DroneToList> DroneSortListByModel(IEnumerable<DroneToList> drones = null)
+        
+        IEnumerable<DroneToList> filterDrones ()
         {
-
+            var drones = DroneToLists();
+            foreach (Func<DroneToList,bool> prdict in droneToListFilter.GetInvocationList())
             {
-                if (drones is null)
-                    return from x in dronesListInBl
-                           orderby x.Model
-                           select x;
-                return from x in drones
-                       orderby x.Model
-                       select x;
+                drones = drones.Where(prdict);
             }
-
-        }
-        public IEnumerable<DroneToList> DroneSortListByWeight(IEnumerable<DroneToList> drones = null)
-        {
-
-            {
-                if (drones is null)
-                    return from x in dronesListInBl
-                           orderby x.WeightCategory
-                           select x;
-                return from x in drones
-                       orderby x.WeightCategory
-                       select x;
-            }
-
-        }
-        public IEnumerable<DroneToList> DroneSortListByStatus(IEnumerable<DroneToList> drones = null)
-        {
-
-            {
-                if (drones is null)
-                    return from x in dronesListInBl
-                           orderby x.DroneStatus
-                           select x;
-                return from x in drones
-                       orderby x.DroneStatus
-                       select x;
-            }
-
-        }
-        public IEnumerable<DroneToList> DroneSortListByButtry(IEnumerable<DroneToList> drones = null)
-        {
-
-            {
-                if (drones is null)
-                    return from x in dronesListInBl
-                           orderby x.ButrryStatus
-                           select x;
-                return from x in drones
-                       orderby x.ButrryStatus
-                       select x;
-            }
-
+            return drones;
         }
     }
 }

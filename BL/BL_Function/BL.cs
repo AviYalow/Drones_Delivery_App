@@ -9,22 +9,25 @@ namespace IBL
 {
     public partial class BL : IBL
     {
+       // delegate bool filter<T>(T item);
         public IDal dalObj;
         List<DroneToList> dronesListInBl = new List<DroneToList>();
         double heaviElctric, mediomElctric, easyElctric, freeElctric, chargingPerMinote;
+        event Func<DroneToList,bool> droneToListFilter = null;
 
         /// <summary>
         /// ctor
         /// </summary>
         public BL()
         {
-            dalObj = new DalObject.DalObject();
-            List<double> electric=new List<double>();
-            foreach(var elctriv in dalObj.Elctrtricity())
+             
+        dalObj = new DalObject.DalObject();
+            List<double> electric = new List<double>();
+            foreach (var elctriv in dalObj.Elctrtricity())
             {
                 electric.Add(elctriv);
             }
-           
+
             freeElctric = electric[0];
             easyElctric = electric[1];
             mediomElctric = electric[2];
@@ -32,7 +35,7 @@ namespace IBL
             chargingPerMinote = electric[4];
 
             Random random = new Random();
-            
+
 
             //Copy the drone list from the data layer to the logic layer
             foreach (IDAL.DO.Drone drone in dalObj.DroneList())
@@ -49,7 +52,7 @@ namespace IBL
                 //Checking for packege connected to this drone
 
                 IDAL.DO.Package package = new IDAL.DO.Package();
-                foreach (IDAL.DO.Package chcking_packege in dalObj.PackegeList(x=>x.OperatorSkimmerId>0))
+                foreach (IDAL.DO.Package chcking_packege in dalObj.PackegeList(x => x.OperatorSkimmerId > 0))
                 {
                     //Check if the package is associated with this drone
                     if (chcking_packege.OperatorSkimmerId == new_drone.SerialNumber)
@@ -95,6 +98,7 @@ namespace IBL
 
                     }
 
+
                 }
 
                 //If the drone doesn't in delivery
@@ -108,7 +112,7 @@ namespace IBL
                         new_drone.ButrryStatus = random.Next(21);
                         int k = random.Next(2);
 
-                        foreach (IDAL.DO.Base_Station base_ in dalObj.BaseStationList(x=>true))
+                        foreach (IDAL.DO.Base_Station base_ in dalObj.BaseStationList(x => true))
                         {
                             if (k == 0)
                             {
@@ -132,13 +136,13 @@ namespace IBL
                         int j = 0;
                         bool flag = false;
                         while (!flag)
-                            foreach (IDAL.DO.Package package1 in dalObj.PackegeList(x=>x.PackageArrived!=null))
+                            foreach (IDAL.DO.Package package1 in dalObj.PackegeList(x => x.PackageArrived != null))
                             {
                                 if (j == k)
                                 {
                                     new_drone.NumPackage = package1.SerialNumber;
                                     new_drone.Location = ClientLocation(package1.GetingClient);
-                                  new_drone.ButrryStatus=  random.Next((int)buttryDownWithNoPackege(new_drone.Location, ClosestBase(ClientLocation(package1.GetingClient)).location) + 1, 100);
+                                    new_drone.ButrryStatus = random.Next((int)buttryDownWithNoPackege(new_drone.Location, ClosestBase(ClientLocation(package1.GetingClient)).location) + 1, 100);
                                     flag = true;
                                     break;
                                 }
@@ -156,6 +160,8 @@ namespace IBL
                 }
 
             }
+
+
 
         }
 
@@ -175,7 +181,7 @@ namespace IBL
         /// </summary>
         /// <param name="point"> a point</param>
         /// <returns>point in the form of degrees</returns>
-        public  string PointToDegree(double point)
+        public string PointToDegree(double point)
         {
             return dalObj.PointToDegree(point);
         }
