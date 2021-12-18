@@ -286,21 +286,21 @@ namespace ConsoleUI
             void baseWhitFreeChargeStation(DalObject.DalObject dalObject)
             {
 
-                foreach (IDAL.DO.Base_Station print in dalObject.BaseStationListWithChargeStates())
+                foreach (IDAL.DO.Base_Station print in dalObject.BaseStationList(x=>x.NumberOfChargingStations>0))
                     Console.WriteLine(print);
             }
 
              void packegeWhitNoDrone(DalObject.DalObject dalObject)
             {
 
-                foreach (IDAL.DO.Package print in dalObject.PackegeListWithNoDrone())
+                foreach (IDAL.DO.Package print in dalObject.PackegeList(x=>x.OperatorSkimmerId==0))
                     Console.WriteLine(print);
             }
 
              void listOfPackage(DalObject.DalObject dalObject)
             {
 
-                foreach (IDAL.DO.Package print in dalObject.PackegeList())
+                foreach (IDAL.DO.Package print in dalObject.PackegeList(x=>true))
                     Console.WriteLine(print);
             }
 
@@ -323,7 +323,7 @@ namespace ConsoleUI
             {
 
 
-                foreach (IDAL.DO.Base_Station print in dalObject.BaseStationList())
+                foreach (IDAL.DO.Base_Station print in dalObject.BaseStationList(x=>true))
                     Console.WriteLine(print);
 
 

@@ -9,6 +9,39 @@
         Title="DroneWindow" Height="450" Width="800"
          Background="LightGreen"
    Icon="/DroneIcon.png">
+    <Window.Resources >
+        <DataTemplate x:Key="gridForDrone" DataType="IBL.BO.Drone">
+            <Grid>
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Siral Number:"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Model:"/>
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Weight Category:"/>
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="Package in transfer:"/>
+                <TextBlock Grid.Column="0" Grid.Row="4" Text="Butrry status:"/>
+                <TextBlock Grid.Column="0" Grid.Row="5" Text="Drone status:"/>
+                <TextBlock Grid.Column="0" Grid.Row="6" Text="Location:"/>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Path=SerialNum}"/>
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=Model}"/>
+                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Path=weightCategory}"/>
+                <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Path=packageInTransfer}"/>
+                <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Path=butrryStatus}"/>
+                <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding Path=droneStatus}"/>
+                <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding Path=location}"/>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="557*"/>
@@ -47,27 +80,57 @@
                         <Setter Property="Foreground" Value="Chocolate"/>
                     </Style>
                 </ComboBox.ItemContainerStyle>
-                
+
 
             </ComboBox>
             <Label Name="ErrorMassegeLabel"  Content="Your input Worng!" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="118" Visibility="Collapsed" Foreground="#FFF13C3C" Margin="132,19,0,0"     />
-            <Button  Name="OkButton"    Grid.Row="6"   VerticalAlignment="Top" Height="50" Click="OkButton_Click" Grid.RowSpan="2" Margin="156,24,169,0" >
+            <Button  Name="OkButton"    Grid.Row="7"   VerticalAlignment="Center" Height="50" Click="OkButton_Click" Margin="50,0,275,0" RenderTransformOrigin="0.528,1.35"  >
                 <Button.Background>
                     <ImageBrush ImageSource="/ok.jpg"/>
                 </Button.Background>
+
             </Button>
 
 
             <Label Name="LocationLabel" Content="Location:" HorizontalAlignment="Left"  Grid.Row="4" VerticalAlignment="Center" Width="74" FontWeight="Bold"/>
-            <ComboBox Name="BaseChosingCombo"  Text="First Base station" HorizontalAlignment="Left" Height="21" Margin="129,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="127" IsEditable="True" >
-                <ComboBox.ItemContainerStyle>
-                <Style TargetType="ComboBoxItem">
-                    <Setter Property="Background" Value="{StaticResource ppp}"/>
-                </Style>
+            <ComboBox Name="BaseChosingCombo"  Text="First Base station" HorizontalAlignment="Left" Height="21" Margin="129,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="127" IsEditable="True"  >
+               
+                <ComboBox.ItemContainerStyle  >
+                    <Style x:Name="notError" TargetType="ComboBoxItem">
+                        <Setter x:Name="aaa" Property="Background" Value="{StaticResource ppp}" />
+                    </Style>
                 </ComboBox.ItemContainerStyle>
             </ComboBox>
-            <Label Name="DroneLabel"   VerticalAlignment="Top"   Grid.RowSpan="9" Width="auto" Height="387" Grid.Column="1" Margin="5,14,-5,0" >
-
+            <Label Name="DroneLabel"   VerticalAlignment="Top"       Grid.RowSpan="9" Width="auto" Height="387" Grid.Column="1" Margin="5,14,-5,0" >
+                <Grid>
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Siral Number:" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Model:" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Weight Category:" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Package in transfer:" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Butrry status:" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="0" Grid.Row="5" Text="Drone status:" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="0" Grid.Row="6" Text="Location:" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=SerialNum}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=Model}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Path=weightCategory}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Path=packageInTransfer}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Path=butrryStatus}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding Path=droneStatus}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding Path=location}"/>
+                </Grid>
             </Label>
 
             <RadioButton x:Name="Charge" Content="Send to charge" HorizontalAlignment="Left"  Grid.Row="5" VerticalAlignment="Center" Visibility="Hidden" />
@@ -75,6 +138,14 @@
             <Label Name="AllFieldsArerequiredLabel" Content="All fields are required!"  HorizontalAlignment="Left" Margin="90,29,0,0" Grid.Row="7" VerticalAlignment="Top" Height="34" Grid.RowSpan="2" Width="145" Foreground="#FFDC3434" Visibility="Collapsed">
 
             </Label>
+            <Button  HorizontalAlignment="Left" Height="58" Margin="286,0,0,43" Grid.Row="6" VerticalAlignment="Bottom" Width="67" Click="Button_Click" Grid.RowSpan="3">
+                <Button.Background>
+                    <ImageBrush ImageSource="/return.png" />
+
+                </Button.Background>
+            </Button>
+           
+
 
         </Grid>
 

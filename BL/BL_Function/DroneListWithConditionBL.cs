@@ -10,6 +10,8 @@ namespace IBL
 {
     public partial class BL : IBL
     {
+        Func<DroneToList, bool> selectByStatus = null;
+        Func<DroneToList, bool> selectByWeihgt = null;
         /// <summary>
         /// return list of drones
         /// </summary>
@@ -21,31 +23,40 @@ namespace IBL
 
             return dronesListInBl.FindAll(x => x.DroneStatus != DroneStatus.Delete);
         }
+
+
         /// <summary>
         /// return list of drones by spsific status
         /// </summary>
         /// <returns> return list of drones</returns>
-        public IEnumerable<DroneToList> DroneToListsByStatus(DroneStatus droneStatus)
+        public IEnumerable<DroneToList> DroneToListsByStatus(DroneStatus? droneStatus = null)
         {
+
+            droneToListFilter -= selectByStatus;
+            selectByStatus = x => x.DroneStatus == droneStatus;
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
-            droneToListFilter += x => x.DroneStatus == droneStatus;
-            return filterDrones();
+            if (droneStatus != null)
+                droneToListFilter += selectByStatus;
 
+            return FilterDronesList();
 
-          //  return dronesListInBl.FindAll(x => x.DroneStatus == droneStatus);
         }
 
         /// <summary>
         /// return list of drones by maximum weight
         /// </summary>
         /// <returns> return list of drones</returns>
-        public IEnumerable<DroneToList> DroneToListsByWhight(WeightCategories weight)
+        public IEnumerable<DroneToList> DroneToListsByWhight(WeightCategories? weight = null)
         {
+            droneToListFilter -= selectByWeihgt;
+            selectByWeihgt = x => x.WeightCategory >= weight;
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
+            if (weight != null)
+                droneToListFilter += selectByWeihgt;
 
-            return dronesListInBl.FindAll(x => x.WeightCategory <= weight);
+            return FilterDronesList();
         }
 
         /// <summary>
@@ -62,12 +73,17 @@ namespace IBL
                    where x.WeightCategory >= package.weightCatgory && x.DroneStatus == DroneStatus.Free && x.ButrryStatus > batteryCalculationForFullShipping(x.Location, package)
                    select new DroneToList { ButrryStatus = x.ButrryStatus, DroneStatus = x.DroneStatus, Location = x.Location, Model = x.Model, NumPackage = x.NumPackage, SerialNumber = x.SerialNumber, WeightCategory = x.WeightCategory };
         }
-
-        public IEnumerable<DroneToList> DroneSortListBySiral(string obj,IEnumerable<DroneToList> drones = null)
+        /// <summary>
+        /// sort list by spscific parameter
+        /// </summary>
+        /// <param name="obj">ordenry list by this parameter parameter </param>
+        /// <param name="drones">ordener this list </param>
+        /// <returns>ordenry list</returns>
+        public IEnumerable<DroneToList> DroneSortList(string obj, IEnumerable<DroneToList> drones = null)
         {
             DroneToList drone = new DroneToList();
             int i = 0;
-            foreach(var type in drone.GetType().GetProperties())
+            foreach (var type in drone.GetType().GetProperties())
             {
                 if (type.Name != obj)
                     i++;
@@ -84,13 +100,17 @@ namespace IBL
                        orderby x.GetType().GetProperties()[i].GetValue(x)
                        select x;
             }
-           
+
         }
-        
-        IEnumerable<DroneToList> filterDrones ()
+        /// <summary>
+        /// return filter list
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<DroneToList> FilterDronesList()
         {
             var drones = DroneToLists();
-            foreach (Func<DroneToList,bool> prdict in droneToListFilter.GetInvocationList())
+            if(droneToListFilter!=null&&droneToListFilter.GetInvocationList()!=null)
+            foreach (Func<DroneToList, bool> prdict in droneToListFilter.GetInvocationList())
             {
                 drones = drones.Where(prdict);
             }

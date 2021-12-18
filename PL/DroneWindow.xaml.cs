@@ -14,8 +14,8 @@ using System.Windows.Shapes;
 using Microsoft.VisualBasic;
 using IBL;
 using IBL.BO;
-
-
+using System.Reflection;
+using Microsoft.Win32;
 
 namespace PL
 {
@@ -32,7 +32,7 @@ namespace PL
         {
 
             InitializeComponent();
-            
+
 
 
 
@@ -61,7 +61,7 @@ namespace PL
             WeightChoseCombo.Text = drone.WeightCategory.ToString();
             BaseChosingCombo.IsEnabled = false;
             sitoation = false;
-            DroneLabel.Content = bl.GetDrone(drone.SerialNumber);
+            // DroneLabel.Content = bl.GetDrone(drone.SerialNumber);
             DroneLabel.DataContext = bl.GetDrone(drone.SerialNumber);
             if (Drone.DroneStatus == DroneStatus.Free)
             {
@@ -89,6 +89,8 @@ namespace PL
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
+
+
             if (!sitoation)
             {
                 if (ModelTextBox.Text != Drone.Model)
@@ -150,24 +152,29 @@ namespace PL
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                    
+
 
                 }
 
                 MessageBox.Show(Drone.ToString() + "\n update list!", "succesful");
             }
 
+
             else
             {
-                try
+                if (BaseChosingCombo.SelectedItem is null || ModelTextBox.Text == "" || SirialNumberTextBox.Text == "" || WeightChoseCombo.SelectedItem is null)
                 {
 
-                    
+                    return;
+                }
+
+                try
+                {
 
                     bl.AddDrone(Drone, ((IBL.BO.BaseStationToList)BaseChosingCombo.SelectedItem).SerialNum);
                     MessageBox.Show(Drone.ToString() + "\n add to list!", "succesful");
                 }
-                catch(IBL.BO.InputErrorException ex)
+                catch (IBL.BO.InputErrorException ex)
                 {
                     MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -238,6 +245,18 @@ namespace PL
 
             Drone.WeightCategory = (IBL.BO.WeightCategories)WeightChoseCombo.SelectedItem;
 
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Closing += DroneWindow_Closing;
+            this.Close();
+        }
+
+        private void DroneWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = false;
 
         }
 

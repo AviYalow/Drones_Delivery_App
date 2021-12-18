@@ -20,9 +20,8 @@ namespace PL
     public partial class DronesListWindow : Window
     {
         IBL.IBL bl;
+
        
-        IEnumerable<IBL.BO.DroneToList> dronesSelectByStatusIenumrble;
-        IEnumerable<IBL.BO.DroneToList> dronesSelectByWeightIenumrble;
         IBL.BO.DroneToList drone;
         public DronesListWindow(IBL.IBL bl)
         {
@@ -37,49 +36,36 @@ namespace PL
             foreach (var item in Enum.GetValues(typeof(IBL.BO.DroneStatus)))
                 StatusSelector.Items.Add(item);
             drone = new IBL.BO.DroneToList();
-            DronesListView.ItemsSource = dronesSelectByStatusIenumrble = dronesSelectByWeightIenumrble = bl.DroneToLists();
+            DronesListView.ItemsSource = bl.FilterDronesList();
             DronesListView.DataContext = drone;
 
-            
+
 
         }
 
-        
+
 
         private void WeightSelctor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
             if (WeightSelctor.SelectedItem == WeightSelctor.Items[0])
             {
-                dronesSelectByWeightIenumrble = bl.DroneToLists();
-               
+                DronesListView.ItemsSource = bl.DroneToListsByWhight();
+
             }
             else
-            {
-                
-
-                dronesSelectByWeightIenumrble = bl.DroneToListsByWhight((IBL.BO.WeightCategories)WeightSelctor.SelectedItem);
-            }
-            DronesListView.ItemsSource = dronesSelectByStatusIenumrble.Intersect(dronesSelectByWeightIenumrble);
+                DronesListView.ItemsSource = bl.DroneToListsByWhight((IBL.BO.WeightCategories)WeightSelctor.SelectedItem);
         }
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            /*  if (StatusSelector.SelectedItem == StatusSelector.Items[0])
-              {
+            if (StatusSelector.SelectedItem == StatusSelector.Items[0])
+            {
+                DronesListView.ItemsSource = bl.DroneToListsByStatus();
 
-                  dronesSelectByStatusIenumrble = bl.DroneToLists();
-
-              }
-              else
-              {
-
-                  dronesSelectByStatusIenumrble = (bl.DroneToListsByStatus((IBL.BO.DroneStatus)StatusSelector.SelectedItem));
-
-
-              }
-              DronesListView.ItemsSource = dronesSelectByStatusIenumrble.Intersect(dronesSelectByWeightIenumrble);*/
-            DronesListView.ItemsSource = bl.DroneToListsByStatus((IBL.BO.DroneStatus)StatusSelector.SelectedItem);
+            }
+            else
+                DronesListView.ItemsSource = bl.DroneToListsByStatus((IBL.BO.DroneStatus)StatusSelector.SelectedItem);
         }
 
 
@@ -89,7 +75,7 @@ namespace PL
             if (DronesListView.SelectedItem != null)
             {
                 new DroneWindow(bl, (IBL.BO.DroneToList)DronesListView.SelectedItem).ShowDialog();
-                updateListView();
+                DronesListView.ItemsSource = bl.FilterDronesList();
             }
 
         }
@@ -98,7 +84,7 @@ namespace PL
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow(bl).ShowDialog();
-            updateListView();
+            DronesListView.ItemsSource = bl.FilterDronesList();
         }
 
         private void Button_Return_Click(object sender, RoutedEventArgs e)
@@ -109,7 +95,7 @@ namespace PL
 
         private void DronesListWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            e.Cancel=false;
+            e.Cancel = false;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -118,34 +104,17 @@ namespace PL
 
         }
 
-        private void updateListView()
-        {
-            if (WeightSelctor.SelectedItem != null)
-                if (WeightSelctor.SelectedItem != WeightSelctor.Items[0])
-                    dronesSelectByWeightIenumrble = bl.DroneToListsByWhight((IBL.BO.WeightCategories)WeightSelctor.SelectedItem);
-                else
-                    dronesSelectByWeightIenumrble = bl.DroneToLists();
-            else
-                dronesSelectByWeightIenumrble = bl.DroneToLists();
-            if (StatusSelector.SelectedItem != null)
-                if (StatusSelector.SelectedItem != StatusSelector.Items[0])
-                    dronesSelectByStatusIenumrble = bl.DroneToListsByStatus((IBL.BO.DroneStatus)WeightSelctor.SelectedItem);
-                else
-                    dronesSelectByStatusIenumrble = bl.DroneToLists();
-            else
-                dronesSelectByStatusIenumrble = bl.DroneToLists();
-            DronesListView.ItemsSource = dronesSelectByStatusIenumrble.Intersect(dronesSelectByWeightIenumrble);
-        }
+   
 
         private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             HeaderedContentControl control = sender as HeaderedContentControl;
-            
-            DronesListView.ItemsSource = bl.DroneSortListBySiral(control.Name, dronesSelectByStatusIenumrble.Intersect(dronesSelectByWeightIenumrble));
+
+            DronesListView.ItemsSource = bl.DroneSortList(control.Name, DronesListView.ItemsSource as IEnumerable<IBL.BO.DroneToList>);
 
 
         }
 
-    
+
     }
 }

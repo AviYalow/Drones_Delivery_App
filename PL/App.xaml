@@ -9,5 +9,15 @@
             <GradientStop Color="Yellow" Offset="0.4"/>
             <GradientStop Color="Red" Offset="1.4"/>
         </LinearGradientBrush>
+        <LinearGradientBrush x:Name="ttt" x:Key="ccc">
+            <GradientStop Color="#FFFF4900" Offset="0"/>
+            <GradientStop Color="#FF00DFFF" Offset="0.4"/>
+            <GradientStop Color="Red" Offset="1.4"/>
+        </LinearGradientBrush>
+      
+            <Style x:Key="qqq" x:Name="notError" TargetType="ComboBoxItem">
+                <Setter x:Name="aaa" Property="Background" Value="{StaticResource ppp}"/>
+            </Style>
+        
     </Application.Resources>
 </Application>

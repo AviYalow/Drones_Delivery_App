@@ -58,7 +58,7 @@
                         </HeaderedContentControl>
                     </GridViewColumn>
                     <GridViewColumn  DisplayMemberBinding="{Binding Path=Location}" x:Name="LocationGrid"  >
-                        <HeaderedContentControl x:Name="Location"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                        <HeaderedContentControl x:Name="Location"    >
                             <TextBox Text="Location" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                         </HeaderedContentControl>
                     </GridViewColumn>

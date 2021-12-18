@@ -56,12 +56,12 @@ namespace IBL
         /// return list of drones by maximum weight
         /// </summary>
         /// <returns> return list of drones</returns>
-        public IEnumerable<DroneToList> DroneToListsByWhight(WeightCategories weight);
+        public IEnumerable<DroneToList> DroneToListsByWhight(WeightCategories? weight=null);
         /// <summary>
         /// return list of drones by spsific status
         /// </summary>
         /// <returns> return list of drones</returns>
-        public IEnumerable<DroneToList> DroneToListsByStatus(DroneStatus droneStatus);
+        public IEnumerable<DroneToList> DroneToListsByStatus(DroneStatus? droneStatus = null);
 
         /// <summary>
         /// search a drone by serial number
@@ -312,11 +312,21 @@ namespace IBL
         public string PointToDegree(double point);
 
 
+        /// <summary>
+        /// sort list by spscific parameter
+        /// </summary>
+        /// <param name="obj">ordenry list by this parameter parameter </param>
+        /// <param name="drones">ordener this list </param>
+        /// <returns>ordenry list</returns>
+        public IEnumerable<DroneToList> DroneSortList(string obj,IEnumerable<DroneToList> drones = null);
 
-        public IEnumerable<DroneToList> DroneSortListBySiral(string obj,IEnumerable<DroneToList> drones = null);
+        /// <summary>
+        /// return filter list
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<DroneToList> FilterDronesList();
 
 
-      
 
 
 
