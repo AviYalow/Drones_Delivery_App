@@ -27,7 +27,7 @@ namespace IBL
                 RecivedClient = clientInPackageFromDal(package.GetingClient)
             };
             returnPackege.Distance = Distans(returnPackege.Source, returnPackege.Destination);
-            returnPackege.InTheWay = (package.PackageArrived == new DateTime()) ? true : false;
+            returnPackege.InTheWay = (package.PackageArrived is null&&package.OperatorSkimmerId!=0) ? true : false;
             return returnPackege;
         }
         /// <summary>
@@ -141,8 +141,12 @@ namespace IBL
             for (int i = 0; i < dronesListInBl.Count; i++)
             {
                 if (dronesListInBl[i].SerialNumber == drone.SerialNumber)
+                {
                     dronesListInBl[i] = drone;
+                    break;
+                }
             }
+            
 
         }
 

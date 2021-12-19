@@ -37,7 +37,7 @@ namespace PL
                 StatusSelector.Items.Add(item);
             drone = new IBL.BO.DroneToList();
             DronesListView.ItemsSource = bl.FilterDronesList();
-            DronesListView.DataContext = drone;
+           
 
 
 
@@ -76,6 +76,7 @@ namespace PL
             {
                 new DroneWindow(bl, (IBL.BO.DroneToList)DronesListView.SelectedItem).ShowDialog();
                 DronesListView.ItemsSource = bl.FilterDronesList();
+                DronesListView.SelectedItem = null;
             }
 
         }

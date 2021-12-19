@@ -29,9 +29,9 @@ namespace IBL
         /// <returns></returns>
         public IEnumerable<BaseStationToList> BaseStationWhitFreeChargingStationToLists()
         {
-            var base_ = dalObj.BaseStationList(x => x.NumberOfChargingStations>0).ToList().ConvertAll(convertBaseInDalToBaseStationList);
-            if (base_.Count == 0)
-                throw new TheListIsEmptyException();
+            var base_ = from x in dalObj.BaseStationList(x => x.NumberOfChargingStations > 0)
+                        select convertBaseInDalToBaseStationList(x);
+           
             return base_;
         }
 

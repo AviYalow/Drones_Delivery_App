@@ -33,15 +33,11 @@ namespace PL
 
             InitializeComponent();
 
-
-
-
             Drone = new DroneToList();
             this.DataContext = Drone;
             this.bl = bl;
             WeightChoseCombo.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategories));
-
-
+         
             BaseChosingCombo.ItemsSource = bl.BaseStationWhitFreeChargingStationToLists();
             sitoation = true;
             DroneLabel.Visibility = Visibility.Hidden;
@@ -61,7 +57,7 @@ namespace PL
             WeightChoseCombo.Text = drone.WeightCategory.ToString();
             BaseChosingCombo.IsEnabled = false;
             sitoation = false;
-            // DroneLabel.Content = bl.GetDrone(drone.SerialNumber);
+           
             DroneLabel.DataContext = bl.GetDrone(drone.SerialNumber);
             if (Drone.DroneStatus == DroneStatus.Free)
             {
@@ -73,6 +69,21 @@ namespace PL
                 Charge.Content = "Release from charge";
                 Charge.Visibility = Visibility.Visible;
             }
+            else if(Drone.DroneStatus == DroneStatus.Work)
+            {
+                var packege = bl.ShowPackage(Drone.NumPackage);
+                if (packege.collect_package is null)
+                {
+                    connectPackage.Content = "Take packege to delviry";
+                    connectPackage.Visibility = Visibility.Visible;
+                }
+               else if (packege.package_arrived is null)
+                {
+                    connectPackage.Content = "Take packege to location";
+                    connectPackage.Visibility = Visibility.Visible;
+                }
+             
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -80,7 +91,6 @@ namespace PL
             e.Cancel = true;
 
         }
-
 
         private void DronesWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -93,22 +103,40 @@ namespace PL
 
             if (!sitoation)
             {
-                if (ModelTextBox.Text != Drone.Model)
-                    bl.UpdateDroneName(Drone.SerialNumber, Drone.Model);
+               
 
                 if (connectPackage.IsChecked == true)
                 {
+                    
                     try
                     {
-                        bl.ConnectPackegeToDrone(Drone.SerialNumber);
-                        MessageBox.Show("Connection Succeeded!", "succesful");
+                        if (connectPackage.Content.ToString() == "Assignment to package")
+                        {
+                            bl.ConnectPackegeToDrone(Drone.SerialNumber);
+                            MessageBox.Show("Connection Succeeded!", "succesful");
+                        }
+                        else if(connectPackage.Content.ToString() == "Take packege to location")
+                        {
+                            bl.PackegArrive(Drone.SerialNumber);
+                            MessageBox.Show("Packege get to dstinetion!", "succesful");
+                        }
+                        else if(connectPackage.Content.ToString() == "Take packege to delviry")
+                        {
+                            bl.CollectPackegForDelivery(Drone.SerialNumber);
+                            MessageBox.Show("Packege collected by drone!", "succesful");
+                        }
                     }
+                       
                     catch (IBL.BO.DroneCantMakeDliveryException ex)
                     {
 
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     catch (IBL.BO.ItemNotFoundException ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    catch(Exception ex)
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
@@ -155,16 +183,32 @@ namespace PL
 
 
                 }
-
-                MessageBox.Show(Drone.ToString() + "\n update list!", "succesful");
+                if (ModelTextBox.Text != Drone.Model)
+                {
+                    bl.UpdateDroneName(Drone.SerialNumber, Drone.Model);
+                    MessageBox.Show(Drone.ToString() + "\n update list!", "succesful");
+                }
             }
 
 
             else
             {
-                if (BaseChosingCombo.SelectedItem is null || ModelTextBox.Text == "" || SirialNumberTextBox.Text == "" || WeightChoseCombo.SelectedItem is null)
+                if (BaseChosingCombo.SelectedItem is null || ModelTextBox.Text == "" || SirialNumberTextBox.Text == ""|| SirialNumberTextBox.Text == "0" || WeightChoseCombo.SelectedItem is null)
                 {
-
+                    if (BaseChosingCombo.SelectedItem is null)
+                        InputMissingLocationLabel.Visibility = Visibility.Visible;
+                    if(WeightChoseCombo.SelectedItem is null)
+                        InputMissingWightLabel.Visibility = Visibility.Visible;
+                    if (ModelTextBox.Text == "")
+                    {
+                        InputMissingModelLabel.Visibility = Visibility.Visible;
+                        ModelTextBox.BorderBrush = Brushes.Red;
+                    }
+                    if(SirialNumberTextBox.Text == "" || SirialNumberTextBox.Text == "0")
+                    {
+                        InputMissingSirialNumberLabel.Visibility = Visibility.Visible;
+                        InputMissingSirialNumberLabel.BorderBrush = Brushes.Red;
+                    }
                     return;
                 }
 
@@ -192,10 +236,6 @@ namespace PL
             this.Close();
         }
 
-
-
-
-
         private void SirialNumberTextBox_PreviewKeyUp(object sender, KeyEventArgs e)
         {
             TextBox text = sender as TextBox;
@@ -207,9 +247,14 @@ namespace PL
                 SirialNumberTextBox.Background = Brushes.White;
                 OkButton.IsEnabled = true;
             }
+            if (text.Text != "0" || text.Text != "")
+            {
+                InputMissingSirialNumberLabel.Visibility = Visibility.Collapsed;
+                SirialNumberTextBox.BorderBrush = Brushes.White;
+            }
 
-            //allow get out of the text box
-            if (e.Key == Key.Enter || e.Key == Key.Return || e.Key == Key.Tab)
+                //allow get out of the text box
+                if (e.Key == Key.Enter || e.Key == Key.Return || e.Key == Key.Tab)
                 return;
 
             //allow list of system keys (add other key here if you want to allow)
@@ -242,7 +287,7 @@ namespace PL
 
         private void WeightChoseCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            InputMissingWightLabel.Visibility = Visibility.Collapsed;
             Drone.WeightCategory = (IBL.BO.WeightCategories)WeightChoseCombo.SelectedItem;
 
 
@@ -260,6 +305,20 @@ namespace PL
 
         }
 
+        private void BaseChosingCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+           
+            InputMissingLocationLabel.Visibility = Visibility.Collapsed;
+          
+        }
 
+        private void ModelTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (ModelTextBox.Text != "")
+            {
+                InputMissingModelLabel.Visibility = Visibility.Collapsed;
+                ModelTextBox.BorderBrush = Brushes.Black;
+            }
+        }
     }
 }

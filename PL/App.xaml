@@ -4,20 +4,32 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-   <LinearGradientBrush x:Name="yyy" x:Key="ppp">
+        <LinearGradientBrush x:Name="LinearGradientBrush1" x:Key="LinearGradientBrush1">
             <GradientStop Color="Blue" Offset="0"/>
             <GradientStop Color="Yellow" Offset="0.4"/>
             <GradientStop Color="Red" Offset="1.4"/>
         </LinearGradientBrush>
-        <LinearGradientBrush x:Name="ttt" x:Key="ccc">
+        <LinearGradientBrush x:Name="LinearGradientBrush2" x:Key="LinearGradientBrush2">
             <GradientStop Color="#FFFF4900" Offset="0"/>
             <GradientStop Color="#FF00DFFF" Offset="0.4"/>
             <GradientStop Color="Red" Offset="1.4"/>
         </LinearGradientBrush>
-      
-            <Style x:Key="qqq" x:Name="notError" TargetType="ComboBoxItem">
-                <Setter x:Name="aaa" Property="Background" Value="{StaticResource ppp}"/>
-            </Style>
+        <Grid x:Name="outPutGrid" x:Key="outPutGrid">
+            <Grid.RowDefinitions >
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+            
         
     </Application.Resources>
 </Application>
