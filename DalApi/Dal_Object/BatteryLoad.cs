@@ -1,7 +1,6 @@
 ﻿using System;
 
-namespace IDAL
-{
+
     namespace DO
     {
         /// <BtarryLoad>
@@ -29,4 +28,3 @@ namespace IDAL
         }
 
     }
-}

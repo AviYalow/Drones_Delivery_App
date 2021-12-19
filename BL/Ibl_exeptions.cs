@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using DalApi;
 
 namespace IBL
 {
@@ -14,8 +15,8 @@ namespace IBL
         /// </summary>
         public class ItemFoundExeption : Exception
         {
-            IDAL.DO.ItemFoundException exeption { get; set; }
-            public ItemFoundExeption(IDAL.DO.ItemFoundException ex) { exeption = ex; }
+           DO.ItemFoundException exeption { get; set; }
+            public ItemFoundExeption(DO.ItemFoundException ex) { exeption = ex; }
             protected ItemFoundExeption(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
             public override string ToString()
             {
@@ -32,7 +33,7 @@ namespace IBL
         /// </summary>
         public class ItemNotFoundException : Exception
         {
-            IDAL.DO.ItemNotFoundException exeption { get; set; }
+           DO.ItemNotFoundException exeption { get; set; }
             public string type { get; set; }
             public uint key { get; set; }
 
@@ -41,7 +42,7 @@ namespace IBL
                 this.type = type;
                 key = unic_key;
             }
-            public ItemNotFoundException(IDAL.DO.ItemNotFoundException ex) : base(ex.Message, ex) { exeption = ex; }
+            public ItemNotFoundException(DO.ItemNotFoundException ex) : base(ex.Message, ex) { exeption = ex; }
             protected ItemNotFoundException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
             public override string ToString()
             {

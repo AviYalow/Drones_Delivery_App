@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using IBL;
 using IBL.BO;
 
+using DalApi;
 namespace IBL
 {
     public partial class BL : IBL
@@ -115,12 +116,12 @@ namespace IBL
         public IEnumerable<PackageToList> PackageWeightLists(WeightCategories weight)
         {
 
-            if (dalObj.PackegeList(x => x.WeightCatgory==(IDAL.DO.WeightCategories)weight).Count() == 0)
+            if (dalObj.PackegeList(x => x.WeightCatgory==(DO.WeightCategories)weight).Count() == 0)
                 throw new TheListIsEmptyException();
 
             List<PackageToList> packageToLists = new List<PackageToList>();
 
-            foreach (var packege in dalObj.PackegeList(x => x.WeightCatgory == (IDAL.DO.WeightCategories)weight))
+            foreach (var packege in dalObj.PackegeList(x => x.WeightCatgory == (DO.WeightCategories)weight))
             {
                 packageToLists.Add(convertPackegeDalToList(packege));
 
@@ -131,12 +132,12 @@ namespace IBL
         public IEnumerable<PackageToList> PackagePriorityLists(Priority priority)
         {
 
-            if (dalObj.PackegeList(x => x.Priority == (IDAL.DO.Priority)priority).Count() == 0)
+            if (dalObj.PackegeList(x => x.Priority == (DO.Priority)priority).Count() == 0)
                 throw new TheListIsEmptyException();
 
             List<PackageToList> packageToLists = new List<PackageToList>();
 
-            foreach (var packege in dalObj.PackegeList(x => x.Priority == (IDAL.DO.Priority)priority))
+            foreach (var packege in dalObj.PackegeList(x => x.Priority == (DO.Priority)priority))
             {
                 packageToLists.Add(convertPackegeDalToList(packege));
 

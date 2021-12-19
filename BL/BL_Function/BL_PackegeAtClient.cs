@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
 
+using DalApi;
 namespace IBL
 {
     public partial class BL : IBL
@@ -15,7 +16,7 @@ namespace IBL
         /// <param name="package">Packege in the data layer </param>
         /// <param name="client1"> id of the client at the pacage</param>
         /// <returns> PackegeAtClient object</returns>
-        PackageAtClient convretPackegeDalToPackegeAtClient(IDAL.DO.Package package ,uint client1)
+        PackageAtClient convretPackegeDalToPackegeAtClient(DO.Package package ,uint client1)
         {
             var convert = new PackageAtClient
             {

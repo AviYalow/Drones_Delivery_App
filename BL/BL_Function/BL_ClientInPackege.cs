@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
 
+using DalApi;
 namespace IBL
 {
     public partial class BL:IBL
@@ -16,12 +17,12 @@ namespace IBL
         /// <returns>client object on the logical layer</returns>
         ClientInPackage clientInPackageFromDal(uint id)
         {
-            IDAL.DO.Client client;
+            DO.Client client;
             try
             {
                  client = dalObj.CilentByNumber(id);
             }
-            catch(IDAL.DO. ItemNotFoundException ex)
+            catch(DO. ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalObject;
-using IDAL.DO;
+using DalApi;
+using DO;
 
-namespace DalObject
+
+namespace DalApi
 {
-   public partial class DalObject : IDAL.IDal
+    partial class DalObject : DalApi.IDal
     {
+        
         /// <summary>
         /// Adding a new package
         /// </summary>
@@ -132,7 +134,7 @@ namespace DalObject
         {
             int i = DataSource.packages.FindIndex(x => x.SerialNumber == package.SerialNumber);
             if (i == -1)
-                throw (new IDAL.DO.ItemNotFoundException("Packege", package.SerialNumber));
+                throw (new DalApi.DO.ItemNotFoundException("Packege", package.SerialNumber));
             else
                 DataSource.packages[i] = package;
         }

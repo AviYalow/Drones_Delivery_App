@@ -1,7 +1,6 @@
 ﻿using System;
 
-namespace IDAL
-{
+
     namespace DO
     {
         /// <Drone>
@@ -33,4 +32,3 @@ namespace IDAL
         }
 
     }
-}

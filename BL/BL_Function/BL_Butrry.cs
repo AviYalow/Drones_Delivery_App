@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
 
+using DalApi;
 namespace IBL
 {
     public partial class BL : IBL
@@ -90,11 +91,11 @@ namespace IBL
 
             
             }
-            catch (IDAL.DO.ItemNotFoundException ex)
+            catch (DO.ItemNotFoundException ex)
             {
                 throw (new ItemNotFoundException(ex));
             }
-            catch (IDAL.DO.ItemFoundException ex)
+            catch (DO.ItemFoundException ex)
             {
                 throw new ItemFoundExeption(ex);
             }
@@ -117,7 +118,7 @@ namespace IBL
             //locking the drone in charge
             var information = dalObj.ChargingDroneList(). FirstOrDefault(x => x.IdDrone == droneNumber);
            
-            if (information.Equals(new IDAL.DO.BatteryLoad()))
+            if (information.Equals(new DO.BatteryLoad()))
                 throw new ItemNotFoundException("Drone", droneNumber);
             //calcoulet how mach he chraging alredy
             double buttry = DroneChrgingAlredy(DateTime.Now-information.EntringDrone);
@@ -151,7 +152,7 @@ namespace IBL
                     throw (new TryToPullOutMoreDrone());
                 }
             }
-            catch (IDAL.DO.ItemNotFoundException ex)
+            catch (DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }

@@ -2,8 +2,7 @@
 
 using System;
 
-namespace IDAL
-{
+
     namespace DO
     {
         /// <Client>
@@ -41,4 +40,3 @@ namespace IDAL
         }
 
     }
-}

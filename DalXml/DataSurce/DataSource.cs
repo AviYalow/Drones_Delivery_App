@@ -1,4 +1,5 @@
-﻿using IDAL.DO;
+﻿using DO;
+using DalApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,19 +7,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace DalObject
+namespace Dal
 {
     /// <summary>
     /// The database
     /// </summary>
-    internal class DataSource
+    public static class DataSource
     {
         //an arrays that contain the various entity
-        internal static List<Drone> drones = new List<Drone>();
-        internal static List<Base_Station> base_Stations = new List<Base_Station>();
-        internal static List<Client> clients = new List<Client>();
-        internal static List<Package> packages = new List<Package>();
-        internal static List<BatteryLoad> droneInCharge = new List<BatteryLoad>();
+        public static List<Drone> drones = new List<Drone>();
+        public static List<Base_Station> base_Stations = new List<Base_Station>();
+        public static List<Client> clients = new List<Client>();
+        public static List<Package> packages = new List<Package>();
+        public static List<BatteryLoad> droneInCharge = new List<BatteryLoad>();
 
 
         /// <Config>
@@ -34,11 +35,15 @@ namespace DalObject
             internal static uint package_num = 10000;
 
         }
+        static DataSource()
+        {
+            Initialize();
+        }
 
         /// <Initialize>
         ///a quick boot of all lists of data 
         /// </Initialize>
-        public static void Initialize()
+         static void Initialize()
         {
 
             Random rand = new Random();

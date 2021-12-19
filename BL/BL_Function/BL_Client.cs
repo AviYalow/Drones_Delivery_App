@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
 
+using DalApi;
 namespace IBL
 {
     public partial class BL : IBL
@@ -16,12 +17,12 @@ namespace IBL
         /// <returns> client location</returns>
         public Location ClientLocation(uint id)
         {
-            IDAL.DO.Client client = new IDAL.DO.Client();
+            DO.Client client = new DO.Client();
             try
             {
                 client = dalObj.CilentByNumber(id);
             }
-            catch (IDAL.DO.ItemNotFoundException ex)
+            catch (DO.ItemNotFoundException ex)
             {
                 throw (new ItemNotFoundException(ex));
             }
@@ -50,7 +51,7 @@ namespace IBL
 
             try
             {
-                dalObj.AddClient(new IDAL.DO.Client
+                dalObj.AddClient(new DO.Client
                 {
                     Id = client.Id,
                     Latitude = client.Location.Latitude,
@@ -59,7 +60,7 @@ namespace IBL
                     PhoneNumber = client.Phone
                 });
             }
-            catch (IDAL.DO.ItemFoundException ex)
+            catch (DO.ItemFoundException ex)
             {
                 throw (new ItemFoundExeption(ex));
             }
@@ -106,7 +107,7 @@ namespace IBL
                     clientFromDal.PhoneNumber = client.Phone;
                 dalObj.UpdateClient(clientFromDal);
             }
-            catch (IDAL.DO.ItemNotFoundException ex)
+            catch (DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }
@@ -143,7 +144,7 @@ namespace IBL
                     }
                 return returnClient;
             }
-            catch (IDAL.DO.ItemNotFoundException ex)
+            catch (DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }
@@ -178,7 +179,7 @@ namespace IBL
                     }
                 }
             }
-            catch(IDAL.DO.ItemNotFoundException ex)
+            catch(DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }

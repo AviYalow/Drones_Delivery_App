@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
-
+using DalApi;
 namespace IBL
 {
     public partial class BL : IBL
@@ -24,7 +24,7 @@ namespace IBL
                     throw new InputErrorException();
 
             }
-            catch (IDAL.DO.ItemNotFoundException ex)
+            catch (DO.ItemNotFoundException ex)
             {
                 throw (new ItemNotFoundException(ex));
             }
@@ -33,9 +33,9 @@ namespace IBL
             Random random = new Random();
             try
             {
-                dalObj.AddDrone(new IDAL.DO.Drone { SerialNumber = drone.SerialNumber, Model = drone.Model, WeightCategory = (IDAL.DO.WeightCategories)drone.WeightCategory });
+                dalObj.AddDrone(new DO.Drone { SerialNumber = drone.SerialNumber, Model = drone.Model, WeightCategory = (DO.WeightCategories)drone.WeightCategory });
             }
-            catch (IDAL.DO.ItemFoundException ex)
+            catch (DO.ItemFoundException ex)
             {
                 throw (new ItemFoundExeption(ex));
             }
@@ -70,13 +70,13 @@ namespace IBL
         /// <param name="newName"> new name to change</param>
         public void UpdateDroneName(uint droneId, string newName)
         {
-            IDAL.DO.Drone droneInData;
+            DO.Drone droneInData;
             try
             {
 
                 droneInData = dalObj.DroneByNumber(droneId);
             }
-            catch (IDAL.DO.ItemNotFoundException ex)
+            catch (DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }
@@ -110,7 +110,7 @@ namespace IBL
         /// </summary>
         /// <param name="drone"> serial number of the  drone</param>
         /// <returns> drone </returns>
-        DroneToList droneFromDal(IDAL.DO.Drone drone)
+        DroneToList droneFromDal(DO.Drone drone)
         {
             return new DroneToList { SerialNumber = drone.SerialNumber, Model = drone.Model, WeightCategory = (WeightCategories)drone.WeightCategory };
         }
@@ -140,7 +140,7 @@ namespace IBL
                     packageInTransfer = pacege
                 };
             }
-            catch (IDAL.DO.ItemNotFoundException ex)
+            catch (DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }

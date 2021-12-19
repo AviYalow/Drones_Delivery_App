@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
 
+using DalApi;
 namespace IBL
 {
     public partial class BL : IBL
@@ -14,7 +15,7 @@ namespace IBL
         /// </summary>
         /// <param name="package"> packege in data layer</param>
         /// <returns> packegeInTrnansfer object in the logical layer</returns>
-        PackageInTransfer convertPackegeDalToPackegeInTrnansfer(IDAL.DO.Package package)
+        PackageInTransfer convertPackegeDalToPackegeInTrnansfer(DO.Package package)
         {
             var returnPackege = new PackageInTransfer
             {
@@ -70,7 +71,7 @@ namespace IBL
                 dalObj.PackageCollected(pacege.SerialNum);
                 dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == droneNumber)] = drone;
             }
-            catch(IDAL.DO.ItemNotFoundException ex)
+            catch(DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }
@@ -99,7 +100,7 @@ namespace IBL
                 dalObj.PackageArrived(packege.SerialNum);
                 dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == droneNumber)] = drone;
             }
-            catch(IDAL.DO.ItemNotFoundException ex)
+            catch(DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }
@@ -119,7 +120,7 @@ namespace IBL
             { throw new DroneCantMakeDliveryException(); }
 
           
-            IDAL.DO.Package returnPackege = new IDAL.DO.Package { SerialNumber=0};
+           DO.Package returnPackege = new DO.Package { SerialNumber=0};
             foreach (var packege in dalObj.PackegeList(x=>x.OperatorSkimmerId==0))
             {
                 if (batteryCalculationForFullShipping(drone.Location, convertPackegeDalToBl(packege)) < drone.ButrryStatus && (WeightCategories)packege.WeightCatgory <= drone.WeightCategory)

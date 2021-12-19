@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalObject;
-using IDAL.DO;
+using DalApi;
+using DO;
 
-namespace DalObject
+namespace DalApi
 {
-    public partial class DalObject : IDAL.IDal
+     partial class DalObject : DalApi.IDal
     {
 
-
+        
         /// <summary>
         ///Adding a new base station
         /// </summary>
@@ -98,7 +98,7 @@ namespace DalObject
         {
             int i = DataSource.base_Stations.FindIndex(x => x.baseNumber == base_.baseNumber);
             if (i == -1)
-                throw (new IDAL.DO.ItemNotFoundException("Base Station", base_.baseNumber));
+                throw (new DalApi.DO.ItemNotFoundException("Base Station", base_.baseNumber));
             else
                 DataSource.base_Stations[i] = base_;
         }

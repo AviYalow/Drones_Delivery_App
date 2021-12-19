@@ -1,8 +1,7 @@
 ﻿using System;
-using DalObject;
 
-namespace IDAL
-{
+
+
     namespace DO
     {
         /// <Base_Station>
@@ -39,4 +38,3 @@ namespace IDAL
 
 
     }
-}

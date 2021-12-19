@@ -5,8 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IDAL
-{
+
     namespace DO
     {
        public class ItemFoundException : Exception
@@ -73,4 +72,4 @@ namespace IDAL
         }
 
     }
-}
+

@@ -1,7 +1,6 @@
 ﻿using System;
 
-namespace IDAL
-{
+
     namespace DO
     {
         /// <Package>
@@ -83,4 +82,3 @@ namespace IDAL
         }
 
     }
-}

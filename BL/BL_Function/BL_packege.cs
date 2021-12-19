@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
 
+using DalApi;
 namespace IBL
 {
     public partial class BL : IBL
@@ -33,17 +34,17 @@ namespace IBL
             try
             {
 
-                packegeNum = dalObj.AddPackage(new IDAL.DO.Package
+                packegeNum = dalObj.AddPackage(new DO.Package
                 {
                     SendClient = package.SendClient.Id,
                     GetingClient = package.RecivedClient.Id,
-                    Priority = (IDAL.DO.Priority)package.priority,
-                    WeightCatgory = (IDAL.DO.WeightCategories)package.weightCatgory,
+                    Priority = (DO.Priority)package.priority,
+                    WeightCatgory = (DO.WeightCategories)package.weightCatgory,
                     PackageArrived = package.create_package
 
                 });
             }
-            catch (IDAL.DO.ItemFoundException ex)
+            catch (DO.ItemFoundException ex)
             {
                 throw (new ItemFoundExeption(ex));
             }
@@ -73,7 +74,7 @@ namespace IBL
         /// <param name="package"> particular package</param>
         public void UpdatePackegInDal(Package package)
         {
-            dalObj.UpdatePackege(new IDAL.DO.Package
+            dalObj.UpdatePackege(new DO.Package
             {
                 SerialNumber = package.SerialNumber,
                 SendClient = package.SendClient.Id,
@@ -82,9 +83,9 @@ namespace IBL
                 OperatorSkimmerId = package.drone.SerialNum,
                 PackageArrived = package.package_arrived,
                 PackageAssociation = package.package_association,
-                Priority = (IDAL.DO.Priority)package.priority,
+                Priority = (DO.Priority)package.priority,
                 GetingClient = package.RecivedClient.Id,
-                WeightCatgory = (IDAL.DO.WeightCategories)package.weightCatgory
+                WeightCatgory = (DO.WeightCategories)package.weightCatgory
             });
         }
 
@@ -104,7 +105,7 @@ namespace IBL
                 var dataPackege = dalObj.packegeByNumber(number);
                 return convertPackegeDalToBl(dataPackege);
             }
-            catch (IDAL.DO.ItemNotFoundException ex)
+            catch (DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }
@@ -116,7 +117,7 @@ namespace IBL
         /// </summary>
         /// <param name="dataPackege"> package in the data layer </param>
         /// <returns>  package in the logical layer</returns>
-        Package convertPackegeDalToBl(IDAL.DO.Package dataPackege)
+        Package convertPackegeDalToBl(DO.Package dataPackege)
         {
             return new Package
             {
@@ -142,7 +143,7 @@ namespace IBL
 
    
 
-        PackageToList convertPackegeDalToList(IDAL.DO.Package package)
+        PackageToList convertPackegeDalToList(DO.Package package)
         {
             PackageStatus packageStatus;
             if (package.PackageArrived != null)
@@ -194,7 +195,7 @@ namespace IBL
                 }
                 dalObj.DeletePackege(number);
             }
-            catch (IDAL.DO.ItemNotFoundException ex)
+            catch (DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }

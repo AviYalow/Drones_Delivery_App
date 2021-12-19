@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalObject;
-using IDAL.DO;
+using DalApi;
+using DO;
 
-namespace DalObject
+namespace DalApi
 {
-   public partial class DalObject : IDAL.IDal
+    partial class DalObject : DalApi.IDal
     {
 
 
@@ -83,7 +83,7 @@ namespace DalObject
             if (index != -1)
                 DataSource.clients[index] = client;
             else
-                throw (new IDAL.DO.ItemNotFoundException("client", client.Id));
+                throw (new DalApi.DO.ItemNotFoundException("client", client.Id));
         }
     }
 }

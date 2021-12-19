@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using IBL;
 using IBL.BO;
 
+using DalApi;
 namespace IBL
 {
     public partial class BL : IBL
@@ -25,7 +26,7 @@ namespace IBL
                 Location base_location = new Location();
 
                 double? distans = null, distans2;
-                foreach (IDAL.DO.Base_Station base_ in dalObj.BaseStationList(x=>true))
+                foreach (DO.Base_Station base_ in dalObj.BaseStationList(x=>true))
                 {
                     base_location.Latitude = base_.latitude;
                     base_location.Longitude = base_.longitude;
@@ -46,7 +47,7 @@ namespace IBL
                     }
                 }
             }
-            catch (IDAL.DO.ItemNotFoundException ex)
+            catch (DO.ItemNotFoundException ex)
             {
                 throw (new ItemNotFoundException(ex));
             }
@@ -60,12 +61,12 @@ namespace IBL
         /// <returns> Location of the base station</returns>
         public Location BaseLocation(uint base_number)
         {
-            IDAL.DO.Base_Station base_Station = new IDAL.DO.Base_Station();
+            DO.Base_Station base_Station = new DO.Base_Station();
             try
             {
                 base_Station = dalObj.BaseStationByNumber(base_number);
             }
-            catch (IDAL.DO.ItemNotFoundException ex)
+            catch (DO.ItemNotFoundException ex)
             {
                 throw (new ItemNotFoundException(ex));
             }
@@ -84,7 +85,7 @@ namespace IBL
         {
             try
             {
-                dalObj.AddStation(new IDAL.DO.Base_Station
+                dalObj.AddStation(new DO.Base_Station
                 {
                     baseNumber = baseStation.SerialNum,
                     NameBase = baseStation.Name,
@@ -93,7 +94,7 @@ namespace IBL
                     longitude = baseStation.location.Longitude
                 });
             }
-            catch (IDAL.DO.ItemFoundException ex)
+            catch (DO.ItemFoundException ex)
             {
                 throw (new ItemFoundExeption(ex));
             }
@@ -108,12 +109,12 @@ namespace IBL
         /// <param name="newNumber"> charging states</param>
         public void UpdateBase(uint base_, string newName, string newNumber)
         {
-            var baseUpdat = new IDAL.DO.Base_Station();
+            var baseUpdat = new DO.Base_Station();
             try
             {
                 baseUpdat = dalObj.BaseStationByNumber(base_);
             }
-            catch (IDAL.DO.ItemNotFoundException ex)
+            catch (DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }
@@ -140,7 +141,7 @@ namespace IBL
         /// </summary>
         /// <param name="baseStation">serial number of the base station</param>
         /// <returns> base station on logical layer </returns>
-        BaseStation convertBaseDalToBaseBl(IDAL.DO.Base_Station baseStation)
+        BaseStation convertBaseDalToBaseBl(DO.Base_Station baseStation)
         {
             return new BaseStation
             {
@@ -156,7 +157,7 @@ namespace IBL
         /// </summary>
         /// <param name="base_Station"></param>
         /// <returns></returns>
-        BaseStationToList convertBaseInDalToBaseStationList(IDAL.DO.Base_Station base_Station)
+        BaseStationToList convertBaseInDalToBaseStationList(DO.Base_Station base_Station)
         {
             var base_ = new BaseStationToList
             {
@@ -189,7 +190,7 @@ namespace IBL
                 }
                 return baseReturn;
             }
-            catch (IDAL.DO.ItemNotFoundException ex)
+            catch (DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }
@@ -216,7 +217,7 @@ namespace IBL
                     drone.Location = ClosestBase(drone.Location).location;
                 }
             }
-            catch (IDAL.DO.ItemNotFoundException ex)
+            catch (DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }

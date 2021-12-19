@@ -4,17 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalObject;
-using IDAL;
-using IDAL.DO;
+using System.Xml.Linq;
+using DO;
 
 
-namespace DalObject
+namespace DalApi
 {
 
-    public partial class DalObject : IDAL.IDal
+     partial class DalObject : DalApi.IDal
     {
-
+        
         /// <summary>
         ///Creating entities with initial initialization
         /// </summary>
@@ -23,7 +22,7 @@ namespace DalObject
             DataSource.Initialize();
         }
 
-
+       
         /// <summary>
         /// show the distance between 2 locations
         /// </summary>
@@ -34,7 +33,7 @@ namespace DalObject
         /// <returns>distance between 2 locations</returns>
         public double Distance(double Longitude1, double Latitude1, double Longitude2, double Latitude2)
         {
-            return IDAL.DO.Point.Distance(Longitude1, Latitude1, Longitude2, Latitude2);
+            return DO.Point.Distance(Longitude1, Latitude1, Longitude2, Latitude2);
         }
 
 

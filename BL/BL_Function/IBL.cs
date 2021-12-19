@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using IBL;
 using IBL.BO;
 
+using DalApi;
 namespace IBL
 {
     public interface IBL

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using IDAL;
+using DalApi;
 using IBL;
 using IBL.BO;
 
@@ -21,7 +21,7 @@ namespace IBL
         public BL()
         {
              
-        dalObj = new DalObject.DalObject();
+        dalObj = new DalObject();
             List<double> electric = new List<double>();
             foreach (var elctriv in dalObj.Elctrtricity())
             {
@@ -38,7 +38,7 @@ namespace IBL
 
 
             //Copy the drone list from the data layer to the logic layer
-            foreach (IDAL.DO.Drone drone in dalObj.DroneList())
+            foreach (DO.Drone drone in dalObj.DroneList())
             {
                 dronesListInBl.Add(droneFromDal(drone));
             }
@@ -51,8 +51,8 @@ namespace IBL
 
                 //Checking for packege connected to this drone
 
-                IDAL.DO.Package package = new IDAL.DO.Package();
-                foreach (IDAL.DO.Package chcking_packege in dalObj.PackegeList(x => x.OperatorSkimmerId > 0))
+                DO.Package package = new DO.Package();
+                foreach (DO.Package chcking_packege in dalObj.PackegeList(x => x.OperatorSkimmerId > 0))
                 {
                     //Check if the package is associated with this drone
                     if (chcking_packege.OperatorSkimmerId == new_drone.SerialNumber)
@@ -112,7 +112,7 @@ namespace IBL
                         new_drone.ButrryStatus = random.Next(21);
                         int k = random.Next(2);
 
-                        foreach (IDAL.DO.Base_Station base_ in dalObj.BaseStationList(x => true))
+                        foreach (DO.Base_Station base_ in dalObj.BaseStationList(x => true))
                         {
                             if (k == 0)
                             {
@@ -136,7 +136,7 @@ namespace IBL
                         int j = 0;
                         bool flag = false;
                         while (!flag)
-                            foreach (IDAL.DO.Package package1 in dalObj.PackegeList(x => x.PackageArrived != null))
+                            foreach (DO.Package package1 in dalObj.PackegeList(x => x.PackageArrived != null))
                             {
                                 if (j == k)
                                 {
