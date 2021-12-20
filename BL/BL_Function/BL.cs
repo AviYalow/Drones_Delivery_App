@@ -9,10 +9,24 @@ namespace BlApi
     sealed partial class BL : IBL
     {
         #region singelton
-        static readonly BL instance = new BL();
-        private static readonly object lock = new object ();
-        static BL() { };
+        private static readonly object padlock = new object ();
+        private static BL instance = null;  
+        public static BL Instance
+        {
 
+            get 
+            {
+                lock (padlock)
+                {
+                        if (instance == null) 
+                        {
+                            instance = new BL();
+                        }
+                        return instance;
+                    }
+            }
+        }
+       
         #endregion
         // delegate bool filter<T>(T item);
         public IDal dalObj;
