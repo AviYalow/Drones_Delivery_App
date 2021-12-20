@@ -9,24 +9,12 @@ namespace BlApi
     sealed partial class BL : IBL
     {
         #region singelton
-        private static readonly object padlock = new object ();
-        private static BL instance = null;  
-        public static BL Instance
-        {
+        private static readonly Lazy<BL> lazy =
+        new Lazy<BL>(() => new BL());
 
-            get 
-            {
-                lock (padlock)
-                {
-                        if (instance == null) 
-                        {
-                            instance = new BL();
-                        }
-                        return instance;
-                    }
-            }
-        }
-       
+        public static BL Instance { get { return lazy.Value; } }
+
+
         #endregion
         // delegate bool filter<T>(T item);
         public IDal dalObj;
@@ -37,7 +25,7 @@ namespace BlApi
         /// <summary>
         /// ctor
         /// </summary>
-       private public BL()
+       private BL()
         {
              
         dalObj = new DalObject();
