@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DalFacade;
+using Ds;
 using DO;
 
-namespace DalFacade
+namespace Dal
 {
     partial class DalObject : DalFacade.IDal
     {
@@ -83,7 +84,7 @@ namespace DalFacade
             if (index != -1)
                 DataSource.clients[index] = client;
             else
-                throw (new DalFacade.DO.ItemNotFoundException("client", client.Id));
+                throw (new DO.ItemNotFoundException("client", client.Id));
         }
     }
 }

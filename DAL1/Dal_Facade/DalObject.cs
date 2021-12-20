@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using DO;
+using Ds;
 
-
-namespace DalFacade
+namespace Dal
 {
 
      partial class DalObject : DalFacade.IDal
@@ -19,7 +19,7 @@ namespace DalFacade
         /// </summary>
         public DalObject()
         {
-            DataSource.Initialize();
+           
         }
 
        

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BlApi.BO;
+using BO;
 
-using DalApi;
+using DalFacade;
 namespace BlApi
 {
     public partial class BL : IBL

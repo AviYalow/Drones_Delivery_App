@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using DalFacade;
 using DO;
+using Ds;
 
 
-namespace DalFacade
+namespace Dal
 {
     partial class DalObject : DalFacade.IDal
     {
@@ -134,7 +135,7 @@ namespace DalFacade
         {
             int i = DataSource.packages.FindIndex(x => x.SerialNumber == package.SerialNumber);
             if (i == -1)
-                throw (new DalFacade.DO.ItemNotFoundException("Packege", package.SerialNumber));
+                throw (new DO.ItemNotFoundException("Packege", package.SerialNumber));
             else
                 DataSource.packages[i] = package;
         }

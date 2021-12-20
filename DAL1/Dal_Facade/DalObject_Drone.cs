@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using DalFacade;
 using DO;
+using Ds;
 
-namespace DalFacade
+namespace Dal
 {
      partial class DalObject : DalFacade.IDal
     {
-
+        
 
         /// <summary>
         /// Adding a new drone
@@ -142,7 +143,7 @@ namespace DalFacade
             if (index != -1)
                 DataSource.drones[index] = drone;
             else
-                throw (new DalFacade.DO.ItemNotFoundException("drone", drone.SerialNumber));
+                throw (new DO.ItemNotFoundException("drone", drone.SerialNumber));
         }
         
         /// <summary>

@@ -5,7 +5,7 @@ using System.Xml.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DalFacade
+namespace Dal
 {
     class DalConfig
     {
