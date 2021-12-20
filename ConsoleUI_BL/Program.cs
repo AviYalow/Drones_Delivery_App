@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using BlApi.BO;
+using BO;
 using BlApi;
 
 namespace ConsoleUI_BL
@@ -183,37 +183,37 @@ namespace ConsoleUI_BL
                             Console.WriteLine(ex);
                         }
 
-                        catch (BlApi.BO.InputErrorException ex)
+                        catch (BO.InputErrorException ex)
                         {
                             Console.WriteLine(ex);
                         }
-                        catch (BlApi.BO.UpdateChargingPositionsException ex)
+                        catch (BO.UpdateChargingPositionsException ex)
                         {
                             Console.WriteLine(ex);
 
                             freeBaseFromDrone(bl, out check, ref num, ex);
                         }
-                        catch (BlApi.BO.StartingException ex)
+                        catch (BO.StartingException ex)
                         {
                             Console.WriteLine(ex);
                         }
-                        catch (BlApi.BO.IllegalDigitsException ex)
+                        catch (BO.IllegalDigitsException ex)
                         {
                             Console.WriteLine(ex);
                         }
-                        catch (BlApi.BO.NumberMoreException ex)
+                        catch (BO.NumberMoreException ex)
                         {
                             Console.WriteLine(ex);
                         }
-                        catch (BlApi.BO.NumberNotEnoughException ex)
+                        catch (BO.NumberNotEnoughException ex)
                         {
                             Console.WriteLine(ex);
                         }
-                        catch (BlApi.BO.TryToPullOutMoreDrone ex)
+                        catch (BO.TryToPullOutMoreDrone ex)
                         {
                             Console.WriteLine(ex);
                         }
-                        catch (BlApi.BO.ItemNotFoundException exception)
+                        catch (BO.ItemNotFoundException exception)
                         {
 
                             Console.WriteLine(exception);
@@ -278,7 +278,7 @@ namespace ConsoleUI_BL
                                     {
                                         bl.DeletePackege(num);
                                     }
-                                    catch (BlApi.BO.ThePackegeAlredySendException ex)
+                                    catch (BO.ThePackegeAlredySendException ex)
                                     {
                                         Console.WriteLine(ex);
                                     }
@@ -290,15 +290,15 @@ namespace ConsoleUI_BL
 
                         }
                        
-                        catch (BlApi.BO.ThePackegeAlredySendException ex)
+                        catch (BO.ThePackegeAlredySendException ex)
                         { Console.WriteLine(ex); }
-                        catch (BlApi.BO.DroneStillAtWorkException ex)
+                        catch (BO.DroneStillAtWorkException ex)
                         { 
                             Console.WriteLine(ex);
                         }
                        
                       
-                        catch (BlApi.BO.ItemNotFoundException ex)
+                        catch (BO.ItemNotFoundException ex)
                         {
                             Console.WriteLine(ex);
                         }
@@ -1020,7 +1020,7 @@ namespace ConsoleUI_BL
                         chose = "";
                 } while (chose == "");
             }
-            catch (BlApi.BO.TryToPullOutMoreDrone exc)
+            catch (BO.TryToPullOutMoreDrone exc)
             {
                 Console.WriteLine(exc);
             }
@@ -1029,7 +1029,7 @@ namespace ConsoleUI_BL
         static void Main(string[] args)
         {
            
-            BlApi.IBL bl = new BL();
+            BlApi.IBL bl =BlFactory.GetBl();
             Menu(bl);
         }
     }

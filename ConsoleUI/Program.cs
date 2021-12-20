@@ -46,7 +46,7 @@ namespace ConsoleUI
         /// </Menu>
         private static void Menu(DalApi.IDal dalObject)
         {
-            
+
             Options option;
             Entities entity;
             UpdatesOptions updatesOption;
@@ -185,9 +185,9 @@ namespace ConsoleUI
 
                             }
                         }
-                        catch(DO.ItemNotFoundException exception)
+                        catch (DO.ItemNotFoundException exception)
                         {
-                            
+
                             Console.WriteLine(exception);
                         }
                         break;
@@ -287,25 +287,25 @@ namespace ConsoleUI
             void baseWhitFreeChargeStation(DalApi.IDal dalObject)
             {
 
-                foreach (DO.Base_Station print in dalObject.BaseStationList(x=>x.NumberOfChargingStations>0))
+                foreach (DO.Base_Station print in dalObject.BaseStationList(x => x.NumberOfChargingStations > 0))
                     Console.WriteLine(print);
             }
 
-             void packegeWhitNoDrone(DalApi.IDal dalObject)
+            void packegeWhitNoDrone(DalApi.IDal dalObject)
             {
 
-                foreach (DO.Package print in dalObject.PackegeList(x=>x.OperatorSkimmerId==0))
+                foreach (DO.Package print in dalObject.PackegeList(x => x.OperatorSkimmerId == 0))
                     Console.WriteLine(print);
             }
 
-             void listOfPackage(DalApi.IDal dalObject)
+            void listOfPackage(DalApi.IDal dalObject)
             {
 
-                foreach (DO.Package print in dalObject.PackegeList(x=>true))
+                foreach (DO.Package print in dalObject.PackegeList(x => true))
                     Console.WriteLine(print);
             }
 
-             void listOfClinet(DalApi.IDal dalObject)
+            void listOfClinet(DalApi.IDal dalObject)
             {
 
                 foreach (DO.Client print in dalObject.cilentList())
@@ -324,13 +324,13 @@ namespace ConsoleUI
             {
 
 
-                foreach (DO.Base_Station print in dalObject.BaseStationList(x=>true))
+                foreach (DO.Base_Station print in dalObject.BaseStationList(x => true))
                     Console.WriteLine(print);
 
 
             }
 
-           void pointToDegree(DalApi.IDal dalObject, out bool check, out double point2)
+            void pointToDegree(DalApi.IDal dalObject, out bool check, out double point2)
             {
                 Console.Write("Enter a longitude or latitude to ge it in degree :");
                 do
@@ -367,7 +367,7 @@ namespace ConsoleUI
                     check = double.TryParse(Console.ReadLine(), out point2);
                 } while (!check);
 
-                Console.WriteLine($"the distance is: {0}KM",dalObject.Distance(doubleNum2, doubleNum1, point2, point1));
+                Console.WriteLine($"the distance is: {0}KM", dalObject.Distance(doubleNum2, doubleNum1, point2, point1));
             }
 
             void packageByNumber(DalApi.IDal dalObject, out bool check, out uint num)
@@ -377,14 +377,14 @@ namespace ConsoleUI
                 Console.WriteLine(dalObject.packegeByNumber(num));
             }
 
-             void droneBySirialNumber(DalApi.IDal dalObject, out bool check, out uint num)
+            void droneBySirialNumber(DalApi.IDal dalObject, out bool check, out uint num)
             {
                 Console.Write("Enter drone number:");
                 check = uint.TryParse(Console.ReadLine(), out num);
                 Console.WriteLine(dalObject.DroneByNumber(num));
             }
 
-           void baseByNumber(DalApi.IDal dalObject, out bool check, out uint num)
+            void baseByNumber(DalApi.IDal dalObject, out bool check, out uint num)
             {
                 //received the details from the user
                 Console.Write("Enter base number:");
@@ -400,7 +400,7 @@ namespace ConsoleUI
                 Console.WriteLine(dalObject.CilentByNumber(num));
             }
 
-          
+
             void updateDelivery(DalApi.IDal dalObject, out bool check, out uint num)
             {
                 //received the details from the user
@@ -412,7 +412,7 @@ namespace ConsoleUI
                 dalObject.PackageArrived(num);
             }
 
-             void updateCollect(DalApi.IDal dalObject, out bool check, out uint num)
+            void updateCollect(DalApi.IDal dalObject, out bool check, out uint num)
             {
                 Console.Write("Enter package number:");
 
@@ -439,7 +439,7 @@ namespace ConsoleUI
                 dalObject.ConnectPackageToDrone(num, num1);
             }
 
-           void addPackage(DalApi.IDal dalObject, out bool check, out uint num, out uint id, out uint num1, out uint num2)
+            void addPackage(DalApi.IDal dalObject, out bool check, out uint num, out uint id, out uint num1, out uint num2)
             {
                 //received the details from the user
 
@@ -464,7 +464,7 @@ namespace ConsoleUI
                     check = uint.TryParse(Console.ReadLine(), out num);
                 } while (!check);
                 // add new package
-                dalObject.AddPackage(new DO.Package { SendClient = id, GetingClient = num1, WeightCatgory = (WeightCategories)num2,Priority= (Priority)num });
+                dalObject.AddPackage(new DO.Package { SendClient = id, GetingClient = num1, WeightCatgory = (WeightCategories)num2, Priority = (Priority)num });
             }
 
             void addDrone(DalApi.IDal dalObject, out bool check, out uint num, out uint id, out uint num1, out double doubleNum1, out string name)
@@ -523,10 +523,10 @@ namespace ConsoleUI
                 } while (!check);
 
                 // add new Base station
-                dalObject.AddStation(new Base_Station {baseNumber= id,NameBase= name,NumberOfChargingStations= num1,latitude= doubleNum1,longitude= doubleNum2 });
+                dalObject.AddStation(new Base_Station { baseNumber = id, NameBase = name, NumberOfChargingStations = num1, latitude = doubleNum1, longitude = doubleNum2 });
             }
 
-             void addClient(DalApi.IDal dalObject, out bool check, out uint num, out double doubleNum1, out double doubleNum2, out string name, out string phone)
+            void addClient(DalApi.IDal dalObject, out bool check, out uint num, out double doubleNum1, out double doubleNum2, out string name, out string phone)
             {
                 Console.Write("Enter ID:");
                 do
@@ -551,16 +551,18 @@ namespace ConsoleUI
                 // add new client
                 dalObject.AddClient(new Client { Id = num, Name = name, PhoneNumber = phone, Latitude = doubleNum1, Longitude = doubleNum2 });
             }
+        
 
 
 
-            static void Main(string[] args)
-            {
+         
+        }
+        static void Main(string[] args)
+        {
 
-                 IDal dalObject = DalFactory.GetDal();
+            IDal dalObject = DalFactory.GetDal();
 
-                Menu(dalObject);
-            }
+            Menu(dalObject);
         }
     }
 }
