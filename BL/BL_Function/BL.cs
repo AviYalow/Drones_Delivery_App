@@ -2,14 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using DalApi;
-using IBL;
-using IBL.BO;
+using BO;
 
-namespace IBL
+namespace BlApi
 {
-    public partial class BL : IBL
+    sealed partial class BL : IBL
     {
-       // delegate bool filter<T>(T item);
+        #region singelton
+        static readonly BL instance = new BL();
+        private static readonly object lock = new object ();
+        static BL() { };
+
+        #endregion
+        // delegate bool filter<T>(T item);
         public IDal dalObj;
         List<DroneToList> dronesListInBl = new List<DroneToList>();
         double heaviElctric, mediomElctric, easyElctric, freeElctric, chargingPerMinote;
@@ -18,7 +23,7 @@ namespace IBL
         /// <summary>
         /// ctor
         /// </summary>
-        public BL()
+       private public BL()
         {
              
         dalObj = new DalObject();
