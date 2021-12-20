@@ -5,14 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BO
+{
     /// <summary>
     /// Package
     /// </summary>
-public class Package
+    public class Package
     {
         public uint SerialNumber { get; init; }
         public ClientInPackage SendClient { get; set; }
-        
+
         public ClientInPackage RecivedClient { get; set; }
         public WeightCategories weightCatgory { get; set; }
         public Priority priority { get; set; }
@@ -37,7 +38,7 @@ public class Package
             print += $"Recived Client: {RecivedClient.Name},\n";
             print += $"Weight Category: {weightCatgory},\n";
             print += $"priority: {priority},\n";
-            print +=drone is null?"drone: no drone\n": $"drone: {drone},\n";
+            print += drone is null ? "drone: no drone\n" : $"drone: {drone},\n";
             print += $"Delivery time create a package: {create_package},\n";
             print += $"Time to assign:";
             if (package_association != DateTime.MinValue)
@@ -47,13 +48,13 @@ public class Package
                 print += "packege not assoction yet\n";
                 return print;
             }
-                print += $"Time Package collection:";
+            print += $"Time Package collection:";
             if (collect_package != DateTime.MinValue)
                 print += $"{collect_package},\n";
             else
-            {print+= "packege not collect yet\n";return print; }
+            { print += "packege not collect yet\n"; return print; }
 
-            
+
             print += $"Time of arrival:";
             if (package_arrived != DateTime.MinValue)
                 print += $"{ package_arrived}\n";
@@ -62,7 +63,7 @@ public class Package
                 print += "packege not arrive yet\n";
                 return print;
             }
-           
+
             return print;
         }
     }
