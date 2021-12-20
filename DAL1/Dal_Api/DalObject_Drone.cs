@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalFacade;
+using DalApi;
 using DO;
 using Ds;
 
 namespace Dal
 {
-     partial class DalObject : DalFacade.IDal
+    sealed partial class DalObject : DalApi.IDal
     {
         
 

@@ -5,9 +5,9 @@ using System.Xml.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dal
+namespace DalApi
 {
-    class DalConfig
+   static class DalConfig
     {
         internal static string DalName;
         internal static Dictionary<string, string> DalPackeges;

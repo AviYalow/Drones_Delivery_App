@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalFacade;
+using DalApi;
 using DO;
 
-namespace DalFacade
+namespace DalApi
 {
     public interface IDal
     {
@@ -62,7 +62,7 @@ namespace DalFacade
         /// <summary>
         /// return the list of all packages
         /// </summary>
-        public IEnumerable<Package> PackegeList(Predicate<Package> predicate);
+        public IEnumerable<Package> PackegeList(Func<Package,bool> predicate);
       
 
         /// <summary>

@@ -5,7 +5,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DalFacade;
+using DalApi;
 using DO;
 
 
@@ -44,7 +44,7 @@ namespace ConsoleUI
         /// Selection menu that which show to the customer 
         /// when opening the program 
         /// </Menu>
-        private static void Menu(DalFacade.IDal dalObject)
+        private static void Menu(DalApi.IDal dalObject)
         {
             
             Options option;
@@ -284,35 +284,35 @@ namespace ConsoleUI
 
 
 
-            void baseWhitFreeChargeStation(DalFacade.IDal dalObject)
+            void baseWhitFreeChargeStation(DalApi.IDal dalObject)
             {
 
                 foreach (DO.Base_Station print in dalObject.BaseStationList(x=>x.NumberOfChargingStations>0))
                     Console.WriteLine(print);
             }
 
-             void packegeWhitNoDrone(DalFacade.IDal dalObject)
+             void packegeWhitNoDrone(DalApi.IDal dalObject)
             {
 
                 foreach (DO.Package print in dalObject.PackegeList(x=>x.OperatorSkimmerId==0))
                     Console.WriteLine(print);
             }
 
-             void listOfPackage(DalFacade.IDal dalObject)
+             void listOfPackage(DalApi.IDal dalObject)
             {
 
                 foreach (DO.Package print in dalObject.PackegeList(x=>true))
                     Console.WriteLine(print);
             }
 
-             void listOfClinet(DalFacade.IDal dalObject)
+             void listOfClinet(DalApi.IDal dalObject)
             {
 
                 foreach (DO.Client print in dalObject.cilentList())
                     Console.WriteLine(print);
             }
 
-            void listOfDrone(DalFacade.IDal dalObject)
+            void listOfDrone(DalApi.IDal dalObject)
             {
 
                 List<DO.Drone> list = (List<DO.Drone>)dalObject.DroneList();
@@ -320,7 +320,7 @@ namespace ConsoleUI
                     Console.WriteLine(print);
             }
 
-            void listOfBass(DalFacade.IDal dalObject)
+            void listOfBass(DalApi.IDal dalObject)
             {
 
 
@@ -330,7 +330,7 @@ namespace ConsoleUI
 
             }
 
-           void pointToDegree(DalFacade.IDal dalObject, out bool check, out double point2)
+           void pointToDegree(DalApi.IDal dalObject, out bool check, out double point2)
             {
                 Console.Write("Enter a longitude or latitude to ge it in degree :");
                 do
@@ -340,7 +340,7 @@ namespace ConsoleUI
                 Console.WriteLine(dalObject.PointToDegree(point2));
             }
 
-            void distanceBetween2points(DalFacade.IDal dalObject, out bool check, out uint num1, out double doubleNum1, out double doubleNum2, out double point1, out double point2)
+            void distanceBetween2points(DalApi.IDal dalObject, out bool check, out uint num1, out double doubleNum1, out double doubleNum2, out double point1, out double point2)
             {
                 num1 = 0;
                 double[] points = new double[4];
@@ -370,21 +370,21 @@ namespace ConsoleUI
                 Console.WriteLine($"the distance is: {0}KM",dalObject.Distance(doubleNum2, doubleNum1, point2, point1));
             }
 
-            void packageByNumber(DalFacade.IDal dalObject, out bool check, out uint num)
+            void packageByNumber(DalApi.IDal dalObject, out bool check, out uint num)
             {
                 Console.Write("Enter packege number:");
                 check = uint.TryParse(Console.ReadLine(), out num);
                 Console.WriteLine(dalObject.packegeByNumber(num));
             }
 
-             void droneBySirialNumber(DalFacade.IDal dalObject, out bool check, out uint num)
+             void droneBySirialNumber(DalApi.IDal dalObject, out bool check, out uint num)
             {
                 Console.Write("Enter drone number:");
                 check = uint.TryParse(Console.ReadLine(), out num);
                 Console.WriteLine(dalObject.DroneByNumber(num));
             }
 
-           void baseByNumber(DalFacade.IDal dalObject, out bool check, out uint num)
+           void baseByNumber(DalApi.IDal dalObject, out bool check, out uint num)
             {
                 //received the details from the user
                 Console.Write("Enter base number:");
@@ -392,7 +392,7 @@ namespace ConsoleUI
                 Console.WriteLine(dalObject.BaseStationByNumber(num));
             }
 
-            void clientById(DalFacade.IDal dalObject, out bool check, out uint num)
+            void clientById(DalApi.IDal dalObject, out bool check, out uint num)
             {
                 //received the details from the user
                 Console.Write("Enter ID:");
@@ -401,7 +401,7 @@ namespace ConsoleUI
             }
 
           
-            void updateDelivery(DalFacade.IDal dalObject, out bool check, out uint num)
+            void updateDelivery(DalApi.IDal dalObject, out bool check, out uint num)
             {
                 //received the details from the user
                 Console.Write("Enter package number:");
@@ -412,7 +412,7 @@ namespace ConsoleUI
                 dalObject.PackageArrived(num);
             }
 
-             void updateCollect(DalFacade.IDal dalObject, out bool check, out uint num)
+             void updateCollect(DalApi.IDal dalObject, out bool check, out uint num)
             {
                 Console.Write("Enter package number:");
 
@@ -423,7 +423,7 @@ namespace ConsoleUI
                 dalObject.PackageCollected(num);
             }
 
-            void updateAssociate(DalFacade.IDal dalObject, out bool check, out uint num, out uint num1)
+            void updateAssociate(DalApi.IDal dalObject, out bool check, out uint num, out uint num1)
             {
                 //received the details from the user
                 Console.Write("Enter package number:");
@@ -439,7 +439,7 @@ namespace ConsoleUI
                 dalObject.ConnectPackageToDrone(num, num1);
             }
 
-           void addPackage(DalFacade.IDal dalObject, out bool check, out uint num, out uint id, out uint num1, out uint num2)
+           void addPackage(DalApi.IDal dalObject, out bool check, out uint num, out uint id, out uint num1, out uint num2)
             {
                 //received the details from the user
 
@@ -467,7 +467,7 @@ namespace ConsoleUI
                 dalObject.AddPackage(new DO.Package { SendClient = id, GetingClient = num1, WeightCatgory = (WeightCategories)num2,Priority= (Priority)num });
             }
 
-            void addDrone(DalFacade.IDal dalObject, out bool check, out uint num, out uint id, out uint num1, out double doubleNum1, out string name)
+            void addDrone(DalApi.IDal dalObject, out bool check, out uint num, out uint id, out uint num1, out double doubleNum1, out string name)
             {
                 Console.Write("Enter sireal number:");
                 do
@@ -496,7 +496,7 @@ namespace ConsoleUI
                 dalObject.AddDrone(new Drone { SerialNumber = id, Model = name, WeightCategory = (WeightCategories)num });
             }
 
-            void addBase(DalFacade.IDal dalObject, out bool check, out uint id, out uint num1, out double doubleNum1, out double doubleNum2, out string name)
+            void addBase(DalApi.IDal dalObject, out bool check, out uint id, out uint num1, out double doubleNum1, out double doubleNum2, out string name)
             {
                 Console.Write("Enter base number:");
                 do
@@ -526,7 +526,7 @@ namespace ConsoleUI
                 dalObject.AddStation(new Base_Station {baseNumber= id,NameBase= name,NumberOfChargingStations= num1,latitude= doubleNum1,longitude= doubleNum2 });
             }
 
-             void addClient(DalFacade.IDal dalObject, out bool check, out uint num, out double doubleNum1, out double doubleNum2, out string name, out string phone)
+             void addClient(DalApi.IDal dalObject, out bool check, out uint num, out double doubleNum1, out double doubleNum2, out string name, out string phone)
             {
                 Console.Write("Enter ID:");
                 do
@@ -557,7 +557,7 @@ namespace ConsoleUI
             static void Main(string[] args)
             {
 
-                DalFacade.IDal dalObject = new DalObject();
+                 IDal dalObject = DalFactory.GetDal();
 
                 Menu(dalObject);
             }

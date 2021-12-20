@@ -8,16 +8,18 @@ using System.Xml.Linq;
 using DO;
 using Ds;
 
+
 namespace Dal
 {
 
-     partial class DalObject : DalFacade.IDal
+    sealed partial  class DalObject : DalApi.IDal
     {
-        
+        private static readonly Lazy<DalObject> lazy = new Lazy<DalObject>(() => new DalObject());
+        public static DalObject Instance { get { return lazy.Value; } }
         /// <summary>
         ///Creating entities with initial initialization
         /// </summary>
-        public DalObject()
+       private DalObject()
         {
            
         }

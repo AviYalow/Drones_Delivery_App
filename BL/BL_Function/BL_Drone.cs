@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
-using DalFacade;
+using DalApi;
 namespace BlApi
 {
     public partial class BL : IBL

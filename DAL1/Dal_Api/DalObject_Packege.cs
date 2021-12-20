@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalFacade;
+using DalApi;
 using DO;
 using Ds;
 
 
 namespace Dal
 {
-    partial class DalObject : DalFacade.IDal
+    sealed partial class DalObject : DalApi.IDal
     {
         
         /// <summary>
@@ -52,7 +52,7 @@ namespace Dal
 
             package.PackageAssociation = DateTime.Now;
             DataSource.packages[i] = package;
-         
+        
 
 
         }
@@ -100,16 +100,21 @@ namespace Dal
             int i = DataSource.packages.FindIndex(x => x.SerialNumber == packageNumber);
             if (i == -1)
                 throw (new ItemNotFoundException("package", packageNumber));
-            return DataSource.packages[i];
+            return DataSource.packages[i].Clone();
 
         }
 
         /// <summary>
         /// return the list of all packages
         /// </summary>
-        public IEnumerable<Package> PackegeList(Predicate<Package> predicate)
+        public IEnumerable<Package> PackegeList(Func<Package,bool> predicate)
         {
-            return DataSource.packages.FindAll(predicate);
+
+            return DataSource.packages.Where(predicate).Select(x => x.Clone());
+                   
+
+                 
+                  
 
         }
 

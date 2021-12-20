@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using DalFacade;
+using DalApi;
 using BO;
+
 
 namespace BlApi
 {
@@ -17,7 +18,7 @@ namespace BlApi
 
         #endregion
         // delegate bool filter<T>(T item);
-        public IDal dalObj;
+        IDal dalObj;
         List<DroneToList> dronesListInBl = new List<DroneToList>();
         double heaviElctric, mediomElctric, easyElctric, freeElctric, chargingPerMinote;
         event Func<DroneToList,bool> droneToListFilter = null;
@@ -28,7 +29,7 @@ namespace BlApi
        private BL()
         {
              
-        dalObj = new DalObject();
+        dalObj = DalFactory.GetDal() ;
             List<double> electric = new List<double>();
             foreach (var elctriv in dalObj.Elctrtricity())
             {
