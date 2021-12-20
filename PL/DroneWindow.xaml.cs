@@ -12,8 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.VisualBasic;
-using IBL;
-using IBL.BO;
+using BlApi;
+using BO;
 using System.Reflection;
 using Microsoft.Win32;
 
@@ -24,11 +24,11 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        IBL.IBL bl;
+        IBL bl;
         DroneToList Drone;
         bool sitoation;
 
-        public DroneWindow(IBL.IBL bl)
+        public DroneWindow(BlApi.IBL bl)
         {
 
             InitializeComponent();
@@ -36,14 +36,14 @@ namespace PL
             Drone = new DroneToList();
             this.DataContext = Drone;
             this.bl = bl;
-            WeightChoseCombo.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategories));
+            WeightChoseCombo.ItemsSource = Enum.GetValues(typeof(BlApi.BO.WeightCategories));
          
             BaseChosingCombo.ItemsSource = bl.BaseStationWhitFreeChargingStationToLists();
             sitoation = true;
             DroneLabel.Visibility = Visibility.Hidden;
         }
 
-        public DroneWindow(IBL.IBL bl, DroneToList drone)
+        public DroneWindow(BlApi.IBL bl, DroneToList drone)
         {
             InitializeComponent();
             Drone = drone;
@@ -127,12 +127,12 @@ namespace PL
                         }
                     }
                        
-                    catch (IBL.BO.DroneCantMakeDliveryException ex)
+                    catch (BlApi.BO.DroneCantMakeDliveryException ex)
                     {
 
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                    catch (IBL.BO.ItemNotFoundException ex)
+                    catch (BlApi.BO.ItemNotFoundException ex)
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
@@ -160,23 +160,23 @@ namespace PL
                         }
 
                     }
-                    catch (IBL.BO.DroneStillAtWorkException ex)
+                    catch (BlApi.BO.DroneStillAtWorkException ex)
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                    catch (IBL.BO.NoButrryToTripException ex)
+                    catch (BlApi.BO.NoButrryToTripException ex)
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                    catch (IBL.BO.NoPlaceForChargeException ex)
+                    catch (BlApi.BO.NoPlaceForChargeException ex)
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                    catch (IBL.BO.ItemNotFoundException ex)
+                    catch (BlApi.BO.ItemNotFoundException ex)
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                    catch (IBL.BO.ItemFoundExeption ex)
+                    catch (BlApi.BO.ItemFoundExeption ex)
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
@@ -215,18 +215,18 @@ namespace PL
                 try
                 {
 
-                    bl.AddDrone(Drone, ((IBL.BO.BaseStationToList)BaseChosingCombo.SelectedItem).SerialNum);
+                    bl.AddDrone(Drone, ((BlApi.BO.BaseStationToList)BaseChosingCombo.SelectedItem).SerialNum);
                     MessageBox.Show(Drone.ToString() + "\n add to list!", "succesful");
                 }
-                catch (IBL.BO.InputErrorException ex)
+                catch (BlApi.BO.InputErrorException ex)
                 {
                     MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                catch (IBL.BO.ItemNotFoundException ex)
+                catch (BlApi.BO.ItemNotFoundException ex)
                 {
                     MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                catch (IBL.BO.ItemFoundExeption ex)
+                catch (BlApi.BO.ItemFoundExeption ex)
                 {
                     MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -288,7 +288,7 @@ namespace PL
         private void WeightChoseCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             InputMissingWightLabel.Visibility = Visibility.Collapsed;
-            Drone.WeightCategory = (IBL.BO.WeightCategories)WeightChoseCombo.SelectedItem;
+            Drone.WeightCategory = (BlApi.BO.WeightCategories)WeightChoseCombo.SelectedItem;
 
 
         }

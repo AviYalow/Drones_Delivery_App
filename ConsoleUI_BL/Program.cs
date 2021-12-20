@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
-using IBL.BO;
-using IBL;
+using BlApi.BO;
+using BlApi;
 
 namespace ConsoleUI_BL
 {
@@ -42,7 +42,7 @@ namespace ConsoleUI_BL
         /// Selection menu which show to the customer 
         /// when opening the program 
         /// </Menu>
-        private static void Menu(IBL.IBL bl)
+        private static void Menu(BlApi.IBL bl)
         {
             if (bl is null)
             {
@@ -183,37 +183,37 @@ namespace ConsoleUI_BL
                             Console.WriteLine(ex);
                         }
 
-                        catch (IBL.BO.InputErrorException ex)
+                        catch (BlApi.BO.InputErrorException ex)
                         {
                             Console.WriteLine(ex);
                         }
-                        catch (IBL.BO.UpdateChargingPositionsException ex)
+                        catch (BlApi.BO.UpdateChargingPositionsException ex)
                         {
                             Console.WriteLine(ex);
 
                             freeBaseFromDrone(bl, out check, ref num, ex);
                         }
-                        catch (IBL.BO.StartingException ex)
+                        catch (BlApi.BO.StartingException ex)
                         {
                             Console.WriteLine(ex);
                         }
-                        catch (IBL.BO.IllegalDigitsException ex)
+                        catch (BlApi.BO.IllegalDigitsException ex)
                         {
                             Console.WriteLine(ex);
                         }
-                        catch (IBL.BO.NumberMoreException ex)
+                        catch (BlApi.BO.NumberMoreException ex)
                         {
                             Console.WriteLine(ex);
                         }
-                        catch (IBL.BO.NumberNotEnoughException ex)
+                        catch (BlApi.BO.NumberNotEnoughException ex)
                         {
                             Console.WriteLine(ex);
                         }
-                        catch (IBL.BO.TryToPullOutMoreDrone ex)
+                        catch (BlApi.BO.TryToPullOutMoreDrone ex)
                         {
                             Console.WriteLine(ex);
                         }
-                        catch (IBL.BO.ItemNotFoundException exception)
+                        catch (BlApi.BO.ItemNotFoundException exception)
                         {
 
                             Console.WriteLine(exception);
@@ -278,7 +278,7 @@ namespace ConsoleUI_BL
                                     {
                                         bl.DeletePackege(num);
                                     }
-                                    catch (IBL.BO.ThePackegeAlredySendException ex)
+                                    catch (BlApi.BO.ThePackegeAlredySendException ex)
                                     {
                                         Console.WriteLine(ex);
                                     }
@@ -290,15 +290,15 @@ namespace ConsoleUI_BL
 
                         }
                        
-                        catch (IBL.BO.ThePackegeAlredySendException ex)
+                        catch (BlApi.BO.ThePackegeAlredySendException ex)
                         { Console.WriteLine(ex); }
-                        catch (IBL.BO.DroneStillAtWorkException ex)
+                        catch (BlApi.BO.DroneStillAtWorkException ex)
                         { 
                             Console.WriteLine(ex);
                         }
                        
                       
-                        catch (IBL.BO.ItemNotFoundException ex)
+                        catch (BlApi.BO.ItemNotFoundException ex)
                         {
                             Console.WriteLine(ex);
                         }
@@ -414,7 +414,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="check"></param>
         /// <param name="num"> serial number of the package</param>
-        public static void packageByNumber(IBL.IBL bl, out bool check, out uint num)
+        public static void packageByNumber(BlApi.IBL bl, out bool check, out uint num)
         {
             Console.Write("Enter packege number:");
             do
@@ -431,7 +431,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="check"></param>
         /// <param name="id"> the id of the client</param>
-        public static void clientById(IBL.IBL bl, out bool check, out uint id)
+        public static void clientById(BlApi.IBL bl, out bool check, out uint id)
         {
             //received the details from the user
             Console.Write("Enter ID:");
@@ -448,7 +448,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="check"></param>
         /// <param name="num">serail number of the drone</param>
-        public static void droneBySirialNumber(IBL.IBL bl, out bool check, out uint num)
+        public static void droneBySirialNumber(BlApi.IBL bl, out bool check, out uint num)
         {
             Console.Write("Enter drone number:");
             do
@@ -464,7 +464,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="check"></param>
         /// <param name="num"> serial number of the base station</param>
-        public static void baseByNumber(IBL.IBL bl, out bool check, out uint num)
+        public static void baseByNumber(BlApi.IBL bl, out bool check, out uint num)
         {
             //received the details from the user
             Console.Write("Enter base number:");
@@ -484,7 +484,7 @@ namespace ConsoleUI_BL
         /// <param name="id">ID of the sender </param>
         /// <param name="num1">ID of the recipient</param>
         /// <param name="num2">Weight categorie </param>
-        public static void AddPackage(IBL.IBL bl, out bool check, out uint num, out uint id, out uint num1, out uint num2)
+        public static void AddPackage(BlApi.IBL bl, out bool check, out uint num, out uint id, out uint num1, out uint num2)
         {
             //received the details from the user
 
@@ -522,7 +522,7 @@ namespace ConsoleUI_BL
         /// <param name="id">sireal number</param>
         /// <param name="num1"> serial number of the first base station</param>
         /// <param name="name"> model</param>
-        public static void AddDrone(IBL.IBL bl, out bool check, out uint num, out uint id, out uint num1, out string name)
+        public static void AddDrone(BlApi.IBL bl, out bool check, out uint num, out uint id, out uint num1, out string name)
         {
             Console.Write("Enter sireal number:");
             do
@@ -566,7 +566,7 @@ namespace ConsoleUI_BL
         /// <param name="doubleNum1">latitude</param>
         /// <param name="doubleNum2">longitude</param>
         /// <param name="name">base station name</param>
-        public static void AddBase(IBL.IBL bL, out bool check, out uint id, out uint num1, out double doubleNum1, out double doubleNum2, out string name)
+        public static void AddBase(BlApi.IBL bL, out bool check, out uint id, out uint num1, out double doubleNum1, out double doubleNum2, out string name)
         {
             Console.Write("Enter base number:");
             do
@@ -614,7 +614,7 @@ namespace ConsoleUI_BL
         /// <param name="doubleNum2">londitude</param>
         /// <param name="name">name</param>
         /// <param name="phone">phone number</param>
-        public static void AddClient(IBL.IBL bl, out bool check, out uint myId, out double doubleNum1, out double doubleNum2, out string name, out string phone)
+        public static void AddClient(BlApi.IBL bl, out bool check, out uint myId, out double doubleNum1, out double doubleNum2, out string name, out string phone)
         {
             Console.Write("Enter ID:");
             do
@@ -657,7 +657,7 @@ namespace ConsoleUI_BL
         /// <param name="id"> serial number</param>
         /// <param name="name">base name</param>
         /// <param name="amount"> charging stations</param>
-        public static void UpdateBase(IBL.IBL bl, out bool check, out uint id, out string name)
+        public static void UpdateBase(BlApi.IBL bl, out bool check, out uint id, out string name)
         {
             Console.Write("Enter base number:");
             do
@@ -681,7 +681,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="check"></param>
         /// <param name="num">serial number</param>
-        public static void updateDelivery(IBL.IBL bl, out bool check, out uint num)
+        public static void updateDelivery(BlApi.IBL bl, out bool check, out uint num)
         {
             //received the details from the user
             Console.Write("Enter drone number:");
@@ -700,7 +700,7 @@ namespace ConsoleUI_BL
         /// <param name="id"> ID</param>
         /// <param name="name"> name</param>
         /// <param name="phone"> phone number</param>
-        public static void UpdateClient(IBL.IBL bl, out bool check, out uint id, out string name, out string phone)
+        public static void UpdateClient(BlApi.IBL bl, out bool check, out uint id, out string name, out string phone)
         {
             Console.Write("Enter ID:");
             do
@@ -753,7 +753,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="check"></param>
         /// <param name="num">drone serial number</param>
-        public static void updateCollect(IBL.IBL bl, out bool check, out uint num)
+        public static void updateCollect(BlApi.IBL bl, out bool check, out uint num)
         {
             Console.Write("Enter drone number: ");
 
@@ -770,7 +770,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="check"></param>
         /// <param name="num">drone serial number</param>
-        public static void UpdateAssociate(IBL.IBL bl, out bool check, out uint num)
+        public static void UpdateAssociate(BlApi.IBL bl, out bool check, out uint num)
         {
             //received the details from the user
 
@@ -790,7 +790,7 @@ namespace ConsoleUI_BL
         /// <param name="check"></param>
         /// <param name="num">serial number</param>
         /// <param name="name">model</param>
-        public static void UpdateDroneName(IBL.IBL bl, out bool check, out uint num, out string name)
+        public static void UpdateDroneName(BlApi.IBL bl, out bool check, out uint num, out string name)
         {
             //received the details from the user
             Console.Write("Enter serial number: ");
@@ -809,7 +809,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="check"></param>
         /// <param name="serial">serial number</param>
-        public static void updateCharge(IBL.IBL bl, out bool check, out uint serial)
+        public static void updateCharge(BlApi.IBL bl, out bool check, out uint serial)
         {
             Console.Write("Enter serial number:");
             do
@@ -826,7 +826,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="check"></param>
         /// <param name="serial">serial number</param>
-        public static void UpdateUnCharge(IBL.IBL bl, out bool check, out uint serial,out double time)
+        public static void UpdateUnCharge(BlApi.IBL bl, out bool check, out uint serial,out double time)
         {
             TimeSpan timeInCharge;
             Console.Write("Enter serial number:");
@@ -851,7 +851,7 @@ namespace ConsoleUI_BL
         /// <param name="bl"></param>
         /// <param name="check"></param>
         /// <param name="doubleNum1">variable for calculating the points</param>
-        public static void Distans(IBL.IBL bl, out bool check, out double doubleNum1)
+        public static void Distans(BlApi.IBL bl, out bool check, out double doubleNum1)
         {
             check = true;
             doubleNum1 = 0;
@@ -884,7 +884,7 @@ namespace ConsoleUI_BL
         /// Base statons list
         /// </summary>
         /// <param name="bl"></param>
-        public static void ShowBaseList(IBL.IBL bl)
+        public static void ShowBaseList(BlApi.IBL bl)
         {
             int i = 0;
             foreach (var _base in bl.BaseStationToLists())
@@ -901,7 +901,7 @@ namespace ConsoleUI_BL
         /// show List of base staions with free states
         /// </summary>
         /// <param name="bl"></param>
-        public static void ShowFreeBaseStation(IBL.IBL bl)
+        public static void ShowFreeBaseStation(BlApi.IBL bl)
         {
             int i = 0;
             foreach (var _base in bl.BaseStationWhitFreeChargingStationToLists())
@@ -918,7 +918,7 @@ namespace ConsoleUI_BL
         /// show List of packages that not associated to drone
         /// </summary>
         /// <param name="bl"></param>
-        public static void ShowFreePackage(IBL.IBL bl)
+        public static void ShowFreePackage(BlApi.IBL bl)
         {
             int i = 0;
             foreach (var pack in bl.PackageWithNoDroneToLists())
@@ -935,7 +935,7 @@ namespace ConsoleUI_BL
         /// show Package list
         /// </summary>
         /// <param name="bl"></param>
-        public static void ShowPackageList(IBL.IBL bl)
+        public static void ShowPackageList(BlApi.IBL bl)
         {
             int i = 0;
             foreach (var pack in bl.PackageToLists())
@@ -952,7 +952,7 @@ namespace ConsoleUI_BL
         /// show client list
         /// </summary>
         /// <param name="bl"></param>
-        public static void ShowClientList(IBL.IBL bl)
+        public static void ShowClientList(BlApi.IBL bl)
         {
             int i = 0;
             foreach (var client in bl.ClientToLists())
@@ -969,7 +969,7 @@ namespace ConsoleUI_BL
         /// show drone list
         /// </summary>
         /// <param name="bl"></param>
-        public static void ShowDroneList(IBL.IBL bl)
+        public static void ShowDroneList(BlApi.IBL bl)
         {
             int i = 0;
             foreach (var drone in bl.DroneToLists())
@@ -989,7 +989,7 @@ namespace ConsoleUI_BL
         /// <param name="check"></param>
         /// <param name="num">base station serial number</param>
         /// <param name="ex"> Update Charging Positions Exception</param>
-        public static void freeBaseFromDrone(IBL.IBL bl, out bool check, ref uint num, UpdateChargingPositionsException ex)
+        public static void freeBaseFromDrone(BlApi.IBL bl, out bool check, ref uint num, UpdateChargingPositionsException ex)
         {
             check = true;
             string chose = "";
@@ -1020,7 +1020,7 @@ namespace ConsoleUI_BL
                         chose = "";
                 } while (chose == "");
             }
-            catch (IBL.BO.TryToPullOutMoreDrone exc)
+            catch (BlApi.BO.TryToPullOutMoreDrone exc)
             {
                 Console.WriteLine(exc);
             }
@@ -1029,7 +1029,7 @@ namespace ConsoleUI_BL
         static void Main(string[] args)
         {
            
-            IBL.IBL bl = new BL();
+            BlApi.IBL bl = new BL();
             Menu(bl);
         }
     }

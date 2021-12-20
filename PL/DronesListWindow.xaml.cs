@@ -19,11 +19,11 @@ namespace PL
     /// </summary>
     public partial class DronesListWindow : Window
     {
-        IBL.IBL bl;
+        BlApi.IBL bl;
 
        
-        IBL.BO.DroneToList drone;
-        public DronesListWindow(IBL.IBL bl)
+        BlApi.BO.DroneToList drone;
+        public DronesListWindow(BlApi.IBL bl)
         {
             InitializeComponent();
 
@@ -31,11 +31,11 @@ namespace PL
 
             WeightSelctor.Items.Add("");
             StatusSelector.Items.Add("");
-            foreach (var item in Enum.GetValues(typeof(IBL.BO.WeightCategories)))
+            foreach (var item in Enum.GetValues(typeof(BlApi.BO.WeightCategories)))
                 WeightSelctor.Items.Add(item);
-            foreach (var item in Enum.GetValues(typeof(IBL.BO.DroneStatus)))
+            foreach (var item in Enum.GetValues(typeof(BlApi.BO.DroneStatus)))
                 StatusSelector.Items.Add(item);
-            drone = new IBL.BO.DroneToList();
+            drone = new BlApi.BO.DroneToList();
             DronesListView.ItemsSource = bl.FilterDronesList();
            
 
@@ -54,7 +54,7 @@ namespace PL
 
             }
             else
-                DronesListView.ItemsSource = bl.DroneToListsByWhight((IBL.BO.WeightCategories)WeightSelctor.SelectedItem);
+                DronesListView.ItemsSource = bl.DroneToListsByWhight((BlApi.BO.WeightCategories)WeightSelctor.SelectedItem);
         }
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -65,7 +65,7 @@ namespace PL
 
             }
             else
-                DronesListView.ItemsSource = bl.DroneToListsByStatus((IBL.BO.DroneStatus)StatusSelector.SelectedItem);
+                DronesListView.ItemsSource = bl.DroneToListsByStatus((BlApi.BO.DroneStatus)StatusSelector.SelectedItem);
         }
 
 
@@ -74,7 +74,7 @@ namespace PL
 
             if (DronesListView.SelectedItem != null)
             {
-                new DroneWindow(bl, (IBL.BO.DroneToList)DronesListView.SelectedItem).ShowDialog();
+                new DroneWindow(bl, (BlApi.BO.DroneToList)DronesListView.SelectedItem).ShowDialog();
                 DronesListView.ItemsSource = bl.FilterDronesList();
                 DronesListView.SelectedItem = null;
             }
@@ -111,7 +111,7 @@ namespace PL
         {
             HeaderedContentControl control = sender as HeaderedContentControl;
 
-            DronesListView.ItemsSource = bl.DroneSortList(control.Name, DronesListView.ItemsSource as IEnumerable<IBL.BO.DroneToList>);
+            DronesListView.ItemsSource = bl.DroneSortList(control.Name, DronesListView.ItemsSource as IEnumerable<BlApi.BO.DroneToList>);
 
 
         }
