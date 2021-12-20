@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
 
-using DalApi;
+using DalFacade;
 namespace IBL
 {
     public partial class BL : IBL

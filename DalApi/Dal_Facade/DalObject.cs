@@ -8,10 +8,10 @@ using System.Xml.Linq;
 using DO;
 
 
-namespace DalApi
+namespace DalFacade
 {
 
-     partial class DalObject : DalApi.IDal
+     partial class DalObject : DalFacade.IDal
     {
         
         /// <summary>

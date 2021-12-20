@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalApi;
+using DalFacade;
 using DO;
 
-namespace DalApi
+namespace DalFacade
 {
-     partial class DalObject : DalApi.IDal
+     partial class DalObject : DalFacade.IDal
     {
 
         
@@ -98,7 +98,7 @@ namespace DalApi
         {
             int i = DataSource.base_Stations.FindIndex(x => x.baseNumber == base_.baseNumber);
             if (i == -1)
-                throw (new DalApi.DO.ItemNotFoundException("Base Station", base_.baseNumber));
+                throw (new DalFacade.DO.ItemNotFoundException("Base Station", base_.baseNumber));
             else
                 DataSource.base_Stations[i] = base_;
         }
