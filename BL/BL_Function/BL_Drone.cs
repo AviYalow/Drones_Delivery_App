@@ -97,6 +97,8 @@ namespace BlApi
         /// <returns> drone founded </returns>
         public DroneToList SpecificDrone(uint siralNuber)
         {
+            
+                        
             var drone = dronesListInBl.Find(x => x.SerialNumber == siralNuber&&x.DroneStatus != DroneStatus.Delete);
             if (drone is null)
                 throw new ItemNotFoundException("drone", siralNuber);

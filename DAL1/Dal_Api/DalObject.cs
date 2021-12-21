@@ -16,6 +16,7 @@ namespace Dal
     {
         private static readonly Lazy<DalObject> lazy = new Lazy<DalObject>(() => new DalObject());
         public static DalObject Instance { get { return lazy.Value; } }
+       
         /// <summary>
         ///Creating entities with initial initialization
         /// </summary>

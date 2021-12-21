@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DalApi;
 using BO;
-
+using System.Linq;
 
 namespace BlApi
 {
@@ -23,6 +23,7 @@ namespace BlApi
         // delegate bool filter<T>(T item);
         IDal dalObj;
         List<DroneToList> dronesListInBl = new List<DroneToList>();
+       
         double heaviElctric, mediomElctric, easyElctric, freeElctric, chargingPerMinote;
         event Func<DroneToList,bool> droneToListFilter = null;
 
@@ -53,6 +54,7 @@ namespace BlApi
             {
                 dronesListInBl.Add(droneFromDal(drone));
             }
+           
 
             for (int i = 0; i < dronesListInBl.Count; i++)
             {

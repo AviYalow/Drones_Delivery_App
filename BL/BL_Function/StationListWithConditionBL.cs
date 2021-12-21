@@ -20,9 +20,13 @@ namespace BlApi
         /// <returns> base station list </returns>
         public IEnumerable<BaseStationToList> BaseStationToLists()
         {
-            var base_= dalObj.BaseStationList(x => true).ToList().ConvertAll(convertBaseInDalToBaseStationList);
+            
+
+
+           var base_= dalObj.BaseStationList(x => true).ToList().ConvertAll(convertBaseInDalToBaseStationList);
             if (base_.Count == 0)
                 throw new TheListIsEmptyException();
+            
             return base_;
         }
         /// <summary>
