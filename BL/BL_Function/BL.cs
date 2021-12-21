@@ -9,6 +9,7 @@ namespace BlApi
 {
     sealed partial class BL : IBL
     {
+        
         #region singelton
         /// <summary>
         /// This implemention of singelton implicitly uses LazyThreadSafetyMode.ExecutionAndPublication 
@@ -32,8 +33,15 @@ namespace BlApi
         /// </summary>
        private BL()
         {
-             
-        dalObj = DalFactory.GetDal() ;
+            try
+            {
+                dalObj = DalFactory.GetDal();
+            }
+            catch(Exception ex)
+            {
+                ex.ToString();
+                return;
+            }
             List<double> electric = new List<double>();
             foreach (var elctriv in dalObj.Elctrtricity())
             {

@@ -11,12 +11,22 @@ namespace Dal
     {
         internal static T Clone<T> (this T surce) where T: new()
         {
+            
+           
             T destintion = new T();
-            foreach(PropertyInfo info in typeof(T).GetProperties()  )
-            {
-                info.SetValue(destintion, info.GetValue(surce, null), null);
+              foreach (PropertyInfo info in surce.GetType(). GetProperties())
+              {
+                if (info.CanWrite && info.CanRead) // (item.PropertyType.IsValueType)
+                {
+                    object srcValue = info.GetValue(surce, null);
+                    info.SetValue(destintion, srcValue);
+                }
+                info.SetValue(destintion, info.GetValue(surce, null),null);
 
-            }
+              }
+           
+        
+        
             return destintion;
         }
     }
