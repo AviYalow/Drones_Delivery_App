@@ -22,7 +22,10 @@ namespace BlApi
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
 
-            return dronesListInBl.FindAll(x => x.DroneStatus != DroneStatus.Delete);
+            return from drone in dronesListInBl
+                   where drone.DroneStatus != DroneStatus.Delete
+                   select drone.Clone();
+                
         }
 
 
@@ -72,7 +75,7 @@ namespace BlApi
             //return dronesListInBl.FindAll(x => x.WeightCategory >=package.weightCatgory&&x.DroneStatus==DroneStatus.Free&&x.ButrryStatus>batteryCalculationForFullShipping(x.Location,package));
             return from x in dronesListInBl
                    where x.WeightCategory >= package.weightCatgory && x.DroneStatus == DroneStatus.Free && x.ButrryStatus > batteryCalculationForFullShipping(x.Location, package)
-                   select new DroneToList { ButrryStatus = x.ButrryStatus, DroneStatus = x.DroneStatus, Location = x.Location, Model = x.Model, NumPackage = x.NumPackage, SerialNumber = x.SerialNumber, WeightCategory = x.WeightCategory };
+                   select x.Clone();
         }
         /// <summary>
         /// sort list by spscific parameter
@@ -95,12 +98,14 @@ namespace BlApi
             {
                 if (drones is null)
                     return from x in dronesListInBl
+                            
                            orderby x.GetType().GetProperties()[i].GetValue(x)
                            select x;
                 return from x in drones
                        orderby x.GetType().GetProperties()[i].GetValue(x)
                        select x;
             }
+
 
         }
         /// <summary>
@@ -109,12 +114,13 @@ namespace BlApi
         /// <returns></returns>
         public IEnumerable<DroneToList> FilterDronesList()
         {
-            var drones = DroneToLists();
-            if(droneToListFilter!=null&&droneToListFilter.GetInvocationList()!=null)
-            foreach (Func<DroneToList, bool> prdict in droneToListFilter.GetInvocationList())
-            {
-                drones = drones.Where(prdict);
-            }
+             var drones = DroneToLists();
+            
+             if (droneToListFilter != null && droneToListFilter.GetInvocationList() != null)
+                 foreach (Func<DroneToList, bool> prdict in droneToListFilter.GetInvocationList())
+                 {
+                     drones = drones.Where(prdict);
+                 }
             return drones;
         }
     }

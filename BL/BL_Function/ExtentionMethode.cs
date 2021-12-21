@@ -3,18 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Reflection;
 using BlApi;
 using BO;
 using DalApi;
-using DO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System.Runtime.Serialization;
 
 
 namespace BlApi
 {
-   
-       internal static class ExtentionMethode
+    
+       static class ExtentionMethode
         {
+
+            internal static T Clone<T>(this T source)
+            {
+
+                DataContractSerializer serializer = new DataContractSerializer(typeof(T));
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    serializer.WriteObject(ms, source);
+                    ms.Seek(0, SeekOrigin.Begin);
+                    return (T)serializer.ReadObject(ms);
+                }
+            }
+
 
             /// <summary>
             /// Auxiliary function that converts a base station object from
@@ -22,7 +37,7 @@ namespace BlApi
             /// </summary>
             /// <param name="baseStation">serial number of the base station</param>
             /// <returns> base station on logical layer </returns>
-          public  static BaseStation convertBaseDalToBaseBl(this DO.Base_Station baseStation)
+            internal static BaseStation convertBaseDalToBaseBl(this DO.Base_Station baseStation)
             {
                 return new BaseStation
                 {
@@ -33,12 +48,13 @@ namespace BlApi
                     dronesInCharge = null
                 };
             }
+
             /// <summary>
             /// convert base from dal to base in list
             /// </summary>
             /// <param name="base_Station"></param>
             /// <returns></returns>
-          public  static BaseStationToList convertBaseInDalToBaseStationList(this DO.Base_Station base_Station, IDal dalObj )
+            internal static BaseStationToList convertBaseInDalToBaseStationList(this DO.Base_Station base_Station, IDal dalObj)
             {
                 var base_ = new BaseStationToList
                 {
@@ -46,9 +62,120 @@ namespace BlApi
                     FreeState = base_Station.NumberOfChargingStations,
                     Name = base_Station.NameBase
                 };
-                base_.BusyState = (uint)dalObj.ChargingDroneList().Count(x => x.idBaseStation == base_Station.baseNumber);
+                base_.BusyState = (uint)dalObj.ChargingDroneList(x => x.idBaseStation == base_Station.baseNumber).Count();
                 return base_;
             }
-        
-    }
+
+            internal static ClientToList convertClientDalToClientToList(this DO.Client clientInDal, IDal dalObj)
+            {
+                return new ClientToList
+                {
+                    ID = clientInDal.Id,
+                    Name = clientInDal.Name,
+                    Phone = clientInDal.PhoneNumber,
+                    Arrived = (uint)dalObj.PackegeList(x => x.SendClient == clientInDal.Id && x.PackageArrived != null).Count(),
+                    NotArrived = (uint)dalObj.PackegeList(x => x.SendClient == clientInDal.Id && x.PackageArrived == null).Count(),
+                    OnTheWay = (uint)dalObj.PackegeList(x => x.GetingClient == clientInDal.Id && x.PackageArrived == null).Count(),
+                    received = (uint)dalObj.PackegeList(x => x.GetingClient == clientInDal.Id && x.PackageArrived != null).Count()
+                };
+            }
+
+            /// <summary>
+            /// list of packages
+            /// </summary>
+            /// <returns>list of packages</returns>
+            internal static PackageToList convertPackegeDalToPackegeToList(this DO.Package package, IDal dalObj)
+            {
+                PackageStatus packageStatus;
+                if (package.PackageArrived != null)
+                    packageStatus = PackageStatus.Arrived;
+                else if (package.CollectPackageForShipment != null)
+                    packageStatus = PackageStatus.Collected;
+                else if (package.PackageAssociation != null)
+                    packageStatus = PackageStatus.Assign;
+                else
+                    packageStatus = PackageStatus.Create;
+
+                return new PackageToList
+                {
+                    packageStatus = packageStatus,
+                    RecivedClient = dalObj.CilentByNumber(package.GetingClient).Name,
+                    SendClient = dalObj.CilentByNumber(package.SendClient).Name,
+                    SerialNumber = package.SerialNumber,
+                    priority = (Priority)package.Priority,
+                    WeightCategories = (WeightCategories)package.WeightCatgory
+
+                };
+
+            }
+
+            /// <summary>
+            /// convret Packege in the data layer to PackegeAtClient object in the logical layer
+            /// </summary>
+            /// <param name="package">Packege in the data layer </param>
+            /// <param name="client1"> id of the client at the pacage</param>
+            /// <returns> PackegeAtClient object</returns>
+            internal static PackageAtClient convretPackegeDalToPackegeAtClient(this DO.Package package, uint client1, IDal dal)
+            {
+                var convert = new PackageAtClient
+                {
+                    SerialNum = package.SerialNumber,
+                    Priority = (Priority)package.Priority,
+                    WeightCatgory = (WeightCategories)package.WeightCatgory,
+
+                };
+                if (client1 == package.SendClient)
+                    convert.client2 = dal.CilentByNumber(package.GetingClient).clientInPackageFromDal();
+                else
+                    convert.client2 = dal.CilentByNumber(package.SendClient).clientInPackageFromDal();
+
+                if (package.PackageArrived != null)
+                    convert.packageStatus = PackageStatus.Arrived;
+                else if (package.CollectPackageForShipment != null)
+                    convert.packageStatus = PackageStatus.Collected;
+                else if (package.PackageAssociation != null)
+                    convert.packageStatus = PackageStatus.Assign;
+                else
+                    convert.packageStatus = PackageStatus.Create;
+                return convert;
+
+            }
+
+            /// <summary>
+            /// Request a client object from the data layer
+            /// </summary>
+            /// <param name="id">ID of the client</param>
+            /// <returns>client object on the logical layer</returns>
+            internal static ClientInPackage clientInPackageFromDal(this DO.Client client)
+            {
+
+                return new ClientInPackage { Id = client.Id, Name = client.Name };
+            }
+
+       
+            /// <summary>
+            /// search drone in package
+            /// </summary>
+            /// <param name="number"> serial number of the drone </param>
+            /// <returns>the founded drone</returns>
+            internal static DroneInPackage droneToDroneInPackage(this DroneToList drone)
+            {
+
+                return new DroneInPackage { SerialNum = drone.SerialNumber, butrryStatus = drone.ButrryStatus, location = drone.Location };
+            }
+            /// <summary>
+            /// drone request from the data layer
+            /// </summary>
+            /// <param name="drone"> serial number of the  drone</param>
+            /// <returns> drone </returns>
+            internal static DroneToList droneFromDal(this DO.Drone drone)
+            {
+                return new DroneToList { SerialNumber = drone.SerialNumber, Model = drone.Model, WeightCategory = (WeightCategories)drone.WeightCategory };
+            }
+
+           
+
+
+        }
+    
 }

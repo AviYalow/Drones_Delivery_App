@@ -143,7 +143,7 @@ namespace DalApi
         ///return all clients
         /// </summary>
         /// <returns> list of client</returns>
-        public IEnumerable<Client> cilentList();
+        public IEnumerable<Client> cilentList(Predicate<Client> predicate);
         /// <summary>
         /// Display client data desired 
         /// </summary>
@@ -182,7 +182,7 @@ namespace DalApi
         /// return list of charging drones
         /// </summary>
         /// <returns>return list of charging drones</returns>
-        public IEnumerable<BatteryLoad> ChargingDroneList();
+        public IEnumerable<BatteryLoad> ChargingDroneList(Predicate<BatteryLoad> predicate);
 
 
     }

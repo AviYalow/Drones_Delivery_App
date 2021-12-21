@@ -17,23 +17,11 @@ namespace BlApi
         /// <returns> list of clients</returns>
         public IEnumerable<ClientToList> ClientActiveToLists()
         {
-            List<ClientToList> clientToLists = new List<ClientToList>();
-            foreach (var clientInDal in dalObj.cilentList().Where(x => x.Active))
-            {
-                clientToLists.Add(new ClientToList
-                {
-                    ID = clientInDal.Id,
-                    Name = clientInDal.Name,
-                    Phone = clientInDal.PhoneNumber,
-                    Arrived = (uint)dalObj.PackegeList(x => x.SendClient == clientInDal.Id && x.PackageArrived != null).Count(),
-                    NotArrived = (uint)dalObj.PackegeList(x => x.SendClient == clientInDal.Id && x.PackageArrived == null).Count(),
-                    OnTheWay = (uint)dalObj.PackegeList(x => x.GetingClient == clientInDal.Id && x.PackageArrived == null).Count(),
-                    received = (uint)dalObj.PackegeList(x => x.GetingClient == clientInDal.Id && x.PackageArrived != null).Count()
-                });
 
-            }
-           
-            return clientToLists;
+
+
+            return from clientInDal in dalObj.cilentList(x => x.Active)
+                   select clientInDal.convertClientDalToClientToList(dalObj);
         }
 
         /// <summary>
@@ -42,23 +30,8 @@ namespace BlApi
         /// <returns> list of clients</returns>
         public IEnumerable<ClientToList> ClientToLists()
         {
-            List<ClientToList> clientToLists = new List<ClientToList>();
-            foreach (var clientInDal in dalObj.cilentList().Where(x => true))
-            {
-                clientToLists.Add(new ClientToList
-                {
-                    ID = clientInDal.Id,
-                    Name = clientInDal.Name,
-                    Phone = clientInDal.PhoneNumber,
-                    Arrived = (uint)dalObj.PackegeList(x => x.SendClient == clientInDal.Id && x.PackageArrived != null).Count(),
-                    NotArrived = (uint)dalObj.PackegeList(x => x.SendClient == clientInDal.Id && x.PackageArrived == null).Count(),
-                    OnTheWay = (uint)dalObj.PackegeList(x => x.GetingClient == clientInDal.Id && x.PackageArrived == null).Count(),
-                    received = (uint)dalObj.PackegeList(x => x.GetingClient == clientInDal.Id && x.PackageArrived != null).Count()
-                });
-
-            }
-            
-            return clientToLists;
+            return from clientInDal in dalObj.cilentList(x => true)
+                   select clientInDal.convertClientDalToClientToList(dalObj);
         }
 
         /// <summary>
@@ -67,8 +40,11 @@ namespace BlApi
         /// <returns></returns>
         public IEnumerable<ClientToList> ClientActiveHowSendPackegesToLists()
         {
-         
-            return ClientActiveToLists().Where(x=>x.Arrived>0||x.NotArrived>0);
+
+            return from client in ClientActiveToLists()
+                   where client.Arrived > 0 || client.NotArrived > 0
+                   select client.Clone();
+
         }
 
         /// <summary>
@@ -77,8 +53,10 @@ namespace BlApi
         /// <returns></returns>
         public IEnumerable<ClientToList> ClientActiveHowSendAndArrivePackegesToLists()
         {
-         
-            return ClientActiveToLists().Where(x => x.Arrived > 0 );
+            return from client in ClientActiveToLists()
+                   where client.Arrived > 0
+                   select client.Clone();
+
         }
         /// <summary>
         /// IEnumerable of client how send packege and not arrive
@@ -86,8 +64,10 @@ namespace BlApi
         /// <returns></returns>
         public IEnumerable<ClientToList> ClientActiveHowSendPackegesAndNotArriveToLists()
         {
+            return from client in ClientActiveToLists()
+                   where client.NotArrived > 0
+                   select client.Clone();
 
-            return ClientActiveToLists().Where(x =>  x.NotArrived > 0);
         }
         /// <summary>
         /// IEnumerable of client how need to get packege 
@@ -95,8 +75,10 @@ namespace BlApi
         /// <returns></returns>
         public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndNotArriveToLists()
         {
+            return from client in ClientActiveToLists()
+                   where client.OnTheWay > 0
+                   select client.Clone();
 
-            return ClientActiveToLists().Where(x => x.OnTheWay > 0);
         }
         /// <summary>
         /// IEnumerable of client how need to get packege and they get 
@@ -104,8 +86,10 @@ namespace BlApi
         /// <returns></returns>
         public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndArriveToLists()
         {
+            return from client in ClientActiveToLists()
+                   where client.received > 0
+                   select client.Clone();
 
-            return ClientActiveToLists().Where(x => x.received > 0);
         }
         /// <summary>
         /// IEnumerable of client how need to get packege and they not get 
@@ -113,8 +97,10 @@ namespace BlApi
         /// <returns></returns>
         public IEnumerable<ClientToList> ClientActiveHowGetingPackegesToLists()
         {
+            return from client in ClientActiveToLists()
+                   where client.received > 0 || client.OnTheWay > 0
+                   select client.Clone();
 
-            return ClientActiveToLists().Where(x => x.received > 0||x.OnTheWay>0);
         }
     }
 }

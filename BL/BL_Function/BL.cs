@@ -9,7 +9,7 @@ namespace BlApi
 {
     sealed partial class BL : IBL
     {
-        
+      
         #region singelton
         /// <summary>
         /// This implemention of singelton implicitly uses LazyThreadSafetyMode.ExecutionAndPublication 
@@ -21,7 +21,7 @@ namespace BlApi
         public static BL Instance { get { return lazy.Value; } }
         #endregion
          
-        // delegate bool filter<T>(T item);
+        
         IDal dalObj;
         List<DroneToList> dronesListInBl = new List<DroneToList>();
        
@@ -60,7 +60,7 @@ namespace BlApi
             //Copy the drone list from the data layer to the logic layer
             foreach (DO.Drone drone in dalObj.DroneList())
             {
-                dronesListInBl.Add(droneFromDal(drone));
+                dronesListInBl.Add(drone.droneFromDal());
             }
            
 

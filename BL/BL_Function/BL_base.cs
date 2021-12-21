@@ -25,7 +25,7 @@ namespace BlApi
                 Location base_location = new Location();
 
                 double? distans = null, distans2;
-                foreach (DO.Base_Station base_ in dalObj.BaseStationList(x=>true))
+                foreach (DO.Base_Station base_ in dalObj.BaseStationList(x => true))
                 {
                     base_location.Latitude = base_.latitude;
                     base_location.Longitude = base_.longitude;
@@ -126,15 +126,13 @@ namespace BlApi
                 flag = uint.TryParse(newNumber, out number);
                 if (!flag)
                     throw new InputErrorException();
-                int droneInCharge = dalObj.ChargingDroneList().Count(x => x.idBaseStation == base_);
+                int droneInCharge = dalObj.ChargingDroneList(x => x.idBaseStation == base_).Count();
                 baseUpdat.NumberOfChargingStations = (droneInCharge <= number) ?
                     number : throw new UpdateChargingPositionsException(droneInCharge, base_);
 
             }
             dalObj.UpdateBase(baseUpdat);
         }
-
-    
 
         /// <summary>
         /// search a specific station
@@ -147,11 +145,11 @@ namespace BlApi
             {
                 var baseStation = dalObj.BaseStationByNumber(baseNume);
                 var baseReturn = new BaseStation { SerialNum = baseNume, location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude }, Name = baseStation.NameBase, FreeState = baseStation.NumberOfChargingStations };
-                var droneInCharge = dalObj.ChargingDroneList().ToList().FindAll(x => x.idBaseStation == baseNume);
+                var droneInCharge = dalObj.ChargingDroneList(x => x.idBaseStation == baseNume);
                 baseReturn.dronesInCharge = new List<DroneInCharge>();
                 foreach (var drone in droneInCharge)
                 {
-                    var butrry = (SpecificDrone(drone.IdDrone).ButrryStatus + DroneChrgingAlredy(DateTime.Now-drone.EntringDrone));
+                    var butrry = (SpecificDrone(drone.IdDrone).ButrryStatus + droneChrgingAlredy(DateTime.Now - drone.EntringDrone));
                     butrry = (butrry > 100) ? 100 : butrry;
                     baseReturn.dronesInCharge.Add(new DroneInCharge { SerialNum = drone.IdDrone, butrryStatus = butrry });
                 }
@@ -180,8 +178,8 @@ namespace BlApi
                 for (int i = 0; i < dronesListInBl.Count; i++)
                 {
                     var drone = dronesListInBl[i];
-                    if(drone.Location.Latitude==baseStation.latitude&&drone.Location.Longitude==baseStation.longitude)
-                    drone.Location = ClosestBase(drone.Location).location;
+                    if (drone.Location.Latitude == baseStation.latitude && drone.Location.Longitude == baseStation.longitude)
+                        drone.Location = ClosestBase(drone.Location).location;
                 }
             }
             catch (DO.ItemNotFoundException ex)

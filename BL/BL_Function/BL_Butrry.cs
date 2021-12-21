@@ -19,7 +19,7 @@ namespace BlApi
         /// <returns> percentage of battery needed</returns>
         double buttryDownPackegeDelivery(PackageInTransfer packageInTransfer)
         {
-            
+
             double battery_drop = 0;
 
             switch (packageInTransfer.WeightCatgory)
@@ -51,18 +51,17 @@ namespace BlApi
         /// <returns> percentage of battery needed</returns>
         double buttryDownWithNoPackege(Location fromLocation, Location toLocation)
         {
-            
+
             double distans = Distans(fromLocation, toLocation);
             double buttry = ((distans / (double)SpeedDrone.Free) * (double)ButrryPer.Minute) * freeElctric;
             return buttry;
         }
 
-        
         /// <summary>
         /// send drone to charge
         /// </summary>
         /// <param name="droneNumber">serial number of drone</param>
-        public void DroneToCharge(uint droneNumber )
+        public void DroneToCharge(uint droneNumber)
         {
 
 
@@ -72,7 +71,7 @@ namespace BlApi
             {
                 throw new DroneStillAtWorkException();
             }
-           // var baseStation = CllosetBase(drone.location);
+            // var baseStation = CllosetBase(drone.location);
             double buttry = buttryDownWithNoPackege(drone.Location, baseStation.location);
             if (drone.ButrryStatus - buttry < 0)
             {
@@ -89,7 +88,7 @@ namespace BlApi
                 drone.Location = baseStation.location;
                 dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == droneNumber)] = drone;
 
-            
+
             }
             catch (DO.ItemNotFoundException ex)
             {
@@ -116,21 +115,21 @@ namespace BlApi
             if (drone == null)
                 throw new ItemNotFoundException("Drone", droneNumber);
             //locking the drone in charge
-            var information = dalObj.ChargingDroneList(). FirstOrDefault(x => x.IdDrone == droneNumber);
-           
+            var information = dalObj.ChargingDroneList(x => x.IdDrone == droneNumber).FirstOrDefault();
+
             if (information.Equals(new DO.BatteryLoad()))
                 throw new ItemNotFoundException("Drone", droneNumber);
             //calcoulet how mach he chraging alredy
-            double buttry = DroneChrgingAlredy(DateTime.Now-information.EntringDrone);
+            double buttry = droneChrgingAlredy(DateTime.Now - information.EntringDrone);
 
-            drone.ButrryStatus = buttry > 100 ? 100 : buttry+drone.ButrryStatus;
+            drone.ButrryStatus = buttry > 100 ? 100 : buttry + drone.ButrryStatus;
             drone.DroneStatus = DroneStatus.Free;
             var baseStation = dalObj.BaseStationByNumber(information.idBaseStation);
             baseStation.NumberOfChargingStations++;
             dalObj.UpdateBase(baseStation);
             dalObj.FreeDroneFromCharge(drone.SerialNumber);
             dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == drone.SerialNumber)] = drone;
-            
+
 
             return drone.ButrryStatus;
 
@@ -141,27 +140,27 @@ namespace BlApi
         /// </summary>
         /// <param name="baseNumber"> serial number of the base station</param>
         /// <param name="number"> amount of drone to release</param>
-        public void FreeBaseFromDrone(uint baseNumber, int number=-1)
+        public void FreeBaseFromDrone(uint baseNumber, int number = -1)
         {
-            if(number!=-1)
-            
-            try
-            {
-                if (dalObj.ChargingDroneList().Count(x=>x.idBaseStation==baseNumber) - number < 0)
+            if (number != -1)
+
+                try
                 {
-                    throw (new TryToPullOutMoreDrone());
+                    if (dalObj.ChargingDroneList(x => x.idBaseStation == baseNumber).Count() - number < 0)
+                    {
+                        throw (new TryToPullOutMoreDrone());
+                    }
                 }
-            }
-            catch (DO.ItemNotFoundException ex)
-            {
-                throw new ItemNotFoundException(ex);
-            }
-           
-            
+                catch (DO.ItemNotFoundException ex)
+                {
+                    throw new ItemNotFoundException(ex);
+                }
+
+
             int i = 0;
             var returnDrone = new DroneInCharge();
             List<DroneInCharge> list = new List<DroneInCharge>();
-            foreach (var droneChrging in dalObj.ChargingDroneList().Where(x => x.idBaseStation == baseNumber))
+            foreach (var droneChrging in dalObj.ChargingDroneList(x => x.idBaseStation == baseNumber))
             {
                 if (number != -1)
                 {
@@ -175,22 +174,33 @@ namespace BlApi
                 }
                 else
                     //FreeDroneFromCharging(droneChrging.IdDrone, droneChrging.EntringDrone - DateTime.Now);
-                    FreeDroneFromCharging(droneChrging.IdDrone);            }
-
+                    FreeDroneFromCharging(droneChrging.IdDrone);
             }
 
-            /// <summary>
-            /// Calculates the percentage of battery of the drone based on the charging time it was
-            /// </summary>
-            /// <param name="span">charging time the drone was</param>
-            /// <returns> percentage of battery</returns>
-            double DroneChrgingAlredy(TimeSpan span)
+        }
+
+        /// <summary>
+        /// Calculates the percentage of battery of the drone based on the charging time it was
+        /// </summary>
+        /// <param name="span">charging time the drone was</param>
+        /// <returns> percentage of battery</returns>
+        double droneChrgingAlredy(TimeSpan span)
         {
-            var a = ((double)(span).TotalMinutes); var b= (chargingPerMinote );
+            var a = ((double)(span).TotalMinutes); var b = (chargingPerMinote);
             a *= b;
             return a;
         }
 
-
+        /// <summary>
+        /// Calculate how much percentage of battery the drone will need for full shipping
+        /// </summary>
+        /// <param name="drone"> drone</param>
+        /// <param name="package"> package</param>
+        /// <returns> percentage of battery </returns>
+        double batteryCalculationForFullShipping(Location drone, Package package)
+        {
+            return buttryDownWithNoPackege(drone, ClientLocation(package.SendClient.Id)) + buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package)) +
+                buttryDownWithNoPackege(ClosestBase(ClientLocation(package.RecivedClient.Id)).location, ClientLocation(package.RecivedClient.Id));
+        }
     }
 }

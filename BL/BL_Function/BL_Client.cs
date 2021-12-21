@@ -133,14 +133,14 @@ namespace BlApi
                 if (packege.Count() != 0)
                     foreach (var packegeInList in packege)
                     {
-                        returnClient.ToClient.Add(convretPackegeDalToPackegeAtClient(packegeInList,packegeInList.GetingClient));
+                        returnClient.ToClient.Add(packegeInList.convretPackegeDalToPackegeAtClient(packegeInList.GetingClient,dalObj));
                     }
                 returnClient.FromClient = new List<PackageAtClient>();
                 packege = dalObj.PackegeList(x => x.SendClient == id);
                 if (packege.Count() != 0)
                     foreach (var packegeInList in packege)
                     {
-                        returnClient.FromClient.Add(convretPackegeDalToPackegeAtClient(packegeInList,packegeInList.SendClient));
+                        returnClient.FromClient.Add(packegeInList.convretPackegeDalToPackegeAtClient(packegeInList.SendClient,dalObj));
                     }
                 return returnClient;
             }
@@ -151,7 +151,6 @@ namespace BlApi
 
 
         }
-
   
         /// <summary>
         /// delete client
@@ -186,6 +185,7 @@ namespace BlApi
 
         }
 
-
+        
+    
     }
 }

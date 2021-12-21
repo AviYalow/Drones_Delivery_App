@@ -56,19 +56,6 @@ namespace BlApi
         }
 
         /// <summary>
-        /// Calculate how much percentage of battery the drone will need for full shipping
-        /// </summary>
-        /// <param name="drone"> drone</param>
-        /// <param name="package"> package</param>
-        /// <returns> percentage of battery </returns>
-
-        double batteryCalculationForFullShipping(Location drone, Package package)
-        {
-            return buttryDownWithNoPackege(drone, ClientLocation(package.SendClient.Id)) + buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package)) +
-                buttryDownWithNoPackege(ClosestBase(ClientLocation(package.RecivedClient.Id)).location, ClientLocation(package.RecivedClient.Id));
-        }
-
-        /// <summary>
         /// Updating fields of a particular package in the data layer
         /// </summary>
         /// <param name="package"> particular package</param>
@@ -88,9 +75,6 @@ namespace BlApi
                 WeightCatgory = (DO.WeightCategories)package.weightCatgory
             });
         }
-
-
-  
 
         /// <summary>
         ///  view a package
@@ -112,63 +96,6 @@ namespace BlApi
 
         }
 
-        /// <summary>
-        /// convert packege from the data layer to the logical layer
-        /// </summary>
-        /// <param name="dataPackege"> package in the data layer </param>
-        /// <returns>  package in the logical layer</returns>
-        Package convertPackegeDalToBl(DO.Package dataPackege)
-        {
-            return new Package
-            {
-                SerialNumber = dataPackege.SerialNumber,
-                SendClient = clientInPackageFromDal(dataPackege.SendClient),
-                collect_package = dataPackege.CollectPackageForShipment,
-                create_package = dataPackege.ReceivingDelivery,
-                drone = dataPackege.OperatorSkimmerId != 0 ? droneToDroneInPackage(dataPackege.OperatorSkimmerId) : null,
-                package_arrived = dataPackege.PackageArrived,
-                package_association = dataPackege.PackageAssociation,
-                priority = (Priority)dataPackege.Priority,
-                RecivedClient = clientInPackageFromDal(dataPackege.GetingClient),
-                weightCatgory = (WeightCategories)dataPackege.WeightCatgory
-            };
-
-        }
-
-     
-        /// <summary>
-        /// list of packages
-        /// </summary>
-        /// <returns>list of packages</returns>
-
-   
-
-        PackageToList convertPackegeDalToList(DO.Package package)
-        {
-            PackageStatus packageStatus;
-            if (package.PackageArrived != null)
-                packageStatus = PackageStatus.Arrived;
-            else if (package.CollectPackageForShipment != null)
-                packageStatus = PackageStatus.Collected;
-            else if (package.PackageAssociation != null)
-                packageStatus = PackageStatus.Assign;
-            else
-                packageStatus = PackageStatus.Create;
-
-         return  new PackageToList
-            {
-                packageStatus = packageStatus,
-                RecivedClient = dalObj.CilentByNumber(package.GetingClient).Name,
-                SendClient = dalObj.CilentByNumber(package.SendClient).Name,
-                SerialNumber = package.SerialNumber,
-                priority = (Priority)package.Priority,
-                WeightCategories = (WeightCategories)package.WeightCatgory
-
-            };
-           
-        }
-
-      
         /// <summary>
         /// delete packege 
         /// </summary>
@@ -199,6 +126,29 @@ namespace BlApi
             {
                 throw new ItemNotFoundException(ex);
             }
+        }
+
+        /// <summary>
+        /// convert packege from the data layer to the logical layer
+        /// </summary>
+        /// <param name="dataPackege"> package in the data layer </param>
+        /// <returns>  package in the logical layer</returns>
+        Package convertPackegeDalToBl(DO.Package dataPackege)
+        {
+            return new Package
+            {
+                SerialNumber = dataPackege.SerialNumber,
+                SendClient = dalObj.CilentByNumber(dataPackege.SendClient).clientInPackageFromDal(),
+                collect_package = dataPackege.CollectPackageForShipment,
+                create_package = dataPackege.ReceivingDelivery,
+                drone = dataPackege.OperatorSkimmerId != 0 ? SpecificDrone(dataPackege.OperatorSkimmerId).droneToDroneInPackage() : null,
+                package_arrived = dataPackege.PackageArrived,
+                package_association = dataPackege.PackageAssociation,
+                priority = (Priority)dataPackege.Priority,
+                RecivedClient = dalObj.CilentByNumber(dataPackege.GetingClient).clientInPackageFromDal(),
+                weightCatgory = (WeightCategories)dataPackege.WeightCatgory
+            };
+
         }
     }
 }

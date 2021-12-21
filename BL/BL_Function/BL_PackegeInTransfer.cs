@@ -9,27 +9,7 @@ namespace BlApi
 {
     partial class BL : IBL
     {
-        /// <summary>
-        ///  convert packege in data layer to packegeInTrnansfer object in the logical layer
-        /// </summary>
-        /// <param name="package"> packege in data layer</param>
-        /// <returns> packegeInTrnansfer object in the logical layer</returns>
-        PackageInTransfer convertPackegeDalToPackegeInTrnansfer(DO.Package package)
-        {
-            var returnPackege = new PackageInTransfer
-            {
-                SerialNum = package.SerialNumber,
-                WeightCatgory = (WeightCategories)package.WeightCatgory,
-                Priority = (Priority)package.Priority,
-                Source = ClientLocation(package.SendClient),
-                Destination = ClientLocation(package.GetingClient),
-                SendClient = clientInPackageFromDal(package.SendClient),
-                RecivedClient = clientInPackageFromDal(package.GetingClient)
-            };
-            returnPackege.Distance = Distans(returnPackege.Source, returnPackege.Destination);
-            returnPackege.InTheWay = (package.PackageArrived is null&&package.OperatorSkimmerId!=0) ? true : false;
-            return returnPackege;
-        }
+     
         /// <summary>
         /// convert Packege object to PackegeInTrnansfer object
         /// </summary>
@@ -55,7 +35,7 @@ namespace BlApi
                 throw new ItemNotFoundException("Drone", droneNumber);
             try
             {
-                var pacege = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.NumPackage));
+                var pacege =  convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.NumPackage));
                 if (pacege.InTheWay != true)
                 { new FunctionErrorException("ShowPackage||AddPackege"); }
 
@@ -87,7 +67,7 @@ namespace BlApi
                 throw new ItemNotFoundException("Drone", droneNumber);
             try
             {
-                var packege = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.NumPackage));
+                var packege =  convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.NumPackage));
                 if (packege.InTheWay == false)
                     throw new PackegeNotAssctionOrCollectedException();
                 drone.ButrryStatus -= buttryDownPackegeDelivery(packege);
@@ -148,6 +128,27 @@ namespace BlApi
             }
             
 
+        }
+        /// <summary>
+        ///  convert packege in data layer to packegeInTrnansfer object in the logical layer
+        /// </summary>
+        /// <param name="package"> packege in data layer</param>
+        /// <returns> packegeInTrnansfer object in the logical layer</returns>
+        PackageInTransfer convertPackegeDalToPackegeInTrnansfer( DO.Package package)
+        {
+            var returnPackege = new PackageInTransfer
+            {
+                SerialNum = package.SerialNumber,
+                WeightCatgory = (WeightCategories)package.WeightCatgory,
+                Priority = (Priority)package.Priority,
+                Source = ClientLocation(package.SendClient),
+                Destination = ClientLocation(package.GetingClient),
+                SendClient = dalObj.CilentByNumber(package.SendClient).clientInPackageFromDal(),
+                RecivedClient = dalObj.CilentByNumber(package.GetingClient).clientInPackageFromDal()
+            };
+            returnPackege.Distance = Distans(returnPackege.Source, returnPackege.Destination);
+            returnPackege.InTheWay = (package.PackageArrived is null && package.OperatorSkimmerId != 0) ? true : false;
+            return returnPackege;
         }
 
     }

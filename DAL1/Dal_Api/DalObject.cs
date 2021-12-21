@@ -12,20 +12,20 @@ using Ds;
 namespace Dal
 {
 
-    sealed partial  class DalObject : DalApi.IDal
+    sealed partial class DalObject : DalApi.IDal
     {
         private static readonly Lazy<DalObject> lazy = new Lazy<DalObject>(() => new DalObject());
         public static DalObject Instance { get { return lazy.Value; } }
-       
+
         /// <summary>
         ///Creating entities with initial initialization
         /// </summary>
-       private DalObject()
+        private DalObject()
         {
-           
+
         }
 
-       
+
         /// <summary>
         /// show the distance between 2 locations
         /// </summary>
@@ -54,10 +54,12 @@ namespace Dal
         /// return list of charging drones
         /// </summary>
         /// <returns>return list of charging drones</returns>
-        public IEnumerable<BatteryLoad> ChargingDroneList()
+        public IEnumerable<BatteryLoad> ChargingDroneList(Predicate<BatteryLoad> predicate)
         {
 
-            return DataSource.droneInCharge.ToList();
+            return from x in DataSource.droneInCharge
+                   where predicate(x)
+                   select x;
         }
 
     }
