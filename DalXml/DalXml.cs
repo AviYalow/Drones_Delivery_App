@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using DalApi;
 using DO;
 
-namespace DalXml
+namespace Dal
 {
    
-     /*   sealed class DalXml : IDal
+       /* sealed class DalXml :IDal
         {
             static readonly IDal instance = new DalXml();
             public static IDal Instance { get => instance; }
