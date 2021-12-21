@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Dal
+namespace Ds
 {
     /// <summary>
     /// The database
@@ -20,19 +20,19 @@ namespace Dal
         public static List<Client> clients = new List<Client>();
         public static List<Package> packages = new List<Package>();
         public static List<BatteryLoad> droneInCharge = new List<BatteryLoad>();
-
+       // public static Config config
 
         /// <Config>
         /// 
         /// </Config>
-        internal class Config
+        public class Config
         {
-            internal static double free { get { return 0.25; } }//per minute
-            internal static double easyWeight { get { return 0.5; } }//per minute
-            internal static double mediomWeight { get { return 0.75; } }//per minute
-            internal static double heavyWeight { get { return 1; } }//per minute
-            internal static double Charging_speed { get { return 1.5; } }//per minute
-            internal static uint package_num = 10000;
+            public  static  double free { get { return 0.25; } }//per minute
+            public static double easyWeight { get { return 0.5; } }//per minute
+            public static double mediomWeight { get { return 0.75; } }//per minute
+            public static double heavyWeight { get { return 1; } }//per minute
+            public static double Charging_speed { get { return 1.5; } }//per minute
+            public static uint package_num = 10000;
 
         }
         static DataSource()

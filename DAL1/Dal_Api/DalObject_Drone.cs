@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using DalApi;
 using DO;
+using Ds;
 
-namespace DalApi
+namespace Dal
 {
-     partial class DalObject : DalApi.IDal
+    sealed partial class DalObject : DalApi.IDal
     {
-
+        
 
         /// <summary>
         /// Adding a new drone
@@ -142,7 +143,7 @@ namespace DalApi
             if (index != -1)
                 DataSource.drones[index] = drone;
             else
-                throw (new DalApi.DO.ItemNotFoundException("drone", drone.SerialNumber));
+                throw (new DO.ItemNotFoundException("drone", drone.SerialNumber));
         }
         
         /// <summary>

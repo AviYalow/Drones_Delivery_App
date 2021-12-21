@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using DalApi;
 using DO;
+using Ds;
 
 
-namespace DalApi
+namespace Dal
 {
-    partial class DalObject : DalApi.IDal
+    sealed partial class DalObject : DalApi.IDal
     {
         
         /// <summary>
@@ -51,7 +52,7 @@ namespace DalApi
 
             package.PackageAssociation = DateTime.Now;
             DataSource.packages[i] = package;
-         
+        
 
 
         }
@@ -99,16 +100,21 @@ namespace DalApi
             int i = DataSource.packages.FindIndex(x => x.SerialNumber == packageNumber);
             if (i == -1)
                 throw (new ItemNotFoundException("package", packageNumber));
-            return DataSource.packages[i];
+            return DataSource.packages[i].Clone();
 
         }
 
         /// <summary>
         /// return the list of all packages
         /// </summary>
-        public IEnumerable<Package> PackegeList(Predicate<Package> predicate)
+        public IEnumerable<Package> PackegeList(Func<Package,bool> predicate)
         {
-            return DataSource.packages.FindAll(predicate);
+
+            return DataSource.packages.Where(predicate).Select(x => x.Clone());
+                   
+
+                 
+                  
 
         }
 
@@ -134,7 +140,7 @@ namespace DalApi
         {
             int i = DataSource.packages.FindIndex(x => x.SerialNumber == package.SerialNumber);
             if (i == -1)
-                throw (new DalApi.DO.ItemNotFoundException("Packege", package.SerialNumber));
+                throw (new DO.ItemNotFoundException("Packege", package.SerialNumber));
             else
                 DataSource.packages[i] = package;
         }

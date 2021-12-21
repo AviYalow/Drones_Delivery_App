@@ -6,20 +6,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using DO;
+using Ds;
 
 
-namespace DalApi
+namespace Dal
 {
 
-     partial class DalObject : DalApi.IDal
+    sealed partial  class DalObject : DalApi.IDal
     {
-        
+        private static readonly Lazy<DalObject> lazy = new Lazy<DalObject>(() => new DalObject());
+        public static DalObject Instance { get { return lazy.Value; } }
         /// <summary>
         ///Creating entities with initial initialization
         /// </summary>
-        public DalObject()
+       private DalObject()
         {
-            DataSource.Initialize();
+           
         }
 
        

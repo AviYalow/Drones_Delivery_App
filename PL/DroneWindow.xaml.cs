@@ -36,7 +36,7 @@ namespace PL
             Drone = new DroneToList();
             this.DataContext = Drone;
             this.bl = bl;
-            WeightChoseCombo.ItemsSource = Enum.GetValues(typeof(BlApi.BO.WeightCategories));
+            WeightChoseCombo.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
          
             BaseChosingCombo.ItemsSource = bl.BaseStationWhitFreeChargingStationToLists();
             sitoation = true;
@@ -127,12 +127,12 @@ namespace PL
                         }
                     }
                        
-                    catch (BlApi.BO.DroneCantMakeDliveryException ex)
+                    catch (BO.DroneCantMakeDliveryException ex)
                     {
 
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                    catch (BlApi.BO.ItemNotFoundException ex)
+                    catch (BO.ItemNotFoundException ex)
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
@@ -160,23 +160,23 @@ namespace PL
                         }
 
                     }
-                    catch (BlApi.BO.DroneStillAtWorkException ex)
+                    catch (BO.DroneStillAtWorkException ex)
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                    catch (BlApi.BO.NoButrryToTripException ex)
+                    catch (BO.NoButrryToTripException ex)
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                    catch (BlApi.BO.NoPlaceForChargeException ex)
+                    catch (BO.NoPlaceForChargeException ex)
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                    catch (BlApi.BO.ItemNotFoundException ex)
+                    catch (BO.ItemNotFoundException ex)
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                    catch (BlApi.BO.ItemFoundExeption ex)
+                    catch (BO.ItemFoundExeption ex)
                     {
                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
@@ -215,18 +215,18 @@ namespace PL
                 try
                 {
 
-                    bl.AddDrone(Drone, ((BlApi.BO.BaseStationToList)BaseChosingCombo.SelectedItem).SerialNum);
+                    bl.AddDrone(Drone, ((BO.BaseStationToList)BaseChosingCombo.SelectedItem).SerialNum);
                     MessageBox.Show(Drone.ToString() + "\n add to list!", "succesful");
                 }
-                catch (BlApi.BO.InputErrorException ex)
+                catch (BO.InputErrorException ex)
                 {
                     MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                catch (BlApi.BO.ItemNotFoundException ex)
+                catch (BO.ItemNotFoundException ex)
                 {
                     MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                catch (BlApi.BO.ItemFoundExeption ex)
+                catch (BO.ItemFoundExeption ex)
                 {
                     MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -288,7 +288,7 @@ namespace PL
         private void WeightChoseCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             InputMissingWightLabel.Visibility = Visibility.Collapsed;
-            Drone.WeightCategory = (BlApi.BO.WeightCategories)WeightChoseCombo.SelectedItem;
+            Drone.WeightCategory = (BO.WeightCategories)WeightChoseCombo.SelectedItem;
 
 
         }

@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using DalApi;
 using DO;
+using Ds;
 
-namespace DalApi
+namespace Dal
 {
-     partial class DalObject : DalApi.IDal
+    sealed partial class DalObject : DalApi.IDal
     {
 
         
@@ -22,7 +23,7 @@ namespace DalApi
         /// <param name="longitude">Longitude of the station</param>
         public void AddStation(uint base_num, string name, uint numOfCharging, double latitude, double longitude)
         {
-
+            
             if (DataSource.base_Stations.Any(x => x.baseNumber == base_num))
                 throw (new ItemFoundException("Base station", base_num));
 
@@ -98,7 +99,7 @@ namespace DalApi
         {
             int i = DataSource.base_Stations.FindIndex(x => x.baseNumber == base_.baseNumber);
             if (i == -1)
-                throw (new DalApi.DO.ItemNotFoundException("Base Station", base_.baseNumber));
+                throw (new DO.ItemNotFoundException("Base Station", base_.baseNumber));
             else
                 DataSource.base_Stations[i] = base_;
         }

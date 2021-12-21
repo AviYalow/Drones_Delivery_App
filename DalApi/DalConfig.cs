@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DalApi
 {
-    class DalConfig
+   static class DalConfig
     {
         internal static string DalName;
         internal static Dictionary<string, string> DalPackeges;

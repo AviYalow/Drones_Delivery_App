@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DalApi;
+using Ds;
 using DO;
 
-namespace DalApi
+namespace Dal
 {
-    partial class DalObject : DalApi.IDal
+    sealed partial class DalObject : DalApi.IDal
     {
 
 
@@ -83,7 +84,7 @@ namespace DalApi
             if (index != -1)
                 DataSource.clients[index] = client;
             else
-                throw (new DalApi.DO.ItemNotFoundException("client", client.Id));
+                throw (new DO.ItemNotFoundException("client", client.Id));
         }
     }
 }
