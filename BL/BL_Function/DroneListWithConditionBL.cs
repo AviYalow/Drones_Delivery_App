@@ -13,6 +13,7 @@ namespace BlApi
     {
         Func<DroneToList, bool> selectByStatus = null;
         Func<DroneToList, bool> selectByWeihgt = null;
+        Func<DroneToList, bool> selectByPackege = null;
         /// <summary>
         /// return list of drones
         /// </summary>
@@ -27,7 +28,6 @@ namespace BlApi
                    select drone.Clone();
                 
         }
-
 
         /// <summary>
         /// return list of drones by spsific status
@@ -69,14 +69,19 @@ namespace BlApi
         /// <returns> return list of drones</returns>
         public IEnumerable<DroneToList> DroneToListPasibalForPackege(Package package)
         {
+            droneToListFilter -= selectByPackege;
+            selectByWeihgt = x => x.WeightCategory >= package.weightCatgory &&
+            x.DroneStatus == DroneStatus.Free &&
+            x.ButrryStatus > batteryCalculationForFullShipping(x.Location, package);
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
+            if (package != null)
+                droneToListFilter += selectByWeihgt;
 
-            //return dronesListInBl.FindAll(x => x.WeightCategory >=package.weightCatgory&&x.DroneStatus==DroneStatus.Free&&x.ButrryStatus>batteryCalculationForFullShipping(x.Location,package));
-            return from x in dronesListInBl
-                   where x.WeightCategory >= package.weightCatgory && x.DroneStatus == DroneStatus.Free && x.ButrryStatus > batteryCalculationForFullShipping(x.Location, package)
-                   select x.Clone();
+            return FilterDronesList();
+
         }
+
         /// <summary>
         /// sort list by spscific parameter
         /// </summary>
@@ -108,6 +113,7 @@ namespace BlApi
 
 
         }
+
         /// <summary>
         /// return filter list
         /// </summary>

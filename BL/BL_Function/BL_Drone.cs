@@ -89,13 +89,6 @@ namespace BlApi
             dalObj.UpdateDrone(droneInData);
         }
 
-
-       
-
-     
-
-      
-
         /// <summary>
         /// search a drone by serial number
         /// </summary>
