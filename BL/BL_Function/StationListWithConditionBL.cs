@@ -26,6 +26,7 @@ namespace BlApi
 
             if (base_.Count() == 0)
                 throw new TheListIsEmptyException();
+            
             return base_;
         }
         /// <summary>

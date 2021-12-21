@@ -26,7 +26,7 @@ namespace BlApi
             {
                 throw new ItemNotFoundException(ex);
             }
-            return new ClientInPackage { Id = client.Id, Name = client.Name };
+            return new ClientInPackage { Id = client.Id, Name = client.Name }.;
         }
 
     }
