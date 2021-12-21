@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
-
 using DalApi;
+
 namespace BlApi
 {
-    public partial class BL : IBL
+    partial class BL : IBL
     {
         /// <summary>
         /// convret Packege in the data layer to PackegeAtClient object in the logical layer

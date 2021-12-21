@@ -11,13 +11,16 @@ namespace BlApi
     {
         
         #region singelton
+        /// <summary>
+        /// This implemention of singelton implicitly uses LazyThreadSafetyMode.ExecutionAndPublication 
+        /// as the thread safety mode for the Lazy<Singleton>. 
+        /// </summary>
+
         private static readonly Lazy<BL> lazy =
         new Lazy<BL>(() => new BL());
-
         public static BL Instance { get { return lazy.Value; } }
-
-
         #endregion
+         
         // delegate bool filter<T>(T item);
         IDal dalObj;
         List<DroneToList> dronesListInBl = new List<DroneToList>();

@@ -8,7 +8,7 @@ using BO;
 using DalApi;
 namespace BlApi
 {
-    public partial class BL : IBL
+    partial class BL : IBL
     {
         /// <summary>
         /// return the client location
