@@ -100,21 +100,19 @@ namespace Dal
             int i = DataSource.packages.FindIndex(x => x.SerialNumber == packageNumber);
             if (i == -1)
                 throw (new ItemNotFoundException("package", packageNumber));
-            return DataSource.packages[i].Clone();
+            return DataSource.packages[i];
 
         }
 
         /// <summary>
         /// return the list of all packages
         /// </summary>
-        public IEnumerable<Package> PackegeList(Func<Package,bool> predicate)
+        public IEnumerable<Package> PackegeList(Predicate<Package> predicate)
         {
-
-            return DataSource.packages.Where(predicate).Select(x => x.Clone());
-                   
-
-                 
-                  
+            // return DataSource.packages.Where(predicate).Select(x => x);
+            return from x in DataSource.packages
+                   where predicate(x) 
+                   select x;
 
         }
 

@@ -62,7 +62,7 @@ namespace DalApi
         /// <summary>
         /// return the list of all packages
         /// </summary>
-        public IEnumerable<Package> PackegeList(Func<Package,bool> predicate);
+        public IEnumerable<Package> PackegeList(Predicate<Package> predicate);
       
 
         /// <summary>

@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 using BO;
-
 using DalApi;
+
 namespace BlApi
 {
     partial class BL : IBL

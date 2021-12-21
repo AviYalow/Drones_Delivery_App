@@ -8,7 +8,7 @@
         /// </Package>
         public struct Package
         {
-            public uint SerialNumber { get; set; }
+            public uint SerialNumber { get; init; }
             public uint SendClient { get; set; }
             public uint GetingClient { get; set; }
             public WeightCategories WeightCatgory { get; set; }

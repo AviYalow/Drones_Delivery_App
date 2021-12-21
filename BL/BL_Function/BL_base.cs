@@ -134,39 +134,7 @@ namespace BlApi
             dalObj.UpdateBase(baseUpdat);
         }
 
-        /// <summary>
-        /// Auxiliary function that converts a base station object from
-        /// the data layer to a base station object on the logical layer
-        /// </summary>
-        /// <param name="baseStation">serial number of the base station</param>
-        /// <returns> base station on logical layer </returns>
-        BaseStation convertBaseDalToBaseBl(DO.Base_Station baseStation)
-        {
-            return new BaseStation
-            {
-                SerialNum = baseStation.baseNumber,
-                Name = baseStation.NameBase,
-                FreeState = baseStation.NumberOfChargingStations,
-                location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude },
-                dronesInCharge = null
-            };
-        }
-        /// <summary>
-        /// convert base from dal to base in list
-        /// </summary>
-        /// <param name="base_Station"></param>
-        /// <returns></returns>
-        BaseStationToList convertBaseInDalToBaseStationList(DO.Base_Station base_Station)
-        {
-            var base_ = new BaseStationToList
-            {
-                SerialNum = base_Station.baseNumber,
-                FreeState = base_Station.NumberOfChargingStations,
-                Name = base_Station.NameBase
-            };
-            base_.BusyState = (uint)dalObj.ChargingDroneList().Count(x => x.idBaseStation == base_Station.baseNumber);
-            return base_;
-        }
+    
 
         /// <summary>
         /// search a specific station

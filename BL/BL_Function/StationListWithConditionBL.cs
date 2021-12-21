@@ -20,8 +20,11 @@ namespace BlApi
         /// <returns> base station list </returns>
         public IEnumerable<BaseStationToList> BaseStationToLists()
         {
-            var base_= dalObj.BaseStationList(x => true).ToList().ConvertAll(convertBaseInDalToBaseStationList);
-            if (base_.Count == 0)
+
+            var base_ = from x in dalObj.BaseStationList(x => true)
+                        select x.convertBaseInDalToBaseStationList(dalObj);
+
+            if (base_.Count() == 0)
                 throw new TheListIsEmptyException();
             return base_;
         }
@@ -32,7 +35,7 @@ namespace BlApi
         public IEnumerable<BaseStationToList> BaseStationWhitFreeChargingStationToLists()
         {
             var base_ = from x in dalObj.BaseStationList(x => x.NumberOfChargingStations > 0)
-                        select convertBaseInDalToBaseStationList(x);
+                        select x.convertBaseInDalToBaseStationList(dalObj);
            
             return base_;
         }
