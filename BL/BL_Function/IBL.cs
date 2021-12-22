@@ -36,7 +36,7 @@ namespace BlApi
         /// </summary>
         /// <param name="droneId"> serial number of the drone</param>
         /// <param name="newName"> new name to change</param>
-        public void UpdateDroneName(uint droneId, string newName);
+        public void UpdateDroneName(uint droneId, DroneModel newName);
         /// <summary>
         /// find specific drone in the list of the drones
         /// </summary>

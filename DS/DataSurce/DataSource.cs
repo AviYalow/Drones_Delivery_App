@@ -102,7 +102,7 @@ namespace Ds
                 drones.Add(new Drone
                 {
                     SerialNumber = (uint)rand.Next(10000),
-                    Model = randomName(rand, rand.Next(3, 7)),
+                    Model =(DroneModel) rand.Next(6),
                     WeightCategory = (WeightCategories)rand.Next(0, 3),
                     Active=true
 

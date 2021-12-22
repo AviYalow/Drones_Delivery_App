@@ -170,7 +170,7 @@ namespace BlApi
             /// <returns> drone </returns>
             internal static DroneToList droneFromDal(this DO.Drone drone)
             {
-                return new DroneToList { SerialNumber = drone.SerialNumber, Model = drone.Model, WeightCategory = (WeightCategories)drone.WeightCategory };
+                return new DroneToList { SerialNumber = drone.SerialNumber, Model = drone.Model.covertDroneModelDalToBl(), WeightCategory = (WeightCategories)drone.WeightCategory };
             }
         internal static DO.Package convertPackageBltopackegeDal(this Package package)
         {
@@ -189,8 +189,15 @@ namespace BlApi
             };
         }
            
-
-
+        internal static DO.DroneModel covertDroneModelBlToDal(this DroneModel drone)
+        {
+            return (DO.DroneModel)drone;
         }
+        internal static DroneModel covertDroneModelDalToBl(this DO. DroneModel drone)
+        {
+            return (DroneModel)drone;
+        }
+
+    }
     
 }

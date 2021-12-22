@@ -37,7 +37,7 @@ namespace PL
             this.DataContext = Drone;
             this.bl = bl;
             WeightChoseCombo.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
-         
+            ModelComboBox.ItemsSource = Enum.GetValues(typeof(DroneModel));
             BaseChosingCombo.ItemsSource = bl.BaseStationWhitFreeChargingStationToLists();
             sitoation = true;
             DroneLabel.Visibility = Visibility.Hidden;
@@ -57,7 +57,8 @@ namespace PL
             WeightChoseCombo.Text = drone.WeightCategory.ToString();
             BaseChosingCombo.IsEnabled = false;
             sitoation = false;
-           
+            ModelComboBox.ItemsSource = Enum.GetValues(typeof(DroneModel));
+            ModelComboBox.SelectedItem = Drone.Model;
             DroneLabel.DataContext = bl.GetDrone(drone.SerialNumber);
             if (Drone.DroneStatus == DroneStatus.Free)
             {
@@ -104,7 +105,6 @@ namespace PL
             if (!sitoation)
             {
                
-
                 if (connectPackage.IsChecked == true)
                 {
                     
@@ -183,26 +183,28 @@ namespace PL
 
 
                 }
-                if (ModelTextBox.Text != Drone.Model)
+                if ((DroneModel)ModelComboBox.SelectedItem != Drone.Model)
                 {
-                    bl.UpdateDroneName(Drone.SerialNumber, Drone.Model);
-                    MessageBox.Show(Drone.ToString() + "\n update list!", "succesful");
+                    Drone.Model = (DroneModel)ModelComboBox.SelectedItem;
+                    bl.UpdateDroneName(Drone.SerialNumber, (DroneModel)ModelComboBox.SelectedItem);
+                    MessageBox.Show(Drone.ToString() + "\nUpdate succsed!");
                 }
+              
             }
 
 
             else
             {
-                if (BaseChosingCombo.SelectedItem is null || ModelTextBox.Text == "" || SirialNumberTextBox.Text == ""|| SirialNumberTextBox.Text == "0" || WeightChoseCombo.SelectedItem is null)
+                if (BaseChosingCombo.SelectedItem is null || ModelComboBox.SelectedItem is null || SirialNumberTextBox.Text == ""|| SirialNumberTextBox.Text == "0" || WeightChoseCombo.SelectedItem is null)
                 {
                     if (BaseChosingCombo.SelectedItem is null)
                         InputMissingLocationLabel.Visibility = Visibility.Visible;
                     if(WeightChoseCombo.SelectedItem is null)
                         InputMissingWightLabel.Visibility = Visibility.Visible;
-                    if (ModelTextBox.Text == "")
+                    if (ModelComboBox.SelectedItem is null)
                     {
                         InputMissingModelLabel.Visibility = Visibility.Visible;
-                        ModelTextBox.BorderBrush = Brushes.Red;
+                        ModelComboBox.BorderBrush = Brushes.Red;
                     }
                     if(SirialNumberTextBox.Text == "" || SirialNumberTextBox.Text == "0")
                     {
@@ -214,7 +216,7 @@ namespace PL
 
                 try
                 {
-
+                    Drone.Model = (DroneModel)ModelComboBox.SelectedItem;
                     bl.AddDrone(Drone, ((BO.BaseStationToList)BaseChosingCombo.SelectedItem).SerialNum);
                     MessageBox.Show(Drone.ToString() + "\n add to list!", "succesful");
                 }
@@ -312,13 +314,6 @@ namespace PL
           
         }
 
-        private void ModelTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (ModelTextBox.Text != "")
-            {
-                InputMissingModelLabel.Visibility = Visibility.Collapsed;
-                ModelTextBox.BorderBrush = Brushes.Black;
-            }
-        }
+     
     }
 }

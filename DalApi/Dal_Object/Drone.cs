@@ -10,7 +10,7 @@
         public struct Drone 
         {
             public uint SerialNumber { get; init; }
-            public string Model { get; set; }
+            public DroneModel Model { get; set; }
             public WeightCategories WeightCategory { get; set; }
             public bool Active { get; set; }
             

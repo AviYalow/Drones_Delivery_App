@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-
+    public enum DroneModel { Blockchains, Prime_Air, Quadcopter, Cargo, BigContainers, FlyingSky }
     public enum WeightCategories { Easy, Medium, Heavy }
     public enum Priority { Immediate, quick, Regular }
     public enum PackageStatus { Create, Assign, Collected, Arrived }

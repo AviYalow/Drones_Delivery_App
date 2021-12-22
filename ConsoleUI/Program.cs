@@ -109,7 +109,7 @@ namespace ConsoleUI
                                     //received the details from the user
                                     try
                                     {
-                                        addDrone(dalObject, out check, out num, out id, out num1, out doubleNum1, out name);
+                                        addDrone(dalObject, out check, out num, out id, out num1, out doubleNum1);
                                     }
                                     catch (DO.ItemFoundException exception)
                                     {
@@ -308,7 +308,7 @@ namespace ConsoleUI
             void listOfClinet(DalApi.IDal dalObject)
             {
 
-                foreach (DO.Client print in dalObject.cilentList())
+                foreach (DO.Client print in dalObject.cilentList(x=>true))
                     Console.WriteLine(print);
             }
 
@@ -467,15 +467,29 @@ namespace ConsoleUI
                 dalObject.AddPackage(new DO.Package { SendClient = id, GetingClient = num1, WeightCatgory = (WeightCategories)num2, Priority = (Priority)num });
             }
 
-            void addDrone(DalApi.IDal dalObject, out bool check, out uint num, out uint id, out uint num1, out double doubleNum1, out string name)
+            void addDrone(DalApi.IDal dalObject, out bool check, out uint num, out uint id, out uint num1, out double doubleNum1)
             {
                 Console.Write("Enter sireal number:");
                 do
                 {
                     check = uint.TryParse(Console.ReadLine(), out id);
                 } while (!check);
-                Console.Write("Enter name:");
-                name = Console.ReadLine();
+                Console.Write("chose name:");
+                int i = 1;
+                foreach (var model in Enum.GetValues(typeof(DroneModel)))
+                {
+                    Console.WriteLine(i + " " + model);
+                    i++;
+                }
+                DroneModel model1;
+                do
+                {
+                    check = Enum.TryParse(Console.ReadLine(), out model1);
+                    if(!check)
+                        Console.WriteLine("Error input");
+                }
+                while (!check);
+               
                 Console.Write("Enter weight Category:0 for easy,1 for mediom,2 for heavy:");
                 do
                 {
@@ -493,7 +507,7 @@ namespace ConsoleUI
                 } while (!check);
 
                 //add new drone
-                dalObject.AddDrone(new Drone { SerialNumber = id, Model = name, WeightCategory = (WeightCategories)num });
+                dalObject.AddDrone(new Drone { SerialNumber = id, Model = model1, WeightCategory = (WeightCategories)num });
             }
 
             void addBase(DalApi.IDal dalObject, out bool check, out uint id, out uint num1, out double doubleNum1, out double doubleNum2, out string name)

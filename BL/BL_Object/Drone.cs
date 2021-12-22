@@ -12,7 +12,7 @@ namespace BO
     public class Drone
     {
         public uint SerialNum { get; init; }
-        public string Model { get; set; }
+        public DroneModel Model { get; set; }
 
         public WeightCategories weightCategory { get; set; }
         public PackageInTransfer packageInTransfer { get; set; }

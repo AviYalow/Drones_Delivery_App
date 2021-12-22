@@ -12,7 +12,7 @@ namespace BO
     public class DroneToList
     {
         public uint SerialNumber { get; init; }
-        public string Model { get; set; }
+        public DroneModel Model { get; set; }
         public WeightCategories WeightCategory { get; set; }
 
         public double ButrryStatus { get; set; }

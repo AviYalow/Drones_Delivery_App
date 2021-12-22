@@ -34,7 +34,7 @@ namespace BlApi
             Random random = new Random();
             try
             {
-                dalObj.AddDrone(new DO.Drone { SerialNumber = drone.SerialNumber, Model = drone.Model, WeightCategory = (DO.WeightCategories)drone.WeightCategory });
+                dalObj.AddDrone(new DO.Drone { SerialNumber = drone.SerialNumber, Model =(DO.DroneModel) drone.Model, WeightCategory = (DO.WeightCategories)drone.WeightCategory });
             }
             catch (DO.ItemFoundException ex)
             {
@@ -69,7 +69,7 @@ namespace BlApi
         /// </summary>
         /// <param name="droneId"> serial number of the drone</param>
         /// <param name="newName"> new name to change</param>
-        public void UpdateDroneName(uint droneId, string newName)
+        public void UpdateDroneName(uint droneId, DroneModel newName)
         {
             DO.Drone droneInData;
             try
@@ -85,7 +85,7 @@ namespace BlApi
             if (i == -1)
                 throw new ItemNotFoundException("Drone", droneId);
             dronesListInBl[i].Model = newName;
-            droneInData.Model = newName;
+            droneInData.Model = newName.covertDroneModelBlToDal();
             dalObj.UpdateDrone(droneInData);
         }
 

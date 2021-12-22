@@ -88,7 +88,7 @@ namespace ConsoleUI_BL
                                     AddBase(bl, out check, out id, out num1, out doubleNum1, out doubleNum2, out name);
                                     break;
                                 case Entities.Drone:
-                                    AddDrone(bl, out check, out num, out id, out num1, out name);
+                                    AddDrone(bl, out check, out num, out id, out num1);
                                     break;
                                 case Entities.Client:
                                     AddClient(bl, out check, out num, out doubleNum1, out doubleNum2, out name, out phone);
@@ -146,7 +146,7 @@ namespace ConsoleUI_BL
                             switch (updatesOption)
                             {
                                 case UpdatesOptions.DroneName:
-                                    UpdateDroneName(bl, out check, out num, out name);
+                                    UpdateDroneName(bl, out check, out num);
                                     break;
                                 case UpdatesOptions.Base_station:
                                     UpdateBase(bl, out check, out id, out name);
@@ -522,15 +522,28 @@ namespace ConsoleUI_BL
         /// <param name="id">sireal number</param>
         /// <param name="num1"> serial number of the first base station</param>
         /// <param name="name"> model</param>
-        public static void AddDrone(BlApi.IBL bl, out bool check, out uint num, out uint id, out uint num1, out string name)
+        public static void AddDrone(BlApi.IBL bl, out bool check, out uint num, out uint id, out uint num1)
         {
             Console.Write("Enter sireal number:");
             do
             {
                 check = uint.TryParse(Console.ReadLine(), out id);
             } while (!check);
-            Console.Write("Enter model:");
-            name = Console.ReadLine();
+            Console.Write("chose name:");
+            int i = 0;
+            foreach (var model in Enum.GetValues(typeof(DroneModel)))
+            {
+                Console.WriteLine(i + " " + model);
+                i++;
+            }
+            DroneModel model1;
+            do
+            {
+                check = Enum.TryParse(Console.ReadLine(), out model1);
+                if (!check)
+                    Console.WriteLine("Error input");
+            }
+            while (!check);
             Console.Write("Enter weight Category:0 for easy 0-12Kg,1 for mediom 12-20Kg,2 for heavy 20-28Kg:");
             do
             {
@@ -547,7 +560,7 @@ namespace ConsoleUI_BL
             DroneToList drone = new DroneToList
             {
                 SerialNumber = id,
-                Model = name,
+                Model = model1,
                 WeightCategory = (WeightCategories)num,
 
             };
@@ -790,7 +803,7 @@ namespace ConsoleUI_BL
         /// <param name="check"></param>
         /// <param name="num">serial number</param>
         /// <param name="name">model</param>
-        public static void UpdateDroneName(BlApi.IBL bl, out bool check, out uint num, out string name)
+        public static void UpdateDroneName(BlApi.IBL bl, out bool check, out uint num)
         {
             //received the details from the user
             Console.Write("Enter serial number: ");
@@ -798,9 +811,20 @@ namespace ConsoleUI_BL
             {
                 check = uint.TryParse(Console.ReadLine(), out num);
             } while (!check);
-            Console.Write("Enter model: ");
-            name = Console.ReadLine();
-            bl.UpdateDroneName(num, name);
+            int i = 0;
+            foreach (var model in Enum.GetValues(typeof(DroneModel)))
+            {
+                Console.WriteLine(i + " " + model);
+                i++;
+            }
+            DroneModel model1;
+            do
+            {
+                check = Enum.TryParse(Console.ReadLine(), out model1);
+                if (!check)
+                    Console.WriteLine("Error input");
+            } while (!check);
+            bl.UpdateDroneName(num, model1);
         }
 
         /// <summary>
