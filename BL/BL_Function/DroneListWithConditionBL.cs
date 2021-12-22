@@ -83,8 +83,6 @@ namespace BlApi
 
         }
 
-     
-
         /// <summary>
         /// return filter list
         /// </summary>
