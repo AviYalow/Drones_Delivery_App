@@ -25,7 +25,7 @@ namespace BlApi
         IDal dalObj;
         List<DroneToList> dronesListInBl = new List<DroneToList>();
        
-        double heaviElctric, mediomElctric, easyElctric, freeElctric, chargingPerMinote;
+        double heaviElctric, mediomElctric, easyElctric, freeElctric, chargingPerMinute;
         event Func<DroneToList,bool> droneToListFilter = null;
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace BlApi
             easyElctric = electric[1];
             mediomElctric = electric[2];
             heaviElctric = electric[3];
-            chargingPerMinote = electric[4];
+            chargingPerMinute = electric[4];
 
             Random random = new Random();
 
@@ -62,7 +62,7 @@ namespace BlApi
             {
                 dronesListInBl.Add(drone.droneFromDal());
             }
-           
+            
 
             for (int i = 0; i < dronesListInBl.Count; i++)
             {
@@ -131,46 +131,26 @@ namespace BlApi
                     if (new_drone.DroneStatus == DroneStatus.Maintenance)
                     {
                         new_drone.ButrryStatus = random.Next(21);
-                        int k = random.Next(2);
+                        int k = random.Next(dalObj.BaseStationList(x => true).Count());
 
-                        foreach (DO.Base_Station base_ in dalObj.BaseStationList(x => true))
-                        {
-                            if (k == 0)
-                            {
-                                var updateBase = base_;
-                                dalObj.DroneToCharge(new_drone.SerialNumber, base_.baseNumber);
-                                new_drone.NumPackage = 0;
-                                new_drone.Location = BaseLocation(base_.baseNumber);
-                                break;
-
-                            }
-                            k--;
-
-                        }
+                        DO.Base_Station base_ = dalObj.BaseStationList(x => true).Skip(k).FirstOrDefault();
+                        var updateBase = base_;
+                        dalObj.DroneToCharge(new_drone.SerialNumber, base_.baseNumber);
+                        new_drone.NumPackage = 0;
+                        new_drone.Location = BaseLocation(base_.baseNumber);
+                      
                     }
 
                     //drone lottery in free
                     else if (new_drone.DroneStatus == DroneStatus.Free)
                     {
                         //lottry drone what is lost shipment
-                        int k = random.Next(10);
-                        int j = 0;
-                        bool flag = false;
-                        while (!flag)
-                            foreach (DO.Package package1 in dalObj.PackegeList(x => x.PackageArrived != null))
-                            {
-                                if (j == k)
-                                {
-                                    new_drone.NumPackage = package1.SerialNumber;
-                                    new_drone.Location = ClientLocation(package1.GetingClient);
-                                    new_drone.ButrryStatus = random.Next((int)buttryDownWithNoPackege(new_drone.Location, ClosestBase(ClientLocation(package1.GetingClient)).location) + 1, 100);
-                                    flag = true;
-                                    break;
-                                }
-                                j++;
-
-                            }
-
+                        int k = random.Next(dalObj.PackegeList(x => x.PackageArrived != null).Count());
+                        DO.Package package1 = dalObj.PackegeList(x => x.PackageArrived != null).Skip(k).FirstOrDefault();
+                        new_drone.NumPackage = package1.SerialNumber;
+                        new_drone.Location = ClientLocation(package1.GetingClient);
+                        new_drone.ButrryStatus = random.Next((int)buttryDownWithNoPackege(new_drone.Location, ClosestBase(ClientLocation(package1.GetingClient)).location) + 1, 100);
+                      
                     }
                     for (int p = 0; p < dronesListInBl.Count; p++)
                     {

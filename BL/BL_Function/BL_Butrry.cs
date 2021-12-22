@@ -71,7 +71,7 @@ namespace BlApi
             {
                 throw new DroneStillAtWorkException();
             }
-            // var baseStation = CllosetBase(drone.location);
+            
             double buttry = buttryDownWithNoPackege(drone.Location, baseStation.location);
             if (drone.ButrryStatus - buttry < 0)
             {
@@ -115,16 +115,16 @@ namespace BlApi
             if (drone == null)
                 throw new ItemNotFoundException("Drone", droneNumber);
             //locking the drone in charge
-            var information = dalObj.ChargingDroneList(x => x.IdDrone == droneNumber).FirstOrDefault();
+            DO.BatteryLoad? information = dalObj.ChargingDroneList(x => x.IdDrone == droneNumber).FirstOrDefault();
 
-            if (information.Equals(new DO.BatteryLoad()))
+            if (information is null)
                 throw new ItemNotFoundException("Drone", droneNumber);
             //calcoulet how mach he chraging alredy
-            double buttry = droneChrgingAlredy(DateTime.Now - information.EntringDrone);
+            double buttry = droneChrgingAlredy(DateTime.Now - information.Value.EntringDrone);
 
             drone.ButrryStatus = buttry > 100 ? 100 : buttry + drone.ButrryStatus;
             drone.DroneStatus = DroneStatus.Free;
-            var baseStation = dalObj.BaseStationByNumber(information.idBaseStation);
+            var baseStation = dalObj.BaseStationByNumber(information.Value.idBaseStation);
             baseStation.NumberOfChargingStations++;
             dalObj.UpdateBase(baseStation);
             dalObj.FreeDroneFromCharge(drone.SerialNumber);
@@ -186,9 +186,9 @@ namespace BlApi
         /// <returns> percentage of battery</returns>
         double droneChrgingAlredy(TimeSpan span)
         {
-            var a = ((double)(span).TotalMinutes); var b = (chargingPerMinote);
-            a *= b;
-            return a;
+            var time = ((double)(span).TotalMinutes); var butrryPerMinute = (chargingPerMinute);
+            time *= butrryPerMinute;
+            return time;
         }
 
         /// <summary>
