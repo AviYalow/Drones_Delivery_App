@@ -174,13 +174,17 @@ namespace BlApi
                 FreeBaseFromDrone(base_);
 
                 dalObj.DeleteBase(base_);
+                //find the clooset base
+                var clooseBase = ClosestBase(new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude }).location;
                 //send the drone to the closset base
                 for (int i = 0; i < dronesListInBl.Count; i++)
                 {
                     var drone = dronesListInBl[i];
                     if (drone.Location.Latitude == baseStation.latitude && drone.Location.Longitude == baseStation.longitude)
-                        drone.Location = ClosestBase(drone.Location).location;
+                        drone.Location = clooseBase;
                 }
+
+               
             }
             catch (DO.ItemNotFoundException ex)
             {
