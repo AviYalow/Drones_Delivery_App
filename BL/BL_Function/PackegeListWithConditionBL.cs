@@ -11,6 +11,13 @@ namespace BlApi
 {
     partial class BL : IBL
     {
+        Func<PackageToList, bool> noDronePackegeFilter = null;
+        Func<PackageToList, bool> arrivePackegeFilter = null;
+        Func<PackageToList, bool> collectedPackegeFilter = null;
+        Func<PackageToList, bool> connectedandNotArrivePackegeFilter = null;
+        Func<PackageToList, bool> connectedButNutCollectedPackegeFilter = null;
+        Func<PackageToList, bool> weightPackegeFilter = null;
+        Func<PackageToList, bool> priorityPackegeFilter = null;
         /// <summary>
         /// list of packages
         /// </summary>
@@ -80,7 +87,6 @@ namespace BlApi
                    select packege.convertPackegeDalToPackegeToList(dalObj);
         }
 
-
         public IEnumerable<PackageToList> PackageWeightLists(WeightCategories weight)
         {
 
@@ -90,6 +96,7 @@ namespace BlApi
             return from packege in dalObj.PackegeList(x => x.WeightCatgory == (DO.WeightCategories)weight)
                    select packege.convertPackegeDalToPackegeToList(dalObj);
         }
+
         public IEnumerable<PackageToList> PackagePriorityLists(Priority priority)
         {
 

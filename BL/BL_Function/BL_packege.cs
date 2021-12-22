@@ -34,15 +34,7 @@ namespace BlApi
             try
             {
 
-                packegeNum = dalObj.AddPackage(new DO.Package
-                {
-                    SendClient = package.SendClient.Id,
-                    GetingClient = package.RecivedClient.Id,
-                    Priority = (DO.Priority)package.priority,
-                    WeightCatgory = (DO.WeightCategories)package.weightCatgory,
-                    PackageArrived = package.create_package
-
-                });
+                packegeNum = dalObj.AddPackage(package.convertPackageBltopackegeDal());
             }
             catch (DO.ItemFoundException ex)
             {
@@ -61,19 +53,7 @@ namespace BlApi
         /// <param name="package"> particular package</param>
         public void UpdatePackegInDal(Package package)
         {
-            dalObj.UpdatePackege(new DO.Package
-            {
-                SerialNumber = package.SerialNumber,
-                SendClient = package.SendClient.Id,
-                CollectPackageForShipment = package.collect_package,
-                ReceivingDelivery = package.create_package,
-                OperatorSkimmerId = package.drone.SerialNum,
-                PackageArrived = package.package_arrived,
-                PackageAssociation = package.package_association,
-                Priority = (DO.Priority)package.priority,
-                GetingClient = package.RecivedClient.Id,
-                WeightCatgory = (DO.WeightCategories)package.weightCatgory
-            });
+            dalObj.UpdatePackege(package.convertPackageBltopackegeDal());
         }
 
         /// <summary>

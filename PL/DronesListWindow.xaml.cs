@@ -110,9 +110,14 @@ namespace PL
         private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             HeaderedContentControl control = sender as HeaderedContentControl;
-
-            DronesListView.ItemsSource = bl.DroneSortList(control.Name, DronesListView.ItemsSource as IEnumerable<BO.DroneToList>);
-
+            try
+            {
+                DronesListView.ItemsSource = bl.SortList(control.Name, DronesListView.ItemsSource as IEnumerable<BO.DroneToList>);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
 

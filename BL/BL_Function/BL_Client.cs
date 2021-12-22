@@ -169,10 +169,14 @@ namespace BlApi
                         dalObj.DeletePackege(packege.SerialNumber);
                         for (int i = 0; i < dronesListInBl.Count; i++)
                         {
-                            var drone = dronesListInBl[i];
-                            drone.DroneStatus = DroneStatus.Free;
-                            drone.NumPackage = 0;
-                             dronesListInBl[i]= drone;
+                            if (dronesListInBl[i].NumPackage == packege.SerialNumber)
+                            {
+                                var drone = dronesListInBl[i];
+                                drone.DroneStatus = DroneStatus.Free;
+                                drone.NumPackage = 0;
+                                dronesListInBl[i] = drone;
+                                break;
+                            }
                         }
 
                     }

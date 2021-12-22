@@ -319,7 +319,7 @@ namespace BlApi
         /// <param name="obj">ordenry list by this parameter parameter </param>
         /// <param name="drones">ordener this list </param>
         /// <returns>ordenry list</returns>
-        public IEnumerable<DroneToList> DroneSortList(string obj,IEnumerable<DroneToList> drones = null);
+        public IEnumerable<T> SortList<T>(string obj,IEnumerable<T> drones);
 
         /// <summary>
         /// return filter list

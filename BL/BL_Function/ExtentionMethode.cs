@@ -172,7 +172,22 @@ namespace BlApi
             {
                 return new DroneToList { SerialNumber = drone.SerialNumber, Model = drone.Model, WeightCategory = (WeightCategories)drone.WeightCategory };
             }
-
+        internal static DO.Package convertPackageBltopackegeDal(this Package package)
+        {
+            return new DO.Package
+            {
+                SerialNumber = package.SerialNumber,
+                SendClient = package.SendClient.Id,
+                CollectPackageForShipment = package.collect_package,
+                ReceivingDelivery = package.create_package,
+                OperatorSkimmerId = package.drone.SerialNum,
+                PackageArrived = package.package_arrived,
+                PackageAssociation = package.package_association,
+                Priority = (DO.Priority)package.priority,
+                GetingClient = package.RecivedClient.Id,
+                WeightCatgory = (DO.WeightCategories)package.weightCatgory
+            };
+        }
            
 
 

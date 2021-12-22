@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DalApi;
 using BO;
 using System.Linq;
+using System.Reflection;
 
 namespace BlApi
 {
@@ -27,11 +28,14 @@ namespace BlApi
        
         double heaviElctric, mediomElctric, easyElctric, freeElctric, chargingPerMinute;
         event Func<DroneToList,bool> droneToListFilter = null;
+        event Func<ClientToList, bool> clientToListFilter = null;
+        event Func<ClientToList, bool> packegeToListFilter = null;
+        event Func<ClientToList, bool> stationToListFilter = null;
 
         /// <summary>
         /// ctor
         /// </summary>
-       private BL()
+        private BL()
         {
             try
             {
@@ -187,5 +191,22 @@ namespace BlApi
             return dalObj.PointToDegree(point);
         }
 
+        /// <summary>
+        /// sort list by spscific parameter
+        /// </summary>
+        /// <param name="obj">ordenry list by this parameter parameter </param>
+        /// <param name="drones">ordener this list </param>
+        /// <returns>ordenry list</returns>
+        public IEnumerable<T> SortList<T>(string obj, IEnumerable<T> drones = null)
+        {
+
+            PropertyInfo property = typeof(T).GetProperty(obj);
+            if (property is null)
+                throw new TheListIsEmptyException();
+            return from x in drones
+                   orderby property.GetValue(x)
+                   select x;
+
+        }
     }
 }
