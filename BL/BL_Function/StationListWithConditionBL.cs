@@ -13,7 +13,6 @@ namespace BlApi
     partial class BL : IBL
     {
 
-
         /// <summary>
         /// show base station list 
         /// </summary>

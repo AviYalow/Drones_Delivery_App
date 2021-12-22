@@ -26,9 +26,6 @@ namespace BlApi
                    select packege.convertPackegeDalToPackegeToList(dalObj);
 
 
-
-
-
         }
         /// <summary>
         /// packeges thir only crate
@@ -40,13 +37,9 @@ namespace BlApi
             if (dalObj.PackegeList(x => x.OperatorSkimmerId!=0).Count() == 0)
                 throw new TheListIsEmptyException();
 
-
-
             return from packege in dalObj.PackegeList(x => x.OperatorSkimmerId != 0)
                    select packege.convertPackegeDalToPackegeToList(dalObj);
            
-
-            
         }
         /// <summary>
         /// packege they get to the resive client
@@ -83,7 +76,6 @@ namespace BlApi
 
             if (dalObj.PackegeList(x => x.CollectPackageForShipment is null && x.PackageAssociation != null).Count() == 0)
                 throw new TheListIsEmptyException();
-
             return from packege in dalObj.PackegeList(x => x.CollectPackageForShipment is null && x.PackageAssociation != null)
                    select packege.convertPackegeDalToPackegeToList(dalObj);
         }

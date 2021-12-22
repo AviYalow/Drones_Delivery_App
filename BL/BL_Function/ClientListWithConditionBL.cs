@@ -17,9 +17,6 @@ namespace BlApi
         /// <returns> list of clients</returns>
         public IEnumerable<ClientToList> ClientActiveToLists()
         {
-
-
-
             return from clientInDal in dalObj.cilentList(x => x.Active)
                    select clientInDal.convertClientDalToClientToList(dalObj);
         }

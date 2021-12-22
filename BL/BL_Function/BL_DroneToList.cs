@@ -32,7 +32,7 @@ namespace BlApi
             var drone = dronesListInBl.Find(x => x.SerialNumber == siralNuber && x.DroneStatus != DroneStatus.Delete);
             if (drone is null)
                 throw new ItemNotFoundException("drone", siralNuber);
-            return drone;
+            return drone.Clone();
 
         }
     }
