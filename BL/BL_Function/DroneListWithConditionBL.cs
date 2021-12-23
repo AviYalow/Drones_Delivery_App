@@ -89,14 +89,10 @@ namespace BlApi
         /// <returns></returns>
         public IEnumerable<DroneToList> FilterDronesList()
         {
-            var drones = DroneToLists();
-
-            if (droneToListFilter != null && droneToListFilter.GetInvocationList() != null)
-                foreach (Func<DroneToList, bool> prdict in droneToListFilter.GetInvocationList())
-                {
-                    drones = drones.Where(prdict);
-                }
-            return drones;
+         
+            return filerList(DroneToLists(), droneToListFilter);
         }
+
+       
     }
 }

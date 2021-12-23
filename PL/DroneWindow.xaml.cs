@@ -56,6 +56,7 @@ namespace PL
             WeightChoseCombo.IsEnabled = false;
             WeightChoseCombo.Text = drone.WeightCategory.ToString();
             BaseChosingCombo.IsEnabled = false;
+            BaseChosingCombo.Text = Drone.Location.ToString();
             sitoation = false;
             ModelComboBox.ItemsSource = Enum.GetValues(typeof(DroneModel));
             ModelComboBox.SelectedItem = Drone.Model;
@@ -314,6 +315,6 @@ namespace PL
           
         }
 
-     
+       
     }
 }

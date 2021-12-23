@@ -47,7 +47,8 @@ namespace PL
 
         private void WeightSelctor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (WeightSelctor.SelectedItem is null)
+                return;
             if (WeightSelctor.SelectedItem == WeightSelctor.Items[0])
             {
                 DronesListView.ItemsSource = bl.DroneToListsByWhight();
@@ -59,6 +60,8 @@ namespace PL
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (StatusSelector.SelectedItem is null)
+                return;
             if (StatusSelector.SelectedItem == StatusSelector.Items[0])
             {
                 DronesListView.ItemsSource = bl.DroneToListsByStatus();

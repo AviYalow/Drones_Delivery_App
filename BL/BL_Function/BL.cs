@@ -29,8 +29,8 @@ namespace BlApi
         double heaviElctric, mediomElctric, easyElctric, freeElctric, chargingPerMinute;
         event Func<DroneToList,bool> droneToListFilter = null;
         event Func<ClientToList, bool> clientToListFilter = null;
-        event Func<ClientToList, bool> packegeToListFilter = null;
-        event Func<ClientToList, bool> stationToListFilter = null;
+        event Func<PackageToList, bool> packegeToListFilter = null;
+        event Func<BaseStationToList, bool> stationToListFilter = null;
 
         /// <summary>
         /// ctor
@@ -207,6 +207,25 @@ namespace BlApi
                    orderby property.GetValue(x)
                    select x;
 
+        }
+        /// <summary>
+        /// filter any list by getting event and list
+        /// </summary>
+        /// <typeparam name="T"> genric object to return</typeparam>
+        /// <param name="list">full list </param>
+        /// <param name="func">event func</param>
+        /// <returns></returns>
+        IEnumerable<T> filerList<T>(IEnumerable<T> list, Func<T, bool> func)
+        {
+
+
+            if (func != null && func.GetInvocationList() != null)
+                foreach (Func<T, bool> prdict in func.GetInvocationList())
+                {
+                    list = list.Where(prdict);
+                }
+
+            return list;
         }
     }
 }

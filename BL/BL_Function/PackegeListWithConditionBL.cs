@@ -41,12 +41,20 @@ namespace BlApi
         public IEnumerable<PackageToList> PackageWithNoDroneToLists()
         {
 
-            if (dalObj.PackegeList(x => x.OperatorSkimmerId!=0).Count() == 0)
+           if (dalObj.PackegeList(x => x.OperatorSkimmerId!=0).Count() == 0)
                 throw new TheListIsEmptyException();
 
             return from packege in dalObj.PackegeList(x => x.OperatorSkimmerId != 0)
                    select packege.convertPackegeDalToPackegeToList(dalObj);
-           
+           /* packegeToListFilter -= noDronePackegeFilter;
+            noDronePackegeFilter = x => x. != 0;
+            if (dronesListInBl.Count == 0)
+                throw new TheListIsEmptyException();
+            if (weight != null)
+                droneToListFilter += selectByWeihgt;
+
+            return FilterDronesList();*/
+
         }
         /// <summary>
         /// packege they get to the resive client
