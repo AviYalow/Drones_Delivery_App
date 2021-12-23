@@ -11,13 +11,13 @@ namespace BlApi
 {
     partial class BL : IBL
     {
-        Func<PackageToList, bool> noDronePackegeFilter = null;
-        Func<PackageToList, bool> arrivePackegeFilter = null;
-        Func<PackageToList, bool> collectedPackegeFilter = null;
-        Func<PackageToList, bool> connectedandNotArrivePackegeFilter = null;
-        Func<PackageToList, bool> connectedButNutCollectedPackegeFilter = null;
-        Func<PackageToList, bool> weightPackegeFilter = null;
-        Func<PackageToList, bool> priorityPackegeFilter = null;
+        Func<DO.Package, bool> noDronePackegeFilter = x => x.OperatorSkimmerId==0;
+        Func<DO.Package, bool> arrivePackegeFilter = x => x.PackageArrived != null;
+        Func<DO.Package, bool> collectedPackegeFilter = x => x.CollectPackageForShipment !=null;
+        Func<DO.Package, bool> CollectedandNotArrivePackegeFilter = x => x.CollectPackageForShipment != null && x.PackageArrived is null; ;
+        Func<DO.Package, bool> connectedButNutCollectedPackegeFilter = x => x.CollectPackageForShipment is null && x.PackageAssociation != null;
+        Func<DO.Package, bool> weightPackegeFilter = null;
+        Func<DO.Package, bool> priorityPackegeFilter = null;
         /// <summary>
         /// list of packages
         /// </summary>
@@ -29,8 +29,8 @@ namespace BlApi
                 throw new TheListIsEmptyException();
 
 
-            return from packege in dalObj.PackegeList(x => true)
-                   select packege.convertPackegeDalToPackegeToList(dalObj);
+            return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
+                   select x.convertPackegeDalToPackegeToList(dalObj);
 
 
         }
@@ -38,81 +38,99 @@ namespace BlApi
         /// packeges thir only crate
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<PackageToList> PackageWithNoDroneToLists()
+        public IEnumerable<PackageToList> PackageWithNoDroneToLists(bool filterPackege=true)
         {
-
-           if (dalObj.PackegeList(x => x.OperatorSkimmerId!=0).Count() == 0)
+           
+         
+            packegeToListFilter -= noDronePackegeFilter;
+            if (PackageToLists().Count() == 0)
                 throw new TheListIsEmptyException();
+            if (filterPackege)
+                packegeToListFilter += noDronePackegeFilter;
 
-            return from packege in dalObj.PackegeList(x => x.OperatorSkimmerId != 0)
-                   select packege.convertPackegeDalToPackegeToList(dalObj);
-           /* packegeToListFilter -= noDronePackegeFilter;
-            noDronePackegeFilter = x => x. != 0;
-            if (dronesListInBl.Count == 0)
-                throw new TheListIsEmptyException();
-            if (weight != null)
-                droneToListFilter += selectByWeihgt;
-
-            return FilterDronesList();*/
+            return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
+                   select x.convertPackegeDalToPackegeToList(dalObj);
 
         }
         /// <summary>
         /// packege they get to the resive client
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<PackageToList> PackageArriveLists()
+        public IEnumerable<PackageToList> PackageArriveLists(bool filterPackege = true)
         {
 
-            if (dalObj.PackegeList(x => x.PackageArrived!=null).Count() == 0)
+            packegeToListFilter -= arrivePackegeFilter;
+            if (PackageToLists().Count() == 0)
                 throw new TheListIsEmptyException();
+            if (filterPackege)
+                packegeToListFilter += arrivePackegeFilter;
 
-            return from packege in dalObj.PackegeList(x => x.PackageArrived != null)
-                   select packege.convertPackegeDalToPackegeToList(dalObj);
+            return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
+                   select x.convertPackegeDalToPackegeToList(dalObj);
         }
         /// <summary>
         /// packege thier collected but not arrive
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<PackageToList> PackageCollectedButNotArriveLists()
+        public IEnumerable<PackageToList> PackageCollectedButNotArriveLists(bool filterPackege = true)
         {
 
-            if (dalObj.PackegeList(x => x.CollectPackageForShipment != null&&x.PackageArrived is null).Count() == 0)
+            packegeToListFilter -= CollectedandNotArrivePackegeFilter;
+            if (PackageToLists().Count() == 0)
                 throw new TheListIsEmptyException();
+            if (filterPackege)
+                packegeToListFilter += CollectedandNotArrivePackegeFilter;
 
-            return from packege in dalObj.PackegeList(x => x.CollectPackageForShipment != null && x.PackageArrived is null)
-                   select packege.convertPackegeDalToPackegeToList(dalObj);
+            return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
+                   select x.convertPackegeDalToPackegeToList(dalObj);
         }
        /// <summary>
        /// packege thet connect to drone but not collected
        /// </summary>
        /// <returns></returns>
-        public IEnumerable<PackageToList> PackageConnectedButNutCollectedLists()
+        public IEnumerable<PackageToList> PackageConnectedButNutCollectedLists(bool filterPackege = true)
         {
 
-            if (dalObj.PackegeList(x => x.CollectPackageForShipment is null && x.PackageAssociation != null).Count() == 0)
+            packegeToListFilter -= connectedButNutCollectedPackegeFilter;
+            if (PackageToLists().Count() == 0)
                 throw new TheListIsEmptyException();
-            return from packege in dalObj.PackegeList(x => x.CollectPackageForShipment is null && x.PackageAssociation != null)
-                   select packege.convertPackegeDalToPackegeToList(dalObj);
+            if (filterPackege)
+                packegeToListFilter += connectedButNutCollectedPackegeFilter;
+
+            return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
+                   select x.convertPackegeDalToPackegeToList(dalObj);
         }
 
-        public IEnumerable<PackageToList> PackageWeightLists(WeightCategories weight)
+        public IEnumerable<PackageToList> PackageWeightLists(WeightCategories? weight=null)
         {
 
-            if (dalObj.PackegeList(x => x.WeightCatgory==(DO.WeightCategories)weight).Count() == 0)
-                throw new TheListIsEmptyException();
+           
 
-            return from packege in dalObj.PackegeList(x => x.WeightCatgory == (DO.WeightCategories)weight)
-                   select packege.convertPackegeDalToPackegeToList(dalObj);
+            packegeToListFilter -= weightPackegeFilter;
+            weightPackegeFilter = x => x.WeightCatgory == (DO.WeightCategories)weight;
+            if (PackageToLists().Count() == 0)
+                throw new TheListIsEmptyException();
+            if (weight is null)
+                packegeToListFilter += weightPackegeFilter;
+
+            return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
+                   select x.convertPackegeDalToPackegeToList(dalObj);
         }
 
-        public IEnumerable<PackageToList> PackagePriorityLists(Priority priority)
+        public IEnumerable<PackageToList> PackagePriorityLists(Priority? priority=null)
         {
 
-            if (dalObj.PackegeList(x => x.Priority == (DO.Priority)priority).Count() == 0)
-                throw new TheListIsEmptyException();
+          
 
-            return from packege in dalObj.PackegeList(x => x.Priority == (DO.Priority)priority)
-                   select packege.convertPackegeDalToPackegeToList(dalObj);
+            packegeToListFilter -= priorityPackegeFilter;
+            priorityPackegeFilter = x => x.Priority == (DO.Priority)priority;
+            if (PackageToLists().Count() == 0)
+                throw new TheListIsEmptyException();
+            if (priority is null)
+                packegeToListFilter += priorityPackegeFilter;
+
+            return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
+                   select x.convertPackegeDalToPackegeToList(dalObj);
         }
      
 

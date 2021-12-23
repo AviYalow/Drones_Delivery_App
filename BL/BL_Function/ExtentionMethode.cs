@@ -96,14 +96,16 @@ namespace BlApi
                 else
                     packageStatus = PackageStatus.Create;
 
-                return new PackageToList
-                {
-                    packageStatus = packageStatus,
-                    RecivedClient = dalObj.CilentByNumber(package.GetingClient).Name,
-                    SendClient = dalObj.CilentByNumber(package.SendClient).Name,
-                    SerialNumber = package.SerialNumber,
-                    priority = (Priority)package.Priority,
-                    WeightCategories = (WeightCategories)package.WeightCatgory
+            return new PackageToList
+            {
+                packageStatus = packageStatus,
+                RecivedClient = dalObj.CilentByNumber(package.GetingClient).Name,
+                SendClient = dalObj.CilentByNumber(package.SendClient).Name,
+                SerialNumber = package.SerialNumber,
+                priority = (Priority)package.Priority,
+                WeightCategories = (WeightCategories)package.WeightCatgory,
+                Drone = package.OperatorSkimmerId == 0 ? false : true
+                    
 
                 };
 

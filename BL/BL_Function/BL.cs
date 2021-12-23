@@ -29,7 +29,7 @@ namespace BlApi
         double heaviElctric, mediomElctric, easyElctric, freeElctric, chargingPerMinute;
         event Func<DroneToList,bool> droneToListFilter = null;
         event Func<ClientToList, bool> clientToListFilter = null;
-        event Func<PackageToList, bool> packegeToListFilter = null;
+        event Func<DO.Package, bool> packegeToListFilter = null;
         event Func<BaseStationToList, bool> stationToListFilter = null;
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace BlApi
             if (property is null)
                 throw new TheListIsEmptyException();
             return from x in drones
-                   orderby property.GetValue(x)
+                   orderby property.GetValue(x) 
                    select x;
 
         }
