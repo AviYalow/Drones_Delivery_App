@@ -249,22 +249,22 @@ namespace BlApi
         /// packege thet connect to drone but not collected
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<PackageToList> PackageConnectedButNutCollectedLists();
+        public IEnumerable<PackageToList> PackageConnectedButNutCollectedLists(bool filterPackege = true);
         /// <summary>
         /// packege thier collected but not arrive
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<PackageToList> PackageCollectedButNotArriveLists();
+        public IEnumerable<PackageToList> PackageCollectedButNotArriveLists(bool filterPackege = true);
         /// <summary>
         /// packege they get to the resive client
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<PackageToList> PackageArriveLists();
+        public IEnumerable<PackageToList> PackageArriveLists(bool filterPackege = true);
         /// <summary>
         /// packeges thir only crate
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<PackageToList> PackageWithNoDroneToLists();
+        public IEnumerable<PackageToList> PackageWithNoDroneToLists(bool filterPackege = true);
 
         /// <summary>
         /// A package that arrived at the destination
@@ -327,9 +327,18 @@ namespace BlApi
         /// <returns></returns>
         public IEnumerable<DroneToList> FilterDronesList();
 
-
-
-
+        /// <summary>
+        /// filter packeg list by weight
+        /// </summary>
+        /// <param name="weight"></param>
+        /// <returns></returns>
+        public IEnumerable<PackageToList> PackageWeightLists(WeightCategories? weight = null);
+        /// <summary>
+        /// filter list by priority
+        /// </summary>
+        /// <param name="priority"></param>
+        /// <returns></returns>
+        public IEnumerable<PackageToList> PackagePriorityLists(Priority? priority = null);
 
 
 

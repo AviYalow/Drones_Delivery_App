@@ -14,7 +14,7 @@ namespace BlApi
         Func<DO.Package, bool> noDronePackegeFilter = x => x.OperatorSkimmerId==0;
         Func<DO.Package, bool> arrivePackegeFilter = x => x.PackageArrived != null;
         Func<DO.Package, bool> collectedPackegeFilter = x => x.CollectPackageForShipment !=null;
-        Func<DO.Package, bool> CollectedandNotArrivePackegeFilter = x => x.CollectPackageForShipment != null && x.PackageArrived is null; ;
+        Func<DO.Package, bool> CollectedandNotArrivePackegeFilter = x => x.CollectPackageForShipment != null && x.PackageArrived is null; 
         Func<DO.Package, bool> connectedButNutCollectedPackegeFilter = x => x.CollectPackageForShipment is null && x.PackageAssociation != null;
         Func<DO.Package, bool> weightPackegeFilter = null;
         Func<DO.Package, bool> priorityPackegeFilter = null;
@@ -100,7 +100,11 @@ namespace BlApi
             return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
                    select x.convertPackegeDalToPackegeToList(dalObj);
         }
-
+        /// <summary>
+        /// filter packeg list by weight
+        /// </summary>
+        /// <param name="weight"></param>
+        /// <returns></returns>
         public IEnumerable<PackageToList> PackageWeightLists(WeightCategories? weight=null)
         {
 
@@ -116,7 +120,11 @@ namespace BlApi
             return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
                    select x.convertPackegeDalToPackegeToList(dalObj);
         }
-
+        /// <summary>
+        /// filter list by priority
+        /// </summary>
+        /// <param name="priority"></param>
+        /// <returns></returns>
         public IEnumerable<PackageToList> PackagePriorityLists(Priority? priority=null)
         {
 
