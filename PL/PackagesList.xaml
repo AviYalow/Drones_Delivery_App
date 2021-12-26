@@ -7,6 +7,56 @@
         mc:Ignorable="d"
         Title="PackagesList" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <ListView x:Name="PackagesListView" Grid.Row="1">
+            <ListView.View>
+                <GridView x:Name="ListviewGridToPackagesList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNumber}" x:Name="Serial"   >
+                        <HeaderedContentControl x:Name="SerialNumber" MouseDoubleClick="SerialNumber_MouseDoubleClick"   >
+                            <TextBox Text="Serial" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" TextChanged="TextBox_TextChanged"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=SendClient}" x:Name="SendClientGrid" >
+                        <HeaderedContentControl x:Name="SendClient" MouseDoubleClick="SendClient_MouseDoubleClick"   >
+                            <TextBox Text="Send Client" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" TextChanged="TextBox_TextChanged"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=RecivedClient}" x:Name="RecivedClientGrid"  >
+                        <HeaderedContentControl x:Name="RecivedClient" MouseDoubleClick="RecivedClient_MouseDoubleClick"    >
+                            <TextBox Text="Recived Client" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=priority}" x:Name="priorityGrid"  >
+                        <HeaderedContentControl x:Name="priority" MouseDoubleClick="priority_MouseDoubleClick"  >
+                            <TextBox Text="Priority" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=WeightCategories}" x:Name="WeightCategoriesGrid" >
+                        <HeaderedContentControl x:Name="WeightCategories" MouseDoubleClick="WeightCategories_MouseDoubleClick"   >
+                            <TextBox Text="Weight Categories" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=packageStatus}" x:Name="packageStatusGrid"  >
+                        <HeaderedContentControl x:Name="packageStatus" MouseDoubleClick="packageStatus_MouseDoubleClick"    >
+                            <TextBox Text="Status" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
     </Grid>
 </Window>

@@ -19,9 +19,45 @@ namespace PL
     /// </summary>
     public partial class PackagesList : Window
     {
+
+        BlApi.IBL bl;
         public PackagesList(BlApi.IBL bl)
         {
             InitializeComponent();
+            this.bl = bl;
+
+           
+            PackagesListView.ItemsSource = bl.PackageToLists();
+        }
+
+        private void SerialNumber_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void SendClient_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void RecivedClient_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void priority_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void WeightCategories_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void packageStatus_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }
