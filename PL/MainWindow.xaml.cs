@@ -41,17 +41,17 @@ namespace PL
 
         private void BaseStationsButton_Click(object sender, RoutedEventArgs e)
         {
-           
+            new BaseStationsList(bL).ShowDialog();
         }
 
         private void PackagesButton_Click(object sender, RoutedEventArgs e)
         {
-
+            new PackagesList(bL).ShowDialog();
         }
 
         private void ClientsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            new ClientsLIst(bL).ShowDialog();
         }
     }
 }
