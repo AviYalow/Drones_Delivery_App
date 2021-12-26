@@ -23,7 +23,7 @@ namespace PL
         public PackagesList()
         {
             InitializeComponent();
-            PackagesList.ItemsSource=
+          
         }
     }
 }

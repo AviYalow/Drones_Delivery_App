@@ -15,6 +15,7 @@ namespace BlApi
         Func<DroneToList, bool> selectByStatus = null;
         Func<DroneToList, bool> selectByWeihgt = null;
         Func<DroneToList, bool> selectByPackege = null;
+        Func<DroneToList, bool> selectBynumber = null;
         /// <summary>
         /// return list of drones
         /// </summary>
@@ -77,6 +78,18 @@ namespace BlApi
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
             if (package != null)
+                droneToListFilter += selectByWeihgt;
+
+            return FilterDronesList();
+
+        }
+        public IEnumerable<DroneToList> DroneToListFilterByNumber(string num)
+        {
+            droneToListFilter -= selectByPackege;
+            selectByWeihgt = x => x.SerialNumber.ToString().StartsWith(num); 
+            if (dronesListInBl.Count == 0)
+                throw new TheListIsEmptyException();
+            if (num!="")
                 droneToListFilter += selectByWeihgt;
 
             return FilterDronesList();
