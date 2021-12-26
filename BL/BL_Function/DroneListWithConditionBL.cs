@@ -72,25 +72,25 @@ namespace BlApi
         public IEnumerable<DroneToList> DroneToListPasibalForPackege(Package package)
         {
             droneToListFilter -= selectByPackege;
-            selectByWeihgt = x => x.WeightCategory >= package.weightCatgory &&
+            selectByPackege = x => x.WeightCategory >= package.weightCatgory &&
             x.DroneStatus == DroneStatus.Free &&
             x.ButrryStatus > batteryCalculationForFullShipping(x.Location, package);
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
             if (package != null)
-                droneToListFilter += selectByWeihgt;
+                droneToListFilter += selectByPackege;
 
             return FilterDronesList();
 
         }
         public IEnumerable<DroneToList> DroneToListFilterByNumber(string num)
         {
-            droneToListFilter -= selectByPackege;
-            selectByWeihgt = x => x.SerialNumber.ToString().StartsWith(num); 
+            droneToListFilter -= selectBynumber;
+            selectBynumber = x => x.SerialNumber.ToString().StartsWith(num); 
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
             if (num!="")
-                droneToListFilter += selectByWeihgt;
+                droneToListFilter += selectBynumber;
 
             return FilterDronesList();
 

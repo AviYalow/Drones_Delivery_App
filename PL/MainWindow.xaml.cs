@@ -41,7 +41,7 @@ namespace PL
 
         private void BaseStationsButton_Click(object sender, RoutedEventArgs e)
         {
-            new BaseStationsList(bL).ShowDialog();
+           
         }
 
         private void PackagesButton_Click(object sender, RoutedEventArgs e)

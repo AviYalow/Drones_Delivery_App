@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DronesListWindow" Height="600" Width="800"
-        Background="LightGreen"
+        Title="DronesListWindow" Height="750" Width="1100"
+        xmlns:materialdesignin="http://materialdesigninxaml.net/winfx/xaml/themes"
         Closing="Window_Closing" Icon="/DroneIcon.png" ResizeMode="NoResize">
+    <Window.Background>
+        <ImageBrush ImageSource="/drones.jpg" />
+
+    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60*"/>
@@ -20,12 +24,14 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ComboBox Name="WeightSelctor" Margin="0,64,0,0"  IsEditable="True" SelectionChanged="WeightSelctor_SelectionChanged" Grid.Column="1" />
-            <ComboBox Name="StatusSelector" Margin="10,64,0,0" IsEditable="True" SelectionChanged="StatusSelector_SelectionChanged" Grid.Column="0" />
+            <ComboBox Name="WeightSelctor" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="0,64,0,0"  IsEditable="True" SelectionChanged="WeightSelctor_SelectionChanged" Grid.Column="1" Height="42" VerticalAlignment="Top" />
+            <ComboBox Name="StatusSelector" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="10,64,0,97" IsEditable="True" SelectionChanged="StatusSelector_SelectionChanged" Grid.Column="0" />
             <Label Name="StatusSelectorLabel" Content="Status" HorizontalAlignment="Stretch" Margin="35,28,0,0" VerticalAlignment="Top" Width="78" FontSize="24" Height="37" Grid.Column="0" />
-            <Label Name="WeightSelectorLabel" Content="Weight" Margin="48,28,0,0"  FontSize="24" Grid.Column="1" HorizontalAlignment="Left"/>
+            <Label Name="WeightSelectorLabel" Content="Weight" Margin="0,28,0,138"  FontSize="24" Grid.Column="1" HorizontalAlignment="Center" Width="100"/>
         </Grid>
-        <Grid/>
+
+        <TextBox x:Name="selectByNumber" HorizontalAlignment="Left" Margin="959,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" KeyDown="TextBox_KeyDown" TextChanged="selectByNumber_TextChanged"/>
+
 
         <ListView x:Name="DronesListView" Margin="0,120,0,136" Grid.RowSpan="2" Background="LightGreen" MouseDoubleClick="ChoseDrone">
             <ListView.View>
@@ -69,7 +75,7 @@
             </ListView.View>
         </ListView>
 
-        <Button   x:Name="ReturnButton" Click="Button_Return_Click"  HorizontalAlignment="Left"  Margin="596,300,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="108" >
+        <Button   x:Name="ReturnButton" Click="Button_Return_Click"  HorizontalAlignment="Left"  Margin="621,395,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="108" >
 
             <Button.Background>
                 <ImageBrush ImageSource="/return.png" />
@@ -77,6 +83,6 @@
 
 
         </Button>
-        <Button x:Name="AddDroneButton" Content="Add Drone" HorizontalAlignment="Left" Height="78" Margin="36,300,0,0" VerticalAlignment="Top" Width="206" Click="Button_Click" Grid.Row="1" />
+        <Button x:Name="AddDroneButton" Content="Add Drone" HorizontalAlignment="Left" Height="78" Margin="38,400,0,0" VerticalAlignment="Top" Width="206" Click="Button_Click" Grid.Row="1" />
     </Grid>
 </Window>

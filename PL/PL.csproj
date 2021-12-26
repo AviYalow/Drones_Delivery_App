@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="DroneIcon.png" />
+    <None Remove="drones.jpg" />
     <None Remove="ok.jpg" />
     <None Remove="return.png" />
   </ItemGroup>
@@ -26,6 +27,7 @@
 
   <ItemGroup>
     <Resource Include="DroneIcon.png" />
+    <Resource Include="drones.jpg" />
     <Resource Include="ok.jpg" />
     <Resource Include="return.png" />
   </ItemGroup>

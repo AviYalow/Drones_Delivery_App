@@ -35,7 +35,7 @@
             </Grid>
 
             <ResourceDictionary.MergedDictionaries>
-                <materialdesignin:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime"  />
+                <materialdesignin:BundledTheme BaseTheme="Light" PrimaryColor="BlueGrey" SecondaryColor="Lime"  />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml"/>
