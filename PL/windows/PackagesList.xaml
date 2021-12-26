@@ -1,0 +1,82 @@
+﻿<Window x:Class="PL.windows.PackagesList"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="DronesListWindow" Height="600" Width="800"
+        Background="LightGreen"
+        Closing="Window_Closing" Icon="/DroneIcon.png" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="157*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ComboBox Name="WeightSelctor" Margin="0,64,0,0"  IsEditable="True" SelectionChanged="WeightSelctor_SelectionChanged" Grid.Column="1" />
+            <ComboBox Name="StatusSelector" Margin="10,64,0,0" IsEditable="True" SelectionChanged="StatusSelector_SelectionChanged" Grid.Column="0" />
+            <Label Name="StatusSelectorLabel" Content="Status" HorizontalAlignment="Stretch" Margin="35,28,0,0" VerticalAlignment="Top" Width="78" FontSize="24" Height="37" Grid.Column="0" />
+            <Label Name="WeightSelectorLabel" Content="Weight" Margin="48,28,0,0"  FontSize="24" Grid.Column="1" HorizontalAlignment="Left"/>
+        </Grid>
+        <Grid/>
+
+        <ListView x:Name="PackagesList" Margin="0,120,0,136" Grid.RowSpan="2" Background="LightGreen" MouseDoubleClick="ChoseDrone">
+            <ListView.View>
+                <GridView x:Name="ListviewGridToPackageList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNumber}" x:Name="Serial"   >
+                        <HeaderedContentControl x:Name="SerialNumber"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                            <TextBox Text="Serial" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=Model}" x:Name="ModelGrid" >
+                        <HeaderedContentControl x:Name="Model"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                            <TextBox Text="Model" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=WeightCategory}" x:Name="WeightCategoryGrid"  >
+                        <HeaderedContentControl x:Name="WeightCategory"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                            <TextBox Text="WeightCategory" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=ButrryStatus}" x:Name="ButrryStatusGrid"  >
+                        <HeaderedContentControl x:Name="ButrryStatus"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                            <TextBox Text="ButrryStatus" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=DroneStatus}" x:Name="DroneStatusGrid" >
+                        <HeaderedContentControl x:Name="DroneStatus"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                            <TextBox Text="DroneStatus" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=Location}" x:Name="LocationGrid"  >
+                        <HeaderedContentControl x:Name="Location"    >
+                            <TextBox Text="Location" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=NumPackage}" x:Name="NumPackageGrid"  >
+                        <HeaderedContentControl x:Name="NumPackage"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                            <TextBox Text="NumPackage" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button   x:Name="ReturnButton" Click="Button_Return_Click"  HorizontalAlignment="Left"  Margin="596,300,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="108" >
+
+            <Button.Background>
+                <ImageBrush ImageSource="/return.png" />
+            </Button.Background>
+
+
+        </Button>
+        <Button x:Name="AddDroneButton" Content="Add Drone" HorizontalAlignment="Left" Height="78" Margin="36,300,0,0" VerticalAlignment="Top" Width="206" Click="Button_Click" Grid.Row="1" />
+    </Grid>
+</Window>
