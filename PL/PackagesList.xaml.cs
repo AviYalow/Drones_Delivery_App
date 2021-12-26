@@ -30,34 +30,20 @@ namespace PL
             PackagesListView.ItemsSource = bl.PackageToLists();
         }
 
-        private void SerialNumber_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            HeaderedContentControl control = sender as HeaderedContentControl;
+            try
+            {
+                PackagesListView.ItemsSource = bl.SortList(control.Name, PackagesListView.ItemsSource as IEnumerable<BO.PackageToList>);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
 
-        private void SendClient_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
 
-        }
-
-        private void RecivedClient_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void priority_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void WeightCategories_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void packageStatus_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
     }
 }
