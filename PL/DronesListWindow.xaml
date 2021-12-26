@@ -30,7 +30,7 @@
             <Label Name="WeightSelectorLabel" Content="Weight" Margin="0,28,0,138"  FontSize="24" Grid.Column="1" HorizontalAlignment="Center" Width="100"/>
         </Grid>
 
-        <TextBox x:Name="selectByNumber" HorizontalAlignment="Left" Margin="959,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" KeyDown="TextBox_KeyDown" TextChanged="selectByNumber_TextChanged"/>
+        <TextBox x:Name="selectByNumber" HorizontalAlignment="Left" Margin="959,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" TextChanged="selectByNumber_TextChanged" KeyUp="TextBox_KeyDown"/>
 
 
         <ListView x:Name="DronesListView" Margin="0,120,0,136" Grid.RowSpan="2" Background="LightGreen" MouseDoubleClick="ChoseDrone">

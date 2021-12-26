@@ -21,7 +21,7 @@ namespace PL
     {
         BlApi.IBL bl;
 
-       
+
         BO.DroneToList drone;
         public DronesListWindow(BlApi.IBL bl)
         {
@@ -37,7 +37,7 @@ namespace PL
                 StatusSelector.Items.Add(item);
             drone = new BO.DroneToList();
             DronesListView.ItemsSource = bl.FilterDronesList();
-           
+
 
 
 
@@ -108,7 +108,7 @@ namespace PL
 
         }
 
-   
+
 
         private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -117,7 +117,7 @@ namespace PL
             {
                 DronesListView.ItemsSource = bl.SortList(control.Name, DronesListView.ItemsSource as IEnumerable<BO.DroneToList>);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -126,7 +126,7 @@ namespace PL
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-          /*  TextBox text = sender as TextBox;
+            TextBox text = sender as TextBox;
             if (text == null) return;
             if (e == null) return;
 
@@ -137,7 +137,10 @@ namespace PL
             //allow list of system keys (add other key here if you want to allow)
             if (e.Key == Key.Escape || e.Key == Key.Back || e.Key == Key.Delete ||
                 e.Key == Key.CapsLock || e.Key == Key.LeftShift || e.Key == Key.Home || e.Key == Key.End ||
-                e.Key == Key.Insert || e.Key == Key.Down || e.Key == Key.Right || e.Key == Key.NumPad0)
+                e.Key == Key.Insert || e.Key == Key.Down || e.Key == Key.Right || e.Key == Key.NumPad0
+                || e.Key == Key.NumPad1|| e.Key == Key.NumPad2|| e.Key == Key.NumPad3|| e.Key == Key.NumPad4
+                || e.Key == Key.NumPad5|| e.Key == Key.NumPad6|| e.Key == Key.NumPad7|| e.Key == Key.NumPad8
+                || e.Key == Key.NumPad9)
                 return;
 
             char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
@@ -149,22 +152,21 @@ namespace PL
             if (Char.IsDigit(c))
                 if (!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightAlt)))
                 {
-                    
-                    DronesListView.ItemsSource = bl.DroneToListFilterByNumber(text.Text+c);
-                    return; 
-                
+
+                    return;
+
                 }
-                     //let this key be written inside the textbox
+            //let this key be written inside the textbox
 
             //forbid letters and signs (#,$, %, ...)
             e.Handled = true; //ignore this key. mark event as handled, will not be routed to other controls
-            return;*/
+            return;
         }
 
         private void selectByNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox text = sender as TextBox;
-            DronesListView.ItemsSource = bl.DroneToListFilterByNumber(text.Text );
+            DronesListView.ItemsSource = bl.DroneToListFilterByNumber(text.Text);
         }
     }
 }
