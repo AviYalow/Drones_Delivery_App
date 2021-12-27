@@ -38,9 +38,6 @@ namespace PL
             drone = new BO.DroneToList();
             DronesListView.ItemsSource = bl.FilterDronesList();
 
-
-
-
         }
 
 

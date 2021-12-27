@@ -23,7 +23,7 @@
             </Grid.ColumnDefinitions>
         </Grid>
         <Grid/>
-        <Button x:Name="DroneMainButton" Content="Drones" HorizontalAlignment="Left" Margin="284,135,0,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="DroneMainButton_Click"/>
+        <Button x:Name="DroneMainButton" Content="Drones" HorizontalAlignment="Left" Margin="274,135,0,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="DroneMainButton_Click"/>
         <Button x:Name="PackagesButton" Content="Packages" HorizontalAlignment="Right" Margin="0,239,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="PackagesButton_Click" />
         <Button x:Name="BaseStationsButton" Content="BaseStations" HorizontalAlignment="Right" Margin="0,346,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="BaseStationsButton_Click" />
         <Button x:Name="ClientsButton" Content="Clients" HorizontalAlignment="Right" Margin="0,31,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="ClientsButton_Click" />

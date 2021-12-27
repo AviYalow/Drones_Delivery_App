@@ -26,8 +26,8 @@ namespace PL
             InitializeComponent();
             this.bl = bl;
 
-           
             PackagesListView.ItemsSource = bl.PackageToLists();
+          
         }
 
         private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -44,6 +44,34 @@ namespace PL
 
         }
 
+        private void CmbDisplayOp_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
+            if (CmbDisplayOp.SelectedItem == CmbDisplayOp.Items[0])
+            {
+                GroupingView.Visibility = Visibility.Hidden;
+                PackagesListView.Visibility = Visibility.Visible;
+                
+            }
+            else if (CmbDisplayOp.SelectedItem == CmbDisplayOp.Items[1])
+            {
+
+                PackagesListView.Visibility = Visibility.Hidden;
+                GroupingView.Visibility = Visibility.Visible;
+                GroupingView.ItemsSource = bl.PackageToLists();
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(GroupingView.ItemsSource);
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("SendClient");
+                view.GroupDescriptions.Add(groupDescription);
+            }
+            else if (CmbDisplayOp.SelectedItem == CmbDisplayOp.Items[2])
+            {
+                PackagesListView.Visibility = Visibility.Hidden;
+                GroupingView.Visibility = Visibility.Visible;
+                GroupingView.ItemsSource = bl.PackageToLists();
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(GroupingView.ItemsSource);
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("RecivedClient");
+                view.GroupDescriptions.Add(groupDescription);
+            }
+        }
     }
 }

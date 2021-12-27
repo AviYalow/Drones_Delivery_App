@@ -20,6 +20,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
         </Grid>
+
         <ListView x:Name="PackagesListView" Grid.Row="1">
             <ListView.View>
                 <GridView x:Name="ListviewGridToPackagesList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
@@ -55,7 +56,74 @@
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
+
         </ListView>
+        <ListView x:Name="GroupingView" Grid.Row="1" Visibility="Hidden">
+            <ListView.View>
+                <GridView x:Name="groupingList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNumber}"   >
+                        <HeaderedContentControl MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
+                            <TextBox Text="Serial" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" />
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=SendClient}"  >
+                        <HeaderedContentControl MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
+                            <TextBox Text="Send Client" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=RecivedClient}"  >
+                        <HeaderedContentControl MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"    >
+                            <TextBox Text="Recived Client" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=priority}"   >
+                        <HeaderedContentControl  MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"  >
+                            <TextBox Text="Priority" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=WeightCategories}" >
+                        <HeaderedContentControl  MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
+                            <TextBox Text="Weight Categories" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=packageStatus}"  >
+                        <HeaderedContentControl  MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"    >
+                            <TextBox Text="Status" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander IsExpanded="True">
+                                            <Expander.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock x:Name="name" Text="{Binding Name}" FontWeight="Bold" Foreground="Gray" FontSize="22" VerticalAlignment="Bottom" />
+                                                    <TextBlock Text="{Binding ItemCount}" FontSize="22" Foreground="Green" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                                                    <TextBlock Text=" item(s)" FontSize="22" Foreground="Silver" FontStyle="Italic" VerticalAlignment="Bottom" />
+                                                </StackPanel>
+                                            </Expander.Header>
+                                            <ItemsPresenter />
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListView.GroupStyle>
+        </ListView>
+        <ComboBox x:Name="CmbDisplayOp" HorizontalAlignment="Left" Margin="224,44,0,0" VerticalAlignment="Top" Width="148" Grid.Row="0" SelectionChanged="CmbDisplayOp_SelectionChanged">
+            <ComboBoxItem Content="Regular" />
+            <ComboBoxItem Content="Grouping by sender" />
+            <ComboBoxItem Content="Grouping by recipient" />
+        </ComboBox>
+        <Label Content="Display Options:" Grid.Column="0" Grid.Row="0" Height="30" VerticalAlignment="Top" Margin="40,40,598,0" FontSize="16" FontFamily="Segoe UI Black"/>
 
 
     </Grid>
