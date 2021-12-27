@@ -36,11 +36,12 @@
                 <ColumnDefinition Width="133*"/>
                 <ColumnDefinition Width="133*"/>
             </Grid.ColumnDefinitions>
-            <ComboBox x:Name="PrioCombo" Grid.Column="1" HorizontalAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top" Width="120"/>
-            <ComboBox x:Name="StatusCombo" Grid.Column="2" HorizontalAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top" Width="120"/>
-            <ComboBox x:Name="WeightCombo" Grid.Column="3" HorizontalAlignment="Left" Margin="7,13,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
-            <DatePicker Grid.Column="5" HorizontalAlignment="Left"  Width="100" Height="34" Margin="19,0,0,0"/>
-            <DatePicker Grid.Column="6" HorizontalAlignment="Left" Width="108" Height="31" Margin="19,0,0,0"/>
+            <ComboBox x:Name="PrioCombo" Grid.Column="1" HorizontalAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="PrioCombo_SelectionChanged" IsSynchronizedWithCurrentItem="False"/>
+            <ComboBox x:Name="StatusCombo" Grid.Column="2" HorizontalAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="StatusCombo_SelectionChanged"/>
+            <ComboBox x:Name="WeightCombo" Grid.Column="3" HorizontalAlignment="Left" Margin="7,13,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" SelectionChanged="WeightCombo_SelectionChanged"/>
+            <DatePicker x:Name="from" Grid.Column="5" HorizontalAlignment="Left"  Width="100" Height="28" Margin="97,-42,0,0" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
+            <DatePicker x:Name="to" Grid.Column="5" HorizontalAlignment="Left" Width="103" Height="28" Grid.ColumnSpan="2" Margin="89,-4,0,0" VerticalAlignment="Top"/>
+            <Button Content="filter" Grid.Column="6" HorizontalAlignment="Left" Margin="70,-18,0,0" VerticalAlignment="Top"/>
 
         </Grid>
 
@@ -142,14 +143,6 @@
             </ListView.GroupStyle>
         </ListView>
         <ComboBox x:Name="CmbDisplayOp" Grid.Column="0" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top"  Width="112" SelectionChanged="CmbDisplayOp_SelectionChanged" RenderTransformOrigin="0.5,0.5" Grid.Row="1" >
-            <ComboBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="1"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </ComboBox.RenderTransform>
             <ComboBoxItem Content="Regular" />
             <ComboBoxItem Content="Grouping by sender" />
             <ComboBoxItem Content="Grouping by recipient" />
@@ -158,8 +151,8 @@
         <Label Content="Priority"  HorizontalAlignment="Left" Margin="177,11,0,0" VerticalAlignment="Center" FontSize="14" FontFamily="Segoe UI Black"/>
         <Label Content="Status"  HorizontalAlignment="Left" Margin="290,11,0,0" VerticalAlignment="Center" FontSize="14" FontFamily="Segoe UI Black"/>
         <Label Content="Weight" HorizontalAlignment="Left" Margin="422,13,0,0" VerticalAlignment="Center" FontSize="14" FontFamily="Segoe UI Black"/>
-        <Label Content="From date:" HorizontalAlignment="Left" Margin="542,14,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black"/>
-        <Label Content="To date:" HorizontalAlignment="Left" Margin="680,15,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black"/>
+        <Label Content="From date:" HorizontalAlignment="Left" Margin="527,14,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black"/>
+        <Label Content="To date:" HorizontalAlignment="Left" Margin="529,0,0,0" VerticalAlignment="Center" FontSize="14" FontFamily="Segoe UI Black" Grid.Row="1"/>
 
 
     </Grid>
