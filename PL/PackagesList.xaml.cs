@@ -73,5 +73,7 @@ namespace PL
                 view.GroupDescriptions.Add(groupDescription);
             }
         }
+
+        
     }
 }
