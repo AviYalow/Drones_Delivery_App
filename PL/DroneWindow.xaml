@@ -95,13 +95,13 @@
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="Butrry status:" FontWeight="Bold"/>
                     <TextBlock Grid.Column="0" Grid.Row="5" Text="Drone status:" FontWeight="Bold"/>
                     <TextBlock Grid.Column="0" Grid.Row="6" Text="Location:" FontWeight="Bold"/>
-                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=SerialNum}"/>
-                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=Model}"/>
-                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Path=weightCategory}"/>
-                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Path=packageInTransfer}"/>
-                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Path=butrryStatus}"/>
-                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding Path=droneStatus}"/>
-                    <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding Path=location}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=SerialNum,Mode=TwoWay}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=Model,Mode=TwoWay}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Path=weightCategory,Mode=TwoWay}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Path=packageInTransfer,Mode=TwoWay}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Path=butrryStatus,Mode=TwoWay}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding Path=droneStatus,Mode=TwoWay}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding Path=location,Mode=TwoWay}"/>
                 </Grid>
             </Label>
             <RadioButton x:Name="Charge" Content="Send to charge" HorizontalAlignment="Left"  Grid.Row="5" VerticalAlignment="Center" Visibility="Collapsed" Margin="10,0,0,0" />

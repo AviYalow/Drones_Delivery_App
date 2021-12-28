@@ -235,8 +235,7 @@ namespace PL
                 }
             }
 
-            this.Closing += DronesWindow_Closing;
-            this.Close();
+          
         }
 
         private void SirialNumberTextBox_PreviewKeyUp(object sender, KeyEventArgs e)
