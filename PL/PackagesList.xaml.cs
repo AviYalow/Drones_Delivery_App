@@ -160,5 +160,23 @@ namespace PL
         {
             PackagesListView.ItemsSource = bl.PackageToDateLists(to.SelectedDate);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new PackageView(bl).ShowDialog();
+            PackagesListView.ItemsSource = bl.PackageToLists();
+        }
+
+        
+
+        private void PackagesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (PackagesListView.SelectedItem != null)
+            {
+                new PackageView(bl, (BO.PackageToList)PackagesListView.SelectedItem).ShowDialog();
+                PackagesListView.ItemsSource = bl.PackageToLists();
+                PackagesListView.SelectedItem = null;
+            }
+        }
     }
 }

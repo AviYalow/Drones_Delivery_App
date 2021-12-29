@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using BO;
 using System.Windows.Shapes;
 using BO;
 using BlApi;
@@ -31,6 +32,13 @@ namespace PL
         {
             InitializeComponent();
             bl = bL;
+
+        }
+
+
+        public PackageView(BlApi.IBL bl, PackageToList package)
+        {
+
 
         }
     }
