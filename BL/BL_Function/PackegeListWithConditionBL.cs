@@ -31,9 +31,8 @@ namespace BlApi
                 throw new TheListIsEmptyException();
 
 
-            //return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
-            //       select x.convertPackegeDalToPackegeToList(dalObj);
-            return from x in filerList(dalObj.PackegeList(x => true), x => true)
+           
+            return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
                    select x.convertPackegeDalToPackegeToList(dalObj);
 
 
@@ -218,6 +217,7 @@ namespace BlApi
                    select x.convertPackegeDalToPackegeToList(dalObj);
         }
 
+      
 
     }
 }

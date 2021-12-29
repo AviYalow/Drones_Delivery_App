@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using BO;
 using System.Windows.Shapes;
 using BO;
+using System.Globalization;
+
 using BlApi;
 
 namespace PL
@@ -27,6 +29,7 @@ namespace PL
         {
             InitializeComponent();
             bl = bL;
+            addPackegeWindow();
         }
         public PackageView(BlApi.IBL bL,uint packegeNum)
         {
@@ -36,10 +39,32 @@ namespace PL
         }
 
 
-        public PackageView(BlApi.IBL bl, PackageToList package)
+        public PackageView(BlApi.IBL bL, PackageToList package)
         {
 
+            InitializeComponent();
+            bl = bL;
+        }
 
+        void addPackegeWindow()
+        {
+            ResiveClientCMB.ItemsSource = bl.ClientActiveToLists();
+            SendClientCMB.ItemsSource = bl.ClientActiveToLists();
+        }
+
+        private void SendClientCMB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+    }
+
+    public class NotEmptyValidationRule : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            return string.IsNullOrWhiteSpace((value ?? "").ToString())
+                ? new ValidationResult(false, "Field is required.")
+                : ValidationResult.ValidResult;
         }
     }
 }

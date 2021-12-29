@@ -53,7 +53,7 @@
 
         </Grid>
 
-        <ListView x:Name="PackagesListView" Grid.Row="2" Margin="-9,4,9,39" Grid.RowSpan="2" Background="#FF24B1C7">
+        <ListView x:Name="PackagesListView" Grid.Row="2" Margin="-9,4,9,39" Grid.RowSpan="2" Background="#FF24B1C7" MouseDoubleClick="PackagesListView_MouseDoubleClick_1" >
             <ListView.View>
                 <GridView x:Name="ListviewGridToPackagesList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
                     <GridViewColumn  DisplayMemberBinding="{Binding SerialNumber}" x:Name="Serial"   >
@@ -127,6 +127,7 @@
         <Label Content="Weight" HorizontalAlignment="Left" Margin="545,32,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black"/>
         <Label Content="From date:" HorizontalAlignment="Left" Margin="661,29,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black"/>
         <Label Content="To date:" HorizontalAlignment="Left" Margin="670,10,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black" Grid.Row="1"/>
+        <Button Content="Add Packege" HorizontalAlignment="Left" Margin="66,0,0,0" Grid.Row="3" VerticalAlignment="Top" Width="171" Height="64"/>
 
 
     </Grid>

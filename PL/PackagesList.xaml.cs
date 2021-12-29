@@ -20,9 +20,7 @@ namespace PL
     /// </summary>
     public partial class PackagesList : Window
     {
-        bool groupVisble = false;
-        bool groupSender = false;
-        bool filter =true;
+      
         BlApi.IBL bl;
         CollectionView view;
         PropertyGroupDescription groupDescription;
@@ -65,7 +63,7 @@ namespace PL
 
         private void CmbDisplayOp_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            view = (CollectionView)CollectionViewSource.GetDefaultView(PackagesListView.ItemsSource);
             if (CmbDisplayOp.SelectedItem == CmbDisplayOp.Items[0])
             {
                 view.GroupDescriptions.Clear();
@@ -74,15 +72,15 @@ namespace PL
             }
             else if (CmbDisplayOp.SelectedItem == CmbDisplayOp.Items[1])
             {
-
+                view.GroupDescriptions.Clear();
                 groupDescription = new PropertyGroupDescription("SendClient");
                 view.GroupDescriptions.Add(groupDescription);
             }
             else if (CmbDisplayOp.SelectedItem == CmbDisplayOp.Items[2])
             {
-               
-                groupDescription = new PropertyGroupDescription("RecivedClient");
                 view.GroupDescriptions.Clear();
+                groupDescription = new PropertyGroupDescription("RecivedClient");
+                
                 view.GroupDescriptions.Add(groupDescription);
             }
         }
@@ -177,6 +175,12 @@ namespace PL
                 PackagesListView.ItemsSource = bl.PackageToLists();
                 PackagesListView.SelectedItem = null;
             }
+        }
+
+        private void PackagesListView_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
+        {
+            new PackageView(bl, (PackageToList)PackagesListView.SelectedItem).ShowDialog();
+            PackagesListView.ItemsSource = bl.PackageToLists();
         }
     }
 }
