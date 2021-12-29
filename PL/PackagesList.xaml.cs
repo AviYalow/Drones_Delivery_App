@@ -21,6 +21,7 @@ namespace PL
     {
         bool groupVisble = false;
         bool groupSender = false;
+        bool filter =true;
         BlApi.IBL bl;
         public PackagesList(BlApi.IBL bl)
         {
@@ -35,11 +36,14 @@ namespace PL
             PrioCombo.Items.Add("");
             foreach (var item in Enum.GetValues(typeof(BO.WeightCategories)))
                 WeightCombo.Items.Add(item);
+
             foreach (var item in Enum.GetValues(typeof(BO.PackageStatus)))
-                StatusCombo.Items.Add(item);
+                    StatusCombo.Items.Add(item);
+
             foreach (var item in Enum.GetValues(typeof(BO.Priority)))
                 PrioCombo.Items.Add(item);
 
+            
         }
 
         private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -98,27 +102,45 @@ namespace PL
                 return;
             if (WeightCombo.SelectedItem == WeightCombo.Items[0])
             {
-                PackagesListView.ItemsSource = bl.PackageToLists();
-                 GroupingView.ItemsSource = bl.PackageToLists();
-                
+                if (!groupVisble)
+                    PackagesListView.ItemsSource = bl.PackageToLists();
+                else
+                {
+                    GroupingView.ItemsSource = bl.PackageToLists();
+                    CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(GroupingView.ItemsSource);
+
+                    if (groupSender)
+                    {
+                        PropertyGroupDescription groupDescription = new PropertyGroupDescription("SendClient");
+                        view.GroupDescriptions.Add(groupDescription);
+                    }
+                    else if (!groupSender)
+                    {
+
+                        PropertyGroupDescription groupDescription = new PropertyGroupDescription("RecivedClient");
+                        view.GroupDescriptions.Add(groupDescription);
+                    }
+                }
+
+
             }
             else if (WeightCombo.SelectedItem != WeightCombo.Items[0])
             {
                 if (!groupVisble)
                     PackagesListView.ItemsSource = bl.PackageWeightLists((BO.WeightCategories)WeightCombo.SelectedItem);
                 else
-                {
+                 {
+                    GroupingView.ItemsSource = bl.PackageWeightLists((BO.WeightCategories)WeightCombo.SelectedItem);
+                    CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(GroupingView.ItemsSource);
+                    
                     if (groupSender)
                     {
-                        GroupingView.ItemsSource = bl.PackageWeightLists((BO.WeightCategories)WeightCombo.SelectedItem);
-                        CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(GroupingView.ItemsSource);
                         PropertyGroupDescription groupDescription = new PropertyGroupDescription("SendClient");
                         view.GroupDescriptions.Add(groupDescription);
                     }
-                   else if (!groupSender)
+                    else if (!groupSender)
                     {
-                        GroupingView.ItemsSource = bl.PackageWeightLists((BO.WeightCategories)WeightCombo.SelectedItem);
-                        CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(GroupingView.ItemsSource);
+                        
                         PropertyGroupDescription groupDescription = new PropertyGroupDescription("RecivedClient");
                         view.GroupDescriptions.Add(groupDescription);
                     }
@@ -127,72 +149,73 @@ namespace PL
 
         }
 
+        
+
+        
         private void StatusCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
             if (StatusCombo.SelectedItem is null)
                 return;
-            if (groupVisble == false)
+            if (!groupVisble)
             {
-                if (StatusCombo.SelectedItem == StatusCombo.Items[0])
+                
+                switch (StatusCombo.SelectedIndex)
                 {
-                    PackagesListView.ItemsSource = bl.PackageToLists();
-
+                    case 0:
+                        PackagesListView.ItemsSource = bl.PackageToLists();
+                        break;
+                    case 1:
+                        PackagesListView.ItemsSource = bl.PackageWithNoDroneToLists();
+                        break;
+                    case 2:
+                        PackagesListView.ItemsSource = bl.PackageConnectedButNutCollectedLists();
+                        break;
+                    case 3:
+                        PackagesListView.ItemsSource = bl.PackageCollectedButNotArriveLists();
+                        break;
+                    case 4:
+                        PackagesListView.ItemsSource = bl.PackageArriveLists();
+                        break;
+                    default:
+                        break;
                 }
-                else if (StatusCombo.SelectedItem == StatusCombo.Items[1])
-                {
-
-                }
-                else if (StatusCombo.SelectedItem == StatusCombo.Items[2])
-                {
-
-                    PackagesListView.ItemsSource = bl.PackageConnectedButNutCollectedLists();
-                }
-                else if (StatusCombo.SelectedItem == StatusCombo.Items[3])
-                {
-                    PackagesListView.ItemsSource = bl.PackageCollectedButNotArriveLists();
-                }
-                else if (StatusCombo.SelectedItem == StatusCombo.Items[4])
-                {
-                    PackagesListView.ItemsSource = bl.PackageArriveLists();
-                }
+                
             }
             else
             {
-                if (StatusCombo.SelectedItem == StatusCombo.Items[0])
+               
+                switch (StatusCombo.SelectedIndex)
                 {
-                    GroupingView.ItemsSource = bl.PackageToLists();
-
+                    case 0:
+                        GroupingView.ItemsSource = bl.PackageToLists();
+                        break;
+                    case 1:
+                        GroupingView.ItemsSource = bl.PackageWithNoDroneToLists();
+                        break;
+                    case 2:
+                        GroupingView.ItemsSource = bl.PackageConnectedButNutCollectedLists();
+                        break;
+                    case 3:
+                        GroupingView.ItemsSource = bl.PackageCollectedButNotArriveLists();
+                        break;
+                    case 4:
+                        GroupingView.ItemsSource = bl.PackageArriveLists();
+                        break;
+                    default:
+                        break;
                 }
-                else if (StatusCombo.SelectedItem == StatusCombo.Items[1])
-                {
+               
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(GroupingView.ItemsSource);
 
-                }
-                else if (StatusCombo.SelectedItem == StatusCombo.Items[2])
+                if (groupSender)
                 {
-
-                    GroupingView.ItemsSource = bl.PackageConnectedButNutCollectedLists();
-                }
-                else if (StatusCombo.SelectedItem == StatusCombo.Items[3])
-                {
-                    GroupingView.ItemsSource = bl.PackageCollectedButNotArriveLists();
-                }
-                else if (StatusCombo.SelectedItem == StatusCombo.Items[4])
-                {
-                    GroupingView.ItemsSource = bl.PackageArriveLists();
-
-                }
-
-                if(groupSender)
-                {
-                    CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(GroupingView.ItemsSource);
                     PropertyGroupDescription groupDescription = new PropertyGroupDescription("SendClient");
                     view.GroupDescriptions.Add(groupDescription);
                 }
                 else if(!groupSender)
                 {
-                    GroupingView.ItemsSource = bl.PackageWeightLists((BO.WeightCategories)WeightCombo.SelectedItem);
-                    CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(GroupingView.ItemsSource);
+                  
                     PropertyGroupDescription groupDescription = new PropertyGroupDescription("RecivedClient");
                     view.GroupDescriptions.Add(groupDescription);
                 }
@@ -205,8 +228,27 @@ namespace PL
                 return;
             if (PrioCombo.SelectedItem == WeightCombo.Items[0])
             {
-                PackagesListView.ItemsSource = bl.PackageToLists();
-                GroupingView.ItemsSource = bl.PackageToLists();
+                if (!groupVisble)
+                    PackagesListView.ItemsSource = bl.PackageToLists();
+                else
+                {
+                    GroupingView.ItemsSource = bl.PackageToLists();
+                    CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(GroupingView.ItemsSource);
+
+                    if (groupSender)
+                    {
+                        PropertyGroupDescription groupDescription = new PropertyGroupDescription("SendClient");
+                        view.GroupDescriptions.Add(groupDescription);
+                    }
+                    else if (!groupSender)
+                    {
+
+                        PropertyGroupDescription groupDescription = new PropertyGroupDescription("RecivedClient");
+                        view.GroupDescriptions.Add(groupDescription);
+                    }
+
+
+                }
             }
             else
             {
@@ -231,6 +273,79 @@ namespace PL
                 }
             }
 
+        }
+
+        
+
+        private void filterBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+            filter = true;
+            var fromDate = from.SelectedDate;
+            var toDate = to.SelectedDate;
+
+            if (fromDate == null || toDate == null)
+                filter = false;
+            if (filter)
+            {
+                var src = from pack in bl.PackageToLists()
+                          where (bl.ShowPackage(pack.SerialNumber).create_package > fromDate && bl.ShowPackage(pack.SerialNumber).create_package < toDate)
+                          select pack;
+
+
+                if (!groupVisble)
+                    PackagesListView.ItemsSource = src;
+                else
+                {
+                    GroupingView.ItemsSource = src;
+                    CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(GroupingView.ItemsSource);
+
+                    if (groupSender)
+                    {
+                        PropertyGroupDescription groupDescription = new PropertyGroupDescription("SendClient");
+                        view.GroupDescriptions.Add(groupDescription);
+                    }
+                    else if (!groupSender)
+                    {
+
+                        PropertyGroupDescription groupDescription = new PropertyGroupDescription("RecivedClient");
+                        view.GroupDescriptions.Add(groupDescription);
+                    }
+
+
+                }
+
+            }
+            else
+            {
+                    from.SelectedDate = null;
+                    to.SelectedDate = null;
+
+                if (!groupVisble)
+                    PackagesListView.ItemsSource = bl.PackageToLists();
+                else
+                {
+                    GroupingView.ItemsSource = bl.PackageToLists();
+                    CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(GroupingView.ItemsSource);
+
+                    if (groupSender)
+                    {
+                        PropertyGroupDescription groupDescription = new PropertyGroupDescription("SendClient");
+                        view.GroupDescriptions.Add(groupDescription);
+                    }
+                    else if (!groupSender)
+                    {
+
+                        PropertyGroupDescription groupDescription = new PropertyGroupDescription("RecivedClient");
+                        view.GroupDescriptions.Add(groupDescription);
+                    }
+
+
+
+
+                }
+
+            }
         }
     }
 }

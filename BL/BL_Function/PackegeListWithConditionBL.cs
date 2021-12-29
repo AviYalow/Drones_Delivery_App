@@ -29,7 +29,9 @@ namespace BlApi
                 throw new TheListIsEmptyException();
 
 
-            return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
+            //return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
+            //       select x.convertPackegeDalToPackegeToList(dalObj);
+            return from x in filerList(dalObj.PackegeList(x => true), x=>true)
                    select x.convertPackegeDalToPackegeToList(dalObj);
 
 
@@ -58,7 +60,7 @@ namespace BlApi
         /// <returns></returns>
         public IEnumerable<PackageToList> PackageArriveLists(bool filterPackege = true)
         {
-
+            
             packegeToListFilter -= arrivePackegeFilter;
             if (PackageToLists().Count() == 0)
                 throw new TheListIsEmptyException();
@@ -111,14 +113,17 @@ namespace BlApi
            
 
             packegeToListFilter -= weightPackegeFilter;
-            weightPackegeFilter = x => x.WeightCatgory == (DO.WeightCategories)weight;
             if (PackageToLists().Count() == 0)
                 throw new TheListIsEmptyException();
-            if (weight is null)
+            if (weight != null)
+            {
+                weightPackegeFilter = x => x.WeightCatgory == (DO.WeightCategories)weight;
                 packegeToListFilter += weightPackegeFilter;
-
+               
+            }
             return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
                    select x.convertPackegeDalToPackegeToList(dalObj);
+           
         }
         /// <summary>
         /// filter list by priority
@@ -131,14 +136,16 @@ namespace BlApi
           
 
             packegeToListFilter -= priorityPackegeFilter;
-            priorityPackegeFilter = x => x.Priority == (DO.Priority)priority;
             if (PackageToLists().Count() == 0)
                 throw new TheListIsEmptyException();
-            if (priority is null)
+            if (priority != null)
+            {
+                priorityPackegeFilter = x => x.Priority == (DO.Priority)priority;
                 packegeToListFilter += priorityPackegeFilter;
-
+            }
             return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
                    select x.convertPackegeDalToPackegeToList(dalObj);
+           
         }
 
         

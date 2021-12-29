@@ -16,7 +16,7 @@
             <RowDefinition Height="1*"/>
 
         </Grid.RowDefinitions>
-        <Grid x:Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Margin="-9,4,9,40" Grid.RowSpan="2">
+        <Grid x:Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Margin="-9,1,9,43" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -26,7 +26,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
         </Grid>
-        <Grid x:Name="btGrid" Height="auto" Grid.Row="1" Width="auto" Margin="-9,4,9,300" Grid.RowSpan="2">
+        <Grid x:Name="btGrid" Height="auto" Grid.Row="1" Width="auto" Margin="-9,5,9,299" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="133*"/>
                 <ColumnDefinition Width="133*"/>
@@ -34,14 +34,18 @@
                 <ColumnDefinition Width="28*"/>
                 <ColumnDefinition Width="106*"/>
                 <ColumnDefinition Width="133*"/>
-                <ColumnDefinition Width="133*"/>
+                <ColumnDefinition Width="78*"/>
+                <ColumnDefinition Width="14*"/>
+                <ColumnDefinition Width="25*"/>
+                <ColumnDefinition Width="17*"/>
             </Grid.ColumnDefinitions>
-            <ComboBox x:Name="PrioCombo" Grid.Column="1" HorizontalAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="PrioCombo_SelectionChanged" IsSynchronizedWithCurrentItem="False"/>
-            <ComboBox x:Name="StatusCombo" Grid.Column="2" HorizontalAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="StatusCombo_SelectionChanged"/>
-            <ComboBox x:Name="WeightCombo" Grid.Column="3" HorizontalAlignment="Left" Margin="7,13,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" SelectionChanged="WeightCombo_SelectionChanged"/>
+            <ComboBox x:Name="PrioCombo" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" SelectionChanged="PrioCombo_SelectionChanged" IsSynchronizedWithCurrentItem="False" Margin="0,1,0,0"/>
+            <ComboBox x:Name="StatusCombo" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" SelectionChanged="StatusCombo_SelectionChanged" Margin="0,3,0,0"/>
+            <ComboBox x:Name="WeightCombo" Grid.Column="3" HorizontalAlignment="Center" Margin="0,3,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" SelectionChanged="WeightCombo_SelectionChanged"/>
             <DatePicker x:Name="from" Grid.Column="5" HorizontalAlignment="Left"  Width="100" Height="28" Margin="97,-42,0,0" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
             <DatePicker x:Name="to" Grid.Column="5" HorizontalAlignment="Left" Width="103" Height="28" Grid.ColumnSpan="2" Margin="89,-4,0,0" VerticalAlignment="Top"/>
-            <Button Content="filter" Grid.Column="6" HorizontalAlignment="Left" Margin="70,-18,0,0" VerticalAlignment="Top"/>
+            <Button x:Name="filterBtn" Content="filter" Grid.Column="6" Margin="67,-35,-2,0" Grid.ColumnSpan="4"  Click="filterBtn_Click" FontSize="14" FontFamily="Segoe UI" Height="40" VerticalAlignment="Top"/>
+
 
         </Grid>
 
