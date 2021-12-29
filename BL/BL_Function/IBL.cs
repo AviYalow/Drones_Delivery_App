@@ -343,8 +343,11 @@ namespace BlApi
 
         public IEnumerable<DroneToList> DroneToListFilterByNumber(string num);
 
+        public IEnumerable<PackageToList> PackegeBySpsificStatus(PackageStatus? status = null);
 
+        public IEnumerable<PackageToList> PackageToDateLists(DateTime? date = null);
 
+        public IEnumerable<PackageToList> PackageFromDateLists(DateTime? date = null);
 
     }
 }

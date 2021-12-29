@@ -21,9 +21,10 @@ namespace PL
     {
         BlApi.IBL bl;
 
-
+        CollectionView view;
+        PropertyGroupDescription groupDescription;
         BO.DroneToList drone;
-        public DronesListWindow(BlApi.IBL bl)
+        public DronesListWindow( BlApi.IBL bl)
         {
             InitializeComponent();
 
@@ -37,6 +38,8 @@ namespace PL
                 StatusSelector.Items.Add(item);
             drone = new BO.DroneToList();
             DronesListView.ItemsSource = bl.FilterDronesList();
+            view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
+             groupDescription = new PropertyGroupDescription("Model");
 
         }
 
@@ -74,7 +77,7 @@ namespace PL
 
             if (DronesListView.SelectedItem != null)
             {
-                new DroneWindow(bl, (BO.DroneToList)DronesListView.SelectedItem).ShowDialog();
+                new DroneWindow( bl, (BO.DroneToList)DronesListView.SelectedItem).ShowDialog();
                 DronesListView.ItemsSource = bl.FilterDronesList();
                 DronesListView.SelectedItem = null;
             }
@@ -84,7 +87,7 @@ namespace PL
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(bl).ShowDialog();
+            new DroneWindow( bl).ShowDialog();
             DronesListView.ItemsSource = bl.FilterDronesList();
         }
 
@@ -164,6 +167,20 @@ namespace PL
         {
             TextBox text = sender as TextBox;
             DronesListView.ItemsSource = bl.DroneToListFilterByNumber(text.Text);
+        }
+
+        private void gropListCB_Checked(object sender, RoutedEventArgs e)
+        {
+            if (gropListCB.IsChecked==true)
+            {
+              if(!view.GroupDescriptions.Any(x=>x.Equals(groupDescription)))
+                view.GroupDescriptions.Add(groupDescription);
+            }
+            else
+            {
+                view.GroupDescriptions.Clear();
+             //  DronesListView.ItemsSource = bl.FilterDronesList();
+            }
         }
     }
 }

@@ -105,13 +105,13 @@ namespace BlApi
                 var pacege = drone.NumPackage != 0 ?  convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.NumPackage)) : null;
                 return new Drone
                 {
-                    SerialNum = drone.SerialNumber,
+                    SerialNumber = drone.SerialNumber,
                     Model = drone.Model,
-                    weightCategory = drone.WeightCategory,
-                    droneStatus = drone.DroneStatus,
-                    location = drone.Location,
-                    butrryStatus = drone.ButrryStatus,
-                    packageInTransfer = pacege
+                    WeightCategory = drone.WeightCategory,
+                    DroneStatus = drone.DroneStatus,
+                    Location = drone.Location,
+                    ButrryStatus = drone.ButrryStatus,
+                    PackageInTransfer = pacege
                 };
             }
             catch (DO.ItemNotFoundException ex)

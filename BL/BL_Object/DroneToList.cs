@@ -11,7 +11,8 @@ namespace BO
     /// </summary>
     public class DroneToList
     {
-        public uint SerialNumber { get; init; }
+        
+        public uint SerialNumber { get; set; }
         public DroneModel Model { get; set; }
         public WeightCategories WeightCategory { get; set; }
 

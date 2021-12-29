@@ -13,4 +13,5 @@ namespace BO
     public enum DroneStatus { Free, Maintenance, Work,Delete }
     public enum SpeedDrone { Free = 25, Easy = 20, Medium = 15, Heavy = 12 }
     public enum ButrryPer { Minute = 60 }
+    
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="PL.PackagesList"
         mc:Ignorable="d"
-        Title="PackagesList" Height="450" Width="800"
+        Title="PackagesList" Height="650" Width="1000"
      Background="LightGreen">
     <Grid>
         <Grid.RowDefinitions>
@@ -42,9 +42,13 @@
             <ComboBox x:Name="PrioCombo" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" SelectionChanged="PrioCombo_SelectionChanged" IsSynchronizedWithCurrentItem="False" Margin="0,1,0,0"/>
             <ComboBox x:Name="StatusCombo" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" SelectionChanged="StatusCombo_SelectionChanged" Margin="0,3,0,0"/>
             <ComboBox x:Name="WeightCombo" Grid.Column="3" HorizontalAlignment="Center" Margin="0,3,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" SelectionChanged="WeightCombo_SelectionChanged"/>
-            <DatePicker x:Name="from" Grid.Column="5" HorizontalAlignment="Left"  Width="100" Height="28" Margin="97,-42,0,0" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
-            <DatePicker x:Name="to" Grid.Column="5" HorizontalAlignment="Left" Width="103" Height="28" Grid.ColumnSpan="2" Margin="89,-4,0,0" VerticalAlignment="Top"/>
-            <Button x:Name="filterBtn" Content="filter" Grid.Column="6" Margin="67,-35,-2,0" Grid.ColumnSpan="4"  Click="filterBtn_Click" FontSize="14" FontFamily="Segoe UI" Height="40" VerticalAlignment="Top"/>
+            <DatePicker x:Name="from" Grid.Column="5" HorizontalAlignment="Left"  Width="100" Height="28" Margin="97,-42,0,0" Grid.ColumnSpan="2" VerticalAlignment="Top" DataContextChanged="from_DataContextChanged"/>
+            <DatePicker x:Name="to" Grid.Column="5" HorizontalAlignment="Left" Width="103" Height="28" Grid.ColumnSpan="2" Margin="94,-2,0,0" VerticalAlignment="Top" DataContextChanged="to_DataContextChanged"/>
+            <Button x:Name="clearDateFromButton" Content="clear date" Grid.Column="6" Margin="68,-35,12,0" Grid.ColumnSpan="3"  Click="ClearFromDate_Click" FontSize="7" FontFamily="Segoe UI" Height="21" VerticalAlignment="Top"/>
+            <Button x:Name="clearDateToButton" Content="clear date" Grid.Column="6" Margin="68,5,12,0" Grid.ColumnSpan="3" FontSize="7" FontFamily="Segoe UI" Height="21" VerticalAlignment="Top" Click="clearDateToButton_Click"/>
+
+
+
 
 
         </Grid>
@@ -84,43 +88,6 @@
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
-
-        </ListView>
-        <ListView x:Name="GroupingView" Grid.Row="2" Visibility="Hidden" Background="#FF607D8B" >
-            <ListView.View>
-                <GridView x:Name="groupingList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
-                    <GridViewColumn  DisplayMemberBinding="{Binding SerialNumber}"   >
-                        <HeaderedContentControl MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
-                            <TextBox Text="Serial" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" />
-                        </HeaderedContentControl>
-                    </GridViewColumn>
-                    <GridViewColumn  DisplayMemberBinding="{Binding SendClient}"  >
-                        <HeaderedContentControl MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
-                            <TextBox Text="Send Client" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
-                        </HeaderedContentControl>
-                    </GridViewColumn>
-                    <GridViewColumn  DisplayMemberBinding="{Binding RecivedClient}"  >
-                        <HeaderedContentControl MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"    >
-                            <TextBox Text="Recived Client" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
-                        </HeaderedContentControl>
-                    </GridViewColumn>
-                    <GridViewColumn  DisplayMemberBinding="{Binding priority}"   >
-                        <HeaderedContentControl  MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"  >
-                            <TextBox Text="Priority" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
-                        </HeaderedContentControl>
-                    </GridViewColumn>
-                    <GridViewColumn  DisplayMemberBinding="{Binding WeightCategories}" >
-                        <HeaderedContentControl  MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
-                            <TextBox Text="Weight Categories" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
-                        </HeaderedContentControl>
-                    </GridViewColumn>
-                    <GridViewColumn  DisplayMemberBinding="{Binding packageStatus}"  >
-                        <HeaderedContentControl  MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"    >
-                            <TextBox Text="Status" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
-                        </HeaderedContentControl>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
             <ListView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.ContainerStyle>
@@ -146,17 +113,20 @@
                 </GroupStyle>
             </ListView.GroupStyle>
         </ListView>
+
+
+
         <ComboBox x:Name="CmbDisplayOp" Grid.Column="0" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top"  Width="112" SelectionChanged="CmbDisplayOp_SelectionChanged" RenderTransformOrigin="0.5,0.5" Grid.Row="1" >
             <ComboBoxItem Content="Regular" />
             <ComboBoxItem Content="Grouping by sender" />
             <ComboBoxItem Content="Grouping by recipient" />
         </ComboBox>
-        <Label Content="Display :" Grid.Column="0" Height="30" VerticalAlignment="Top" Margin="34,12,688,0" FontSize="14" FontFamily="Segoe UI Black"/>
-        <Label Content="Priority"  HorizontalAlignment="Left" Margin="177,11,0,0" VerticalAlignment="Center" FontSize="14" FontFamily="Segoe UI Black"/>
-        <Label Content="Status"  HorizontalAlignment="Left" Margin="290,11,0,0" VerticalAlignment="Center" FontSize="14" FontFamily="Segoe UI Black"/>
-        <Label Content="Weight" HorizontalAlignment="Left" Margin="422,13,0,0" VerticalAlignment="Center" FontSize="14" FontFamily="Segoe UI Black"/>
-        <Label Content="From date:" HorizontalAlignment="Left" Margin="527,14,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black"/>
-        <Label Content="To date:" HorizontalAlignment="Left" Margin="529,0,0,0" VerticalAlignment="Center" FontSize="14" FontFamily="Segoe UI Black" Grid.Row="1"/>
+        <Label Content="Display :" Grid.Column="0" Height="30" VerticalAlignment="Top" Margin="26,27,696,0" FontSize="14" FontFamily="Segoe UI Black"/>
+        <Label Content="Priority"  HorizontalAlignment="Left" Margin="207,29,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black"/>
+        <Label Content="Status"  HorizontalAlignment="Left" Margin="383,32,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black"/>
+        <Label Content="Weight" HorizontalAlignment="Left" Margin="545,32,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black"/>
+        <Label Content="From date:" HorizontalAlignment="Left" Margin="661,29,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black"/>
+        <Label Content="To date:" HorizontalAlignment="Left" Margin="670,10,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black" Grid.Row="1"/>
 
 
     </Grid>

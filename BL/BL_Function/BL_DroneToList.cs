@@ -19,7 +19,7 @@ namespace BlApi
         Drone convertDroneToListToDrone( DroneToList droneToList)
         {
 
-            return new Drone { SerialNum = droneToList.SerialNumber, butrryStatus = droneToList.ButrryStatus, droneStatus = droneToList.DroneStatus, location = droneToList.Location, Model = droneToList.Model, weightCategory = droneToList.WeightCategory, packageInTransfer = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(droneToList.NumPackage)) };
+            return new Drone { SerialNumber = droneToList.SerialNumber, ButrryStatus = droneToList.ButrryStatus, DroneStatus = droneToList.DroneStatus, Location = droneToList.Location, Model = droneToList.Model, WeightCategory = droneToList.WeightCategory, PackageInTransfer = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(droneToList.NumPackage)) };
         }
 
         /// <summary>

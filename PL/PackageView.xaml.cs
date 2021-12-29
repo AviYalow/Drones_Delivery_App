@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BO;
+using BlApi;
 
 namespace PL
 {
@@ -19,9 +21,17 @@ namespace PL
     /// </summary>
     public partial class PackageView : Window
     {
-        public PackageView()
+        BlApi.IBL bl;
+        public PackageView(BlApi.IBL bL)
         {
             InitializeComponent();
+            bl = bL;
+        }
+        public PackageView(BlApi.IBL bL,uint packegeNum)
+        {
+            InitializeComponent();
+            bl = bL;
+
         }
     }
 }

@@ -11,26 +11,26 @@ namespace BO
     /// </summary>
     public class Drone
     {
-        public uint SerialNum { get; init; }
+        public uint SerialNumber { get; init; }
         public DroneModel Model { get; set; }
 
-        public WeightCategories weightCategory { get; set; }
-        public PackageInTransfer packageInTransfer { get; set; }
+        public WeightCategories WeightCategory { get; set; }
+        public PackageInTransfer PackageInTransfer { get; set; }
 
-        public double butrryStatus { get; set; }
-        public DroneStatus droneStatus { get; set; }
-        public Location location { get; set; }
+        public double ButrryStatus { get; set; }
+        public DroneStatus DroneStatus { get; set; }
+        public Location Location { get; set; }
         public override string ToString()
         {
             String print = "";
-            print += $"Siral Number: {SerialNum},\n";
+            print += $"Serial Number: {SerialNumber},\n";
             print += $"model: {Model},\n";
-            print+= $"Weight Category: {weightCategory},\n";
+            print+= $"Weight Category: {WeightCategory},\n";
             print += $"Package in transfer:\n";
-            print +=(packageInTransfer != null)?  $" {packageInTransfer,3}":'0';
-            print += $"Butrry status: {butrryStatus},\n";
-            print += $"Drone status: {droneStatus},\n";
-            print += $"Location:\n{location}\n";
+            print +=(PackageInTransfer != null)?  $" {PackageInTransfer,3}":'0';
+            print += $"Butrry status: {ButrryStatus},\n";
+            print += $"Drone status: {DroneStatus},\n";
+            print += $"Location:\n{Location}\n";
            
             return print;
         }

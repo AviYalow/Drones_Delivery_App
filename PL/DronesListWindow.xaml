@@ -4,11 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
-     
-        
-        
-        mc:Ignorable="d"
-        Title="DronesListWindow" Height="750" Width="1100"
+             mc:Ignorable="d"
+        Title="DronesListWindow" Height="750" Width="1250"
         xmlns:materialdesignin="http://materialdesigninxaml.net/winfx/xaml/themes"
         Closing="Window_Closing" Icon="/DroneIcon.png" ResizeMode="NoResize">
     <Window.Background>
@@ -27,13 +24,22 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ComboBox Name="WeightSelctor" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="0,64,0,0"  IsEditable="True" SelectionChanged="WeightSelctor_SelectionChanged" Grid.Column="1" Height="42" VerticalAlignment="Top" />
-            <ComboBox Name="StatusSelector" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="10,64,0,97" IsEditable="True" SelectionChanged="StatusSelector_SelectionChanged" Grid.Column="0" />
-            <Label Name="StatusSelectorLabel" Content="Status" HorizontalAlignment="Stretch" Margin="35,28,0,0" VerticalAlignment="Top" Width="78" FontSize="24" Height="37" Grid.Column="0" />
-            <Label Name="WeightSelectorLabel" Content="Weight" Margin="0,28,0,138"  FontSize="24" Grid.Column="1" HorizontalAlignment="Center" Width="100"/>
+            <ComboBox Name="WeightSelctor" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="175,65,0,0"  IsEditable="True" SelectionChanged="WeightSelctor_SelectionChanged" Height="42" VerticalAlignment="Top" />
+            <ComboBox Name="StatusSelector" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="10,64,205,97" IsEditable="True" SelectionChanged="StatusSelector_SelectionChanged" Grid.Column="0" />
+            <Label Name="StatusSelectorLabel" Content="Status" Margin="65,22,232,0" VerticalAlignment="Top" Width="78" FontSize="24" Height="37" Grid.Column="0" />
+            <Label Name="WeightSelectorLabel" Content="Weight" Margin="225,29,0,137"  FontSize="24" HorizontalAlignment="Left" Width="100"/>
         </Grid>
 
-        <TextBox x:Name="selectByNumber" HorizontalAlignment="Left" Margin="959,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" TextChanged="selectByNumber_TextChanged" KeyUp="TextBox_KeyDown"/>
+        <TextBox x:Name="selectByNumber" HorizontalAlignment="Left" Margin="344,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="selectByNumber_TextChanged" KeyUp="TextBox_KeyDown">
+            <TextBox.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="#FF151313" Offset="1"/>
+                </LinearGradientBrush>
+
+            </TextBox.BorderBrush>
+
+        </TextBox>
 
 
         <ListView x:Name="DronesListView" Margin="0,120,0,136" Grid.RowSpan="2" Background="LightGreen" MouseDoubleClick="ChoseDrone">
@@ -76,6 +82,30 @@
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander IsExpanded="True">
+                                            <Expander.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Model}" FontWeight="Bold" Foreground="Gray" FontSize="22" VerticalAlignment="Bottom" />
+                                                    <TextBlock Text="{Binding ItemCount}" FontSize="22" Foreground="Green" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                                                    <TextBlock Text=" Drons:" FontSize="22" Foreground="Silver" FontStyle="Italic" VerticalAlignment="Bottom" />
+                                                </StackPanel>
+                                            </Expander.Header>
+                                            <ItemsPresenter />
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListView.GroupStyle>
         </ListView>
 
         <Button   x:Name="ReturnButton" Click="Button_Return_Click"  HorizontalAlignment="Left"  Margin="621,395,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="108" >
@@ -87,5 +117,8 @@
 
         </Button>
         <Button x:Name="AddDroneButton" Content="Add Drone" HorizontalAlignment="Left" Height="78" Margin="38,400,0,0" VerticalAlignment="Top" Width="206" Click="Button_Click" Grid.Row="1" />
+        <CheckBox x:Name="gropListCB" Content="grop list" HorizontalAlignment="Left" Margin="882,439,0,0" Grid.Row="1" VerticalAlignment="Top" Height="38" Width="108" FontSize="24" Click="gropListCB_Checked"/>
+        <Label Content="Select By number" FontSize="16" HorizontalAlignment="Left" Margin="344,43,0,0" VerticalAlignment="Top" Width="135"/>
+
     </Grid>
 </Window>
