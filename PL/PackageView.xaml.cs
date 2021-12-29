@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using BO;
 using System.Windows.Shapes;
 
 namespace PL
@@ -19,9 +20,16 @@ namespace PL
     /// </summary>
     public partial class PackageView : Window
     {
-        public PackageView()
+        public PackageView(BlApi.IBL bl)
         {
             InitializeComponent();
+        }
+
+
+        public PackageView(BlApi.IBL bl, PackageToList package)
+        {
+
+
         }
     }
 }
