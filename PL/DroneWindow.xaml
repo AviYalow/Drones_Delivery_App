@@ -49,7 +49,7 @@
             <Label  Name="ModelLabel" Content="Model:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Width="72" HorizontalAlignment="Left" FontWeight="Bold"/>
 
             <Label Name="WeightCategoryLabel"  Content="Weight Category:" Grid.Row="3" VerticalAlignment="Center" Width="105" HorizontalAlignment="Left" FontWeight="Bold"/>
-            <ComboBox Name="WeightChoseCombo" Text="Wight category"   HorizontalAlignment="Left" Margin="126,0,0,0" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Width="130" IsEditable="True" SelectionChanged="WeightChoseCombo_SelectionChanged" IsReadOnly="True" IsDropDownOpen="False" IsSynchronizedWithCurrentItem="False" >
+            <ComboBox Name="WeightChoseCombo" Text="Wight category" SelectedItem="{Binding weightCategory }"  HorizontalAlignment="Left" Margin="126,0,0,0" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Width="130" IsEditable="True" SelectionChanged="WeightChoseCombo_SelectionChanged" IsReadOnly="True" IsDropDownOpen="False" IsSynchronizedWithCurrentItem="False" >
             </ComboBox>
             <Label Name="ErrorMassegeLabel"  Content="Your input Worng!" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="118" Visibility="Collapsed" Foreground="#FFF13C3C" Margin="132,19,0,0"     />
             <Button  Name="OkButton"    Grid.Row="7"   VerticalAlignment="Center" Height="50" Click="OkButton_Click" Margin="50,0,275,0" RenderTransformOrigin="0.528,1.35"  >
@@ -58,7 +58,7 @@
                 </Button.Background>
             </Button>
             <Label Name="LocationLabel" Content="Location:" HorizontalAlignment="Left"  Grid.Row="4" VerticalAlignment="Center" Width="74" FontWeight="Bold"/>
-            <ComboBox  Name="BaseChosingCombo" Width="137" Text="First Base station" HorizontalAlignment="Left" Height="34" Margin="119,14,0,0" Grid.Row="4" VerticalAlignment="Top"  IsEditable="True" SelectionChanged="BaseChosingCombo_SelectionChanged"   >
+            <ComboBox  Name="BaseChosingCombo" Width="137" Text="{Binding Location}" IsEnabled="{Binding ElementName=TitelDroneLabel ,Path=Content  }"  HorizontalAlignment="Left" Height="34" Margin="119,14,0,0" Grid.Row="4" VerticalAlignment="Top"  IsEditable="True" SelectionChanged="BaseChosingCombo_SelectionChanged"   >
                 <ComboBox.ItemContainerStyle  >
                     <Style x:Name="notError" TargetType="ComboBoxItem">
                         <Style.Triggers>

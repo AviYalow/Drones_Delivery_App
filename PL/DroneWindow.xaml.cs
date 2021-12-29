@@ -48,16 +48,16 @@ namespace PL
             InitializeComponent();
             Drone = drone;
             this.bl = bl;
-
+            sitoation = false;
             this.DataContext = Drone;
             TitelDroneLabel.Content = "Updte Drone Window";
             SirialNumberTextBox.IsEnabled = false;
-            SirialNumberTextBox.Text = Drone.SerialNumber.ToString();
+           // SirialNumberTextBox.Text = Drone.SerialNumber.ToString();
             WeightChoseCombo.IsEnabled = false;
-            WeightChoseCombo.Text = drone.WeightCategory.ToString();
+           // WeightChoseCombo.Text = drone.WeightCategory.ToString();
             BaseChosingCombo.IsEnabled = false;
-            BaseChosingCombo.Text = Drone.Location.ToString();
-            sitoation = false;
+          //  BaseChosingCombo.Text = Drone.Location.ToString();
+            
             ModelComboBox.ItemsSource = Enum.GetValues(typeof(DroneModel));
             ModelComboBox.SelectedItem = Drone.Model;
             DroneLabel.DataContext = bl.GetDrone(drone.SerialNumber);
