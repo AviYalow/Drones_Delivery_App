@@ -47,7 +47,7 @@ namespace Dal
         ///return all clients
         /// </summary>
         /// <returns> list of client</returns>
-        public IEnumerable<Client> cilentList(Predicate<Client> predicate)
+        public IEnumerable<Client> CilentList(Predicate<Client> predicate)
         {
             return from x in DataSource.clients
                    where predicate(x)

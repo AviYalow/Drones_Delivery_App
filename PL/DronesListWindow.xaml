@@ -24,13 +24,14 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ComboBox Name="WeightSelctor" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="175,65,0,0"  IsEditable="True" SelectionChanged="WeightSelctor_SelectionChanged" Height="42" VerticalAlignment="Top" />
-            <ComboBox Name="StatusSelector" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="10,64,205,97" IsEditable="True" SelectionChanged="StatusSelector_SelectionChanged" Grid.Column="0" />
-            <Label Name="StatusSelectorLabel" Content="Status" Margin="65,22,232,0" VerticalAlignment="Top" Width="78" FontSize="24" Height="37" Grid.Column="0" />
-            <Label Name="WeightSelectorLabel" Content="Weight" Margin="225,29,0,137"  FontSize="24" HorizontalAlignment="Left" Width="100"/>
+            <ComboBox Name="WeightSelctor" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="240,66,248,0"  IsEditable="True" SelectionChanged="WeightSelctor_SelectionChanged" Height="42" VerticalAlignment="Top" Grid.ColumnSpan="2" />
+            <ComboBox Name="StatusSelector" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="65,64,138,97" IsEditable="True" SelectionChanged="StatusSelector_SelectionChanged" Grid.Column="0" />
+            <Label Name="StatusSelectorLabel" Content="Status" Margin="89,22,114,0" VerticalAlignment="Top" FontSize="24" Height="37" Grid.Column="0" />
+            <Label Name="WeightSelectorLabel" Content="Weight" Margin="265,22,0,137"  FontSize="24" HorizontalAlignment="Left" Width="87" Grid.ColumnSpan="2"/>
+            <materialdesignin:PackIcon Kind="CardSearchOutline" Grid.Column="1" Margin="264,69,0,0" Height="37" Width="49"/>
         </Grid>
 
-        <TextBox x:Name="selectByNumber" HorizontalAlignment="Left" Margin="344,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="selectByNumber_TextChanged" KeyUp="TextBox_KeyDown">
+        <TextBox x:Name="selectByNumber" HorizontalAlignment="Left" Margin="433,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="selectByNumber_TextChanged" KeyUp="TextBox_KeyDown">
             <TextBox.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -42,42 +43,42 @@
         </TextBox>
 
 
-        <ListView x:Name="DronesListView" Margin="0,120,0,136" Grid.RowSpan="2" Background="LightGreen" MouseDoubleClick="ChoseDrone">
+        <ListView x:Name="DronesListView" Margin="0,120,0,136" Grid.RowSpan="2" Background="LightGreen" MouseDoubleClick="ChoseDrone" Foreground="#DD00FFE8">
             <ListView.View>
                 <GridView x:Name="ListviewGridToDroneList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
                     <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNumber}" x:Name="Serial"   >
                         <HeaderedContentControl x:Name="SerialNumber"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
-                            <TextBox Text="Serial" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            <TextBox Text="Serial" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline"/>
                         </HeaderedContentControl>
                     </GridViewColumn>
                     <GridViewColumn  DisplayMemberBinding="{Binding Path=Model}" x:Name="ModelGrid" >
                         <HeaderedContentControl x:Name="Model"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
-                            <TextBox Text="Model" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            <TextBox Text="Model" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline"/>
                         </HeaderedContentControl>
                     </GridViewColumn>
                     <GridViewColumn  DisplayMemberBinding="{Binding Path=WeightCategory}" x:Name="WeightCategoryGrid"  >
                         <HeaderedContentControl x:Name="WeightCategory"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
-                            <TextBox Text="WeightCategory" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            <TextBox Text="WeightCategory" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline"/>
                         </HeaderedContentControl>
                     </GridViewColumn>
                     <GridViewColumn  DisplayMemberBinding="{Binding Path=ButrryStatus}" x:Name="ButrryStatusGrid"  >
                         <HeaderedContentControl x:Name="ButrryStatus"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
-                            <TextBox Text="ButrryStatus" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            <TextBox Text="ButrryStatus" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline"/>
                         </HeaderedContentControl>
                     </GridViewColumn>
                     <GridViewColumn  DisplayMemberBinding="{Binding Path=DroneStatus}" x:Name="DroneStatusGrid" >
                         <HeaderedContentControl x:Name="DroneStatus"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
-                            <TextBox Text="DroneStatus" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            <TextBox Text="DroneStatus" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" TextDecorations="Underline" Foreground="White"/>
                         </HeaderedContentControl>
                     </GridViewColumn>
                     <GridViewColumn  DisplayMemberBinding="{Binding Path=Location}" x:Name="LocationGrid"  >
                         <HeaderedContentControl x:Name="Location"    >
-                            <TextBox Text="Location" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            <TextBox Text="Location" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline"/>
                         </HeaderedContentControl>
                     </GridViewColumn>
                     <GridViewColumn  DisplayMemberBinding="{Binding Path=NumPackage}" x:Name="NumPackageGrid"  >
                         <HeaderedContentControl x:Name="NumPackage"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
-                            <TextBox Text="NumPackage" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            <TextBox Text="NumPackage"  IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline"/>
                         </HeaderedContentControl>
                     </GridViewColumn>
                 </GridView>
@@ -90,11 +91,11 @@
                                 <Setter.Value>
                                     <ControlTemplate>
                                         <Expander IsExpanded="True">
-                                            <Expander.Header>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Model}" FontWeight="Bold" Foreground="Gray" FontSize="22" VerticalAlignment="Bottom" />
-                                                    <TextBlock Text="{Binding ItemCount}" FontSize="22" Foreground="Green" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
-                                                    <TextBlock Text=" Drons:" FontSize="22" Foreground="Silver" FontStyle="Italic" VerticalAlignment="Bottom" />
+                                            <Expander.Header >
+                                                <StackPanel Orientation="Horizontal" Background="Blue" >
+                                                    <materialdesignin:PackIcon Kind="ArrowDownDropCircle" />
+                                                    <TextBlock Text="{Binding Model}" FontWeight="Bold" Foreground="White" FontSize="22" VerticalAlignment="Bottom" />
+
                                                 </StackPanel>
                                             </Expander.Header>
                                             <ItemsPresenter />
@@ -116,9 +117,16 @@
 
 
         </Button>
-        <Button x:Name="AddDroneButton" Content="Add Drone" HorizontalAlignment="Left" Height="78" Margin="38,400,0,0" VerticalAlignment="Top" Width="206" Click="Button_Click" Grid.Row="1" />
-        <CheckBox x:Name="gropListCB" Content="grop list" HorizontalAlignment="Left" Margin="882,439,0,0" Grid.Row="1" VerticalAlignment="Top" Height="38" Width="108" FontSize="24" Click="gropListCB_Checked"/>
-        <Label Content="Select By number" FontSize="16" HorizontalAlignment="Left" Margin="344,43,0,0" VerticalAlignment="Top" Width="135"/>
+        <Button x:Name="AddDroneButton" HorizontalAlignment="Left" Height="78" Margin="115,400,0,0" VerticalAlignment="Top" Width="93" Click="Button_Click" Grid.Row="1" 
+              Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+  ToolTip="MaterialDesignFloatingActionDarkButton"
+  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+            <!--materialDesign:PackIcon Kind="Alarm" Height="{StaticResource IconSize}"  Width="{StaticResource IconSize}" />-->
+            <materialdesignin:PackIcon Kind="Add" Height="78" Width="81" HorizontalAlignment="Center"   />
+
+        </Button>
+        <CheckBox x:Name="gropListCB" Content="group list"  HorizontalAlignment="Left" Margin="818,400,0,0" Grid.Row="1" VerticalAlignment="Top" Height="77" Width="180" FontSize="34" Click="gropListCB_Checked" BorderBrush="#FF02090C" />
+        <Label Name="SelectBynumberLab" Content="Select By number" FontSize="20" HorizontalAlignment="Left" Margin="426,38,0,0" VerticalAlignment="Top" Width="187" FontWeight="Bold" Height="34"/>
 
     </Grid>
 </Window>

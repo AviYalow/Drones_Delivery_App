@@ -15,49 +15,49 @@ namespace BO
         public ClientInPackage SendClient { get; set; }
 
         public ClientInPackage RecivedClient { get; set; }
-        public WeightCategories weightCatgory { get; set; }
-        public Priority priority { get; set; }
-        public DroneInPackage drone { get; set; }
+        public WeightCategories WeightCatgory { get; set; }
+        public Priority Priority { get; set; }
+        public DroneInPackage Drone { get; set; }
 
         //Delivery time create a package
-        public DateTime? create_package { get; set; }
+        public DateTime? Create_package { get; set; }
 
         //Time to assign the package to a drone
-        public DateTime? package_association { get; set; }
+        public DateTime? PackageAssociation { get; set; }
 
         //Package collection time from the sender
-        public DateTime? collect_package { get; set; }
+        public DateTime? CollectPackage { get; set; }
 
         //Time of arrival of the package to the recipient
-        public DateTime? package_arrived { get; set; }
+        public DateTime? PackageArrived { get; set; }
         public override string ToString()
         {
             String print = "";
             print += $"Serial Number: {SerialNumber},\n";
             print += $"Send Client: {SendClient.Name},\n";
             print += $"Recived Client: {RecivedClient.Name},\n";
-            print += $"Weight Category: {weightCatgory},\n";
-            print += $"priority: {priority},\n";
-            print += drone is null ? "drone: no drone\n" : $"drone: {drone},\n";
-            print += $"Delivery time create a package: {create_package},\n";
+            print += $"Weight Category: {WeightCatgory},\n";
+            print += $"priority: {Priority},\n";
+            print += Drone is null ? "drone: no drone\n" : $"drone: {Drone},\n";
+            print += $"Delivery time create a package: {Create_package},\n";
             print += $"Time to assign:";
-            if (package_association != DateTime.MinValue)
-                print += $"{package_association},\n";
+            if (PackageAssociation != DateTime.MinValue)
+                print += $"{PackageAssociation},\n";
             else
             {
                 print += "packege not assoction yet\n";
                 return print;
             }
             print += $"Time Package collection:";
-            if (collect_package != DateTime.MinValue)
-                print += $"{collect_package},\n";
+            if (CollectPackage != DateTime.MinValue)
+                print += $"{CollectPackage},\n";
             else
             { print += "packege not collect yet\n"; return print; }
 
 
             print += $"Time of arrival:";
-            if (package_arrived != DateTime.MinValue)
-                print += $"{ package_arrived}\n";
+            if (PackageArrived != DateTime.MinValue)
+                print += $"{ PackageArrived}\n";
             else
             {
                 print += "packege not arrive yet\n";

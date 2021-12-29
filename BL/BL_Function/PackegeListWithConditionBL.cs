@@ -154,7 +154,7 @@ namespace BlApi
 
 
 
-            packegeToListFilter -= priorityPackegeFilter;
+            packegeToListFilter -= fromDateFilter;
             if (PackageToLists().Count() == 0)
                 throw new TheListIsEmptyException();
             if (date != null)
@@ -172,7 +172,7 @@ namespace BlApi
 
 
 
-            packegeToListFilter -= priorityPackegeFilter;
+            packegeToListFilter -= toDateFilter;
             if (PackageToLists().Count() == 0)
                 throw new TheListIsEmptyException();
             if (date != null)

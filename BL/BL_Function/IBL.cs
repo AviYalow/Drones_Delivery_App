@@ -349,5 +349,7 @@ namespace BlApi
 
         public IEnumerable<PackageToList> PackageFromDateLists(DateTime? date = null);
 
+        public IEnumerable<ClientInPackage> ClientInPackagesList();
+
     }
 }

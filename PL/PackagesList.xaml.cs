@@ -149,15 +149,9 @@ namespace PL
             PackagesListView.ItemsSource = bl.PackageToDateLists();
         }
 
-        private void from_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            PackagesListView.ItemsSource = bl.PackageFromDateLists(from.SelectedDate);
-        }
+     
 
-        private void to_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            PackagesListView.ItemsSource = bl.PackageToDateLists(to.SelectedDate);
-        }
+      
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -181,6 +175,22 @@ namespace PL
         {
             new PackageView(bl, (PackageToList)PackagesListView.SelectedItem).ShowDialog();
             PackagesListView.ItemsSource = bl.PackageToLists();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            new PackageView(bl).ShowDialog();
+            PackagesListView.ItemsSource = bl.PackageToLists();
+        }
+
+        private void from_DataContextChanged(object sender, RoutedEventArgs e)
+        {
+            PackagesListView.ItemsSource = bl.PackageFromDateLists(from.SelectedDate);
+        }
+
+        private void to_DataContextChanged(object sender, RoutedEventArgs e)
+        {
+            PackagesListView.ItemsSource = bl.PackageToDateLists(to.SelectedDate);
         }
     }
 }

@@ -173,8 +173,11 @@ namespace PL
         {
             if (gropListCB.IsChecked==true)
             {
-              if(!view.GroupDescriptions.Any(x=>x.Equals(groupDescription)))
+                view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
+                
+                if (!view.GroupDescriptions.Any(x=>x.Equals(groupDescription)))
                 view.GroupDescriptions.Add(groupDescription);
+                
             }
             else
             {
@@ -182,5 +185,7 @@ namespace PL
              //  DronesListView.ItemsSource = bl.FilterDronesList();
             }
         }
+
+      
     }
 }

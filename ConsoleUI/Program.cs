@@ -308,7 +308,7 @@ namespace ConsoleUI
             void listOfClinet(DalApi.IDal dalObject)
             {
 
-                foreach (DO.Client print in dalObject.cilentList(x=>true))
+                foreach (DO.Client print in dalObject.CilentList(x=>true))
                     Console.WriteLine(print);
             }
 

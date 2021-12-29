@@ -72,7 +72,7 @@ namespace BlApi
         public IEnumerable<DroneToList> DroneToListPasibalForPackege(Package package)
         {
             droneToListFilter -= selectByPackege;
-            selectByPackege = x => x.WeightCategory >= package.weightCatgory &&
+            selectByPackege = x => x.WeightCategory >= package.WeightCatgory &&
             x.DroneStatus == DroneStatus.Free &&
             x.ButrryStatus > batteryCalculationForFullShipping(x.Location, package);
             if (dronesListInBl.Count == 0)

@@ -509,7 +509,7 @@ namespace ConsoleUI_BL
                 check = uint.TryParse(Console.ReadLine(), out num);
             } while (!check);
             // add new package
-            uint i = bl.AddPackege(new Package { SendClient = new ClientInPackage { Id = id }, RecivedClient = new ClientInPackage { Id = num1 }, weightCatgory = (WeightCategories)num2, priority = (Priority)num });
+            uint i = bl.AddPackege(new Package { SendClient = new ClientInPackage { Id = id }, RecivedClient = new ClientInPackage { Id = num1 }, WeightCatgory = (WeightCategories)num2, Priority = (Priority)num });
             Console.WriteLine("Thank You! your packege number is: {0}", i);
         }
 

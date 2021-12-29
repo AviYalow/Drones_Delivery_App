@@ -17,7 +17,7 @@ namespace BlApi
         /// <returns> list of clients</returns>
         public IEnumerable<ClientToList> ClientActiveToLists()
         {
-            return from clientInDal in dalObj.cilentList(x => x.Active)
+            return from clientInDal in dalObj.CilentList(x => x.Active)
                    select clientInDal.convertClientDalToClientToList(dalObj);
         }
 
@@ -27,7 +27,7 @@ namespace BlApi
         /// <returns> list of clients</returns>
         public IEnumerable<ClientToList> ClientToLists()
         {
-            return from clientInDal in dalObj.cilentList(x => true)
+            return from clientInDal in dalObj.CilentList(x => true)
                    select clientInDal.convertClientDalToClientToList(dalObj);
         }
 
@@ -98,6 +98,12 @@ namespace BlApi
                    where client.received > 0 || client.OnTheWay > 0
                    select client.Clone();
 
+        }
+
+        public IEnumerable<ClientInPackage> ClientInPackagesList()
+        {
+            return from client in dalObj.CilentList(x => true)
+                   select new ClientInPackage { Id = client.Id, Name = client.Name };
         }
     }
 }

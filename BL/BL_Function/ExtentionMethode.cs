@@ -180,14 +180,14 @@ namespace BlApi
             {
                 SerialNumber = package.SerialNumber,
                 SendClient = package.SendClient.Id,
-                CollectPackageForShipment = package.collect_package,
-                ReceivingDelivery = package.create_package,
-                OperatorSkimmerId = package.drone.SerialNum,
-                PackageArrived = package.package_arrived,
-                PackageAssociation = package.package_association,
-                Priority = (DO.Priority)package.priority,
+                CollectPackageForShipment = package.CollectPackage,
+                ReceivingDelivery = package.Create_package,
+                OperatorSkimmerId =(package.Drone is null)?0: package.Drone.SerialNum,
+                PackageArrived = package.PackageArrived,
+                PackageAssociation = package.PackageAssociation,
+                Priority = (DO.Priority)package.Priority,
                 GetingClient = package.RecivedClient.Id,
-                WeightCatgory = (DO.WeightCategories)package.weightCatgory
+                WeightCatgory = (DO.WeightCategories)package.WeightCatgory
             };
         }
            

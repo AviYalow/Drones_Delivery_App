@@ -17,9 +17,9 @@ namespace BlApi
         /// <returns> PackegeInTrnansfer object</returns>
         PackageInTransfer convertPackegeBlToPackegeInTrnansfer(Package package)
         {
-            var returnPackege = new PackageInTransfer { Priority = package.priority, SendClient = package.SendClient, RecivedClient = package.RecivedClient, SerialNum = package.SerialNumber, WeightCatgory = package.weightCatgory, Source = ClientLocation(package.SendClient.Id), Destination = ClientLocation(package.RecivedClient.Id) };
+            var returnPackege = new PackageInTransfer { Priority = package.Priority, SendClient = package.SendClient, RecivedClient = package.RecivedClient, SerialNum = package.SerialNumber, WeightCatgory = package.WeightCatgory, Source = ClientLocation(package.SendClient.Id), Destination = ClientLocation(package.RecivedClient.Id) };
             returnPackege.Distance = Distans(returnPackege.Source, returnPackege.Destination);
-            returnPackege.InTheWay = (package.package_arrived != new DateTime()) ? true : false;
+            returnPackege.InTheWay = (package.PackageArrived != new DateTime()) ? true : false;
             return returnPackege;
         }
 

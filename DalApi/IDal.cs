@@ -143,7 +143,7 @@ namespace DalApi
         ///return all clients
         /// </summary>
         /// <returns> list of client</returns>
-        public IEnumerable<Client> cilentList(Predicate<Client> predicate);
+        public IEnumerable<Client> CilentList(Predicate<Client> predicate);
         /// <summary>
         /// Display client data desired 
         /// </summary>

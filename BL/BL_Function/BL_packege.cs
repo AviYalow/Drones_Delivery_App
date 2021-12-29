@@ -17,7 +17,7 @@ namespace BlApi
         /// <returns> serial number of the packege</returns>
         public uint AddPackege(Package package)
         {
-            if (package.priority > Priority.Regular || package.weightCatgory > WeightCategories.Heavy)
+            if (package.Priority > Priority.Regular || package.WeightCatgory > WeightCategories.Heavy)
                 throw new InputErrorException();
             uint packegeNum = 0;
             var send = dalObj.CilentByNumber(package.SendClient.Id);
@@ -119,14 +119,14 @@ namespace BlApi
             {
                 SerialNumber = dataPackege.SerialNumber,
                 SendClient = dalObj.CilentByNumber(dataPackege.SendClient).clientInPackageFromDal(),
-                collect_package = dataPackege.CollectPackageForShipment,
-                create_package = dataPackege.ReceivingDelivery,
-                drone = dataPackege.OperatorSkimmerId != 0 ? SpecificDrone(dataPackege.OperatorSkimmerId).droneToDroneInPackage() : null,
-                package_arrived = dataPackege.PackageArrived,
-                package_association = dataPackege.PackageAssociation,
-                priority = (Priority)dataPackege.Priority,
+                CollectPackage = dataPackege.CollectPackageForShipment,
+                Create_package = dataPackege.ReceivingDelivery,
+                Drone = dataPackege.OperatorSkimmerId != 0 ? SpecificDrone(dataPackege.OperatorSkimmerId).droneToDroneInPackage() : null,
+                PackageArrived = dataPackege.PackageArrived,
+                PackageAssociation = dataPackege.PackageAssociation,
+                Priority = (Priority)dataPackege.Priority,
                 RecivedClient = dalObj.CilentByNumber(dataPackege.GetingClient).clientInPackageFromDal(),
-                weightCatgory = (WeightCategories)dataPackege.WeightCatgory
+                WeightCatgory = (WeightCategories)dataPackege.WeightCatgory
             };
 
         }

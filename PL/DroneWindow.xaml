@@ -62,10 +62,10 @@
                 <ComboBox.ItemContainerStyle  >
                     <Style x:Name="notError" TargetType="ComboBoxItem">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=InputMissingLocationLabel,Path=Visibility}" Value="Collapsed">
+                            <DataTrigger Binding="{Binding ElementName=InputMissingLocationLabel,Path=IsVisible}" Value="Collapsed">
                                 <Setter x:Name="aaa" Property="Background" Value="{StaticResource LinearGradientBrush1}" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=InputMissingLocationLabel,Path=Visibility}" Value="Visible">
+                            <DataTrigger Binding="{Binding ElementName=InputMissingLocationLabel,Path=IsVisible}" Value="Visible">
                                 <Setter Property="Background" Value="{StaticResource LinearGradientBrush2}" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -121,7 +121,7 @@
             </ComboBox>
             <Label Name="Statuslabel" Content="Status:" HorizontalAlignment="Left" Margin="12,16,0,0" Grid.Row="4" VerticalAlignment="Top" Width="82" FontWeight="Bold"/>
             <ComboBox Name="StatusComb"    HorizontalAlignment="Left" Margin="125,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="131" Height="29" SelectionChanged="StatusComb_SelectionChanged" />
-            <Label Name="SirealNumberLabel" Content="{Binding SerialNumber}" Visibility="{Binding ElementName=DroneLabel, Path=Visibility}" HorizontalAlignment="Left" Margin="125,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="131"/>
+            <Label Name="SirealNumberLabel" Content="{Binding SerialNumber}" Visibility="{Binding ElementName=DroneLabel, Path=IsVisible}" HorizontalAlignment="Left" Margin="125,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="131"/>
 
         </Grid>
 

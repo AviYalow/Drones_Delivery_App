@@ -42,8 +42,8 @@
             <ComboBox x:Name="PrioCombo" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" SelectionChanged="PrioCombo_SelectionChanged" IsSynchronizedWithCurrentItem="False" Margin="0,1,0,0"/>
             <ComboBox x:Name="StatusCombo" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" SelectionChanged="StatusCombo_SelectionChanged" Margin="0,3,0,0"/>
             <ComboBox x:Name="WeightCombo" Grid.Column="3" HorizontalAlignment="Center" Margin="0,3,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" SelectionChanged="WeightCombo_SelectionChanged"/>
-            <DatePicker x:Name="from" Grid.Column="5" HorizontalAlignment="Left"  Width="100" Height="28" Margin="97,-42,0,0" Grid.ColumnSpan="2" VerticalAlignment="Top" DataContextChanged="from_DataContextChanged"/>
-            <DatePicker x:Name="to" Grid.Column="5" HorizontalAlignment="Left" Width="103" Height="28" Grid.ColumnSpan="2" Margin="94,-2,0,0" VerticalAlignment="Top" DataContextChanged="to_DataContextChanged"/>
+            <DatePicker x:Name="from" Grid.Column="5" HorizontalAlignment="Left"  Width="100" Height="28" Margin="97,-42,0,0" Grid.ColumnSpan="2" VerticalAlignment="Top" CalendarClosed="from_DataContextChanged"/>
+            <DatePicker x:Name="to" Grid.Column="5" HorizontalAlignment="Left" Width="103" Height="28" Grid.ColumnSpan="2" Margin="94,-2,0,0" VerticalAlignment="Top" CalendarClosed="to_DataContextChanged"/>
             <Button x:Name="clearDateFromButton" Content="clear date" Grid.Column="6" Margin="68,-35,12,0" Grid.ColumnSpan="3"  Click="ClearFromDate_Click" FontSize="7" FontFamily="Segoe UI" Height="21" VerticalAlignment="Top"/>
             <Button x:Name="clearDateToButton" Content="clear date" Grid.Column="6" Margin="68,5,12,0" Grid.ColumnSpan="3" FontSize="7" FontFamily="Segoe UI" Height="21" VerticalAlignment="Top" Click="clearDateToButton_Click"/>
 
@@ -53,7 +53,7 @@
 
         </Grid>
 
-        <ListView x:Name="PackagesListView" Grid.Row="2" Margin="-9,4,9,39" Grid.RowSpan="2" Background="#FF24B1C7" MouseDoubleClick="PackagesListView_MouseDoubleClick_1" >
+        <ListView x:Name="PackagesListView" Grid.Row="2" Margin="-9,4,9,10" Background="#FF24B1C7" MouseDoubleClick="PackagesListView_MouseDoubleClick_1" >
             <ListView.View>
                 <GridView x:Name="ListviewGridToPackagesList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
                     <GridViewColumn  DisplayMemberBinding="{Binding SerialNumber}" x:Name="Serial"   >
@@ -127,7 +127,7 @@
         <Label Content="Weight" HorizontalAlignment="Left" Margin="545,32,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black"/>
         <Label Content="From date:" HorizontalAlignment="Left" Margin="661,29,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black"/>
         <Label Content="To date:" HorizontalAlignment="Left" Margin="670,10,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black" Grid.Row="1"/>
-        <Button Content="Add Packege" HorizontalAlignment="Left" Margin="66,0,0,0" Grid.Row="3" VerticalAlignment="Top" Width="171" Height="64"/>
+        <Button Content="Add Packege" HorizontalAlignment="Left" Margin="66,0,0,0" Grid.Row="3" VerticalAlignment="Top" Width="171" Height="64" Click="Button_Click_1"/>
 
 
     </Grid>
