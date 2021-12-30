@@ -37,7 +37,7 @@
             <ComboBox Name="PraiyurtyCMB"  HorizontalAlignment="Left"  Margin="150,294,0,0" VerticalAlignment="Top" 
               Style="{StaticResource MaterialDesignOutlinedComboBox}" FontSize="18" materialDesign:HintAssist.Hint="Priority" materialDesign:TextFieldAssist.HasClearButton="True" Width="291" Height="57">
                 <ComboBox.SelectedItem>
-                    <Binding      Path="Priority" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="Priority" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <local:NotEmptyValidationRule  ValidatesOnTargetUpdated="True"    />
                         </Binding.ValidationRules>
@@ -61,7 +61,7 @@
 
             </Button>
         </Grid>
-        <Grid x:Name="UpdateGrid" >
+        <Grid x:Name="UpdateGrid" Visibility="Hidden"  >
 
             <Label x:Name="DataGridPackege"  Margin="589,0,0,0" Visibility="{Binding ElementName=UpDatePackegeTital, Path=IsVisible}">
                 <Grid>
@@ -86,12 +86,21 @@
                     <Label Content="Time of arrive:" Grid.Column="0" FontSize="30" Grid.Row="5"/>
 
                     <Label Content="{Binding Path=SerialNumber, Mode=TwoWay}" FontSize="30" Grid.Column="1" Grid.Row="0"/>
-                    <Label Content="{Binding Path=Drone, Mode=TwoWay}" Grid.Column="1" FontSize="30" Grid.Row="1"/>
+                   
                     <Label Content="{Binding Path=Create_package , Mode=TwoWay}"  FontSize="30" Grid.Column="1" Grid.Row="2"/>
                     <Label Content="{Binding Path=PackageAssociation, Mode=TwoWay}" FontSize="30" Grid.Column="1" Grid.Row="3"/>
                     <Label Content="{Binding Path= CollectPackage, Mode=TwoWay}" FontSize="30" Grid.Column="1" Grid.Row="4"/>
                     <Label Content="{Binding Path=PackageArrived, Mode=TwoWay}" FontSize="30" Grid.Column="1" Grid.Row="5"/>
-
+                    <Grid Grid.Column="1" Grid.Row="1" DataContext="{Binding Path=Drone}"  >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+                        <Label Name="SirialNumberDroneLabel"  FontSize="30" Content="{Binding Path=SerialNum}" Grid.Row="0" MouseLeftButtonDown="SirialNumberDroneLabel_MouseLeftButtonDown"/>
+                        <Label Name="ButtryDroneLabel"  FontSize="30" Content="{Binding Path=ButrryStatus}" Grid.Row="1"/>
+                        <Label Name="LocationDroneLabel"  FontSize="30" Content="{Binding Path=Location}" Grid.Row="2"/>
+                    </Grid>
                 </Grid>
             </Label>
 
@@ -101,8 +110,10 @@
             <Label Name="Toclient"  Content="{Binding Path=RecivedClient}" FontSize="18" HorizontalAlignment="Left" Margin="148,194,0,0" VerticalAlignment="Top" Height="60" Width="295" />
             <Label Name="Priority" Content="{Binding Path=Priority}" FontSize="18" HorizontalAlignment="Left" Margin="148,298,0,0" VerticalAlignment="Top" Height="50" Width="291" />
             <Label Name="Wieght" Content="{Binding Path=WeightCatgory}" FontSize="18" HorizontalAlignment="Left" Margin="152,397,0,0" VerticalAlignment="Top" Height="48" Width="287" />
-            <Label Name="DronestatuseTitel" Content="Drone Status:" HorizontalAlignment="Left" Margin="27,493,0,0" VerticalAlignment="Top" Height="41" Width="100"/>
-            <Label Name="DronestatuseLabel" Content="{Binding}" HorizontalAlignment="Left" Margin="170,493,0,0" VerticalAlignment="Top" Height="41" Width="75"/>
+            <Label Name="DronestatuseTitel" Content="Drone Status:" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="27,493,0,0" VerticalAlignment="Top" Height="41" Width="100"/>
+            <Label Name="DronestatuseLabel" Content="{Binding}" FontSize="18"  HorizontalAlignment="Left" Margin="170,493,0,0" VerticalAlignment="Top" Height="41" Width="75"/>
+
+
             <Button x:Name="NextModeButton" HorizontalAlignment="Left" Margin="272,502,0,0" VerticalAlignment="Top" Click="NextModeButton_Click">
                 <materialDesign:PackIcon Kind="SkipNext" FontSize="25" Height="30" Width="34" HorizontalAlignment="Stretch"/>
             </Button>

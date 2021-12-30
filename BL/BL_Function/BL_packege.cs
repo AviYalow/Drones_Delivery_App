@@ -86,12 +86,13 @@ namespace BlApi
             {
                 var packege = dalObj.packegeByNumber(number);
                 //cheack the packege not send yet
-                if (packege.CollectPackageForShipment != null)
+                if (packege.PackageAssociation != null)
                 { throw new ThePackegeAlredySendException(); }
                 if (packege.OperatorSkimmerId != 0)
                 {
                     var drone = SpecificDrone(packege.OperatorSkimmerId);
                     drone.DroneStatus = DroneStatus.Free;
+                    
                     drone.NumPackage = 0;
 
                     for (int i = 0; i < dronesListInBl.Count; i++)

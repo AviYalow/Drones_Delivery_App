@@ -51,11 +51,26 @@ namespace PL
             DroneLabel.Visibility = Visibility.Hidden;
         }
 
+        public DroneWindow(BlApi.IBL bl, uint droneFromListView)
+        {
+            InitializeComponent();
+            ctorUpdateDronWindow(bl, droneFromListView);
+
+
+        }
+
         public DroneWindow(BlApi.IBL bl, DroneToList droneFromListView)
         {
             InitializeComponent();
+            ctorUpdateDronWindow(bl, droneFromListView.SerialNumber);
+
+
+        }
+
+        private void ctorUpdateDronWindow(BlApi.IBL bl, uint droneFromListView)
+        {
             this.bl = bl;
-            this.drone = bl.GetDrone(droneFromListView.SerialNumber);
+            this.drone = bl.GetDrone(droneFromListView);
 
             SirialNumberTextBox.DataContext = drone;
             this.DataContext = this.drone;
@@ -66,7 +81,7 @@ namespace PL
 
             ModelComboBox.ItemsSource = Enum.GetValues(typeof(DroneModel));
             ModelComboBox.SelectedItem = this.drone.Model;
-            DroneLabel.DataContext = bl.GetDrone(droneFromListView.SerialNumber);
+            DroneLabel.DataContext = bl.GetDrone(droneFromListView);
             if (this.drone.DroneStatus == DroneStatus.Free)
                 StatusComb.ItemsSource = Enum.GetValues(typeof(DroneStatus));
             else if (this.drone.DroneStatus == DroneStatus.Maintenance)
@@ -124,7 +139,10 @@ namespace PL
                 bl.AddDrone(droneToList, ((BO.BaseStationToList)BaseChosingCombo.SelectedItem).SerialNum);
                 drone = bl.GetDrone(droneToList.SerialNumber);
                 MessageBox.Show(drone.ToString() + "\n add to list!", "succesful");
-                Closing += DroneWindow_Closing;
+
+               DroneWindow newWindow = new DroneWindow(bl, droneToList);
+                Application.Current.MainWindow = newWindow;
+                newWindow.Show();
                 this.Close();
             }
             catch (BO.InputErrorException ex)
