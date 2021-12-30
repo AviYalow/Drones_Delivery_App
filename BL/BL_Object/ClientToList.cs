@@ -28,7 +28,7 @@ namespace BO
             print += $"The Name is {Name},\n";
             print += $"Phone {Phone},\n";
             print += $"Amount of package that send and arrived: {Arrived},\n";
-            print += $"Amount of package that send and hasn't arrived yet: {NotArrived},\n";
+            print += $"Amount of package that send but not arrived yet: {NotArrived},\n";
             print += $"Amount of package that recived : {received},\n";
             print += $"Amount of package that on the way : {OnTheWay},\n";
 

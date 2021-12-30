@@ -19,9 +19,33 @@ namespace PL
     /// </summary>
     public partial class ClientsLIst : Window
     {
+        BlApi.IBL bl;
         public ClientsLIst(BlApi.IBL bl)
         {
             InitializeComponent();
+            this.bl = bl;
+            clientListView.ItemsSource = bl.ClientActiveToLists();
+        }
+
+        private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new ClientView(bl).ShowDialog();
+            clientListView.ItemsSource = bl.ClientActiveToLists();
+        }
+
+        private void clientListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (clientListView.SelectedItem != null)
+            {
+                new ClientView(bl, (BO.ClientToList)clientListView.SelectedItem).ShowDialog();
+                clientListView.ItemsSource = bl.ClientActiveToLists();
+                clientListView.SelectedItem = null;
+            }
         }
     }
 }

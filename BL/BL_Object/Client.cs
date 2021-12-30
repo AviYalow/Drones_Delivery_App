@@ -26,8 +26,8 @@ namespace BO
             print += $"ID: {Id},\n";
             print += $"Name is {Name},\n";
             print += $"Phone: {Phone},\n";
-            print += Location;
-            print += $"Statos client";
+            print += $"Location: {Location}\n";
+            print += $"Statos client: ";
             print += Active ? "Active\n" : "Not active\n";
             print += "Packege from this client:\n";
             if (FromClient != null)

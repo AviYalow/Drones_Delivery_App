@@ -5,8 +5,151 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ClientView" Height="450" Width="800">
-    <Grid>
-        
+        Title="ClientView" Height="450" Width="800"
+         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="13"
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     Background="{DynamicResource MaterialDesignPaper}"
+     FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <Grid Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="557*"/>
+            <ColumnDefinition Width="243*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="AddDroneGrid" Margin="0,0,10,0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="395*"/>
+                <ColumnDefinition Width="166*"/>
+                <ColumnDefinition Width="229*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+
+            </Grid.RowDefinitions>
+            <Label Name="TitelClientLabel" Content="Add Client" FontSize="15" Foreground="#FF1432F0" Background="Transparent"/>
+            <TextBox x:Name="idTextBox"  Margin="126,48,0,10"   Width="130"   HorizontalAlignment="Left" Grid.RowSpan="2" BorderBrush="#FF0E1015"   />
+            <Label x:Name="IdLabel" Content="ID:"  HorizontalAlignment="Left" FontWeight="Bold" FontStyle="Normal" Margin="0,48,0,0" Grid.RowSpan="2"/>
+            <Label  Name="name" Content="Name:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Width="72" HorizontalAlignment="Left" FontWeight="Bold" Margin="0,48,0,0" Grid.RowSpan="2"/>
+
+            <Label Name="Phone"  Content="Phone:" Grid.Row="3" VerticalAlignment="Center" Width="105" HorizontalAlignment="Left" FontWeight="Bold"/>
+            <TextBox Name="phoneTextBox"    HorizontalAlignment="Left" Margin="126,0,0,0" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Width="130"   />
+
+            <Button  Name="OkButton"    Grid.Row="7"   VerticalAlignment="Center" Height="50" Click="OkButton_Click" Margin="50,0,275,0" RenderTransformOrigin="0.528,1.35"  >
+                <Button.Background>
+                    <ImageBrush ImageSource="/ok.jpg"/>
+                </Button.Background>
+            </Button>
+            <Label Name="LonditudeLabel"  Content="Londitude:" HorizontalAlignment="Left"  Grid.Row="5" VerticalAlignment="Center" Width="74" FontWeight="Bold" Margin="6,0,0,0" />
+            <TextBox  Name="longditue" Width="148"  HorizontalAlignment="Left" Height="29" Margin="120,8,0,0" Grid.Row="5" VerticalAlignment="Top"  />
+
+
+            <Label Name="ClientLabel"   VerticalAlignment="Top"   Grid.RowSpan="2" Width="auto" Height="auto" Grid.Column="1" Margin="5,14,-5,0" Grid.ColumnSpan="2" >
+
+                <Grid  >
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="ID:" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Name:" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Phone:" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Location:" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=Id}"  />
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=Name}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Path=Phone}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Path=Location}" />
+                </Grid>
+            </Label>
+
+            <Label Name="AllFieldsArerequiredLabel" Content="All fields are required!"  HorizontalAlignment="Left" Margin="90,29,0,0" Grid.Row="7" VerticalAlignment="Top" Height="34" Grid.RowSpan="2" Width="145" Foreground="#FFDC3434" Visibility="Collapsed">
+            </Label>
+            <Button  HorizontalAlignment="Left" Height="58" Margin="286,0,0,0" Grid.Row="7" VerticalAlignment="Center" Width="67" Click="Button_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="/return.png" />
+                </Button.Background>
+            </Button>
+            <Label Name="InputMissingIdLabel" Visibility="Collapsed" Content="Input is missing!"  HorizontalAlignment="Left" Margin="124,20,0,0" Grid.Row="1" VerticalAlignment="Top" Width="127" Foreground="#FFEA1111"/>
+            <Label Name="InputMissingNameLabel" Content="Input is missing!" Visibility="Collapsed"  HorizontalAlignment="Left" Margin="126,15,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127" Foreground="#FFEA1111"/>
+            <Label Name="InputMissingPhoneLabel" Content="Input is missing!" Visibility="Collapsed" HorizontalAlignment="Left" Margin="126,30,0,0" Grid.Row="3" VerticalAlignment="Top" Width="127" Foreground="#FFEA1111"/>
+            <Label Name="InputMissingLocationLabel" Content="Input is missing!" Visibility="Collapsed" HorizontalAlignment="Left" Margin="126,10,0,0" Grid.Row="5" VerticalAlignment="Top" Width="126" Foreground="#FFEA1111" Height="26"/>
+            <TextBox  Name="nameTextBox"  HorizontalAlignment="Left" Margin="126,48,0,0" Grid.Row="1" VerticalAlignment="Top" Width="130" Grid.RowSpan="2" />
+
+
+            <Label Name="latitudelabel" Content="Latitude:" HorizontalAlignment="Left" Margin="12,16,0,0" Grid.Row="4" VerticalAlignment="Top" Width="82" FontWeight="Bold"/>
+            <TextBox Name="letitudeTextBox"    HorizontalAlignment="Left" Margin="125,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="131" Height="29"  />
+            <ListView x:Name="clientListView" Grid.Row="3" Margin="4,5,-4,48" Background="#FF24B1C7" Grid.ColumnSpan="2" Grid.Column="1" Grid.RowSpan="5" >
+                <ListView.View>
+                    <GridView x:Name="ListviewGridToPackagesList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
+                        <GridViewColumn  DisplayMemberBinding="{Binding SerialNumber}" x:Name="Serial"   >
+                            <HeaderedContentControl x:Name="SerialNumber" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
+                                <TextBox Text="Serial" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" />
+                            </HeaderedContentControl>
+                        </GridViewColumn>
+
+                        <GridViewColumn  DisplayMemberBinding="{Binding WeightCategories}" x:Name="WeightCategoriesGrid" >
+                            <HeaderedContentControl x:Name="WeightCategories" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
+                                <TextBox Text="Weight Categories" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            </HeaderedContentControl>
+                        </GridViewColumn>
+                        <GridViewColumn  DisplayMemberBinding="{Binding priority}" x:Name="priorityGrid"  >
+                            <HeaderedContentControl x:Name="priority" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"  >
+                                <TextBox Text="Priority" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            </HeaderedContentControl>
+                        </GridViewColumn>
+                        
+                        <GridViewColumn  DisplayMemberBinding="{Binding packageStatus}" x:Name="packageStatusGrid"  >
+                            <HeaderedContentControl x:Name="packageStatus" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"    >
+                                <TextBox Text="Status" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            </HeaderedContentControl>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.ContainerStyle>
+                            <Style TargetType="{x:Type GroupItem}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Expander IsExpanded="True" Background="LightGreen">
+                                                <Expander.Header>
+                                                    <StackPanel Orientation="Horizontal" Background="LightGreen">
+                                                        <TextBlock x:Name="name" Text="From client" FontWeight="Bold" Foreground="Black" FontSize="12" VerticalAlignment="Bottom" />
+                                                        <TextBlock Text="{Binding ItemCount}" FontSize="12" Foreground="Blue" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                                                        <TextBlock Text=" item(s)" FontSize="14" Foreground="Black" FontStyle="Italic" VerticalAlignment="Bottom" />
+                                                    </StackPanel>
+                                                </Expander.Header>
+                                                <ItemsPresenter />
+                                            </Expander>
+                                        
+                                            
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.ContainerStyle>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
+        </Grid>
+
     </Grid>
+
 </Window>
