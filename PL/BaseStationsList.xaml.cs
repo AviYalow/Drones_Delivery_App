@@ -13,8 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BO;
 using BlApi;
-using Windows.UI.Xaml.Controls.Maps;
-using Microsoft.Toolkit.Forms.UI.Controls;
+
 
 
 namespace PL

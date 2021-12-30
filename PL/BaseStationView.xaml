@@ -4,33 +4,48 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 
-        xmlns:controls="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls"
-        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+        
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
          xmlns:materialdesignin="http://materialdesigninxaml.net/winfx/xaml/themes"
          Icon="/DroneIcon.png" ResizeMode="NoResize"
-        Title="BaseStationView" Height="750" Width="1250">
-    
+        Title="BaseStationView" Height="750" Width="800">
+
     <Window.Background>
         <ImageBrush  ImageSource="BaseStationView.jpg" />
 
     </Window.Background>
-    <Grid Margin="899,0,0,454">
+    <Grid>
 
-        <controls:MapControl x:Name="mapControl" DockPanel.Dock="Top" ZoomInteractionMode="GestureAndControl"
-    TiltInteractionMode="GestureAndControl"  MapServiceToken="EnterYourAuthenticationKeyHere" Margin="-6,-6,6,6" />
 
-        <Label Name="serialNumberLabel" Content="sirialNumber:" HorizontalAlignment="Left" Margin="43,264,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
-        <Label Name="NameLabel" Content="Name:" HorizontalAlignment="Left" Margin="52,306,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
-        <Label Name="NumberChargingStationLabel" Content=" Charging Stations:" HorizontalAlignment="Left" Margin="27,345,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
-        <Label Name="LatitudeLabel" Content="Latitude:" HorizontalAlignment="Left" Margin="37,453,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
-        <Label Name="LongitudeLabel" Content="Longitude:" HorizontalAlignment="Left" Margin="38,397,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
-        <TextBox x:Name="SerialText" HorizontalAlignment="Left" Margin="161,262,0,0" Text="{Binding Path=SerialNum,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Foreground="White" BorderBrush="#89FFFFFF"/>
-        <TextBox x:Name="NameText" HorizontalAlignment="Left" Margin="163,302,0,0" Text="{Binding Path=Name,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Foreground="White" BorderBrush="#89FFFFFF"/>
-        <TextBox x:Name="FreeStateText" HorizontalAlignment="Left" Margin="162,344,0,0" Text="{Binding Path=FreeState,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Foreground="White" BorderBrush="#89FFFFFF"/>
-        <TextBox x:Name="Latitudtext" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="164,390,0,0" Text="{Binding Path=Latitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Foreground="White" BorderBrush="#89FFFFFF"/>
-        <TextBox x:Name="LongitudeText" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="163,454,0,0" Text="{Binding Path=Longitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Foreground="White" BorderBrush="#89FFFFFF"/>
-        <Button x:Name="AddButton" Content="Button" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="176,599,0,0" VerticalAlignment="Top" Click="AddButton_Click"/>
+        <Label Name="serialNumberLabel" FontSize="25" Content="serial Number:" HorizontalAlignment="Left" Margin="24,169,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
+        <Label Name="NameLabel" Content="Name:" FontSize="25" HorizontalAlignment="Left" Margin="26,219,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
+        <Label Name="NumberChargingStationLabel" FontSize="25" Content=" Charging Stations:" HorizontalAlignment="Left" Margin="20,266,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
+        <Label Name="LatitudeLabel" Content="Latitude:" FontSize="25" HorizontalAlignment="Left" Margin="32,364,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
+        <Label Name="LongitudeLabel" Content="Longitude:" FontSize="25" HorizontalAlignment="Left" Margin="31,317,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
+        <TextBox x:Name="SerialText" HorizontalAlignment="Left" FontSize="25" Margin="205,164,0,0" Text="{Binding Path=SerialNum,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitNoDot"/>
+        <TextBox x:Name="NameText" HorizontalAlignment="Left"  FontSize="25" Margin="121,201,0,0" Text="{Binding Path=Name,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="184" Foreground="White" BorderBrush="#89FFFFFF"/>
+        <TextBox x:Name="FreeStateText" HorizontalAlignment="Left" FontSize="25" Margin="244,262,0,0" Text="{Binding Path=FreeState,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="163" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitNoDot"/>
+        <TextBox x:Name="Latitudtext" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="157,314,0,0" Text="{Binding Path=Latitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" TextChanged="Latitudtext_TextChanged" GotFocus="Latitudtext_GotFocus"/>
+        <TextBox x:Name="LongitudeText" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="149,354,0,0" Text="{Binding Path=Longitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" GotFocus="Latitudtext_GotFocus"/>
+        <Button x:Name="AddButton"  Content="ADD" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="135,657,0,0" VerticalAlignment="Top" Click="AddButton_Click"/>
+        <ListView x:Name="DroneChargeLabel" Margin="551,256,34,211">
+
+            <ListView.View>
+                <GridView x:Name="ListviewGridToDroneList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNum}" x:Name="Serial"   >
+                        <HeaderedContentControl x:Name="SerialNum"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                            <TextBox Text="Serial NUmber" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" />
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=ButrryStatus}" x:Name="ModelGrid"  >
+                        <HeaderedContentControl x:Name="ButrryStatus"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
+                            <TextBox Text="Buttry" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

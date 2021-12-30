@@ -30,7 +30,7 @@ namespace BlApi
         event Func<DroneToList,bool> droneToListFilter = null;
         event Func<ClientToList, bool> clientToListFilter = null;
         event Func<DO.Package, bool> packegeToListFilter = null;
-        event Func<BaseStationToList, bool> stationToListFilter = null;
+        
 
         /// <summary>
         /// ctor

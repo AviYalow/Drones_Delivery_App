@@ -151,7 +151,7 @@ namespace BlApi
                 baseReturn.dronesInCharge = (from drone in dalObj.ChargingDroneList(x => x.idBaseStation == baseNume)
                                              let butrry = (SpecificDrone(drone.IdDrone).ButrryStatus + droneChrgingAlredy(DateTime.Now - drone.EntringDrone))
                                              let newButrry = (butrry > 100) ? 100 : butrry
-                                             select new DroneInCharge { butrryStatus = newButrry, SerialNum = drone.IdDrone }).ToList();
+                                             select new DroneInCharge { ButrryStatus = newButrry, SerialNum = drone.IdDrone }).ToList();
                 return baseReturn;
             }
             catch (DO.ItemNotFoundException ex)

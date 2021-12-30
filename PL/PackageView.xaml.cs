@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using BO;
 using System.Windows.Shapes;
-using BO;
+
 using System.Globalization;
 
 using BlApi;

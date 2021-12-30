@@ -12,13 +12,13 @@ namespace BO
     public class DroneInCharge
     {
         public uint SerialNum { get; set; }
-        public double butrryStatus { get; set; }
+        public double ButrryStatus { get; set; }
 
         public override string ToString()
         {
             String print = "";
             print += $"Siral Number: {SerialNum},\n";
-            print += $"Butrry Status: {butrryStatus}\n";
+            print += $"Butrry Status: {ButrryStatus}\n";
             return print;
         }
 

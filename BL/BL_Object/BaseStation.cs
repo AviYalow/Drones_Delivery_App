@@ -27,7 +27,7 @@ namespace BO
             print += $"Drone in Charge: {dronesInCharge.Count},\n";
             foreach(DroneInCharge drone in dronesInCharge)
             {
-               print += $"Serial number: {drone.SerialNum}, butrry Status: {drone.butrryStatus}\n";
+               print += $"Serial number: {drone.SerialNum}, butrry Status: {drone.ButrryStatus}\n";
             }
             return print;
         }
