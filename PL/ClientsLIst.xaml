@@ -3,10 +3,65 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL"
+        xmlns:local="clr-namespace:PL" xmlns:materialdesignin="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="ClientsLIst" Height="450" Width="800">
+        Title="ClientsLIst" Height="650" Width="1000">
     <Grid>
-        
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="55*"/>
+            <RowDefinition Height="315*"/>
+            <RowDefinition Height="65*"/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="clientListView" Grid.Row="1" MouseDoubleClick="clientListView_MouseDoubleClick">
+            <ListView.View>
+                <GridView x:Name="ListviewGridToClientsList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
+                    <GridViewColumn  DisplayMemberBinding="{Binding ID}" x:Name="ID"   >
+                        <HeaderedContentControl x:Name="Id" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
+                            <TextBox Text="ID" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" />
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Name}" x:Name="name" >
+                        <HeaderedContentControl x:Name="ClientName" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
+                            <TextBox Text="Name" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Phone}" x:Name="Phone"  >
+                        <HeaderedContentControl x:Name="clientPhone" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"    >
+                            <TextBox Text="Phone" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Arrived}" x:Name="Arrived"  >
+                        <HeaderedContentControl x:Name="ArrivedPack" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"  >
+                            <TextBox Text="Arrived" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding NotArrived}" x:Name="NotArrived" >
+                        <HeaderedContentControl x:Name="NotArrivedPack" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"   >
+                            <TextBox Text="Not arrived" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding received}" x:Name="received"  >
+                        <HeaderedContentControl x:Name="receivedPack" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"    >
+                            <TextBox Text="Received" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding OnTheWay}" x:Name="OnTheWay"  >
+                        <HeaderedContentControl x:Name="OnTheWayPack" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"    >
+                            <TextBox Text="On the way" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="AddDroneButton" HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="93" Click="Button_Click" Grid.Row="2" 
+              Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+  ToolTip="MaterialDesignFloatingActionDarkButton"
+  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Margin="60,0,0,0">
+            <!--materialDesign:PackIcon Kind="Alarm" Height="{StaticResource IconSize}"  Width="{StaticResource IconSize}" />-->
+            <materialdesignin:PackIcon Kind="Add" Height="78" Width="81" HorizontalAlignment="Center"   />
+
+        </Button>
     </Grid>
 </Window>

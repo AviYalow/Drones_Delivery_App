@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using BO;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -19,9 +20,31 @@ namespace PL
     /// </summary>
     public partial class ClientView : Window
     {
-        public ClientView()
+        Client client;
+        
+        public ClientView (BlApi.IBL bl)
         {
             InitializeComponent();
+        }
+
+        public ClientView(BlApi.IBL bl , ClientToList client)
+        {
+            InitializeComponent();
+            this.client = bl.GetingClient(client.ID);
+            this.DataContext = this.client;
+            TitelClientLabel.Content = "Updte Client Window";
+            ClientLabel.DataContext = bl.GetingClient(client.ID);
+          
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

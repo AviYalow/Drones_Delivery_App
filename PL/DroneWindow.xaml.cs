@@ -284,6 +284,7 @@ namespace PL
 
         private void TextBlock_PreviewMouseRightButtonDownPackegeWindow(object sender, MouseButtonEventArgs e)
         {
+            
             new PackageView(bl, drone.PackageInTransfer.SerialNum).ShowDialog();
         }
     }

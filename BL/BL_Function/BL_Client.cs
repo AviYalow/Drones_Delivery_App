@@ -124,8 +124,10 @@ namespace BlApi
             try
             {
                 var client = dalObj.CilentByNumber(id);
-                
-                var returnClient = new Client { Id = client.Id, Name = client.Name, Phone = client.PhoneNumber };
+                var loc = new Location();
+                loc.Latitude = client.Latitude;
+                loc.Longitude = client.Longitude;
+                var returnClient = new Client { Id = client.Id, Name = client.Name, Phone = client.PhoneNumber, Location=loc};
                 returnClient.ToClient = new List<PackageAtClient>();
                 var packege = dalObj.PackegeList(x => x.GetingClient == id);
                 
