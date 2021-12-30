@@ -94,60 +94,7 @@
 
             <Label Name="latitudelabel" Content="Latitude:" HorizontalAlignment="Left" Margin="12,16,0,0" Grid.Row="4" VerticalAlignment="Top" Width="82" FontWeight="Bold"/>
             <TextBox Name="letitudeTextBox"    HorizontalAlignment="Left" Margin="125,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="131" Height="29"  />
-            <ListView x:Name="clientListView" Grid.Row="3" Margin="4,5,-4,48" Background="#FF24B1C7" Grid.ColumnSpan="2" Grid.Column="1" Grid.RowSpan="5" >
-                <ListView.View>
-                    <GridView x:Name="ListviewGridToPackagesList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
-                        <GridViewColumn  DisplayMemberBinding="{Binding SerialNumber}" x:Name="Serial"   >
-                            <HeaderedContentControl x:Name="SerialNumber" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
-                                <TextBox Text="Serial" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" />
-                            </HeaderedContentControl>
-                        </GridViewColumn>
-
-                        <GridViewColumn  DisplayMemberBinding="{Binding WeightCategories}" x:Name="WeightCategoriesGrid" >
-                            <HeaderedContentControl x:Name="WeightCategories" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
-                                <TextBox Text="Weight Categories" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
-                            </HeaderedContentControl>
-                        </GridViewColumn>
-                        <GridViewColumn  DisplayMemberBinding="{Binding priority}" x:Name="priorityGrid"  >
-                            <HeaderedContentControl x:Name="priority" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"  >
-                                <TextBox Text="Priority" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
-                            </HeaderedContentControl>
-                        </GridViewColumn>
-                        
-                        <GridViewColumn  DisplayMemberBinding="{Binding packageStatus}" x:Name="packageStatusGrid"  >
-                            <HeaderedContentControl x:Name="packageStatus" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"    >
-                                <TextBox Text="Status" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
-                            </HeaderedContentControl>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-                <ListView.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.ContainerStyle>
-                            <Style TargetType="{x:Type GroupItem}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate>
-                                            <Expander IsExpanded="True" Background="LightGreen">
-                                                <Expander.Header>
-                                                    <StackPanel Orientation="Horizontal" Background="LightGreen">
-                                                        <TextBlock x:Name="name" Text="From client" FontWeight="Bold" Foreground="Black" FontSize="12" VerticalAlignment="Bottom" />
-                                                        <TextBlock Text="{Binding ItemCount}" FontSize="12" Foreground="Blue" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
-                                                        <TextBlock Text=" item(s)" FontSize="14" Foreground="Black" FontStyle="Italic" VerticalAlignment="Bottom" />
-                                                    </StackPanel>
-                                                </Expander.Header>
-                                                <ItemsPresenter />
-                                            </Expander>
-                                        
-                                            
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </GroupStyle.ContainerStyle>
-                    </GroupStyle>
-                </ListView.GroupStyle>
-            </ListView>
+            
         </Grid>
 
     </Grid>
