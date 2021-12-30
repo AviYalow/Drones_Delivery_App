@@ -12,15 +12,15 @@ namespace BO
     public class DroneInPackage
     {
         public uint SerialNum { get; set; }
-        public double butrryStatus { get; set; }
-        public Location location { get; set; }
+        public double ButrryStatus { get; set; }
+        public Location Location { get; set; }
 
         public override string ToString()
         {
             String print = "";
             print += $"Siral Number: {SerialNum},\n";
-            print += $"Butrry Status: {butrryStatus}\n";
-            print += location;
+            print += $"Butrry Status: {ButrryStatus}\n";
+            print += Location;
             return print;
 
         }

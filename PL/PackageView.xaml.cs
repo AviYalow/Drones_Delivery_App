@@ -34,20 +34,15 @@ namespace PL
             InitializeComponent();
             AddGrid.Visibility = Visibility.Visible;
             bl = bL;
-            package = new Package();
-            addPackegeWindow();
+            package = new Package { SendClient = new ClientInPackage(), RecivedClient = new ClientInPackage() };
+            DataToCmb();
         }
         public PackageView(BlApi.IBL bL, uint packegeNum)
         {
             InitializeComponent();
 
             bl = bL;
-            package = bl.ShowPackage(packegeNum);
-            this.DataContext = package;
-            MainGrid.DataContext = package;
-            DataGridPackege.DataContext = package;
-            UpdateGrid.Visibility = Visibility.Visible;
-            statusSelectorSurce();
+            packegeFromDialog(packegeNum);
 
         }
 
@@ -58,13 +53,25 @@ namespace PL
             InitializeComponent();
 
             bl = bL;
-            package = bl.ShowPackage(packagefromList.SerialNumber);
-            this.DataContext = package;
-            MainGrid.DataContext = package;
-            DataGridPackege.DataContext = package;
-            UpdateGrid.Visibility = Visibility.Visible;
-            statusSelectorSurce();
+            packegeFromDialog(packagefromList.SerialNumber);
 
+        }
+        private void packegeFromDialog(uint serialNumber)
+        {
+            try
+            {
+                package = bl.ShowPackage(serialNumber);
+                this.DataContext = package;
+                MainGrid.DataContext = package;
+                DataGridPackege.DataContext = package;
+                UpdateGrid.Visibility = Visibility.Visible;
+                statusSelectorSurce();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+                this.Close();
+            }
         }
         void statusSelectorSurce()
         {
@@ -94,12 +101,21 @@ namespace PL
 
 
         }
-        void addPackegeWindow()
+        void DataToCmb()
         {
-            DataContext = package;
-            ResiveClientCMB.ItemsSource = bl.ClientInPackagesList();
-            SendClientCMB.ItemsSource = bl.ClientInPackagesList();
-           
+            try
+            {
+                DataContext = package;
+                ResiveClientCMB.ItemsSource = bl.ClientInPackagesList();
+                SendClientCMB.ItemsSource = bl.ClientInPackagesList();
+                PraiyurtyCMB.ItemsSource = Enum.GetValues(typeof(Priority));
+                WeightCmb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -109,6 +125,10 @@ namespace PL
             try
             {
                 MessageBox.Show($"Packege number:{ bl.AddPackege(package)} Add!");
+                PackageView newWindow = new PackageView(bl, package.SerialNumber);
+                Application.Current.MainWindow = newWindow;
+                newWindow.Show();
+                this.Close();
 
             }
             catch (Exception ex)
@@ -121,16 +141,40 @@ namespace PL
 
         private void NextModeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (packageStatus == PackageStatus.Assign)
-                bl.CollectPackegForDelivery(package.Drone.SerialNum);
-            else if (packageStatus == PackageStatus.Collected)
-                bl.PackegArrive(package.Drone.SerialNum);
-            else
-                return;
-            PackageView newWindow = new PackageView(bl, package.SerialNumber);
-            Application.Current.MainWindow = newWindow;
-            newWindow.Show();
-            this.Close();
+            try
+            {
+                if (packageStatus == PackageStatus.Assign)
+                    bl.CollectPackegForDelivery(package.Drone.SerialNum);
+                else if (packageStatus == PackageStatus.Collected)
+                    bl.PackegArrive(package.Drone.SerialNum);
+                else
+                    return;
+                PackageView newWindow = new PackageView(bl, package.SerialNumber);
+                Application.Current.MainWindow = newWindow;
+                newWindow.Show();
+                this.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+
+        }
+
+        private void SirialNumberDroneLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                new DroneWindow(bl, package.Drone.SerialNum).ShowDialog();
+                PackageView newWindow = new PackageView(bl, package.SerialNumber);
+                Application.Current.MainWindow = newWindow;
+                newWindow.Show();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
         }
     }
     public class NotEmptyValidationRule : ValidationRule

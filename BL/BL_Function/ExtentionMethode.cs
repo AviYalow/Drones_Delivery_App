@@ -163,7 +163,7 @@ namespace BlApi
             internal static DroneInPackage droneToDroneInPackage(this DroneToList drone)
             {
 
-                return new DroneInPackage { SerialNum = drone.SerialNumber, butrryStatus = drone.ButrryStatus, location = drone.Location };
+                return new DroneInPackage { SerialNum = drone.SerialNumber, ButrryStatus = drone.ButrryStatus, Location = drone.Location };
             }
             /// <summary>
             /// drone request from the data layer

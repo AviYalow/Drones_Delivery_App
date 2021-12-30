@@ -151,7 +151,7 @@ namespace BlApi
                         //lottry drone what is lost shipment
                         int k = random.Next(dalObj.PackegeList(x => x.PackageArrived != null).Count());
                         DO.Package package1 = dalObj.PackegeList(x => x.PackageArrived != null).Skip(k).FirstOrDefault();
-                        new_drone.NumPackage = package1.SerialNumber;
+                        new_drone.NumPackage = 0;
                         new_drone.Location = ClientLocation(package1.GetingClient);
                         new_drone.ButrryStatus = random.Next((int)buttryDownWithNoPackege(new_drone.Location, ClosestBase(ClientLocation(package1.GetingClient)).location) + 1, 100);
                       
