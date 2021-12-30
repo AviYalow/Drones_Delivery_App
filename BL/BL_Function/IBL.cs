@@ -351,5 +351,12 @@ namespace BlApi
 
         public IEnumerable<ClientInPackage> ClientInPackagesList();
 
+        public IEnumerable<uint> DronesNumber();
+
+        public IEnumerable<BaseStationToList> AllBaseStation();
+
+        public BaseStationToList BaseStationWhitSpscificDrone(uint drone);
+
+       
     }
 }

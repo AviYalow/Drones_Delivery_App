@@ -44,7 +44,7 @@ namespace BlApi
                     SerialNum = baseStation.baseNumber,
                     Name = baseStation.NameBase,
                     FreeState = baseStation.NumberOfChargingStations,
-                    location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude },
+                    Location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude },
                     dronesInCharge = null
                 };
             }
@@ -60,7 +60,9 @@ namespace BlApi
                 {
                     SerialNum = base_Station.baseNumber,
                     FreeState = base_Station.NumberOfChargingStations,
-                    Name = base_Station.NameBase
+                    Name = base_Station.NameBase,
+                    Active=base_Station.Active?"Active":"Not Active"
+                   
                 };
                 base_.BusyState = (uint)dalObj.ChargingDroneList(x => x.idBaseStation == base_Station.baseNumber).Count();
                 return base_;

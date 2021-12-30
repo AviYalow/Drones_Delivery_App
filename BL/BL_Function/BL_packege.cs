@@ -26,7 +26,7 @@ namespace BlApi
             Location locationsend = new Location { Latitude = send.Latitude, Longitude = send.Longitude };
             Location locationGet = ClientLocation(package.RecivedClient.Id);
             var butrryWithDelvery = buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package));
-            var butrryFree = buttryDownWithNoPackege(ClosestBase(locationsend).location, locationsend) + buttryDownWithNoPackege(ClosestBase(locationGet).location, locationGet);
+            var butrryFree = buttryDownWithNoPackege(ClosestBase(locationsend).Location, locationsend) + buttryDownWithNoPackege(ClosestBase(locationGet).Location, locationGet);
             if (butrryWithDelvery + butrryFree > 100)
                 throw new MoreDistasThenMaximomException(package.SendClient.Id, package.RecivedClient.Id);
 

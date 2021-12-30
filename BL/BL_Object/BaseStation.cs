@@ -14,7 +14,7 @@ namespace BO
 
         public uint SerialNum { get; init; }
         public string Name { get; set; }
-        public Location location { get; set; }
+        public Location Location { get; set; }
         public uint FreeState { get; set; }
         public List<DroneInCharge> dronesInCharge { get; set; }
         public override string ToString()
@@ -22,7 +22,7 @@ namespace BO
             String print= "";
             print += $"Siral Number is {SerialNum},\n";
             print += $"The Name is {Name},\n";
-            print += $"Location: Latitude:{location.Latitude} Longitude:{location.Longitude},\n";
+            print += $"Location: Latitude:{Location.Latitude} Longitude:{Location.Longitude},\n";
             print += $"Number of free state: {FreeState},\n";
             print += $"Drone in Charge: {dronesInCharge.Count},\n";
             foreach(DroneInCharge drone in dronesInCharge)

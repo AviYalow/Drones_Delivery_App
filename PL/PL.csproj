@@ -7,8 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="base station list.jfif" />
+    <None Remove="BaseStationView.jpg" />
     <None Remove="DroneIcon.png" />
     <None Remove="drones.jpg" />
+    <None Remove="Mastercard_Controlcenter.jpg" />
     <None Remove="ok.jpg" />
     <None Remove="return.png" />
   </ItemGroup>
@@ -17,8 +20,11 @@
     <PackageReference Include="Ccr.MaterialDesign" Version="3.0.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.MaterialDesign" Version="4.11.0" />
     <PackageReference Include="Mapsui" Version="3.0.2" />
+    <PackageReference Include="Mapsui.Wpf" Version="3.0.2" />
     <PackageReference Include="MaterialDesignColors" Version="2.0.4" />
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Maps.MapControl.WPF" Version="1.0.0.3" />
+    <PackageReference Include="Microsoft.Toolkit.Wpf.UI.Controls" Version="6.1.2" />
     <PackageReference Include="ScottPlot.WPF" Version="4.1.27" />
   </ItemGroup>
 
@@ -27,10 +33,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="base station list.jfif" />
+    <Resource Include="BaseStationView.jpg" />
     <Resource Include="DroneIcon.png" />
     <Resource Include="drones.jpg" />
+    <Resource Include="Mastercard_Controlcenter.jpg" />
     <Resource Include="ok.jpg" />
     <Resource Include="return.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.VCRTForwarders.140" Version="1.0.7" />
   </ItemGroup>
 
 </Project>

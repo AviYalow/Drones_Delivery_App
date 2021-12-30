@@ -72,7 +72,7 @@ namespace BlApi
                 throw new DroneStillAtWorkException();
             }
             
-            double buttry = buttryDownWithNoPackege(drone.Location, baseStation.location);
+            double buttry = buttryDownWithNoPackege(drone.Location, baseStation.Location);
             if (drone.ButrryStatus - buttry < 0)
             {
                 throw new NoButrryToTripException(buttry);
@@ -85,7 +85,7 @@ namespace BlApi
                     throw (new NoPlaceForChargeException(baseStation.SerialNum));
                 dalObj.DroneToCharge(droneNumber, baseStation.SerialNum);
                 drone.DroneStatus = DroneStatus.Maintenance;
-                drone.Location = baseStation.location;
+                drone.Location = baseStation.Location;
                 dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == droneNumber)] = drone;
 
 
@@ -200,7 +200,7 @@ namespace BlApi
         double batteryCalculationForFullShipping(Location drone, Package package)
         {
             return buttryDownWithNoPackege(drone, ClientLocation(package.SendClient.Id)) + buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package)) +
-                buttryDownWithNoPackege(ClosestBase(ClientLocation(package.RecivedClient.Id)).location, ClientLocation(package.RecivedClient.Id));
+                buttryDownWithNoPackege(ClosestBase(ClientLocation(package.RecivedClient.Id)).Location, ClientLocation(package.RecivedClient.Id));
         }
     }
 }

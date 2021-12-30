@@ -31,6 +31,19 @@ namespace BlApi
 
         }
 
+        public IEnumerable<DroneToList> AllDroneToLists()
+        {
+            if (dronesListInBl.Count == 0)
+                throw new TheListIsEmptyException();
+
+            return from drone in filerList(dronesListInBl, droneToListFilter)
+                   select drone.Clone();
+
+           
+
+        }
+
+
         /// <summary>
         /// return list of drones by spsific status
         /// </summary>
@@ -86,10 +99,10 @@ namespace BlApi
         public IEnumerable<DroneToList> DroneToListFilterByNumber(string num)
         {
             droneToListFilter -= selectBynumber;
-            selectBynumber = x => x.SerialNumber.ToString().StartsWith(num); 
+            selectBynumber = x => x.SerialNumber.ToString().StartsWith(num);
             if (dronesListInBl.Count == 0)
                 throw new TheListIsEmptyException();
-            if (num!="")
+            if (num != "")
                 droneToListFilter += selectBynumber;
 
             return FilterDronesList();
@@ -102,10 +115,17 @@ namespace BlApi
         /// <returns></returns>
         public IEnumerable<DroneToList> FilterDronesList()
         {
-         
+
             return filerList(DroneToLists(), droneToListFilter);
         }
 
-       
+        public IEnumerable<uint>DronesNumber()
+        { 
+            return from drone in dronesListInBl
+                   where drone.DroneStatus != DroneStatus.Delete
+                   select drone.SerialNumber.Clone();
+        }
+
+
     }
 }

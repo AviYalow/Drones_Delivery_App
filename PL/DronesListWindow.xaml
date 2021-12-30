@@ -51,7 +51,7 @@
                             <TextBox Text="Serial" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline"/>
                         </HeaderedContentControl>
                     </GridViewColumn>
-                    <GridViewColumn  DisplayMemberBinding="{Binding Path=Model}" x:Name="ModelGrid" >
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=Model}" x:Name="ModelGrid"  >
                         <HeaderedContentControl x:Name="Model"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
                             <TextBox Text="Model" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline"/>
                         </HeaderedContentControl>
@@ -61,7 +61,7 @@
                             <TextBox Text="WeightCategory" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline"/>
                         </HeaderedContentControl>
                     </GridViewColumn>
-                    <GridViewColumn  DisplayMemberBinding="{Binding Path=ButrryStatus}" x:Name="ButrryStatusGrid"  >
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=ButrryStatus }" x:Name="ButrryStatusGrid"    >
                         <HeaderedContentControl x:Name="ButrryStatus"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
                             <TextBox Text="ButrryStatus" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline"/>
                         </HeaderedContentControl>
@@ -86,16 +86,18 @@
             <ListView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.ContainerStyle>
-                        <Style TargetType="{x:Type GroupItem}">
+                        <Style TargetType="{x:Type GroupItem}" >
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate>
-                                        <Expander IsExpanded="True">
-                                            <Expander.Header >
+                                        <Expander IsExpanded="True" Background="Black" >
+                                            <Expander.Header  >
                                                 <StackPanel Orientation="Horizontal" Background="Blue" >
                                                     <materialdesignin:PackIcon Kind="ArrowDownDropCircle" />
-                                                    <TextBlock Text="{Binding Model}" FontWeight="Bold" Foreground="White" FontSize="22" VerticalAlignment="Bottom" />
-
+                                                    <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold" VerticalAlignment="Bottom" TextDecorations="Underline"/>
+                                                    <TextBlock Text=" Number of Drones: " FontSize="16" FontWeight="Bold" VerticalAlignment="Bottom"/>
+                                                    <TextBlock Text="{Binding ItemCount}" FontSize="16" FontWeight="Bold" VerticalAlignment="Bottom"/>
+                                                   
                                                 </StackPanel>
                                             </Expander.Header>
                                             <ItemsPresenter />

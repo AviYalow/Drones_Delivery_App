@@ -18,7 +18,7 @@ namespace BlApi
         public BaseStation ClosestBase(Location location)
         {
             BaseStation baseStation = new BaseStation();
-            baseStation.location = new Location();
+            baseStation.Location = new Location();
             try
             {
 
@@ -36,7 +36,7 @@ namespace BlApi
                         distans = distans2;
                         baseStation = new BaseStation
                         {
-                            location = base_location,
+                            Location = base_location,
                             Name = base_.NameBase,
                             SerialNum = base_.baseNumber,
                             FreeState = base_.NumberOfChargingStations,
@@ -89,8 +89,8 @@ namespace BlApi
                     baseNumber = baseStation.SerialNum,
                     NameBase = baseStation.Name,
                     NumberOfChargingStations = baseStation.FreeState,
-                    latitude = baseStation.location.Latitude,
-                    longitude = baseStation.location.Longitude
+                    latitude = baseStation.Location.Latitude,
+                    longitude = baseStation.Location.Longitude
                 });
             }
             catch (DO.ItemFoundException ex)
@@ -144,14 +144,14 @@ namespace BlApi
             try
             {
                 var baseStation = dalObj.BaseStationByNumber(baseNume);
-                var baseReturn = new BaseStation { SerialNum = baseNume, location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude }, Name = baseStation.NameBase, FreeState = baseStation.NumberOfChargingStations };
-                 
+                var baseReturn = new BaseStation { SerialNum = baseNume, Location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude }, Name = baseStation.NameBase, FreeState = baseStation.NumberOfChargingStations };
+
                 baseReturn.dronesInCharge = new List<DroneInCharge>();
 
-                baseReturn.dronesInCharge = (List<DroneInCharge>)(from drone in dalObj.ChargingDroneList(x => x.idBaseStation == baseNume)
-                                                                  let butrry = (SpecificDrone(drone.IdDrone).ButrryStatus + droneChrgingAlredy(DateTime.Now - drone.EntringDrone))
-                                                                  let newButrry = (butrry > 100) ? 100 : butrry
-                                                                  select new DroneInCharge { butrryStatus = newButrry, SerialNum = drone.IdDrone });
+                baseReturn.dronesInCharge = (from drone in dalObj.ChargingDroneList(x => x.idBaseStation == baseNume)
+                                             let butrry = (SpecificDrone(drone.IdDrone).ButrryStatus + droneChrgingAlredy(DateTime.Now - drone.EntringDrone))
+                                             let newButrry = (butrry > 100) ? 100 : butrry
+                                             select new DroneInCharge { butrryStatus = newButrry, SerialNum = drone.IdDrone }).ToList();
                 return baseReturn;
             }
             catch (DO.ItemNotFoundException ex)
@@ -168,27 +168,25 @@ namespace BlApi
         {
             try
             {
-                var baseStation = dalObj.BaseStationByNumber(base_);
-                //relese the drone from chrge
-                FreeBaseFromDrone(base_);
 
                 dalObj.DeleteBase(base_);
-                //find the clooset base
-                var clooseBase = ClosestBase(new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude }).location;
-                //send the drone to the closset base
-                for (int i = 0; i < dronesListInBl.Count; i++)
-                {
-                    var drone = dronesListInBl[i];
-                    if (drone.Location.Latitude == baseStation.latitude && drone.Location.Longitude == baseStation.longitude)
-                        drone.Location = clooseBase;
-                }
-
 
             }
             catch (DO.ItemNotFoundException ex)
             {
                 throw new ItemNotFoundException(ex);
             }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        public BaseStationToList BaseStationWhitSpscificDrone(uint drone)
+        {
+            return dalObj.BaseStationByNumber(dalObj.ChargingDroneList(x => x.IdDrone == drone)
+                .FirstOrDefault().idBaseStation).convertBaseInDalToBaseStationList(dalObj);
+
         }
 
     }

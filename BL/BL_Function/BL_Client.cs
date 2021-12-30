@@ -43,7 +43,7 @@ namespace BlApi
             { throw new NumberNotEnoughException(9); }
             if (client.Id > 999999999)
             { throw new NumberMoreException(); }
-            var distas = Distans(client.Location, ClosestBase(client.Location).location);
+            var distas = Distans(client.Location, ClosestBase(client.Location).Location);
             if (distas > 60)
                 throw new ClientOutOfRangeException();
             //chcing phon number

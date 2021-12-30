@@ -609,7 +609,7 @@ namespace ConsoleUI_BL
             {
                 SerialNum = id,
                 Name = name,
-                location = new Location { Longitude = doubleNum1, Latitude = doubleNum2 },
+                Location = new Location { Longitude = doubleNum1, Latitude = doubleNum2 },
                 FreeState = num1,
                 dronesInCharge = null
             };

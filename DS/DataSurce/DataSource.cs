@@ -81,7 +81,8 @@ namespace Ds
                 NameBase = randomName(rand),
                 NumberOfChargingStations = (uint)rand.Next(3, 6),
                 latitude = 31.790133,
-                longitude = 34.627143
+                longitude = 34.627143,
+                Active=true
 
             });
 
@@ -92,7 +93,8 @@ namespace Ds
                 NameBase = randomName(rand),
                 NumberOfChargingStations = (uint)rand.Next(3, 6),
                 latitude = 32.009490,
-                longitude = 34.736002
+                longitude = 34.736002,
+                Active=true
             });
 
 

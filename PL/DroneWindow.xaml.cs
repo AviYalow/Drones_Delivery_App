@@ -44,10 +44,7 @@ namespace PL
             this.bl = bl;
             WeightChoseCombo.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
             ModelComboBox.ItemsSource = Enum.GetValues(typeof(DroneModel));
-
             BaseChosingCombo.ItemsSource = bl.BaseStationWhitFreeChargingStationToLists();
-
-
             DroneLabel.Visibility = Visibility.Hidden;
         }
 
@@ -139,21 +136,11 @@ namespace PL
                 bl.AddDrone(droneToList, ((BO.BaseStationToList)BaseChosingCombo.SelectedItem).SerialNum);
                 drone = bl.GetDrone(droneToList.SerialNumber);
                 MessageBox.Show(drone.ToString() + "\n add to list!", "succesful");
+                ctorUpdateDronWindow(bl, drone.SerialNumber);
 
-               DroneWindow newWindow = new DroneWindow(bl, droneToList);
-                Application.Current.MainWindow = newWindow;
-                newWindow.Show();
-                this.Close();
             }
-            catch (BO.InputErrorException ex)
-            {
-                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (BO.ItemNotFoundException ex)
-            {
-                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (BO.ItemFoundExeption ex)
+
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -269,18 +256,16 @@ namespace PL
 
                         }
 
-                        DroneLabel.DataContext = bl.GetDrone(drone.SerialNumber);
+                        ctorUpdateDronWindow(bl, drone.SerialNumber);
+
 
                     }
 
-                    catch (BO.ItemNotFoundException ex)
-                    {
-                        MessageBox.Show(ex.ToString(), "ERROR");
-                    }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.ToString(), "ERROR");
                     }
+
             }
         }
 

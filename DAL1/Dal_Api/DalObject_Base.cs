@@ -33,9 +33,10 @@ namespace Dal
                 NameBase = name,
                 NumberOfChargingStations = numOfCharging,
                 latitude = latitude,
-                longitude = longitude
+                longitude = longitude,
+                Active = true
 
-            });
+            }) ;
 
         }
 
@@ -84,9 +85,13 @@ namespace Dal
         /// <param name="sirial"> Base Station number</param>
         public void DeleteBase(uint sirial)
         {
-            if (!DataSource.base_Stations.Any(x => x.baseNumber == sirial))
+            var baseDeleteNumber = DataSource.base_Stations.FindIndex(x => x.baseNumber == sirial);
+            if (baseDeleteNumber == -1)
                 throw (new ItemNotFoundException("Base station", sirial));
-            DataSource.base_Stations.Remove(DataSource.base_Stations[DataSource.base_Stations.FindIndex(x => x.baseNumber == sirial)]);
+            var baseDelete = DataSource.base_Stations[baseDeleteNumber];
+            baseDelete.Active = false;
+
+            DataSource.base_Stations[baseDeleteNumber] = baseDelete;
 
 
         }

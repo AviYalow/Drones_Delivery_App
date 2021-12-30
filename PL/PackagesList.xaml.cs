@@ -149,19 +149,14 @@ namespace PL
             PackagesListView.ItemsSource = bl.PackageToDateLists();
         }
 
-     
-
-      
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            
             new PackageView(bl).ShowDialog();
             PackagesListView.ItemsSource = bl.PackageToLists();
         }
 
-        
-
-        private void PackagesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void PackagesListView_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
             if (PackagesListView.SelectedItem != null)
             {
@@ -169,12 +164,6 @@ namespace PL
                 PackagesListView.ItemsSource = bl.PackageToLists();
                 PackagesListView.SelectedItem = null;
             }
-        }
-
-        private void PackagesListView_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
-        {
-            new PackageView(bl, (PackageToList)PackagesListView.SelectedItem).ShowDialog();
-            PackagesListView.ItemsSource = bl.PackageToLists();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

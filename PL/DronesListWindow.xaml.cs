@@ -38,6 +38,7 @@ namespace PL
                 StatusSelector.Items.Add(item);
             drone = new BO.DroneToList();
             DronesListView.ItemsSource = bl.FilterDronesList();
+            
             view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
              groupDescription = new PropertyGroupDescription("Model");
 
@@ -174,7 +175,7 @@ namespace PL
             if (gropListCB.IsChecked==true)
             {
                 view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
-                
+                groupDescription = new PropertyGroupDescription("Model");
                 if (!view.GroupDescriptions.Any(x=>x.Equals(groupDescription)))
                 view.GroupDescriptions.Add(groupDescription);
                 

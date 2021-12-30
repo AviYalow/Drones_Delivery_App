@@ -15,6 +15,7 @@ namespace BO
         public string Name { get; set; }
         public uint FreeState { get; set; }
         public uint BusyState { get; set; }
+        public string Active { get; set; }
 
         public override string ToString()
         {
