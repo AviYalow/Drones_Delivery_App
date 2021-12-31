@@ -56,6 +56,28 @@ namespace PL
       
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            if (SerialText.Text == "0" || SerialText.Text == ""||
+                FreeStateText.Text == "0" || FreeStateText.Text == ""||
+                Latitudtext.Text == "0" || Latitudtext.Text == ""||
+                LongitudeText.Text == "0" || LongitudeText.Text == "")
+            {
+                if (SerialText.Text == "0" || SerialText.Text == "")
+                {
+                    SerialText.BorderBrush = Brushes.Red;
+
+                }
+                if (FreeStateText.Text == "0" || FreeStateText.Text == "")
+                {
+                    FreeStateText.BorderBrush = Brushes.Red;
+                }
+                if (Latitudtext.Text == "0" || Latitudtext.Text == "")
+                {
+                    Latitudtext.BorderBrush = Brushes.Red;
+                }
+                if (LongitudeText.Text == "0" || LongitudeText.Text == "")
+                { LongitudeText.BorderBrush = Brushes.Red; }
+                return;
+            }
             try
             {
                 bl.AddBase(baseStation);
@@ -72,11 +94,12 @@ namespace PL
             {
 
                ((TextBox)sender).Background = Brushes.Transparent;
+                ((TextBox)sender).BorderBrush= Brushes.Transparent;
                 AddButton.IsEnabled = true;
             }
             if (text.Text != "0" || text.Text != "")
             {
-
+                ((TextBox)sender).BorderBrush = Brushes.Transparent;
                 ((TextBox)sender).BorderBrush = Brushes.Transparent;
             }
 
@@ -119,12 +142,13 @@ namespace PL
             if (e == null) return;
             if (text.Text.All(x => x >= '0' && x <= '9'))
             {
-
+                ((TextBox)sender).BorderBrush = Brushes.Transparent;
                 ((TextBox)sender).Background = Brushes.Transparent;
                 AddButton.IsEnabled = true;
             }
             if(text.Text.Count(x => x == '.') > 1)
             {
+                ((TextBox)sender).BorderBrush = Brushes.Transparent;
                 ((TextBox)sender).Background = Brushes.Transparent;
                 AddButton.IsEnabled = true;
             }
@@ -148,9 +172,8 @@ namespace PL
                 return;
             if (e.Key == Key.Decimal || e.Key == Key.OemPeriod)
             {
-                if(text.Text.Count()==0)
-                { }
-                    if(text.Text.Count(x=>x=='.')>1)
+               
+                    if(text.Text.StartsWith('.')||text.Text.Count(x=>x=='.')>1)
                 {
                     ((TextBox)sender).Background = Brushes.Red;
                     AddButton.IsEnabled = false;
@@ -183,18 +206,17 @@ namespace PL
 
         }
 
-        private void Latitudtext_TextChanged(object sender, TextChangedEventArgs e)
-        {
-           /* TextBox text = sender as TextBox;
-            if (text == null) return;
-            if(Double.text.Text)
-            ((TextBox)sender).Background = Brushes.Red;
-            AddButton.IsEnabled = false;*/
-        }
+     
 
         private void Latitudtext_GotFocus(object sender, RoutedEventArgs e)
         {
             ((TextBox)sender).Text = "";
+        }
+
+        private void LongitudeText_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if(((TextBox)sender).Text =="")
+                ((TextBox)sender).Text = "0";
         }
     }
 }
