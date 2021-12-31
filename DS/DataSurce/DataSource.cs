@@ -99,7 +99,7 @@ namespace Ds
 
 
             //initializing the drones list in a randone values
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 15; i++)
             {
                 drones.Add(new Drone
                 {

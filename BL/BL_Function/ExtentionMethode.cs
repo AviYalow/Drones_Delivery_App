@@ -45,7 +45,7 @@ namespace BlApi
                     Name = baseStation.NameBase,
                     FreeState = baseStation.NumberOfChargingStations,
                     Location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude },
-                    dronesInCharge = null
+                    DronesInChargeList = null
                 };
             }
 

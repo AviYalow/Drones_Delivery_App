@@ -51,7 +51,8 @@ namespace PL
             DataContext = baseStation;
             LongitudeText.DataContext = baseStation.Location;
             Latitudtext.DataContext = baseStation.Location;
-            
+        
+          //  DroneCharge1View.ItemsSource= baseStation.DronesInChargeList;
         }
       
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -210,7 +211,8 @@ namespace PL
 
         private void Latitudtext_GotFocus(object sender, RoutedEventArgs e)
         {
-            ((TextBox)sender).Text = "";
+            if (((TextBox)sender).Text == "0")
+                ((TextBox)sender).Text = "";
         }
 
         private void LongitudeText_LostFocus(object sender, RoutedEventArgs e)

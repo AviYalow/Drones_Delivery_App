@@ -16,7 +16,7 @@ namespace BO
         public string Name { get; set; }
         public Location Location { get; set; }
         public uint FreeState { get; set; }
-        public List<DroneInCharge> dronesInCharge { get; set; }
+        public List<DroneInCharge> DronesInChargeList { get; set; }
         public override string ToString()
         {
             String print= "";
@@ -24,8 +24,8 @@ namespace BO
             print += $"The Name is {Name},\n";
             print += $"Location: Latitude:{Location.Latitude} Longitude:{Location.Longitude},\n";
             print += $"Number of free state: {FreeState},\n";
-            print += $"Drone in Charge: {dronesInCharge.Count},\n";
-            foreach(DroneInCharge drone in dronesInCharge)
+            print += $"Drone in Charge: {DronesInChargeList.Count},\n";
+            foreach(DroneInCharge drone in DronesInChargeList)
             {
                print += $"Serial number: {drone.SerialNum}, butrry Status: {drone.ButrryStatus}\n";
             }

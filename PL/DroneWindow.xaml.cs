@@ -79,8 +79,17 @@ namespace PL
             ModelComboBox.ItemsSource = Enum.GetValues(typeof(DroneModel));
             ModelComboBox.SelectedItem = this.drone.Model;
             DroneLabel.DataContext = bl.GetDrone(droneFromListView);
+            StatusComb.SelectedItem = null;
+            StatusComb.Items.Clear();
             if (this.drone.DroneStatus == DroneStatus.Free)
-                StatusComb.ItemsSource = Enum.GetValues(typeof(DroneStatus));
+            {
+                foreach (var status in Enum.GetValues(typeof(DroneStatus)))
+                {
+                    StatusComb.Items.Add(status);
+                }
+                                  
+            }
+                
             else if (this.drone.DroneStatus == DroneStatus.Maintenance)
             {
                 StatusComb.Items.Add(DroneStatus.Maintenance);
@@ -227,7 +236,7 @@ namespace PL
 
         private void StatusComb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (drone != null)
+            if (drone != null&& StatusComb.SelectedItem!=null)
             {
                 DroneStatus droneStatus = (DroneStatus)StatusComb.SelectedItem;
                 if (droneStatus != drone.DroneStatus)

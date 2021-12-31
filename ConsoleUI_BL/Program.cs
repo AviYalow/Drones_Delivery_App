@@ -611,7 +611,7 @@ namespace ConsoleUI_BL
                 Name = name,
                 Location = new Location { Longitude = doubleNum1, Latitude = doubleNum2 },
                 FreeState = num1,
-                dronesInCharge = null
+                DronesInChargeList = null
             };
             // add new Base station
             bL.AddBase(baseStation);

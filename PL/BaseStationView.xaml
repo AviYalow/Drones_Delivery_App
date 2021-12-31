@@ -29,16 +29,24 @@
         <TextBox x:Name="Latitudtext" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="157,314,0,0" Text="{Binding Path=Latitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" GotFocus="Latitudtext_GotFocus" LostFocus="LongitudeText_LostFocus"/>
         <TextBox x:Name="LongitudeText" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="149,354,0,0" Text="{Binding Path=Longitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" GotFocus="Latitudtext_GotFocus" LostFocus="LongitudeText_LostFocus"/>
         <Button x:Name="AddButton"  Content="ADD" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="135,657,0,0" VerticalAlignment="Top" Click="AddButton_Click"/>
-        <ListView x:Name="DroneChargeLabel" Margin="477,164,41,303">
+        <ListView x:Name="DroneCharge1View" Margin="24,410,448,54" ItemsSource="{Binding Path=DronesInChargeList}" RenderTransformOrigin="0.5,0.5" Height="auto" Foreground="#DDFFFFFF">
+            <ListView.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ListView.RenderTransform>
 
             <ListView.View>
-                <GridView x:Name="ListviewGridToDroneList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
+                <GridView x:Name="Listvi1ewGridToDroneList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
                     <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNum}" x:Name="Serial"   >
                         <HeaderedContentControl x:Name="SerialNum"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
-                            <TextBox Text="Serial NUmber" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" />
+                            <TextBox Text="Serial Number" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" />
                         </HeaderedContentControl>
                     </GridViewColumn>
-                    <GridViewColumn  DisplayMemberBinding="{Binding Path=ButrryStatus}" x:Name="ModelGrid"  >
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=ButrryStatus}" x:Name="ButrryStatusGrid"  >
                         <HeaderedContentControl x:Name="ButrryStatus"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
                             <TextBox Text="Buttry" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline"/>
                         </HeaderedContentControl>

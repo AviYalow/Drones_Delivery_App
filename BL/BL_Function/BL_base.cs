@@ -40,7 +40,7 @@ namespace BlApi
                             Name = base_.NameBase,
                             SerialNum = base_.baseNumber,
                             FreeState = base_.NumberOfChargingStations,
-                            dronesInCharge = null
+                            DronesInChargeList = null
                         };
 
                     }
@@ -146,9 +146,9 @@ namespace BlApi
                 var baseStation = dalObj.BaseStationByNumber(baseNume);
                 var baseReturn = new BaseStation { SerialNum = baseNume, Location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude }, Name = baseStation.NameBase, FreeState = baseStation.NumberOfChargingStations };
 
-                baseReturn.dronesInCharge = new List<DroneInCharge>();
+                baseReturn.DronesInChargeList = new List<DroneInCharge>();
 
-                baseReturn.dronesInCharge = (from drone in dalObj.ChargingDroneList(x => x.idBaseStation == baseNume)
+                baseReturn.DronesInChargeList = (from drone in dalObj.ChargingDroneList(x => x.idBaseStation == baseNume)
                                              let butrry = (SpecificDrone(drone.IdDrone).ButrryStatus + droneChrgingAlredy(DateTime.Now - drone.EntringDrone))
                                              let newButrry = (butrry > 100) ? 100 : butrry
                                              select new DroneInCharge { ButrryStatus = newButrry, SerialNum = drone.IdDrone }).ToList();
