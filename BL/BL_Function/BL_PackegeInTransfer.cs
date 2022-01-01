@@ -38,7 +38,7 @@ namespace BlApi
                 if (pacege.InTheWay != true)
                 { new FunctionErrorException("ShowPackage||AddPackege"); }
 
-                Location location = ClientLocation(pacege.SendClient.Id);
+                Location location = ClientLocation(pacege.SendClient.Id).Clone();
                 drone.ButrryStatus -= buttryDownWithNoPackege(drone.Location, location);
 
                 if (drone.ButrryStatus < 0)
@@ -71,7 +71,7 @@ namespace BlApi
                     throw new PackegeNotAssctionOrCollectedException();
                 drone.ButrryStatus -= buttryDownPackegeDelivery(packege);
 
-                drone.Location = ClientLocation(packege.RecivedClient.Id);
+                drone.Location = ClientLocation(packege.RecivedClient.Id).Clone();
                 drone.DroneStatus = DroneStatus.Free;
                 drone.NumPackage = 0;
                 packege.InTheWay = false;
@@ -144,8 +144,8 @@ namespace BlApi
                 SerialNum = package.SerialNumber,
                 WeightCatgory = (WeightCategories)package.WeightCatgory,
                 Priority = (Priority)package.Priority,
-                Source = ClientLocation(package.SendClient),
-                Destination = ClientLocation(package.GetingClient),
+                Source = ClientLocation(package.SendClient).Clone(),
+                Destination = ClientLocation(package.GetingClient).Clone(),
                 SendClient = dalObj.CilentByNumber(package.SendClient).clientInPackageFromDal(),
                 RecivedClient = dalObj.CilentByNumber(package.GetingClient).clientInPackageFromDal()
             };

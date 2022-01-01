@@ -109,7 +109,7 @@ namespace BlApi
                     Model = drone.Model,
                     WeightCategory = drone.WeightCategory,
                     DroneStatus = drone.DroneStatus,
-                    Location = drone.Location,
+                    Location = drone.Location.Clone(),
                     ButrryStatus = drone.ButrryStatus,
                     PackageInTransfer = pacege
                 };

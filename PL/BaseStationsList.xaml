@@ -97,9 +97,9 @@
   materialDesign:HintAssist.Hint="Status Base"
  
   MinWidth="128" Height="36" SelectionChanged="FiletrListCmb_SelectionChanged" Foreground="Red" Background="#FF92ACE0">
-                <ComboBoxItem Content="Base Station Active"/>
-                <ComboBoxItem Content="Base Station with Free Charging Station"/>
-                <ComboBoxItem Content="All Base Station"/>
+                <ComboBoxItem Name="BaseStationActive" Content="Base Station Active"/>
+                <ComboBoxItem Name="BaseStationWithFreeChargingStation" Content="Base Station with Free Charging Station"/>
+                <ComboBoxItem Name="AllBaseStation" Content="All Base Station"/>
 
 
             </ComboBox>

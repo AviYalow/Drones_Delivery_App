@@ -38,7 +38,11 @@ namespace PL
     
         private void BaseListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new BaseStationView(bl,(BaseStationToList)BaseListView.SelectedItem).ShowDialog();
+            if (BaseListView.SelectedItem != null)
+            {
+                new BaseStationView(bl, (BaseStationToList)BaseListView.SelectedItem).ShowDialog();
+                BaseListView.ItemsSource = bl.BaseStationToLists();
+            }
         }
 
         private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -56,11 +60,11 @@ namespace PL
 
         private void FiletrListCmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(FiletrListCmb.SelectedItem== FiletrListCmb.Items[0])
+            if(FiletrListCmb.SelectedItem== BaseStationActive)
             {
                 BaseListView.ItemsSource = bl.BaseStationToLists();
             }
-            if (FiletrListCmb.SelectedItem == FiletrListCmb.Items[1])
+            if (FiletrListCmb.SelectedItem == BaseStationWithFreeChargingStation)
             {
                 BaseListView.ItemsSource = bl.BaseStationWhitFreeChargingStationToLists();
             }

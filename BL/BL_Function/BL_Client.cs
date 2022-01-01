@@ -31,7 +31,7 @@ namespace BlApi
             location_client.Longitude = client.Longitude;
             return location_client;
         }
-        
+
         /// <summary>
         /// add client
         /// </summary>
@@ -65,7 +65,7 @@ namespace BlApi
                 throw (new ItemFoundExeption(ex));
             }
         }
-        
+
         /// <summary>
         /// help mathod to chack phone number
         /// </summary>
@@ -153,7 +153,7 @@ namespace BlApi
 
 
         }
-  
+
         /// <summary>
         /// delete client
         /// </summary>

@@ -236,7 +236,7 @@ namespace PL
 
         private void StatusComb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (drone != null&& StatusComb.SelectedItem!=null)
+            if (drone != null&& StatusComb.SelectedItem!=null&&(DroneStatus)StatusComb.SelectedItem!=drone.DroneStatus)
             {
                 DroneStatus droneStatus = (DroneStatus)StatusComb.SelectedItem;
                 if (droneStatus != drone.DroneStatus)
@@ -272,6 +272,8 @@ namespace PL
 
                     catch (Exception ex)
                     {
+                     
+                        StatusComb.SelectedItem = drone.DroneStatus;
                         MessageBox.Show(ex.ToString(), "ERROR");
                     }
 

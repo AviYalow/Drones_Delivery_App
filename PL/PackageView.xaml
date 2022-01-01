@@ -57,13 +57,13 @@
 
             </ComboBox>
 
-            <Button x:Name="AddButton" Click="Button_Click" Content="ADD" HorizontalAlignment="Left" Margin="191,501,0,0" VerticalAlignment="Top" Height="52" Width="107" Visibility="{Binding ElementName=TitelPackegeViewLabel,Path=IsVisible}" >
+            <Button x:Name="AddButton" Click="Button_Click" Content="ADD" HorizontalAlignment="Left" Margin="191,501,0,0" VerticalAlignment="Top" Height="52" Width="107" Visibility="{Binding ElementName=TitelPackegeViewLabel,Path=Visibility}" >
 
             </Button>
         </Grid>
         <Grid x:Name="UpdateGrid" Visibility="Hidden"  >
 
-            <Label x:Name="DataGridPackege"  Margin="589,0,0,0" Visibility="{Binding ElementName=UpDatePackegeTital, Path=IsVisible}">
+            <Label x:Name="DataGridPackege"  Margin="589,0,0,0" Visibility="{Binding ElementName=UpDatePackegeTital, Path=Visibility}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition  Width="*"/>

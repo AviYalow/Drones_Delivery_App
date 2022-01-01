@@ -17,19 +17,19 @@
     </Window.Background>
     <Grid>
 
-
-        <Label Name="serialNumberLabel" FontSize="25" Content="serial Number:" HorizontalAlignment="Left" Margin="24,169,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
-        <Label Name="NameLabel" Content="Name:" FontSize="25" HorizontalAlignment="Left" Margin="26,219,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
-        <Label Name="NumberChargingStationLabel" FontSize="25" Content=" Charging Stations:" HorizontalAlignment="Left" Margin="20,266,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
-        <Label Name="LatitudeLabel" Content="Latitude:" FontSize="25" HorizontalAlignment="Left" Margin="32,364,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
-        <Label Name="LongitudeLabel" Content="Longitude:" FontSize="25" HorizontalAlignment="Left" Margin="31,317,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
-        <TextBox x:Name="SerialText" HorizontalAlignment="Left" FontSize="25" Margin="205,164,0,0" Text="{Binding Path=SerialNum,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitNoDot" LostFocus="LongitudeText_LostFocus"/>
-        <TextBox x:Name="NameText" HorizontalAlignment="Left"  FontSize="25" Margin="121,201,0,0" Text="{Binding Path=Name,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="184" Foreground="White" BorderBrush="#89FFFFFF"/>
-        <TextBox x:Name="FreeStateText" HorizontalAlignment="Left" FontSize="25" Margin="244,262,0,0" Text="{Binding Path=FreeState,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="163" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitNoDot" LostFocus="LongitudeText_LostFocus"/>
-        <TextBox x:Name="Latitudtext" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="157,314,0,0" Text="{Binding Path=Latitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" GotFocus="Latitudtext_GotFocus" LostFocus="LongitudeText_LostFocus"/>
-        <TextBox x:Name="LongitudeText" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="149,354,0,0" Text="{Binding Path=Longitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" GotFocus="Latitudtext_GotFocus" LostFocus="LongitudeText_LostFocus"/>
-        <Button x:Name="AddButton"  Content="ADD" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="135,657,0,0" VerticalAlignment="Top" Click="AddButton_Click"/>
-        <ListView x:Name="DroneCharge1View" Margin="24,410,448,54" ItemsSource="{Binding Path=DronesInChargeList}" RenderTransformOrigin="0.5,0.5" Height="auto" Foreground="#DDFFFFFF">
+        <Label Name="TitelLabel" FontSize="35" Content="Add Base Station" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+        <Label Name="serialNumberLabel" FontSize="25" Content="serial Number:" HorizontalAlignment="Left" Margin="24,123,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
+        <Label Name="NameLabel" Content="Name:" FontSize="25" HorizontalAlignment="Left" Margin="35,211,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
+        <Label Name="NumberChargingStationLabel" FontSize="25" Content="Free Charging Stations:" HorizontalAlignment="Left" Margin="28,308,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
+        <Label Name="LatitudeLabel" Content="Latitude:" FontSize="25" HorizontalAlignment="Left" Margin="32,471,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
+        <Label Name="LongitudeLabel" Content="Longitude:" FontSize="25" HorizontalAlignment="Left" Margin="33,385,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
+        <TextBox x:Name="SerialText" HorizontalAlignment="Left" FontSize="25" Margin="32,160,0,0" Text="{Binding Path=SerialNum,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitNoDot" LostFocus="LongitudeText_LostFocus"/>
+        <TextBox x:Name="NameText" HorizontalAlignment="Left"  FontSize="25" Margin="33,247,0,0" Text="{Binding Path=Name,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="184" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyDown="NameText_PreviewKeyDown"/>
+        <TextBox x:Name="FreeStateText" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" FontSize="25" Margin="35,345,0,0" Text="{Binding Path=FreeState,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="163" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitNoDot" LostFocus="LongitudeText_LostFocus"/>
+        <TextBox x:Name="Latitudtext" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="32,435,0,0" Text="{Binding Path=Latitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" GotFocus="Latitudtext_GotFocus" LostFocus="LongitudeText_LostFocus"/>
+        <TextBox x:Name="LongitudeText" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="33,505,0,0" Text="{Binding Path=Longitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" GotFocus="Latitudtext_GotFocus" LostFocus="LongitudeText_LostFocus"/>
+        <Button x:Name="AddButton"  Content="ADD"  HorizontalAlignment="Left" Margin="66,654,0,0" VerticalAlignment="Top" Click="AddButton_Click"/>
+        <ListView x:Name="DroneCharge1View"  Visibility="Collapsed" Margin="464,135,8,329" DataContext="{Binding  }" RenderTransformOrigin="0.5,0.5" Height="auto" Foreground="#DDFFFFFF" MouseDoubleClick="DroneCharge1View_MouseDoubleClick">
             <ListView.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="1"/>
@@ -55,5 +55,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Label Name="NewChrgingStatimLabel"  Visibility="Collapsed" Content="New number of charging station:" FontSize="20" HorizontalAlignment="Left" Margin="30,556,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
+        <TextBox  Name="NewChrgingStatimText" HorizontalAlignment="Left" Margin="34,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="163" Height="49"  
+  Visibility="Collapsed"
+  FontSize="24" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitNoDot"/>
     </Grid>
 </Window>

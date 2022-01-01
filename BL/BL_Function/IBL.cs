@@ -357,6 +357,8 @@ namespace BlApi
 
         public BaseStationToList BaseStationWhitSpscificDrone(uint drone);
 
-       
+        public IEnumerable<DroneInCharge> DroneINChargePerBase(uint base_);
+
+
     }
 }

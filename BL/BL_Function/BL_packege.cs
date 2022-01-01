@@ -24,7 +24,7 @@ namespace BlApi
             if (!send.Active)
                 throw new ItemNotFoundException("Client", package.SendClient.Id);
             Location locationsend = new Location { Latitude = send.Latitude, Longitude = send.Longitude };
-            Location locationGet = ClientLocation(package.RecivedClient.Id);
+            Location locationGet = ClientLocation(package.RecivedClient.Id).Clone();
             var butrryWithDelvery = buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package));
             var butrryFree = buttryDownWithNoPackege(ClosestBase(locationsend).Location, locationsend) + buttryDownWithNoPackege(ClosestBase(locationGet).Location, locationGet);
             if (butrryWithDelvery + butrryFree > 100)

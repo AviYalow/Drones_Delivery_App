@@ -8,7 +8,7 @@ using BO;
 using DalApi;
 namespace BlApi
 {
-    partial class BL : IBL
+   partial class BL : IBL
     {
         /// <summary>
         /// calculation the most collset base station to a particular location
@@ -25,7 +25,7 @@ namespace BlApi
                 Location base_location = new Location();
 
                 double? distans = null, distans2;
-                foreach (DO.Base_Station base_ in dalObj.BaseStationList(x => true))
+                foreach (DO.Base_Station base_ in dalObj.BaseStationList(x => x.Active))
                 {
                     base_location.Latitude = base_.latitude;
                     base_location.Longitude = base_.longitude;
@@ -36,7 +36,7 @@ namespace BlApi
                         distans = distans2;
                         baseStation = new BaseStation
                         {
-                            Location = base_location,
+                            Location = base_location.Clone(),
                             Name = base_.NameBase,
                             SerialNum = base_.baseNumber,
                             FreeState = base_.NumberOfChargingStations,
@@ -148,10 +148,7 @@ namespace BlApi
 
                 baseReturn.DronesInChargeList = new List<DroneInCharge>();
 
-                baseReturn.DronesInChargeList = (from drone in dalObj.ChargingDroneList(x => x.idBaseStation == baseNume)
-                                             let butrry = (SpecificDrone(drone.IdDrone).ButrryStatus + droneChrgingAlredy(DateTime.Now - drone.EntringDrone))
-                                             let newButrry = (butrry > 100) ? 100 : butrry
-                                             select new DroneInCharge { ButrryStatus = newButrry, SerialNum = drone.IdDrone }).ToList();
+                baseReturn.DronesInChargeList = DroneINChargePerBase(baseNume);
                 return baseReturn;
             }
             catch (DO.ItemNotFoundException ex)
@@ -159,6 +156,15 @@ namespace BlApi
                 throw new ItemNotFoundException(ex);
             }
         }
+
+        public IEnumerable<DroneInCharge>DroneINChargePerBase(uint base_)
+            {
+            return from drone in dalObj.ChargingDroneList(x => x.idBaseStation == base_)
+             let butrry = (SpecificDrone(drone.IdDrone).ButrryStatus + droneChrgingAlredy(DateTime.Now - drone.EntringDrone))
+             let newButrry = (butrry > 100) ? 100 : butrry
+             select new DroneInCharge { ButrryStatus = newButrry, SerialNum = drone.IdDrone };
+        }
+
 
         /// <summary>
         /// delete base station
