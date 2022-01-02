@@ -11,14 +11,23 @@ namespace BlApi
 {
     partial class BL : IBL
     {
+        Func<ClientToList, bool> activeClient = x => x.Active;
+        Func<ClientToList, bool> clientHowSendPackege = client => (client.Arrived > 0 || client.NotArrived > 0);
+        Func<ClientToList, bool> clientHowSendPackegeAndThePackegeArrive = client => client.Arrived > 0;
+        Func<ClientToList, bool> clientHowSendPackegeAndThePackegeNotArrive = client => client.NotArrived > 0;
+        Func<ClientToList, bool> clientHowGetingPackegesAndNotArrive = client => client.OnTheWay > 0;
+        Func<ClientToList, bool> clientHowGetingPackegesAndArrive = client => client.received > 0;
+        Func<ClientToList, bool> clientActiveHowGetingPackeges = client => client.received > 0 || client.OnTheWay > 0;
         /// <summary>
         /// list of clients activ
         /// </summary>
         /// <returns> list of clients</returns>
-        public IEnumerable<ClientToList> ClientActiveToLists()
+        public IEnumerable<ClientToList> ClientActiveToLists(bool filter=true)
         {
-            return from clientInDal in dalObj.CilentList(x => x.Active)
-                   select clientInDal.convertClientDalToClientToList(dalObj);
+            clientToListFilter -= activeClient;
+            if(filter)
+            clientToListFilter += activeClient;
+            return FilterClientList();
         }
 
         /// <summary>
@@ -27,20 +36,24 @@ namespace BlApi
         /// <returns> list of clients</returns>
         public IEnumerable<ClientToList> ClientToLists()
         {
-            return from clientInDal in dalObj.CilentList(x => true)
-                   select clientInDal.convertClientDalToClientToList(dalObj);
+
+            return from client in dalObj.CilentList(x => true)
+                   select client.convertClientDalToClientToList(dalObj);
+
         }
 
         /// <summary>
         /// IEnumerable of client how send packege
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ClientToList> ClientActiveHowSendPackegesToLists()
+        public IEnumerable<ClientToList> ClientActiveHowSendPackegesToLists(bool filter = true)
         {
-
-            return from client in ClientActiveToLists()
-                   where client.Arrived > 0 || client.NotArrived > 0
-                   select client.Clone();
+            clientToListFilter -= clientHowSendPackege;
+            clientToListFilter -= clientHowSendPackegeAndThePackegeArrive;
+            clientToListFilter -= clientHowSendPackegeAndThePackegeNotArrive;
+            if (filter)
+                clientToListFilter += clientHowSendPackege;
+            return FilterClientList();
 
         }
 
@@ -48,62 +61,84 @@ namespace BlApi
         /// IEnumerable of client how send packege and arrive
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ClientToList> ClientActiveHowSendAndArrivePackegesToLists()
+        public IEnumerable<ClientToList> ClientActiveHowSendAndArrivePackegesToLists(bool filter = true)
         {
-            return from client in ClientActiveToLists()
-                   where client.Arrived > 0
-                   select client.Clone();
+            clientToListFilter -= clientHowSendPackege;
+            clientToListFilter -= clientHowSendPackegeAndThePackegeArrive;
+            clientToListFilter -= clientHowSendPackegeAndThePackegeNotArrive;
+            if (filter)
+                clientToListFilter += clientHowSendPackegeAndThePackegeArrive;
+            return FilterClientList();
 
         }
         /// <summary>
         /// IEnumerable of client how send packege and not arrive
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ClientToList> ClientActiveHowSendPackegesAndNotArriveToLists()
+        public IEnumerable<ClientToList> ClientActiveHowSendPackegesAndNotArriveToLists(bool filter = true)
         {
-            return from client in ClientActiveToLists()
-                   where client.NotArrived > 0
-                   select client.Clone();
+            clientToListFilter -= clientHowSendPackege;
+            clientToListFilter -= clientHowSendPackegeAndThePackegeArrive;
+            clientToListFilter -= clientHowSendPackegeAndThePackegeNotArrive;
+            if (filter)
+                clientToListFilter += clientHowSendPackegeAndThePackegeNotArrive;
+            return FilterClientList();
 
         }
         /// <summary>
         /// IEnumerable of client how need to get packege 
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndNotArriveToLists()
+        public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndNotArriveToLists(bool filter = true)
         {
-            return from client in ClientActiveToLists()
-                   where client.OnTheWay > 0
-                   select client.Clone();
 
+            clientToListFilter -= clientHowGetingPackegesAndNotArrive;
+            clientToListFilter -= clientHowGetingPackegesAndArrive;
+            clientToListFilter -= clientActiveHowGetingPackeges;
+            if (filter)
+                clientToListFilter += clientHowGetingPackegesAndNotArrive;
+            return FilterClientList();
         }
         /// <summary>
         /// IEnumerable of client how need to get packege and they get 
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndArriveToLists()
+        public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndArriveToLists(bool filter = true)
         {
-            return from client in ClientActiveToLists()
-                   where client.received > 0
-                   select client.Clone();
+            clientToListFilter -= clientHowGetingPackegesAndNotArrive;
+            clientToListFilter -= clientHowGetingPackegesAndArrive;
+            clientToListFilter -= clientActiveHowGetingPackeges;
+            if (filter)
+                clientToListFilter += clientHowGetingPackegesAndArrive;
+            return FilterClientList();
 
         }
         /// <summary>
         /// IEnumerable of client how need to get packege and they not get 
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ClientToList> ClientActiveHowGetingPackegesToLists()
+        public IEnumerable<ClientToList> ClientActiveHowGetingPackegesToLists(bool filter = true)
         {
-            return from client in ClientActiveToLists()
-                   where client.received > 0 || client.OnTheWay > 0
-                   select client.Clone();
+            clientToListFilter -= clientHowGetingPackegesAndNotArrive;
+            clientToListFilter -= clientHowGetingPackegesAndArrive;
+            clientToListFilter -= clientActiveHowGetingPackeges;
+            if (filter)
+                clientToListFilter += clientActiveHowGetingPackeges;
+            return FilterClientList();
 
         }
 
-        public IEnumerable<ClientInPackage> ClientInPackagesList()
+        public IEnumerable<ClientInPackage> ClientInPackagesList(bool filter = true)
         {
             return from client in dalObj.CilentList(x => true)
                    select new ClientInPackage { Id = client.Id, Name = client.Name };
+        }
+
+        public IEnumerable<ClientToList> FilterClientList()
+        {
+
+            return from client in filerList(ClientToLists(), clientToListFilter)
+                   select client.Clone();
         }
     }
 }

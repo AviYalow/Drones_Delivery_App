@@ -30,7 +30,7 @@ namespace BlApi
                     base_location.Latitude = base_.latitude;
                     base_location.Longitude = base_.longitude;
                     distans2 = Distans(location, base_location);
-                    if (distans > distans2 || distans == null)
+                    if ((distans > distans2 || distans == null)&&base_.NumberOfChargingStations>0)
                     {
 
                         distans = distans2;
@@ -90,8 +90,9 @@ namespace BlApi
                     NameBase = baseStation.Name,
                     NumberOfChargingStations = baseStation.FreeState,
                     latitude = baseStation.Location.Latitude,
-                    longitude = baseStation.Location.Longitude
-                });
+                    longitude = baseStation.Location.Longitude,
+                    Active = true
+                }) ;
             }
             catch (DO.ItemFoundException ex)
             {

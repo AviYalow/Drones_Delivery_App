@@ -60,16 +60,21 @@ namespace PL
 
         private void FiletrListCmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(FiletrListCmb.SelectedItem== BaseStationActive)
+            try
             {
-                BaseListView.ItemsSource = bl.BaseStationToLists();
+                if (FiletrListCmb.SelectedItem == BaseStationActive)
+                {
+                    BaseListView.ItemsSource = bl.BaseStationToLists();
+                }
+                if (FiletrListCmb.SelectedItem == BaseStationWithFreeChargingStation)
+                {
+                    BaseListView.ItemsSource = bl.BaseStationWhitFreeChargingStationToLists();
+                }
+                else
+                    BaseListView.ItemsSource = bl.AllBaseStation();
             }
-            if (FiletrListCmb.SelectedItem == BaseStationWithFreeChargingStation)
-            {
-                BaseListView.ItemsSource = bl.BaseStationWhitFreeChargingStationToLists();
-            }
-            else
-                BaseListView.ItemsSource = bl.AllBaseStation();
+            catch(Exception ex)
+            { MessageBox.Show(ex.ToString(), "ERROR"); }
         }
 
         private void ChoceDroneCmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -85,8 +90,13 @@ namespace PL
 
         private void AddBaseButton_Click(object sender, RoutedEventArgs e)
         {
-            new BaseStationView(bl).ShowDialog();
-            BaseListView.ItemsSource = bl.BaseStationToLists();
+            try
+            {
+                new BaseStationView(bl).ShowDialog();
+                BaseListView.ItemsSource = bl.BaseStationToLists();
+            }
+            catch(Exception ex)
+            { MessageBox.Show(ex.ToString()); }
         }
     }
 }

@@ -23,7 +23,7 @@ namespace BlApi
         public IEnumerable<DroneToList> DroneToLists()
         {
             if (dronesListInBl.Count == 0)
-                throw new TheListIsEmptyException();
+                return null;
 
             return from drone in dronesListInBl
                    where drone.DroneStatus != DroneStatus.Delete
@@ -34,7 +34,7 @@ namespace BlApi
         public IEnumerable<DroneToList> AllDroneToLists()
         {
             if (dronesListInBl.Count == 0)
-                throw new TheListIsEmptyException();
+                return null;
 
             return from drone in filerList(dronesListInBl, droneToListFilter)
                    select drone.Clone();
@@ -54,7 +54,7 @@ namespace BlApi
             droneToListFilter -= selectByStatus;
             selectByStatus = x => x.DroneStatus == droneStatus;
             if (dronesListInBl.Count == 0)
-                throw new TheListIsEmptyException();
+                return null;
             if (droneStatus != null)
                 droneToListFilter += selectByStatus;
 
@@ -71,7 +71,7 @@ namespace BlApi
             droneToListFilter -= selectByWeihgt;
             selectByWeihgt = x => x.WeightCategory >= weight;
             if (dronesListInBl.Count == 0)
-                throw new TheListIsEmptyException();
+                return null;
             if (weight != null)
                 droneToListFilter += selectByWeihgt;
 
@@ -89,7 +89,7 @@ namespace BlApi
             x.DroneStatus == DroneStatus.Free &&
             x.ButrryStatus > batteryCalculationForFullShipping(x.Location, package);
             if (dronesListInBl.Count == 0)
-                throw new TheListIsEmptyException();
+                return null;
             if (package != null)
                 droneToListFilter += selectByPackege;
 
@@ -101,7 +101,7 @@ namespace BlApi
             droneToListFilter -= selectBynumber;
             selectBynumber = x => x.SerialNumber.ToString().StartsWith(num);
             if (dronesListInBl.Count == 0)
-                throw new TheListIsEmptyException();
+                return null;
             if (num != "")
                 droneToListFilter += selectBynumber;
 

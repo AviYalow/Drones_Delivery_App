@@ -28,7 +28,7 @@ namespace BlApi
        
         double heaviElctric, mediomElctric, easyElctric, freeElctric, chargingPerMinute;
         event Func<DroneToList,bool> droneToListFilter = null;
-        event Func<ClientToList, bool> clientToListFilter = null;
+      event Func<ClientToList, bool> clientToListFilter = null;
         event Func<DO.Package, bool> packegeToListFilter = null;
         
 

@@ -29,7 +29,15 @@ namespace PL
 
         private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            HeaderedContentControl control = sender as HeaderedContentControl;
+            try
+            {
+                clientListView.ItemsSource = bl.SortList(control.Name, clientListView.ItemsSource as IEnumerable<BO.ClientToList>);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -46,6 +54,22 @@ namespace PL
                 clientListView.ItemsSource = bl.ClientActiveToLists();
                 clientListView.SelectedItem = null;
             }
+        }
+
+      
+
+        private void SenderClientCmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+           if(SenderClientCmb.SelectedItem is null)
+            {
+                clientListView.ItemsSource = bl.ClientActiveHowSendPackegesToLists(false);
+            }
+           else if(SenderClientCmb.SelectedItem == SendItem)
+            { clientListView.ItemsSource = bl.ClientActiveHowSendPackegesToLists(); }
+            else if (SenderClientCmb.SelectedItem == SendItemAndPackegeArrive)
+            { clientListView.ItemsSource = bl.ClientActiveHowSendAndArrivePackegesToLists(); }
+            else if (SenderClientCmb.SelectedItem == SendItemAndPackegeNotArrive)
+            { clientListView.ItemsSource = bl.ClientActiveHowSendPackegesAndNotArriveToLists(); }
         }
     }
 }

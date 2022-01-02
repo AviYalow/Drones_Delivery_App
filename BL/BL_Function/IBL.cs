@@ -179,37 +179,37 @@ namespace BlApi
         /// list of clients activ
         /// </summary>
         /// <returns> list of clients</returns>
-        public IEnumerable<ClientToList> ClientActiveToLists();
+        public IEnumerable<ClientToList> ClientActiveToLists(bool filter = true);
         /// <summary>
         /// IEnumerable of client how need to get packege and they not get 
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ClientToList> ClientActiveHowGetingPackegesToLists();
+        public IEnumerable<ClientToList> ClientActiveHowGetingPackegesToLists(bool filter = true);
         /// <summary>
         /// IEnumerable of client how need to get packege and they get 
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndArriveToLists();
+        public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndArriveToLists(bool filter = true);
         /// <summary>
         /// IEnumerable of client how need to get packege 
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndNotArriveToLists();
+        public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndNotArriveToLists(bool filter = true);
         /// <summary>
         /// IEnumerable of client how send packege and not arrive
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ClientToList> ClientActiveHowSendPackegesAndNotArriveToLists();
+        public IEnumerable<ClientToList> ClientActiveHowSendPackegesAndNotArriveToLists(bool filter = true);
         /// <summary>
         /// IEnumerable of client how send packege and arrive
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ClientToList> ClientActiveHowSendAndArrivePackegesToLists();
+        public IEnumerable<ClientToList> ClientActiveHowSendAndArrivePackegesToLists(bool filter = true);
         /// <summary>
         /// IEnumerable of client how send packege
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ClientToList> ClientActiveHowSendPackegesToLists();
+        public IEnumerable<ClientToList> ClientActiveHowSendPackegesToLists(bool filter = true);
         /// <summary>
         /// Receiving a client by ID
         /// </summary>
@@ -349,7 +349,7 @@ namespace BlApi
 
         public IEnumerable<PackageToList> PackageFromDateLists(DateTime? date = null);
 
-        public IEnumerable<ClientInPackage> ClientInPackagesList();
+        public IEnumerable<ClientInPackage> ClientInPackagesList(bool filter = true);
 
         public IEnumerable<uint> DronesNumber();
 
@@ -360,5 +360,7 @@ namespace BlApi
         public IEnumerable<DroneInCharge> DroneINChargePerBase(uint base_);
 
 
+
+       
     }
 }

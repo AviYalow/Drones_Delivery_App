@@ -28,7 +28,7 @@ namespace BlApi
         {
 
             if (dalObj.PackegeList(x => true).Count() == 0)
-                throw new TheListIsEmptyException();
+                return null;
 
 
            
@@ -47,7 +47,7 @@ namespace BlApi
 
             packegeToListFilter -= noDronePackegeFilter;
             if (PackageToLists().Count() == 0)
-                throw new TheListIsEmptyException();
+                return null;
             if (filterPackege)
                 packegeToListFilter += noDronePackegeFilter;
 
@@ -64,7 +64,7 @@ namespace BlApi
 
             packegeToListFilter -= arrivePackegeFilter;
             if (PackageToLists().Count() == 0)
-                throw new TheListIsEmptyException();
+                return null;
             if (filterPackege)
                 packegeToListFilter += arrivePackegeFilter;
 
@@ -80,7 +80,7 @@ namespace BlApi
 
             packegeToListFilter -= CollectedandNotArrivePackegeFilter;
             if (PackageToLists().Count() == 0)
-                throw new TheListIsEmptyException();
+                return null;
             if (filterPackege)
                 packegeToListFilter += CollectedandNotArrivePackegeFilter;
 
@@ -96,7 +96,7 @@ namespace BlApi
 
             packegeToListFilter -= connectedButNutCollectedPackegeFilter;
             if (PackageToLists().Count() == 0)
-                throw new TheListIsEmptyException();
+                return null;
             if (filterPackege)
                 packegeToListFilter += connectedButNutCollectedPackegeFilter;
 
@@ -115,7 +115,7 @@ namespace BlApi
 
             packegeToListFilter -= weightPackegeFilter;
             if (PackageToLists().Count() == 0)
-                throw new TheListIsEmptyException();
+                return null;
             if (weight != null)
             {
                 weightPackegeFilter = x => x.WeightCatgory == (DO.WeightCategories)weight;
@@ -138,7 +138,7 @@ namespace BlApi
 
             packegeToListFilter -= priorityPackegeFilter;
             if (PackageToLists().Count() == 0)
-                throw new TheListIsEmptyException();
+                return null;
             if (priority != null)
             {
                 priorityPackegeFilter = x => x.Priority == (DO.Priority)priority;
@@ -156,7 +156,7 @@ namespace BlApi
 
             packegeToListFilter -= fromDateFilter;
             if (PackageToLists().Count() == 0)
-                throw new TheListIsEmptyException();
+                return null;
             if (date != null)
             {
                 fromDateFilter = x => x.ReceivingDelivery >= date;
@@ -174,7 +174,7 @@ namespace BlApi
 
             packegeToListFilter -= toDateFilter;
             if (PackageToLists().Count() == 0)
-                throw new TheListIsEmptyException();
+                return null;
             if (date != null)
             {
                 toDateFilter = x => x.ReceivingDelivery <= date;

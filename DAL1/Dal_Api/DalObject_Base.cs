@@ -72,8 +72,10 @@ namespace Dal
         /// </summary>
         public IEnumerable<Base_Station> BaseStationList(Predicate<Base_Station> predicate)
         {
-            
-            return DataSource.base_Stations.FindAll(predicate);
+            return from base_ in DataSource.base_Stations
+                   where predicate(base_)
+                   select base_;
+       
         }
 
 

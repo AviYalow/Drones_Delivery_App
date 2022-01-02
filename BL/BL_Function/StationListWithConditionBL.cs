@@ -24,7 +24,7 @@ namespace BlApi
                         select x.convertBaseInDalToBaseStationList(dalObj);
 
             if (base_.Count() == 0)
-                throw new TheListIsEmptyException();
+                return null;
             
             return base_;
         }

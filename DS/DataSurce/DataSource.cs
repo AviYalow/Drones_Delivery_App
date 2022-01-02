@@ -79,7 +79,7 @@ namespace Ds
             {
                 baseNumber = (uint)rand.Next(1000, 10000),
                 NameBase = randomName(rand),
-                NumberOfChargingStations = (uint)rand.Next(3, 6),
+                NumberOfChargingStations = (uint)rand.Next(5, 15),
                 latitude = 31.790133,
                 longitude = 34.627143,
                 Active=true
@@ -91,7 +91,7 @@ namespace Ds
             {
                 baseNumber = (uint)rand.Next(1000, 10000),
                 NameBase = randomName(rand),
-                NumberOfChargingStations = (uint)rand.Next(3, 6),
+                NumberOfChargingStations = (uint)rand.Next(4, 9),
                 latitude = 32.009490,
                 longitude = 34.736002,
                 Active=true

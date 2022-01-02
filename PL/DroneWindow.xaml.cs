@@ -32,40 +32,49 @@ namespace PL
 
         public DroneWindow(BlApi.IBL bl)
         {
+            try
+            {
+                InitializeComponent();
 
-            InitializeComponent();
-
-            droneToList = new DroneToList();
-            this.DataContext = drone;
-            SirialNumberTextBox.DataContext = droneToList;
-            StatusComb.Items.Add(DroneStatus.Maintenance);
-            StatusComb.SelectedItem = StatusComb.Items[0];
-            droneToList.DroneStatus = (DroneStatus)StatusComb.SelectedItem;
-            this.bl = bl;
-            WeightChoseCombo.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
-            ModelComboBox.ItemsSource = Enum.GetValues(typeof(DroneModel));
-            BaseChosingCombo.ItemsSource = bl.BaseStationWhitFreeChargingStationToLists();
-            DroneLabel.Visibility = Visibility.Hidden;
+                droneToList = new DroneToList();
+                this.DataContext = drone;
+                SirialNumberTextBox.DataContext = droneToList;
+                StatusComb.Items.Add(DroneStatus.Maintenance);
+                StatusComb.SelectedItem = StatusComb.Items[0];
+                droneToList.DroneStatus = (DroneStatus)StatusComb.SelectedItem;
+                this.bl = bl;
+                WeightChoseCombo.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
+                ModelComboBox.ItemsSource = Enum.GetValues(typeof(DroneModel));
+                BaseChosingCombo.ItemsSource = bl.BaseStationWhitFreeChargingStationToLists();
+                DroneLabel.Visibility = Visibility.Hidden;
+            }
+            catch(Exception ex)
+            { MessageBox.Show(ex.ToString()); }
         }
 
         public DroneWindow(BlApi.IBL bl, uint droneFromListView)
         {
-            InitializeComponent();
-            ctorUpdateDronWindow(bl, droneFromListView);
-
+            try
+            {
+                InitializeComponent();
+                ctorUpdateDronWindow(bl, droneFromListView);
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
 
         }
 
         public DroneWindow(BlApi.IBL bl, DroneToList droneFromListView)
-        {
-            InitializeComponent();
-            ctorUpdateDronWindow(bl, droneFromListView.SerialNumber);
-
-
-        }
+        {try
+            {
+                InitializeComponent();
+                ctorUpdateDronWindow(bl, droneFromListView.SerialNumber);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.ToString()); }        }
 
         private void ctorUpdateDronWindow(BlApi.IBL bl, uint droneFromListView)
         {
+            
             this.bl = bl;
             this.drone = bl.GetDrone(droneFromListView);
 
@@ -86,6 +95,7 @@ namespace PL
                 foreach (var status in Enum.GetValues(typeof(DroneStatus)))
                 {
                     StatusComb.Items.Add(status);
+                    StatusComb.IsEnabled = true;
                 }
                                   
             }
@@ -94,6 +104,7 @@ namespace PL
             {
                 StatusComb.Items.Add(DroneStatus.Maintenance);
                 StatusComb.Items.Add(DroneStatus.Free);
+                StatusComb.IsEnabled = true;
 
             }
             else if (this.drone.DroneStatus == DroneStatus.Work)
@@ -282,21 +293,31 @@ namespace PL
 
         private void ModelComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (drone != null)
-                if (drone.Model != (DroneModel)ModelComboBox.SelectedItem)
-                {
-                    bl.UpdateDroneName(drone.SerialNumber, (DroneModel)ModelComboBox.SelectedItem);
+            try
+            {
+                if (drone != null)
+                    if (drone.Model != (DroneModel)ModelComboBox.SelectedItem)
+                    {
+                        bl.UpdateDroneName(drone.SerialNumber, (DroneModel)ModelComboBox.SelectedItem);
 
-                    DroneLabel.DataContext = bl.GetDrone(drone.SerialNumber);
-                }
-            if (drone is null)
-                droneToList.Model = (DroneModel)ModelComboBox.SelectedItem;
+                        DroneLabel.DataContext = bl.GetDrone(drone.SerialNumber);
+                    }
+                if (drone is null)
+                    droneToList.Model = (DroneModel)ModelComboBox.SelectedItem;
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
         }
 
         private void TextBlock_PreviewMouseRightButtonDownPackegeWindow(object sender, MouseButtonEventArgs e)
         {
-            
-            new PackageView(bl, drone.PackageInTransfer.SerialNum).ShowDialog();
+            try
+            {
+                new PackageView(bl, drone.PackageInTransfer.SerialNum).ShowDialog();
+                ctorUpdateDronWindow(bl, drone.SerialNumber);
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
         }
     }
 }

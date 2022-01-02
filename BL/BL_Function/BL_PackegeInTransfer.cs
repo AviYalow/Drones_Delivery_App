@@ -119,7 +119,14 @@ namespace BlApi
                 throw new DroneCantMakeDliveryException();
             drone.NumPackage = returnPackege.SerialNumber;
             drone.DroneStatus = DroneStatus.Work;
-            dalObj.ConnectPackageToDrone(returnPackege.SerialNumber, droneNumber);
+            try
+            {
+                dalObj.ConnectPackageToDrone(returnPackege.SerialNumber, droneNumber);
+            }
+            catch(DO.ItemNotFoundException ex)
+            {
+                throw new ItemNotFoundException(ex);
+            }
             for (int i = 0; i < dronesListInBl.Count; i++)
             {
                 if (dronesListInBl[i].SerialNumber == drone.SerialNumber)

@@ -29,60 +29,78 @@ namespace PL
     {
         BlApi.IBL bl;
         BaseStation baseStation;
-        Location location;
-    
-        uint numberOfChargingStation;
+        
+
+        int numberOfChargingStation;
         public BaseStationView(BlApi.IBL bL)
         {
-            InitializeComponent();
-            bl = bL;
-            baseStation = new BaseStation();
-            baseStation.Location = new Location();
-            location = new Location();
-            DataContext = baseStation;
-            LongitudeText.DataContext = baseStation.Location;
-            Latitudtext.DataContext = baseStation.Location;
+            try
+            {
+                InitializeComponent();
+                bl = bL;
+                baseStation = new BaseStation();
+                baseStation.Location = new Location();
+             
+                DataContext = baseStation;
+                LongitudeText.DataContext = baseStation.Location;
+                Latitudtext.DataContext = baseStation.Location;
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
 
-            
+
 
         }
         public BaseStationView(BlApi.IBL bL, BaseStationToList base_)
         {
-            InitializeComponent();
-            bl = bL;
-            numberOfChargingStation = (base_.FreeState + base_.BusyState);
-            ctorByItems(base_.SerialNum);
-        
-        
+            try
+            {
+                InitializeComponent();
+                bl = bL;
+                
+                ctorByItems(base_.SerialNum);
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
+
+
         }
 
         private void ctorByItems(uint base_)
         {
-            baseStation = bl.BaseByNumber(base_);
-            SerialText.IsEnabled = false;
-            DataContext = baseStation;
-            LongitudeText.DataContext = baseStation.Location;
-            Latitudtext.DataContext = baseStation.Location;
-            
-            NewChrgingStatimText.Text = numberOfChargingStation.ToString();
-            NewChrgingStatimText.Visibility = Visibility.Visible;
-            NewChrgingStatimLabel.Visibility = Visibility.Visible;
-            AddButton.Visibility = Visibility.Collapsed;
-            TitelLabel.Content = "Base Station update";
-            location = baseStation.Location;
-          
-            DroneCharge1View.Visibility = Visibility.Visible;
-           
-            
-            DroneCharge1View.ItemsSource = baseStation.DronesInChargeList;
-            
+            try
+            {
+                baseStation = bl.BaseByNumber(base_);
+                SerialText.IsEnabled = false;
+                DataContext = baseStation;
+                LongitudeText.DataContext = baseStation.Location;
+                Latitudtext.DataContext = baseStation.Location;
+                NewChrgingStatimText.Visibility = Visibility.Visible;
+                NewChrgingStatimLabel.Visibility = Visibility.Visible;
+                numberOfChargingStation =(int) baseStation.FreeState+baseStation.DronesInChargeList.Count();
+                NewChrgingStatimText.Text = numberOfChargingStation.ToString();
+               
+                AddButton.Visibility = Visibility.Collapsed;
+                TitelLabel.Content = "Base Station update";
+                
+
+                DroneCharge1View.Visibility = Visibility.Visible;
+
+
+                DroneCharge1View.ItemsSource = baseStation.DronesInChargeList;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                this.Close();
+            }
+
 
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SerialText.Text == "0" || SerialText.Text == "" ||
-                FreeStateText.Text == "0" || FreeStateText.Text == "" ||
+            if (SerialText.Text == "" || FreeStateText.Text == "" ||
                 Latitudtext.Text == "0" || Latitudtext.Text == "" ||
                 LongitudeText.Text == "0" || LongitudeText.Text == "")
             {
@@ -107,7 +125,7 @@ namespace PL
             {
                 bl.AddBase(baseStation);
                 MessageBox.Show("Add base Station Succes!");
-                numberOfChargingStation = baseStation.FreeState;
+                numberOfChargingStation = (int)baseStation.FreeState;
                 ctorByItems(baseStation.SerialNum);
             }
             catch (Exception ex)
@@ -117,7 +135,7 @@ namespace PL
         private void PreviewKeyDownWhitNoDot(object sender, KeyEventArgs e)
         {
             TextBox text = sender as TextBox;
-            
+
             if (text == null) return;
             if (e == null) return;
             if (text.Text.All(x => x >= '0' && x <= '9'))
@@ -132,24 +150,24 @@ namespace PL
                 ((TextBox)sender).BorderBrush = Brushes.Transparent;
                 ((TextBox)sender).BorderBrush = Brushes.Transparent;
             }
-           if((text.Name)== "NewChrgingStatimText")
+            if ((text.Name) == "NewChrgingStatimText")
             {
                 if (e.Key == Key.Enter)
                     if (AddButton.Visibility != Visibility.Visible)
-                    if (MessageBox.Show("Do you want to update the base name?", "Update", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                    {
-                        try
+                        if (MessageBox.Show("Do you want to update the base name?", "Update", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                         {
-                            bl.UpdateBase(baseStation.SerialNum, "", text.Text);
+                            try
+                            {
+                                bl.UpdateBase(baseStation.SerialNum, "", text.Text);
                                 MessageBox.Show("Update seccsed!");
-                            DataContext = baseStation;
-                            DroneCharge1View.ItemsSource = baseStation.DronesInChargeList;
+                                ctorByItems(baseStation.SerialNum);
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.ToString(), "ERROR");
+                                text.Text = numberOfChargingStation.ToString();
+                            }
                         }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.ToString(), "ERROR");
-                        }
-                    }
             }
             //allow get out of the text box
             if (e.Key == Key.Enter || e.Key == Key.Return || e.Key == Key.Tab)
@@ -256,7 +274,7 @@ namespace PL
             {
                 DroneCharge1View.ItemsSource = (bl.SortList(control.Name, DroneCharge1View.ItemsSource as IEnumerable<DroneInCharge>));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "ERROR");
             }
@@ -280,7 +298,7 @@ namespace PL
         {
             try
             {
-                
+
                 new DroneWindow(bl, (((DroneInCharge)DroneCharge1View.SelectedItem).SerialNum)).ShowDialog();
             }
             catch (Exception ex)
@@ -292,17 +310,17 @@ namespace PL
                 baseStation = bl.BaseByNumber(baseStation.SerialNum);
                 DataContext = baseStation;
                 DroneCharge1View.ItemsSource = baseStation.DronesInChargeList;
-                
-           
+
+
             }
         }
 
 
- 
+
 
         private void NameText_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key==Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 if (AddButton.Visibility != Visibility.Visible)
                     if (MessageBox.Show("Do you want to update the base name?", "Update", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
@@ -311,8 +329,7 @@ namespace PL
                         {
                             bl.UpdateBase(baseStation.SerialNum, ((TextBox)sender).Text, "");
                             MessageBox.Show("Update seccsed!");
-                            DataContext = baseStation;
-                            DroneCharge1View.ItemsSource = baseStation.DronesInChargeList;
+                            ctorByItems(baseStation.SerialNum);
                         }
                         catch (Exception ex)
                         {

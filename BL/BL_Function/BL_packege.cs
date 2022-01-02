@@ -17,22 +17,27 @@ namespace BlApi
         /// <returns> serial number of the packege</returns>
         public uint AddPackege(Package package)
         {
-            if (package.Priority > Priority.Regular || package.WeightCatgory > WeightCategories.Heavy)
-                throw new InputErrorException();
             uint packegeNum = 0;
-            var send = dalObj.CilentByNumber(package.SendClient.Id);
-            if (!send.Active)
-                throw new ItemNotFoundException("Client", package.SendClient.Id);
-            Location locationsend = new Location { Latitude = send.Latitude, Longitude = send.Longitude };
-            Location locationGet = ClientLocation(package.RecivedClient.Id).Clone();
-            var butrryWithDelvery = buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package));
-            var butrryFree = buttryDownWithNoPackege(ClosestBase(locationsend).Location, locationsend) + buttryDownWithNoPackege(ClosestBase(locationGet).Location, locationGet);
-            if (butrryWithDelvery + butrryFree > 100)
-                throw new MoreDistasThenMaximomException(package.SendClient.Id, package.RecivedClient.Id);
-
-
             try
             {
+                if (package.Priority > Priority.Regular || package.WeightCatgory > WeightCategories.Heavy)
+                    throw new InputErrorException();
+
+
+                var send = dalObj.CilentByNumber(package.SendClient.Id);
+
+
+                if (!send.Active)
+                    throw new ItemNotFoundException("Client", package.SendClient.Id);
+                Location locationsend = new Location { Latitude = send.Latitude, Longitude = send.Longitude };
+                Location locationGet = ClientLocation(package.RecivedClient.Id).Clone();
+                var butrryWithDelvery = buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package));
+                var butrryFree = buttryDownWithNoPackege(ClosestBase(locationsend).Location, locationsend) + buttryDownWithNoPackege(ClosestBase(locationGet).Location, locationGet);
+                if (butrryWithDelvery + butrryFree > 100)
+                    throw new MoreDistasThenMaximomException(package.SendClient.Id, package.RecivedClient.Id);
+
+
+
 
                 packegeNum = dalObj.AddPackage(package.convertPackageBltopackegeDal());
             }
@@ -53,7 +58,12 @@ namespace BlApi
         /// <param name="package"> particular package</param>
         public void UpdatePackegInDal(Package package)
         {
-            dalObj.UpdatePackege(package.convertPackageBltopackegeDal());
+            try
+            {
+                dalObj.UpdatePackege(package.convertPackageBltopackegeDal());
+            }
+            catch (DO.ItemNotFoundException ex)
+            { throw new ItemNotFoundException(ex); }
         }
 
         /// <summary>
@@ -92,7 +102,7 @@ namespace BlApi
                 {
                     var drone = SpecificDrone(packege.OperatorSkimmerId);
                     drone.DroneStatus = DroneStatus.Free;
-                    
+
                     drone.NumPackage = 0;
 
                     for (int i = 0; i < dronesListInBl.Count; i++)

@@ -26,61 +26,76 @@ namespace PL
         BO.DroneToList drone;
         public DronesListWindow( BlApi.IBL bl)
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
 
-            this.bl = bl;
+                this.bl = bl;
 
-            WeightSelctor.Items.Add("");
-            StatusSelector.Items.Add("");
-            foreach (var item in Enum.GetValues(typeof(BO.WeightCategories)))
-                WeightSelctor.Items.Add(item);
-            foreach (var item in Enum.GetValues(typeof(BO.DroneStatus)))
-                StatusSelector.Items.Add(item);
-            drone = new BO.DroneToList();
-            DronesListView.ItemsSource = bl.FilterDronesList();
-            
-            view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
-             groupDescription = new PropertyGroupDescription("Model");
+                WeightSelctor.Items.Add("");
+                StatusSelector.Items.Add("");
+                foreach (var item in Enum.GetValues(typeof(BO.WeightCategories)))
+                    WeightSelctor.Items.Add(item);
+                foreach (var item in Enum.GetValues(typeof(BO.DroneStatus)))
+                    StatusSelector.Items.Add(item);
+                drone = new BO.DroneToList();
+                DronesListView.ItemsSource = bl.FilterDronesList();
 
+                view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
+                groupDescription = new PropertyGroupDescription("Model");
+            }
+            catch(Exception ex)
+            { MessageBox.Show(ex.ToString()); }
         }
 
-
-
         private void WeightSelctor_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (WeightSelctor.SelectedItem is null)
-                return;
-            if (WeightSelctor.SelectedItem == WeightSelctor.Items[0])
+        {try
             {
-                DronesListView.ItemsSource = bl.DroneToListsByWhight();
-
+                if (WeightSelctor.SelectedItem is null)
+                    return;
+                if (WeightSelctor.SelectedItem == WeightSelctor.Items[0])
+                {
+                    DronesListView.ItemsSource = bl.DroneToListsByWhight();
+                }
+                else
+                    DronesListView.ItemsSource = bl.DroneToListsByWhight((BO.WeightCategories)WeightSelctor.SelectedItem);
             }
-            else
-                DronesListView.ItemsSource = bl.DroneToListsByWhight((BO.WeightCategories)WeightSelctor.SelectedItem);
+            catch (Exception ex) { MessageBox.Show(ex.ToString()); }
         }
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (StatusSelector.SelectedItem is null)
-                return;
-            if (StatusSelector.SelectedItem == StatusSelector.Items[0])
+            try
             {
-                DronesListView.ItemsSource = bl.DroneToListsByStatus();
+                if (StatusSelector.SelectedItem is null)
+                    return;
+                if (StatusSelector.SelectedItem == StatusSelector.Items[0])
+                {
+                    DronesListView.ItemsSource = bl.DroneToListsByStatus();
 
+                }
+                else
+                    DronesListView.ItemsSource = bl.DroneToListsByStatus((BO.DroneStatus)StatusSelector.SelectedItem);
             }
-            else
-                DronesListView.ItemsSource = bl.DroneToListsByStatus((BO.DroneStatus)StatusSelector.SelectedItem);
+            catch(Exception ex)
+
+            { MessageBox.Show(ex.ToString()); }
         }
 
 
         private void ChoseDrone(object sender, MouseButtonEventArgs e)
         {
-
-            if (DronesListView.SelectedItem != null)
+            try
             {
-                new DroneWindow( bl, (BO.DroneToList)DronesListView.SelectedItem).ShowDialog();
-                DronesListView.ItemsSource = bl.FilterDronesList();
-                DronesListView.SelectedItem = null;
+                if (DronesListView.SelectedItem != null)
+                {
+                    new DroneWindow(bl, (BO.DroneToList)DronesListView.SelectedItem).ShowDialog();
+                    DronesListView.ItemsSource = bl.FilterDronesList();
+                    DronesListView.SelectedItem = null;
+                }
+            }catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
 
         }
@@ -167,6 +182,8 @@ namespace PL
         private void selectByNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox text = sender as TextBox;
+            if (text.Text.Any(x => x < '0' || x > '9'))
+                return;
             DronesListView.ItemsSource = bl.DroneToListFilterByNumber(text.Text);
         }
 
@@ -183,7 +200,7 @@ namespace PL
             else
             {
                 view.GroupDescriptions.Clear();
-             //  DronesListView.ItemsSource = bl.FilterDronesList();
+             
             }
         }
 

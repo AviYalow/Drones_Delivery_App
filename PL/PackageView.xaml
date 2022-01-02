@@ -79,7 +79,7 @@
 
                     </Grid.RowDefinitions>
                     <Label Content="Sirial Number:" FontSize="30" Grid.Row="0" Grid.Column="0" />
-                    <Label Content="Drone:" Grid.Column="0" FontSize="30"  Grid.Row="1"/>
+                    <Label Content="Drone:" Grid.Column="0" FontSize="30"  Grid.Row="1" MouseLeftButtonDown="SirialNumberDroneLabel_MouseLeftButtonDown"/>
                     <Label Content="Time of crate:" Grid.Column="0" FontSize="30" Grid.Row="2"/>
                     <Label Content="Time of conected:" Grid.Column="0" FontSize="30" Grid.Row="3"/>
                     <Label Content="Time of collected:" Grid.Column="0" FontSize="30" Grid.Row="4"/>
@@ -98,8 +98,8 @@
                             <RowDefinition Height="2*"/>
                         </Grid.RowDefinitions>
                         <Label Name="SirialNumberDroneLabel"  FontSize="30" Content="{Binding Path=SerialNum}" Grid.Row="0" MouseLeftButtonDown="SirialNumberDroneLabel_MouseLeftButtonDown"/>
-                        <Label Name="ButtryDroneLabel"  FontSize="30" Content="{Binding Path=ButrryStatus}" Grid.Row="1"/>
-                        <Label Name="LocationDroneLabel"  FontSize="30" Content="{Binding Path=Location}" Grid.Row="2"/>
+                        <Label Name="ButtryDroneLabel"  FontSize="30" Content="{Binding Path=ButrryStatus}" Grid.Row="1" MouseLeftButtonDown="SirialNumberDroneLabel_MouseLeftButtonDown"/>
+                        <Label Name="LocationDroneLabel"  FontSize="30" Content="{Binding Path=Location}" Grid.Row="2" MouseLeftButtonDown="SirialNumberDroneLabel_MouseLeftButtonDown"/>
                     </Grid>
                 </Grid>
             </Label>

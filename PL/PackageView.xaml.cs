@@ -31,28 +31,42 @@ namespace PL
 
         public PackageView(BlApi.IBL bL)
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
 
-            bl = bL;
+                bl = bL;
 
-            DataToCmb();
+                DataToCmb();
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
         }
         public PackageView(BlApi.IBL bL, uint packegeNum)
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
 
-            bl = bL;
-            packegeFromDialog(packegeNum);
+                bl = bL;
+                packegeFromDialog(packegeNum);
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
 
         }
 
 
         public PackageView(BlApi.IBL bL, PackageToList packagefromList)
         {
-
-            InitializeComponent();
-            bl = bL;
-            packegeFromDialog(packagefromList.SerialNumber);
+            try
+            {
+                InitializeComponent();
+                bl = bL;
+                packegeFromDialog(packagefromList.SerialNumber);
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
 
         }
         private void packegeFromDialog(uint serialNumber)

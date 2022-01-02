@@ -70,15 +70,16 @@ namespace BlApi
 
             internal static ClientToList convertClientDalToClientToList(this DO.Client clientInDal, IDal dalObj)
             {
-                return new ClientToList
-                {
-                    ID = clientInDal.Id,
-                    Name = clientInDal.Name,
-                    Phone = clientInDal.PhoneNumber,
-                    Arrived = (uint)dalObj.PackegeList(x => x.SendClient == clientInDal.Id && x.PackageArrived != null).Count(),
-                    NotArrived = (uint)dalObj.PackegeList(x => x.SendClient == clientInDal.Id && x.PackageArrived == null).Count(),
-                    OnTheWay = (uint)dalObj.PackegeList(x => x.GetingClient == clientInDal.Id && x.PackageArrived == null).Count(),
-                    received = (uint)dalObj.PackegeList(x => x.GetingClient == clientInDal.Id && x.PackageArrived != null).Count()
+            return new ClientToList
+            {
+                ID = clientInDal.Id,
+                Name = clientInDal.Name,
+                Phone = clientInDal.PhoneNumber,
+                Arrived = (uint)dalObj.PackegeList(x => x.SendClient == clientInDal.Id && x.PackageArrived != null).Count(),
+                NotArrived = (uint)dalObj.PackegeList(x => x.SendClient == clientInDal.Id && x.PackageArrived == null).Count(),
+                OnTheWay = (uint)dalObj.PackegeList(x => x.GetingClient == clientInDal.Id && x.PackageArrived == null).Count(),
+                received = (uint)dalObj.PackegeList(x => x.GetingClient == clientInDal.Id && x.PackageArrived != null).Count(),
+                Active = clientInDal.Active
                 };
             }
 

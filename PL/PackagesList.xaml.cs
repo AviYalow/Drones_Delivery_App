@@ -26,25 +26,30 @@ namespace PL
         PropertyGroupDescription groupDescription;
         public PackagesList(BlApi.IBL bl)
         {
-            InitializeComponent();
-            this.bl = bl;
+            try
+            {
+                InitializeComponent();
+                this.bl = bl;
 
-            PackagesListView.ItemsSource = bl.PackageToLists();
+                PackagesListView.ItemsSource = bl.PackageToLists();
 
 
-            WeightCombo.Items.Add("");
-            StatusCombo.Items.Add("");
-            PrioCombo.Items.Add("");
-            foreach (var item in Enum.GetValues(typeof(BO.WeightCategories)))
-                WeightCombo.Items.Add(item);
+                WeightCombo.Items.Add("");
+                StatusCombo.Items.Add("");
+                PrioCombo.Items.Add("");
+                foreach (var item in Enum.GetValues(typeof(BO.WeightCategories)))
+                    WeightCombo.Items.Add(item);
 
-            foreach (var item in Enum.GetValues(typeof(BO.PackageStatus)))
+                foreach (var item in Enum.GetValues(typeof(BO.PackageStatus)))
                     StatusCombo.Items.Add(item);
 
-            foreach (var item in Enum.GetValues(typeof(BO.Priority)))
-                PrioCombo.Items.Add(item);
+                foreach (var item in Enum.GetValues(typeof(BO.Priority)))
+                    PrioCombo.Items.Add(item);
 
-            view = (CollectionView)CollectionViewSource.GetDefaultView(PackagesListView.ItemsSource);
+                view = (CollectionView)CollectionViewSource.GetDefaultView(PackagesListView.ItemsSource);
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
         }
 
         private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -63,44 +68,54 @@ namespace PL
 
         private void CmbDisplayOp_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            view = (CollectionView)CollectionViewSource.GetDefaultView(PackagesListView.ItemsSource);
-            if (CmbDisplayOp.SelectedItem == CmbDisplayOp.Items[0])
+            try
             {
-                view.GroupDescriptions.Clear();
+                view = (CollectionView)CollectionViewSource.GetDefaultView(PackagesListView.ItemsSource);
+                if (CmbDisplayOp.SelectedItem == CmbDisplayOp.Items[0])
+                {
+                    view.GroupDescriptions.Clear();
 
 
+                }
+                else if (CmbDisplayOp.SelectedItem == CmbDisplayOp.Items[1])
+                {
+                    view.GroupDescriptions.Clear();
+                    groupDescription = new PropertyGroupDescription("SendClient");
+                    view.GroupDescriptions.Add(groupDescription);
+                }
+                else if (CmbDisplayOp.SelectedItem == CmbDisplayOp.Items[2])
+                {
+                    view.GroupDescriptions.Clear();
+                    groupDescription = new PropertyGroupDescription("RecivedClient");
+
+                    view.GroupDescriptions.Add(groupDescription);
+                }
             }
-            else if (CmbDisplayOp.SelectedItem == CmbDisplayOp.Items[1])
-            {
-                view.GroupDescriptions.Clear();
-                groupDescription = new PropertyGroupDescription("SendClient");
-                view.GroupDescriptions.Add(groupDescription);
-            }
-            else if (CmbDisplayOp.SelectedItem == CmbDisplayOp.Items[2])
-            {
-                view.GroupDescriptions.Clear();
-                groupDescription = new PropertyGroupDescription("RecivedClient");
-                
-                view.GroupDescriptions.Add(groupDescription);
-            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
         }
 
         private void WeightCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (WeightCombo.SelectedItem is null)
-                return;
-            if (WeightCombo.SelectedItem == WeightCombo.Items[0])
+            try
             {
-                PackagesListView.ItemsSource = bl.PackageWeightLists();
+                if (WeightCombo.SelectedItem is null)
+                    return;
+                if (WeightCombo.SelectedItem == WeightCombo.Items[0])
+                {
+                    PackagesListView.ItemsSource = bl.PackageWeightLists();
 
 
-            }
-            else if (WeightCombo.SelectedItem != WeightCombo.Items[0])
-            {
-               
+                }
+                else if (WeightCombo.SelectedItem != WeightCombo.Items[0])
+                {
+
                     PackagesListView.ItemsSource = bl.PackageWeightLists((BO.WeightCategories)WeightCombo.SelectedItem);
-                
+
+                }
             }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
 
         }
 
@@ -109,67 +124,98 @@ namespace PL
 
         private void StatusCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            if (StatusCombo.SelectedItem is null)
-                return;
-            if (StatusCombo.SelectedItem == StatusCombo.Items[0])
-              PackagesListView.ItemsSource=  bl.PackegeBySpsificStatus();
-            else
-                PackagesListView.ItemsSource = bl.PackegeBySpsificStatus((PackageStatus)StatusCombo.SelectedItem);
-
+            try
+            {
+                if (StatusCombo.SelectedItem is null)
+                    return;
+                if (StatusCombo.SelectedItem == StatusCombo.Items[0])
+                    PackagesListView.ItemsSource = bl.PackegeBySpsificStatus();
+                else
+                    PackagesListView.ItemsSource = bl.PackegeBySpsificStatus((PackageStatus)StatusCombo.SelectedItem);
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
         }
 
         private void PrioCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (PrioCombo.SelectedItem is null)
-                return;
-            if (PrioCombo.SelectedItem == PrioCombo.Items[0])
+            try
             {
-             
+                if (PrioCombo.SelectedItem is null)
+                    return;
+                if (PrioCombo.SelectedItem == PrioCombo.Items[0])
+                {
+
                     PackagesListView.ItemsSource = bl.PackagePriorityLists();
-          
+
+                }
+                else
+                {
+                    PackagesListView.ItemsSource = bl.PackagePriorityLists((Priority)PrioCombo.SelectedItem);
+                }
             }
-          else
-            {
-                PackagesListView.ItemsSource = bl.PackagePriorityLists((Priority)PrioCombo.SelectedItem);
-            }
-        
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
 
         }
 
         private void ClearFromDate_Click(object sender, RoutedEventArgs e)
         {
-            from.SelectedDate = null;
-            PackagesListView.ItemsSource = bl.PackageFromDateLists();
+            try
+            {
+                from.SelectedDate = null;
+                PackagesListView.ItemsSource = bl.PackageFromDateLists();
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
         }
 
         private void clearDateToButton_Click(object sender, RoutedEventArgs e)
         {
-           to.SelectedDate = null;
-            PackagesListView.ItemsSource = bl.PackageToDateLists();
+            try
+            {
+                to.SelectedDate = null;
+                PackagesListView.ItemsSource = bl.PackageToDateLists();
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
-            new PackageView(bl).ShowDialog();
-            PackagesListView.ItemsSource = bl.PackageToLists();
+            try
+            {
+                new PackageView(bl).ShowDialog();
+                PackagesListView.ItemsSource = bl.PackageToLists();
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
         }
 
         private void PackagesListView_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
-            if (PackagesListView.SelectedItem != null)
+            try
             {
-                new PackageView(bl, (BO.PackageToList)PackagesListView.SelectedItem).ShowDialog();
-                PackagesListView.ItemsSource = bl.PackageToLists();
-                PackagesListView.SelectedItem = null;
+                if (PackagesListView.SelectedItem != null)
+                {
+                    new PackageView(bl, (BO.PackageToList)PackagesListView.SelectedItem).ShowDialog();
+                    PackagesListView.ItemsSource = bl.PackageToLists();
+                    PackagesListView.SelectedItem = null;
+                }
             }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            new PackageView(bl).ShowDialog();
-            PackagesListView.ItemsSource = bl.PackageToLists();
+            try
+            {
+                new PackageView(bl).ShowDialog();
+                PackagesListView.ItemsSource = bl.PackageToLists();
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
         }
 
         private void from_DataContextChanged(object sender, RoutedEventArgs e)
