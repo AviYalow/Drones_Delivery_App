@@ -66,7 +66,7 @@ namespace BlApi
 
 
             var drone = SpecificDrone(droneNumber);
-            BaseStation baseStation = ClosestBase(drone.Location);
+            BaseStation baseStation = ClosestBase(drone.Location,true);
             if (drone.DroneStatus != DroneStatus.Free)
             {
                 throw new DroneStillAtWorkException();

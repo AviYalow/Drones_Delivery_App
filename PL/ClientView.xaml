@@ -1,11 +1,14 @@
 ﻿<Window x:Class="PL.ClientView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialdesignin="http://materialdesigninxaml.net/winfx/xaml/themes"
+        
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ClientView" Height="450" Width="800"
+        ResizeMode="NoResize"
+        Title="ClientView" Height="600" Width="1200"
          TextElement.Foreground="{DynamicResource MaterialDesignBody}"
      TextElement.FontWeight="Regular"
      TextElement.FontSize="13"
@@ -26,35 +29,37 @@
                 <ColumnDefinition Width="229*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
 
             </Grid.RowDefinitions>
             <Label Name="TitelClientLabel" Content="Add Client" FontSize="15" Foreground="#FF1432F0" Background="Transparent"/>
-            <TextBox x:Name="idTextBox"  Margin="126,48,0,10"   Width="130"   HorizontalAlignment="Left" Grid.RowSpan="2" BorderBrush="#FF0E1015"   />
-            <Label x:Name="IdLabel" Content="ID:"  HorizontalAlignment="Left" FontWeight="Bold" FontStyle="Normal" Margin="0,48,0,0" Grid.RowSpan="2"/>
-            <Label  Name="name" Content="Name:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Width="72" HorizontalAlignment="Left" FontWeight="Bold" Margin="0,48,0,0" Grid.RowSpan="2"/>
+            <TextBox x:Name="idTextBox" Text="{Binding Path=Id, Mode=TwoWay}" IsEnabled="{Binding ElementName=OkButton, Path=IsVisible}"  Margin="83,3,0,21"   Width="157"   HorizontalAlignment="Left" BorderBrush="#FF0E1015" PreviewKeyUp="PreviewKeyDownWhitNoDot" Grid.Row="1"   />
+            <Label x:Name="IdLabel" Content="ID:"  HorizontalAlignment="Left" FontWeight="Bold" FontStyle="Normal" Margin="23,22,0,16" Grid.Row="1"/>
+            <Label  Name="nameLabel" Content="Name:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Width="72" HorizontalAlignment="Left" FontWeight="Bold" Margin="15,29,0,0"/>
 
-            <Label Name="Phone"  Content="Phone:" Grid.Row="3" VerticalAlignment="Center" Width="105" HorizontalAlignment="Left" FontWeight="Bold"/>
-            <TextBox Name="phoneTextBox"    HorizontalAlignment="Left" Margin="126,0,0,0" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Width="130"   />
+            <Label Name="PhoneLabel"  Content="Phone:" Grid.Row="3" VerticalAlignment="Top" Width="51" HorizontalAlignment="Left" FontWeight="Bold" Margin="17,23,0,0"/>
+            <TextBox Name="phoneTextBox" MaxLength="7"     HorizontalAlignment="Left" Margin="181,31,0,0" Grid.Row="3" VerticalAlignment="Top" Width="129"   />
 
-            <Button  Name="OkButton"    Grid.Row="7"   VerticalAlignment="Center" Height="50" Click="OkButton_Click" Margin="50,0,275,0" RenderTransformOrigin="0.528,1.35"  >
+            <Button  Name="OkButton"    Grid.Row="7"   VerticalAlignment="Center" Height="50" Click="OkButton_Click" Margin="50,0,421,0" RenderTransformOrigin="0.528,1.35"  >
                 <Button.Background>
                     <ImageBrush ImageSource="/ok.jpg"/>
                 </Button.Background>
+
             </Button>
-            <Label Name="LonditudeLabel"  Content="Londitude:" HorizontalAlignment="Left"  Grid.Row="5" VerticalAlignment="Center" Width="74" FontWeight="Bold" Margin="6,0,0,0" />
-            <TextBox  Name="longditue" Width="148"  HorizontalAlignment="Left" Height="29" Margin="120,8,0,0" Grid.Row="5" VerticalAlignment="Top"  />
+            <Button x:Name="updateButton" Visibility="{Binding ElementName=AddPAckegeButton, Path=Visibility}" Content="Update" Margin="71,11,445,15" Click="updateButton_Click" Grid.Row="7" />
+            <Label Name="LonditudeLabel"  Content="Londitude:" HorizontalAlignment="Left"  Grid.Row="5" VerticalAlignment="Top" Width="74" FontWeight="Bold" Margin="6,11,0,0" />
+            <TextBox  Name="longditue" Text="{Binding Path=Longitude, Mode=TwoWay}" Width="148"  HorizontalAlignment="Left" Height="29" Margin="88,4,0,0" Grid.Row="5" VerticalAlignment="Top" PreviewKeyUp="PreviewKeyDownWhitDot"  />
 
 
-            
+
 
             <Label Name="AllFieldsArerequiredLabel" Content="All fields are required!"  HorizontalAlignment="Left" Margin="90,29,0,0" Grid.Row="7" VerticalAlignment="Top" Height="34" Grid.RowSpan="2" Width="145" Foreground="#FFDC3434" Visibility="Collapsed">
             </Label>
@@ -67,14 +72,92 @@
             <Label Name="InputMissingNameLabel" Content="Input is missing!" Visibility="Collapsed"  HorizontalAlignment="Left" Margin="126,15,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127" Foreground="#FFEA1111"/>
             <Label Name="InputMissingPhoneLabel" Content="Input is missing!" Visibility="Collapsed" HorizontalAlignment="Left" Margin="126,30,0,0" Grid.Row="3" VerticalAlignment="Top" Width="127" Foreground="#FFEA1111"/>
             <Label Name="InputMissingLocationLabel" Content="Input is missing!" Visibility="Collapsed" HorizontalAlignment="Left" Margin="126,10,0,0" Grid.Row="5" VerticalAlignment="Top" Width="126" Foreground="#FFEA1111" Height="26"/>
-            <TextBox  Name="nameTextBox"  HorizontalAlignment="Left" Margin="126,48,0,0" Grid.Row="1" VerticalAlignment="Top" Width="130" Grid.RowSpan="2" />
+            <TextBox Text="{Binding Path=Name, Mode=TwoWay}" Name="nameTextBox"  HorizontalAlignment="Left" Margin="81,29,0,0" Grid.Row="2" VerticalAlignment="Top" Width="147" />
 
 
-            <Label Name="latitudelabel" Content="Latitude:" HorizontalAlignment="Left" Margin="12,16,0,0" Grid.Row="4" VerticalAlignment="Top" Width="82" FontWeight="Bold"/>
-            <TextBox Name="letitudeTextBox"    HorizontalAlignment="Left" Margin="125,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="131" Height="29"  />
-            
+            <Label Name="latitudelabel" Content="Latitude:" HorizontalAlignment="Left" Margin="11,19,0,0" Grid.Row="4" VerticalAlignment="Top" Width="82" FontWeight="Bold"/>
+            <TextBox Name="letitudeTextBox" Text="{Binding Path=Latitude, Mode=TwoWay}"   HorizontalAlignment="Left" Margin="81,11,0,0" Grid.Row="4" VerticalAlignment="Top" Width="148" Height="29" PreviewKeyUp="PreviewKeyDownWhitDot"  />
+
+            <ListView Visibility="Visible" x:Name="ListPackegeFromClient" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,47,3,2" Grid.RowSpan="4" BorderBrush="Black" Background="#FFDC0E0E" SelectionChanged="ListPackegeFromClient_SelectionChanged">
+                <ListView.View>
+                    <GridView x:Name="ListviewGridFromClientsList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
+
+                        <GridViewColumn  DisplayMemberBinding="{Binding SerialNum}" x:Name="SerialNumPac" >
+                            <HeaderedContentControl x:Name="SerialNumS" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"   >
+                                <TextBox Text="Serial Number" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            </HeaderedContentControl>
+                        </GridViewColumn>
+                        <GridViewColumn  DisplayMemberBinding="{Binding WeightCatgory}" x:Name="WeightCatgoryPAc"  >
+                            <HeaderedContentControl x:Name="WeightCatgory" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"    >
+                                <TextBox Text="Weight Catgory" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            </HeaderedContentControl>
+                        </GridViewColumn>
+                        <GridViewColumn  DisplayMemberBinding="{Binding Priority}" x:Name="PriorityPac"  >
+                            <HeaderedContentControl x:Name="PriorityS" HorizontalAlignment="Left" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"  >
+                                <TextBox Text="Priority" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            </HeaderedContentControl>
+                        </GridViewColumn>
+                        <GridViewColumn  DisplayMemberBinding="{Binding PackageStatus}" x:Name="PackageStatusPac" >
+                            <HeaderedContentControl x:Name="PackageStatusS" HorizontalAlignment="Left" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"   >
+                                <TextBox Text="Package Status" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            </HeaderedContentControl>
+                        </GridViewColumn>
+                        <GridViewColumn  DisplayMemberBinding="{Binding Client2}" x:Name="Client2Pac" >
+                            <HeaderedContentControl x:Name="Client2S" HorizontalAlignment="Left" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"   >
+                                <TextBox Text="To Client " IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            </HeaderedContentControl>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Label Visibility="{Binding ElementName=ListPackegeFromClient, Path=Visibility }" Name="SendListlabel" Content="Packege Send:" Grid.Column="1" HorizontalAlignment="Left" Margin="30,21,0,0" VerticalAlignment="Top"/>
+            <ListView  Visibility="{Binding ElementName=ListPackegeFromClient, Path=Visibility }" x:Name="ListPackegeToClient" Grid.Row="4" Grid.ColumnSpan="2" Margin="4,45,-1,4" Grid.RowSpan="4" BorderBrush="Black" Background="#FFDC0E0E" Grid.Column="1" SelectionChanged="ListPackegeToClient_SelectionChanged">
+                <ListView.View>
+                    <GridView x:Name="ListviewGridToClientsList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
+
+                        <GridViewColumn  DisplayMemberBinding="{Binding SerialNum}" x:Name="SerialNumberGet" >
+                            <HeaderedContentControl x:Name="SerialNumP" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
+                                <TextBox Text="Serial Number" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            </HeaderedContentControl>
+                        </GridViewColumn>
+                        <GridViewColumn  DisplayMemberBinding="{Binding WeightCatgory}" x:Name="WeightCatgoryGet"  >
+                            <HeaderedContentControl x:Name="WeightCatgoryP" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"    >
+                                <TextBox Text="Weight Catgory" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            </HeaderedContentControl>
+                        </GridViewColumn>
+                        <GridViewColumn  DisplayMemberBinding="{Binding Priority}" x:Name="PriorityGet"  >
+                            <HeaderedContentControl x:Name="PriorityP" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"  >
+                                <TextBox Text="Priority" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            </HeaderedContentControl>
+                        </GridViewColumn>
+                        <GridViewColumn  DisplayMemberBinding="{Binding PackageStatus}" x:Name="PackageStatusGet" >
+                            <HeaderedContentControl x:Name="PackageStatusP" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"   >
+                                <TextBox Text="Package Status" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            </HeaderedContentControl>
+                        </GridViewColumn>
+                        <GridViewColumn  DisplayMemberBinding="{Binding Client2}" x:Name="Client2Get" >
+                            <HeaderedContentControl x:Name="Client2P" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"   >
+                                <TextBox Text="To Client " IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                            </HeaderedContentControl>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Label  Visibility="{Binding ElementName=ListPackegeFromClient, Path=Visibility }" Name="ToClientLabel" Content="Packege to client:" HorizontalAlignment="Left" Margin="26,27,0,0" Grid.Row="4" VerticalAlignment="Top" Grid.Column="1"/>
+            <Button  Visibility="{Binding ElementName=ListPackegeFromClient, Path=Visibility }" x:Name="AddPAckegeButton"  HorizontalAlignment="Left" Margin="96,9,0,0" VerticalAlignment="Top"   Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+  ToolTip="MaterialDesignFloatingActionMiniDarkButton"   Height="35" Grid.Column="2" Click="AddPAckegeButton_Click">
+                <materialdesignin:PackIcon Kind="Add" />
+            </Button>
+            <ComboBox Name="StartPhoneCmb" HorizontalAlignment="Left" Height="35" Margin="75,20,0,0" Grid.Row="3" VerticalAlignment="Top" Width="87" SelectionChanged="StartPhoneCmb_SelectionChanged">
+                <ComboBoxItem Content="054"/>
+                <ComboBoxItem Content="052"/>
+                <ComboBoxItem Content="053"/>
+                <ComboBoxItem Content="059"/>
+                <ComboBoxItem Content="050"/>
+
+            </ComboBox>
+            <Button x:Name="Delete" Margin="448,13,45,13" Grid.Row="7" Content="Delete" Click="Delete_Click" />
         </Grid>
-
     </Grid>
 
 </Window>

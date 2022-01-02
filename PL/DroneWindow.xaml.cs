@@ -70,7 +70,8 @@ namespace PL
                 InitializeComponent();
                 ctorUpdateDronWindow(bl, droneFromListView.SerialNumber);
             }
-            catch (Exception ex) { MessageBox.Show(ex.ToString()); }        }
+            catch (Exception ex) { MessageBox.Show(ex.ToString()); }
+        }
 
         private void ctorUpdateDronWindow(BlApi.IBL bl, uint droneFromListView)
         {

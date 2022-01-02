@@ -15,7 +15,7 @@ namespace BlApi
         /// </summary>
         /// <param name="location"> particular location</param>
         /// <returns> the most collset base station </returns>
-        public BaseStation ClosestBase(Location location)
+        public BaseStation ClosestBase(Location location,bool toCharge=false)
         {
             BaseStation baseStation = new BaseStation();
             baseStation.Location = new Location();
@@ -30,7 +30,12 @@ namespace BlApi
                     base_location.Latitude = base_.latitude;
                     base_location.Longitude = base_.longitude;
                     distans2 = Distans(location, base_location);
-                    if ((distans > distans2 || distans == null)&&base_.NumberOfChargingStations>0)
+                    if(toCharge)
+                    {
+                        if (base_.NumberOfChargingStations <= 0)
+                            continue;
+                    }
+                    if ((distans > distans2 || distans == null))
                     {
 
                         distans = distans2;

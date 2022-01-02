@@ -75,13 +75,14 @@ namespace BlApi
             if (fon.Count() < 10)
             { throw new NumberNotEnoughException(10); }
             if (fon.Count() > 10)
+                
             { throw new NumberMoreException(); }
             if (fon[0] != '0' || fon[1] != '5')
             { throw new StartingException("0,5"); }
             if (fon.Any(c => c < '0' || c > '9'))
             { throw new IllegalDigitsException(); }
-            fon = fon.Insert(3, "-");
-            fon = fon.Insert(7, "-");
+            
+           
 
         }
 
@@ -89,7 +90,7 @@ namespace BlApi
         /// Update fields at a client
         /// </summary>
         /// <param name="client"> client </param>
-        public void UpdateClient(ref Client client)
+        public void UpdateClient( Client client)
         {
             //checking id
             if (client.Id < 100000000)
@@ -105,6 +106,11 @@ namespace BlApi
                     clientFromDal.Name = client.Name;
                 if (client.Phone != "")
                     clientFromDal.PhoneNumber = client.Phone;
+                if (client.Location.Latitude != 0)
+                    clientFromDal.Latitude = client.Location.Latitude;
+                if (client.Location.Longitude != 0)
+                    clientFromDal.Latitude = client.Location.Longitude;
+
                 dalObj.UpdateClient(clientFromDal);
             }
             catch (DO.ItemNotFoundException ex)
@@ -166,7 +172,7 @@ namespace BlApi
                 foreach(var packege in dalObj.PackegeList(x=>true))
                 {
                     //cancel paceges how dont send yet
-                    if(packege.SendClient==id&&packege.CollectPackageForShipment!=null)
+                    if(packege.SendClient==id&&packege.CollectPackageForShipment is null)
                     {
                         dalObj.DeletePackege(packege.SerialNumber);
                         for (int i = 0; i < dronesListInBl.Count; i++)

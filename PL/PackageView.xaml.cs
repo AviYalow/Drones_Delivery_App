@@ -19,6 +19,7 @@ using BlApi;
 
 namespace PL
 {
+  public  enum StatusPackegeWindow {NotClient,SendClient,GetingClient }
     /// <summary>
     /// Interaction logic for PackageView.xaml
     /// </summary>
@@ -27,27 +28,27 @@ namespace PL
         BlApi.IBL bl;
         Package package;
         PackageStatus packageStatus;
+        StatusPackegeWindow changFromClient;
 
-
-        public PackageView(BlApi.IBL bL)
+        public PackageView(BlApi.IBL bL,string SendClient="", StatusPackegeWindow change =StatusPackegeWindow. NotClient)
         {
             try
             {
                 InitializeComponent();
 
                 bl = bL;
-
-                DataToCmb();
+                changFromClient = change;
+                DataToCmb(SendClient);
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
         }
-        public PackageView(BlApi.IBL bL, uint packegeNum)
+        public PackageView(BlApi.IBL bL, uint packegeNum, StatusPackegeWindow change = StatusPackegeWindow.NotClient)
         {
             try
             {
                 InitializeComponent();
-
+                changFromClient = change;
                 bl = bL;
                 packegeFromDialog(packegeNum);
             }
@@ -57,12 +58,13 @@ namespace PL
         }
 
 
-        public PackageView(BlApi.IBL bL, PackageToList packagefromList)
+        public PackageView(BlApi.IBL bL, PackageToList packagefromList, StatusPackegeWindow change = StatusPackegeWindow.NotClient)
         {
             try
             {
                 InitializeComponent();
                 bl = bL;
+                changFromClient = change;
                 packegeFromDialog(packagefromList.SerialNumber);
             }
             catch (Exception ex)
@@ -77,6 +79,7 @@ namespace PL
                 this.DataContext = package;
                 MainGrid.DataContext = package;
                 DataGridPackege.DataContext = package;
+                AddGrid.Visibility = Visibility.Collapsed;
                 UpdateGrid.Visibility = Visibility.Visible;
                 statusSelectorSurce();
             }
@@ -92,37 +95,60 @@ namespace PL
             {
                 packageStatus = PackageStatus.Arrived;
                 NextModeButton.Visibility = Visibility.Collapsed;
-
+                
+               
             }
             else if (package.CollectPackage != null)
             {
                 packageStatus = (PackageStatus.Collected);
+                if(changFromClient==StatusPackegeWindow.SendClient)
+                {
+                    NextModeButton.Visibility = Visibility.Collapsed;
+                }
 
             }
             else if (package.PackageAssociation != null)
             {
                 packageStatus = (PackageStatus.Assign);
-
+                if (changFromClient==StatusPackegeWindow.GetingClient)
+                {
+                    NextModeButton.Visibility = Visibility.Collapsed;
+                }
 
             }
             else
             {
                 packageStatus = (PackageStatus.Create);
                 NextModeButton.Visibility = Visibility.Collapsed;
+                if(changFromClient != StatusPackegeWindow.GetingClient)
+                DeleteButton.Visibility = Visibility.Visible;
             }
             DronestatuseLabel.DataContext = packageStatus;
 
 
         }
-        void DataToCmb()
+        void DataToCmb(string SendClient)
         {
             try
             {
                 AddGrid.Visibility = Visibility.Visible;
                 package = new Package { SendClient = new ClientInPackage(), RecivedClient = new ClientInPackage() };
+                if(SendClient!="")
+                {
+                    uint id;
+                    uint.TryParse(SendClient,out id);
+                    package.SendClient.Id = id;
+                    SendClientCMB.ItemsSource = bl.ClientInPackagesList().Where(x => x.Id == id);
+                    SendClientCMB.SelectedItem = SendClientCMB.Items[0];
+
+
+
+                }
+                else
+                    SendClientCMB.ItemsSource = bl.ClientInPackagesList();
                 DataContext = package;
                 ResiveClientCMB.ItemsSource = bl.ClientInPackagesList();
-                SendClientCMB.ItemsSource = bl.ClientInPackagesList();
+               
                 PraiyurtyCMB.ItemsSource = Enum.GetValues(typeof(Priority));
                 WeightCmb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             }
@@ -139,8 +165,9 @@ namespace PL
                 return;
             try
             {
-                MessageBox.Show($"Packege number:{ bl.AddPackege(package)} Add!");
-
+                uint packegeNumber = bl.AddPackege(package);
+                MessageBox.Show($"Packege number:{packegeNumber } Add!");
+                packegeFromDialog(packegeNumber);
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString(), "ERROR"); }
@@ -179,12 +206,29 @@ namespace PL
 
         private void SirialNumberDroneLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+          if (changFromClient != StatusPackegeWindow.NotClient)
+                {
+                return;
+                }
             try
             {
                 new DroneWindow(bl, package.Drone.SerialNum).ShowDialog();
                 packegeFromDialog(package.SerialNumber);
             }
             catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
+            }
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.DeletePackege(package.SerialNumber);
+                MessageBox.Show($"Packge number{package.SerialNumber} deleted!");
+                this.Close();
+            }catch(Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "ERROR");
             }

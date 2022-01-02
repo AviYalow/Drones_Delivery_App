@@ -70,6 +70,7 @@ namespace Dal
                     var client = DataSource.clients[i];
                     client.Active = false;
                     DataSource.clients[i] = client;
+                    break;
                 }    
             }
 

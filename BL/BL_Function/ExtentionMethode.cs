@@ -130,18 +130,18 @@ namespace BlApi
 
                 };
                 if (client1 == package.SendClient)
-                    convert.client2 = dal.CilentByNumber(package.GetingClient).clientInPackageFromDal();
+                    convert.Client2 = dal.CilentByNumber(package.GetingClient).clientInPackageFromDal();
                 else
-                    convert.client2 = dal.CilentByNumber(package.SendClient).clientInPackageFromDal();
+                    convert.Client2 = dal.CilentByNumber(package.SendClient).clientInPackageFromDal();
 
                 if (package.PackageArrived != null)
-                    convert.packageStatus = PackageStatus.Arrived;
+                    convert.PackageStatus = PackageStatus.Arrived;
                 else if (package.CollectPackageForShipment != null)
-                    convert.packageStatus = PackageStatus.Collected;
+                    convert.PackageStatus = PackageStatus.Collected;
                 else if (package.PackageAssociation != null)
-                    convert.packageStatus = PackageStatus.Assign;
+                    convert.PackageStatus = PackageStatus.Assign;
                 else
-                    convert.packageStatus = PackageStatus.Create;
+                    convert.PackageStatus = PackageStatus.Create;
                 return convert;
 
             }

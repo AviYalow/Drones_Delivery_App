@@ -102,7 +102,7 @@ namespace BlApi
         /// </summary>
         /// <param name="location"> particular location</param>
         /// <returns> the most collset base station </returns>
-        public BaseStation ClosestBase(Location location);
+        public BaseStation ClosestBase(Location location,bool toCharge= false);
 
         /// <summary>
         /// geting location for specific base station
@@ -162,7 +162,7 @@ namespace BlApi
         /// Update fields at a client
         /// </summary>
         /// <param name="client"> client </param>
-        public void UpdateClient(ref Client client);
+        public void UpdateClient( Client client);
         /// <summary>
         /// return the client location
         /// </summary>
