@@ -19,11 +19,15 @@ namespace PL
     /// </summary>
     public partial class ClientsLIst : Window
     {
+        CollectionView view;
+        PropertyGroupDescription groupDescription;
         BlApi.IBL bl;
         public ClientsLIst(BlApi.IBL bl)
         {
             InitializeComponent();
             this.bl = bl;
+            view = (CollectionView)CollectionViewSource.GetDefaultView(clientListView.ItemsSource);
+            groupDescription = new PropertyGroupDescription("Name");
             clientListView.ItemsSource = bl.ClientActiveToLists();
         }
 
@@ -70,6 +74,25 @@ namespace PL
             { clientListView.ItemsSource = bl.ClientActiveHowSendAndArrivePackegesToLists(); }
             else if (SenderClientCmb.SelectedItem == SendItemAndPackegeNotArrive)
             { clientListView.ItemsSource = bl.ClientActiveHowSendPackegesAndNotArriveToLists(); }
+        }
+
+        private void GetingClientCmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (getingClientCmb.SelectedItem is null)
+            {
+                clientListView.ItemsSource = bl.ClientActiveHowSendPackegesToLists(false);
+            }
+            else if (getingClientCmb.SelectedItem == GetItem)
+            { clientListView.ItemsSource = bl.ClientActiveHowGetingPackegesToLists(); }
+            else if (getingClientCmb.SelectedItem == GetItemAndPackegeArrive)
+            { clientListView.ItemsSource = bl.ClientActiveHowGetingPackegesAndArriveToLists(); }
+            else if (getingClientCmb.SelectedItem == GetItemAndPackegeNotArrive)
+            { clientListView.ItemsSource = bl.ClientActiveHowGetingPackegesAndNotArriveToLists(); }
+        }
+
+        private void AllClient_Checked(object sender, RoutedEventArgs e)
+        {
+            clientListView.ItemsSource = bl.ClientActiveToLists(false);
         }
     }
 }

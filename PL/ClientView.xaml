@@ -54,29 +54,7 @@
             <TextBox  Name="longditue" Width="148"  HorizontalAlignment="Left" Height="29" Margin="120,8,0,0" Grid.Row="5" VerticalAlignment="Top"  />
 
 
-            <Label Name="ClientLabel"   VerticalAlignment="Top"   Grid.RowSpan="2" Width="auto" Height="auto" Grid.Column="1" Margin="5,14,-5,0" Grid.ColumnSpan="2" >
-
-                <Grid  >
-                    <Grid.RowDefinitions >
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="ID:" FontWeight="Bold"/>
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Name:" FontWeight="Bold"/>
-                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Phone:" FontWeight="Bold"/>
-                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Location:" FontWeight="Bold"/>
-                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=Id}"  />
-                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=Name}"/>
-                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Path=Phone}"/>
-                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Path=Location}" />
-                </Grid>
-            </Label>
+            
 
             <Label Name="AllFieldsArerequiredLabel" Content="All fields are required!"  HorizontalAlignment="Left" Margin="90,29,0,0" Grid.Row="7" VerticalAlignment="Top" Height="34" Grid.RowSpan="2" Width="145" Foreground="#FFDC3434" Visibility="Collapsed">
             </Label>

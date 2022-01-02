@@ -78,5 +78,22 @@
             <ComboBoxItem Name="SendItemAndPackegeArrive" Content="Sender client and their packege arrive" />
 
         </ComboBox>
+
+        <ComboBox Name="getingClientCmb" HorizontalAlignment="Left" Margin="223,35,0,0" VerticalAlignment="Top" Width="150"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+  materialDesign:TextFieldAssist.HasClearButton="True"
+ 
+  materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
+  materialDesign:ColorZoneAssist.Mode="SecondaryLight"
+  materialDesign:HintAssist.Hint="Select by geting client"
+  
+  MinWidth="128" SelectionChanged="GetingClientCmb_SelectionChanged">
+            <ComboBoxItem Name="GetItem" Content="geting client"  />
+            <ComboBoxItem Name="GetItemAndPackegeNotArrive" Content="geting client and their packege not arrive"  />
+            <ComboBoxItem Name="GetItemAndPackegeArrive" Content="geting client and their packege arrive" />
+
+        </ComboBox>
+        <CheckBox Name="AllClient" Content="include not activ client" HorizontalAlignment="Left" Margin="434,53,0,0" VerticalAlignment="Top" Checked="AllClient_Checked"/>
+
     </Grid>
 </Window>
