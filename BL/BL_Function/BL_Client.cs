@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
-
+using System.Collections;
 using DalApi;
 namespace BlApi
 {
@@ -166,15 +166,17 @@ namespace BlApi
         /// <param name="id"> client id</param>
         public void DeleteClient (uint id)
         {
+            List<uint>packegesDelete = new List<uint>();
             try
             {
                 dalObj.DeleteClient(id);
-                foreach(var packege in dalObj.PackegeList(x=>true))
+               foreach (var packege in dalObj.PackegeList(x=>true))
                 {
+                   
                     //cancel paceges how dont send yet
                     if(packege.SendClient==id&&packege.CollectPackageForShipment is null)
                     {
-                        dalObj.DeletePackege(packege.SerialNumber);
+                        packegesDelete.Add(packege.SerialNumber);
                         for (int i = 0; i < dronesListInBl.Count; i++)
                         {
                             if (dronesListInBl[i].NumPackage == packege.SerialNumber)
@@ -189,6 +191,8 @@ namespace BlApi
 
                     }
                 }
+               foreach(var packege in packegesDelete)
+                dalObj.DeletePackege(packege);
             }
             catch(DO.ItemNotFoundException ex)
             {
