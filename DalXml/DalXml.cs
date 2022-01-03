@@ -8,12 +8,26 @@ using DO;
 
 namespace Dal
 {
-   
-       /* sealed class DalXml :IDal
-        {
-            static readonly IDal instance = new DalXml();
-            public static IDal Instance { get => instance; }
-            DalXml() { }
-        }*/
-    
+
+    /* sealed class DalXml :IDal
+     {
+          //Using a design pattern of singelton
+     #region singelton
+     static readonly DalXml instance = new DalXml();
+     /// <summary>
+     /// static constructor to ensure instance init is done just before first use
+     /// </summary>
+     static DalXml() { }
+     /// <summary>
+     ///  constructor. default => private
+     /// </summary>
+     DalXml() { }
+     /// <summary>
+     /// the public Instance property for use. returns the instance
+     /// </summary>
+     public static DalXml Instance { get => instance; }// The public Instance property to use
+     #endregion
+
+     }*/
+
 }
