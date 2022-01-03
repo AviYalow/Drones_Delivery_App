@@ -18,38 +18,38 @@
         <ListView x:Name="clientListView" Grid.Row="1" MouseDoubleClick="clientListView_MouseDoubleClick">
             <ListView.View>
                 <GridView x:Name="ListviewGridToClientsList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
-                    <GridViewColumn  DisplayMemberBinding="{Binding ID}" x:Name="ID"   >
-                        <HeaderedContentControl x:Name="Id" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
+                    <GridViewColumn  DisplayMemberBinding="{Binding ID}" x:Name="IDNme"   >
+                        <HeaderedContentControl x:Name="ID" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
                             <TextBox Text="ID" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" />
                         </HeaderedContentControl>
                     </GridViewColumn>
-                    <GridViewColumn  DisplayMemberBinding="{Binding Name}" x:Name="name" >
-                        <HeaderedContentControl x:Name="ClientName" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
+                    <GridViewColumn  DisplayMemberBinding="{Binding Name}" x:Name="Clientname" >
+                        <HeaderedContentControl x:Name="Name" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
                             <TextBox Text="Name" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                         </HeaderedContentControl>
                     </GridViewColumn>
-                    <GridViewColumn  DisplayMemberBinding="{Binding Phone}" x:Name="Phone"  >
-                        <HeaderedContentControl x:Name="clientPhone" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"    >
+                    <GridViewColumn  DisplayMemberBinding="{Binding Phone}" x:Name="ClientPhone"  >
+                        <HeaderedContentControl x:Name="Phone" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"    >
                             <TextBox Text="Phone" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                         </HeaderedContentControl>
                     </GridViewColumn>
-                    <GridViewColumn  DisplayMemberBinding="{Binding Arrived}" x:Name="Arrived"  >
-                        <HeaderedContentControl x:Name="ArrivedPack" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"  >
+                    <GridViewColumn  DisplayMemberBinding="{Binding Arrived}" x:Name="ArrivedPac"  >
+                        <HeaderedContentControl x:Name="Arrive" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"  >
                             <TextBox Text="Arrived" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                         </HeaderedContentControl>
                     </GridViewColumn>
-                    <GridViewColumn  DisplayMemberBinding="{Binding NotArrived}" x:Name="NotArrived" >
-                        <HeaderedContentControl x:Name="NotArrivedPack" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"   >
+                    <GridViewColumn  DisplayMemberBinding="{Binding NotArrived}" x:Name="NotArrivedPac" >
+                        <HeaderedContentControl x:Name="NotArrived" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"   >
                             <TextBox Text="Not arrived" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                         </HeaderedContentControl>
                     </GridViewColumn>
-                    <GridViewColumn  DisplayMemberBinding="{Binding received}" x:Name="received"  >
-                        <HeaderedContentControl x:Name="receivedPack" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"    >
+                    <GridViewColumn  DisplayMemberBinding="{Binding received}" x:Name="receivedPack"  >
+                        <HeaderedContentControl x:Name="received" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"    >
                             <TextBox Text="Received" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                         </HeaderedContentControl>
                     </GridViewColumn>
-                    <GridViewColumn  DisplayMemberBinding="{Binding OnTheWay}" x:Name="OnTheWay"  >
-                        <HeaderedContentControl x:Name="OnTheWayPack" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"    >
+                    <GridViewColumn  DisplayMemberBinding="{Binding OnTheWay}" x:Name="OnTheWayPack"  >
+                        <HeaderedContentControl x:Name="OnTheWay" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"    >
                             <TextBox Text="On the way" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                         </HeaderedContentControl>
                     </GridViewColumn>

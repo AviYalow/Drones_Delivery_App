@@ -213,7 +213,7 @@ namespace PL
         private void SirialNumberDroneLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
           
-          if (changFromClient != StatusPackegeWindow.NotClient|| !clientMode)
+          if (changFromClient != StatusPackegeWindow.NotClient|| clientMode)
                 {
                 return;
                 }
