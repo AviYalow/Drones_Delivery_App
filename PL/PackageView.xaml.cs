@@ -29,13 +29,14 @@ namespace PL
         Package package;
         PackageStatus packageStatus;
         StatusPackegeWindow changFromClient;
+        bool clientMode;
 
-        public PackageView(BlApi.IBL bL,string SendClient="", StatusPackegeWindow change =StatusPackegeWindow. NotClient)
+        public PackageView(BlApi.IBL bL,string SendClient="", StatusPackegeWindow change =StatusPackegeWindow. NotClient, bool clientMode = false)
         {
             try
             {
                 InitializeComponent();
-
+                this.clientMode = clientMode;
                 bl = bL;
                 changFromClient = change;
                 DataToCmb(SendClient);
@@ -43,11 +44,12 @@ namespace PL
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
         }
-        public PackageView(BlApi.IBL bL, uint packegeNum, StatusPackegeWindow change = StatusPackegeWindow.NotClient)
+        public PackageView(BlApi.IBL bL, uint packegeNum, StatusPackegeWindow change = StatusPackegeWindow.NotClient ,bool clientMode=false)
         {
             try
             {
                 InitializeComponent();
+                this.clientMode = clientMode;
                 changFromClient = change;
                 bl = bL;
                 packegeFromDialog(packegeNum);
@@ -58,12 +60,13 @@ namespace PL
         }
 
 
-        public PackageView(BlApi.IBL bL, PackageToList packagefromList, StatusPackegeWindow change = StatusPackegeWindow.NotClient)
+        public PackageView(BlApi.IBL bL, PackageToList packagefromList, StatusPackegeWindow change = StatusPackegeWindow.NotClient, bool clientMode = false)
         {
             try
             {
                 InitializeComponent();
                 bl = bL;
+                this.clientMode = clientMode;
                 changFromClient = change;
                 packegeFromDialog(packagefromList.SerialNumber);
             }
@@ -75,6 +78,7 @@ namespace PL
         {
             try
             {
+                
                 package = bl.ShowPackage(serialNumber);
                 this.DataContext = package;
                 MainGrid.DataContext = package;
@@ -206,7 +210,8 @@ namespace PL
 
         private void SirialNumberDroneLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-          if (changFromClient != StatusPackegeWindow.NotClient)
+          
+          if (changFromClient != StatusPackegeWindow.NotClient|| !clientMode)
                 {
                 return;
                 }
@@ -232,6 +237,22 @@ namespace PL
             {
                 MessageBox.Show(ex.ToString(), "ERROR");
             }
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Closing += PackageView_Closing;
+            this.Close();
+        }
+
+        private void PackageView_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = false;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
         }
     }
     public class NotEmptyValidationRule : ValidationRule

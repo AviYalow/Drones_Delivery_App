@@ -25,11 +25,35 @@ namespace PL
         
        internal readonly IBL bL= BlFactory.GetBl();
 
-
+     internal  static EnterMode enter;
+        internal static uint clientId;
         public MainWindow()
         {
             
             InitializeComponent();
+            new SelctedModeWindow(bL).ShowDialog();
+            switch (enter)
+            {
+                case EnterMode.Meneger:
+
+                    break;
+                case EnterMode.Client:
+                    new ClientView(bL, clientId, true).Show();
+                    this.Closing += MainWindow_Closing;
+                    this.Close();
+                    break;
+                case EnterMode.AddClient:
+                    new ClientView(bL, true).Show();
+                    this.Closing += MainWindow_Closing;
+                    this.Close();
+                    break;
+                case EnterMode.Close:
+                    this.Closing += MainWindow_Closing;
+                    this.Close();
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void DroneMainButton_Click(object sender, RoutedEventArgs e)
@@ -52,6 +76,22 @@ namespace PL
         private void ClientsButton_Click(object sender, RoutedEventArgs e)
         {
             new ClientsLIst(bL).ShowDialog();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Closing += MainWindow_Closing;
+            this.Close();
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = false;
         }
     }
 }

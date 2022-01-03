@@ -174,12 +174,9 @@ namespace BlApi
         /// list of clients
         /// </summary>
         /// <returns> list of clients</returns>
-        public IEnumerable<ClientToList> ClientToLists();
-        /// <summary>
-        /// list of clients activ
-        /// </summary>
-        /// <returns> list of clients</returns>
-        public IEnumerable<ClientToList> ClientActiveToLists(bool filter = true);
+        public IEnumerable<ClientToList> ClientToLists(bool filter = true);
+     
+    
         /// <summary>
         /// IEnumerable of client how need to get packege and they not get 
         /// </summary>
@@ -359,8 +356,9 @@ namespace BlApi
 
         public IEnumerable<DroneInCharge> DroneINChargePerBase(uint base_);
 
+        public IEnumerable<uint> ClientById(string id);
 
+        public IEnumerable<ClientToList> FilterClientList(bool active = true);
 
-       
     }
 }

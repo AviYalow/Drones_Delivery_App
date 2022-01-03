@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:myns="clr-namespace:BO;assembly=BL"
-  
+  Icon="/DroneIcon.png"  
+        Closing="Window_Closing"
+        
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="PackageView" Height="700" Width="1200" ResizeMode="NoResize">
@@ -86,7 +88,7 @@
                     <Label Content="Time of arrive:" Grid.Column="0" FontSize="30" Grid.Row="5"/>
 
                     <Label Content="{Binding Path=SerialNumber, Mode=TwoWay}" FontSize="30" Grid.Column="1" Grid.Row="0"/>
-                   
+
                     <Label Content="{Binding Path=Create_package , Mode=TwoWay}"  FontSize="30" Grid.Column="1" Grid.Row="2"/>
                     <Label Content="{Binding Path=PackageAssociation, Mode=TwoWay}" FontSize="30" Grid.Column="1" Grid.Row="3"/>
                     <Label Content="{Binding Path= CollectPackage, Mode=TwoWay}" FontSize="30" Grid.Column="1" Grid.Row="4"/>
@@ -124,6 +126,6 @@
         <Label Content="Priority:" HorizontalAlignment="Left" Margin="24,306,0,0" VerticalAlignment="Top" Height="32" Width="78" FontSize="16" FontWeight="Bold"/>
         <Button x:Name="DeleteButton" Content="Delete" Visibility="Collapsed"  HorizontalAlignment="Left" Margin="488,625,0,0" VerticalAlignment="Top" Click="DeleteButton_Click"/>
 
-
+        <Button x:Name="Exit" Content="{  materialDesign:PackIcon Kind=ExitRun, Size=45}" HorizontalAlignment="Left" Margin="593,596,0,0" VerticalAlignment="Top" Height="54" Width="77" Click="Exit_Click"/>
     </Grid>
 </Window>

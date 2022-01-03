@@ -98,5 +98,21 @@ namespace PL
             catch(Exception ex)
             { MessageBox.Show(ex.ToString()); }
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Closing += BaseStationsList_Closing;
+            this.Close();
+        }
+
+        private void BaseStationsList_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = false;
+        }
     }
 }

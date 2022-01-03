@@ -23,28 +23,35 @@ namespace PL
     {
         Client client;
         IBL bl;
+        bool clientMode;
 
-        public ClientView(BlApi.IBL bL)
+        public ClientView(BlApi.IBL bL,bool clientView=false)
         {
             InitializeComponent();
             bl = bL;
             client = new Client { ToClient = null, FromClient = null, Phone = "" };
             DataContext = client;
-            
+            clientMode = clientView;
             letitudeTextBox.DataContext = client.Location;
             longditue.DataContext = client.Location;
+            ListPackegeFromClient.Visibility = Visibility.Collapsed;
+
         }
 
-        public ClientView(BlApi.IBL bL, ClientToList clientFromList)
+        public ClientView(BlApi.IBL bL, ClientToList clientFromList,bool clientView= false)
         {
             InitializeComponent();
             bl = bL;
+            clientMode = clientView;
             ctorUpdateClient(clientFromList.ID);
 
-
-
-            // idTextBox.IsEnabled = false;
-
+        }
+        public ClientView(BlApi.IBL bL, uint clientFromList, bool clientView = false)
+        {
+            InitializeComponent();
+            bl = bL;
+            clientMode = clientView;
+            ctorUpdateClient(clientFromList);
 
         }
         private void ctorUpdateClient(uint id)
@@ -79,7 +86,13 @@ namespace PL
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            this.Closing += ClientView_Closing;
+            this.Close();
+        }
 
+        private void ClientView_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = false;
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
@@ -259,6 +272,7 @@ namespace PL
 
                 new PackageView(bl, ((PackageAtClient)ListPackegeFromClient.SelectedItem).SerialNum, StatusPackegeWindow.SendClient).ShowDialog();
                 this.client = bl.GetingClient(client.Id);
+                ListPackegeFromClient.SelectedItem = null;
                 this.DataContext = this.client;
             }
         }
@@ -268,7 +282,8 @@ namespace PL
             if(ListPackegeToClient.SelectedItem!=null)
             {
 
-                new PackageView(bl, ((PackageAtClient)ListPackegeToClient.SelectedItem).SerialNum, StatusPackegeWindow.GetingClient).ShowDialog();
+                new PackageView(bl, ((PackageAtClient)ListPackegeToClient.SelectedItem).SerialNum, StatusPackegeWindow.GetingClient, clientMode).ShowDialog();
+                ListPackegeToClient.SelectedItem = null;
                 this.client = bl.GetingClient(client.Id);
                 this.DataContext = this.client;
             }
@@ -276,7 +291,7 @@ namespace PL
 
         private void AddPAckegeButton_Click(object sender, RoutedEventArgs e)
         {
-            new PackageView(bl,client.Id.ToString(),StatusPackegeWindow.SendClient).ShowDialog();
+            new PackageView(bl,client.Id.ToString(),StatusPackegeWindow.SendClient,clientMode).ShowDialog();
             this.client = bl.GetingClient(client.Id);
             this.DataContext = this.client;
             ListPackegeFromClient.ItemsSource = client.FromClient;
@@ -290,6 +305,7 @@ namespace PL
                 {
                     bl.DeleteClient(client.Id);
                     MessageBox.Show($"client {client.Id.ToString()} deleted!");
+                    this.Closing += ClientView_Closing;
                     this.Close();
 
                 }
@@ -299,6 +315,11 @@ namespace PL
 
                 }
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
         }
     }
 }

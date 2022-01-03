@@ -168,6 +168,8 @@ namespace PL
                                 text.Text = numberOfChargingStation.ToString();
                             }
                         }
+                else
+                            text.Text = numberOfChargingStation.ToString();
             }
             //allow get out of the text box
             if (e.Key == Key.Enter || e.Key == Key.Return || e.Key == Key.Tab)
@@ -323,6 +325,7 @@ namespace PL
             if (e.Key == Key.Enter)
             {
                 if (AddButton.Visibility != Visibility.Visible)
+                {
                     if (MessageBox.Show("Do you want to update the base name?", "Update", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                     {
                         try
@@ -336,6 +339,39 @@ namespace PL
                             MessageBox.Show(ex.ToString(), "ERROR");
                         }
                     }
+                    else
+                       ( (TextBox)sender).Text = baseStation.Name;
+                }
+            }
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true;
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Closing += BaseStationView_Closing;
+            this.Close();
+        }
+
+        private void BaseStationView_Closing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = false;
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.DeleteBase(baseStation.SerialNum);
+                MessageBox.Show($"Base number{baseStation.SerialNum} deleted!");
+                this.Closing += BaseStationView_Closing;
+                this.Close();
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR");
             }
         }
     }

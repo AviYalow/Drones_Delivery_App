@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL" xmlns:materialdesignin="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
+        Closing="Window_Closing"
         Title="ClientsLIst" Height="650" Width="1000">
     <Grid>
         <Grid.RowDefinitions>
@@ -94,6 +95,7 @@
 
         </ComboBox>
         <CheckBox Name="AllClient" Content="include not activ client" HorizontalAlignment="Left" Margin="434,53,0,0" VerticalAlignment="Top" Checked="AllClient_Checked"/>
+        <Button x:Name="Exit" Content="{  materialDesign:PackIcon Kind=ExitRun, Size=45}" HorizontalAlignment="Left" Margin="643,0,0,0" Grid.Row="2" VerticalAlignment="Center" Height="54" Width="77" Click="Exit_Click"/>
 
     </Grid>
 </Window>

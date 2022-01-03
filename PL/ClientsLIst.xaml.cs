@@ -28,7 +28,7 @@ namespace PL
             this.bl = bl;
             view = (CollectionView)CollectionViewSource.GetDefaultView(clientListView.ItemsSource);
             groupDescription = new PropertyGroupDescription("Name");
-            clientListView.ItemsSource = bl.ClientActiveToLists();
+            clientListView.ItemsSource = bl.ClientToLists();
         }
 
         private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -47,7 +47,7 @@ namespace PL
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             new ClientView(bl).ShowDialog();
-            clientListView.ItemsSource = bl.ClientActiveToLists();
+            clientListView.ItemsSource = bl.FilterClientList();
         }
 
         private void clientListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -55,7 +55,7 @@ namespace PL
             if (clientListView.SelectedItem != null)
             {
                 new ClientView(bl, (BO.ClientToList)clientListView.SelectedItem).ShowDialog();
-                clientListView.ItemsSource = bl.ClientActiveToLists();
+                clientListView.ItemsSource = bl.FilterClientList();
                 clientListView.SelectedItem = null;
             }
         }
@@ -92,7 +92,26 @@ namespace PL
 
         private void AllClient_Checked(object sender, RoutedEventArgs e)
         {
-            clientListView.ItemsSource = bl.ClientActiveToLists(false);
+            if(!AllClient.IsChecked.Value)
+            clientListView.ItemsSource = bl.FilterClientList(false);
+            if (AllClient.IsChecked.Value)
+                clientListView.ItemsSource = bl.FilterClientList();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Closing += ClientsLIst_Closing;
+            this.Close();
+        }
+
+        private void ClientsLIst_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = false;
         }
     }
 }

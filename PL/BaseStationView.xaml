@@ -4,15 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 
-        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
          xmlns:materialdesignin="http://materialdesigninxaml.net/winfx/xaml/themes"
          Icon="/DroneIcon.png" ResizeMode="NoResize"
+        Closing="Window_Closing"
+        
         Title="BaseStationView" Height="750" Width="800">
 
     <Window.Background>
-        <ImageBrush  ImageSource="BaseStationView.jpg" />
+        <ImageBrush  ImageSource="/img_art.png" />
 
     </Window.Background>
     <Grid>
@@ -29,7 +31,8 @@
         <TextBox x:Name="Latitudtext" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="32,435,0,0" Text="{Binding Path=Latitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" GotFocus="Latitudtext_GotFocus" LostFocus="LongitudeText_LostFocus"/>
         <TextBox x:Name="LongitudeText" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="33,505,0,0" Text="{Binding Path=Longitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" GotFocus="Latitudtext_GotFocus" LostFocus="LongitudeText_LostFocus"/>
         <Button x:Name="AddButton"  Content="ADD"  HorizontalAlignment="Left" Margin="66,654,0,0" VerticalAlignment="Top" Click="AddButton_Click"/>
-        <ListView x:Name="DroneCharge1View"  Visibility="Collapsed" Margin="464,135,8,329" DataContext="{Binding  }" RenderTransformOrigin="0.5,0.5" Height="auto" Foreground="#DDFFFFFF" MouseDoubleClick="DroneCharge1View_MouseDoubleClick">
+        <ListView x:Name="DroneCharge1View"  Visibility="Collapsed" Margin="464,135,8,329" DataContext="{Binding  }" RenderTransformOrigin="0.5,0.5" Height="auto" Foreground="#DDFFFFFF" MouseDoubleClick="DroneCharge1View_MouseDoubleClick" Background="#891054DA">
+
             <ListView.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="1"/>
@@ -39,9 +42,9 @@
                 </TransformGroup>
             </ListView.RenderTransform>
 
-            <ListView.View>
+            <ListView.View >
                 <GridView x:Name="Listvi1ewGridToDroneList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
-                    <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNum}" x:Name="Serial"   >
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNum}"  x:Name="Serial"   >
                         <HeaderedContentControl x:Name="SerialNum"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
                             <TextBox Text="Serial Number" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFFFFFF" TextDecorations="Underline" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" />
                         </HeaderedContentControl>
@@ -59,5 +62,7 @@
         <TextBox  Name="NewChrgingStatimText" HorizontalAlignment="Left" Margin="34,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="163" Height="49"  
   Visibility="Collapsed"
   FontSize="24" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitNoDot"/>
+        <Button x:Name="Exit" Content="{  materialDesign:PackIcon Kind=ExitRun, Size=45}" HorizontalAlignment="Left" Margin="242,635,0,0" VerticalAlignment="Top" Height="54" Width="77" Click="Exit_Click"/>
+        <Button x:Name="Delete" Visibility="{Binding ElementName=DroneCharge1View, Path=Visibility}" Content="{materialDesign:PackIcon Kind=Delete, Size=30 }" HorizontalAlignment="Left" Margin="560,646,0,0" VerticalAlignment="Top" Height="44" Width="62" Click="Delete_Click"/>
     </Grid>
 </Window>

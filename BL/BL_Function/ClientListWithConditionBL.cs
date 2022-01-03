@@ -18,27 +18,22 @@ namespace BlApi
         Func<ClientToList, bool> clientHowGetingPackegesAndNotArrive = client => client.OnTheWay > 0;
         Func<ClientToList, bool> clientHowGetingPackegesAndArrive = client => client.received > 0;
         Func<ClientToList, bool> clientActiveHowGetingPackeges = client => client.received > 0 || client.OnTheWay > 0;
-        /// <summary>
-        /// list of clients activ
-        /// </summary>
-        /// <returns> list of clients</returns>
-        public IEnumerable<ClientToList> ClientActiveToLists(bool filter=true)
-        {
-            clientToListFilter -= activeClient;
-            if(filter)
-            clientToListFilter += activeClient;
-            return FilterClientList();
-        }
+        Func<ClientToList, bool> clientById = null;
+
+ 
 
         /// <summary>
         /// list of clients activ
         /// </summary>
         /// <returns> list of clients</returns>
-        public IEnumerable<ClientToList> ClientToLists()
+        public IEnumerable<ClientToList> ClientToLists(bool filter = true)
         {
-
+            if(!filter)
             return from client in dalObj.CilentList(x => true)
                    select client.convertClientDalToClientToList(dalObj);
+            else
+                return from client in dalObj.CilentList(x => x.Active)
+                       select client.convertClientDalToClientToList(dalObj);
 
         }
 
@@ -134,11 +129,22 @@ namespace BlApi
                    select new ClientInPackage { Id = client.Id, Name = client.Name };
         }
 
-        public IEnumerable<ClientToList> FilterClientList()
+        public IEnumerable<ClientToList> FilterClientList(bool active =true)
         {
 
-            return from client in filerList(ClientToLists(), clientToListFilter)
+            return from client in filerList(ClientToLists(active), clientToListFilter)
                    select client.Clone();
+        }
+
+        public IEnumerable<uint> ClientById(string id)
+        {
+            clientById= x => x.ID.ToString().StartsWith(id);
+            clientToListFilter -= clientById;
+            if (id!="")
+                clientToListFilter += clientById;
+            return from client in filerList(ClientToLists(), clientToListFilter)
+                   select  client.ID ;
+
         }
     }
 }

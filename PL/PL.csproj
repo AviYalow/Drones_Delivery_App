@@ -9,9 +9,13 @@
   <ItemGroup>
     <None Remove="base station list.jfif" />
     <None Remove="BaseStationView.jpg" />
+    <None Remove="clienticon.png" />
     <None Remove="DroneIcon.png" />
     <None Remove="drones.jpg" />
+    <None Remove="img_art.png" />
+    <None Remove="Manager-icon.png" />
     <None Remove="Mastercard_Controlcenter.jpg" />
+    <None Remove="ok-icon.jpg" />
     <None Remove="ok.jpg" />
     <None Remove="return.png" />
   </ItemGroup>
@@ -33,9 +37,13 @@
   <ItemGroup>
     <Resource Include="base station list.jfif" />
     <Resource Include="BaseStationView.jpg" />
+    <Resource Include="clienticon.png" />
     <Resource Include="DroneIcon.png" />
     <Resource Include="drones.jpg" />
+    <Resource Include="img_art.png" />
+    <Resource Include="Manager-icon.png" />
     <Resource Include="Mastercard_Controlcenter.jpg" />
+    <Resource Include="ok-icon.jpg" />
     <Resource Include="ok.jpg" />
     <Resource Include="return.png" />
   </ItemGroup>

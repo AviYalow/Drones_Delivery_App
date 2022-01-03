@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-       
+       Closing="Window_Closing"
+        
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
   
         xmlns:materialdesignin="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -58,9 +59,9 @@
                                             <Expander IsExpanded="True">
                                                 <Expander.Header >
                                                     <StackPanel Orientation="Horizontal" Background="White" >
-                                                       
+
                                                         <TextBlock Text="Free charging stations: " FontWeight="Bold" Foreground="Black" FontSize="22" VerticalAlignment="Bottom" />
-                                                       
+
                                                         <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="Black" FontSize="22" VerticalAlignment="Bottom" />
                                                         <TextBlock Text=" Amount: " FontWeight="Bold" Foreground="Black" FontSize="22" VerticalAlignment="Bottom" />
                                                         <TextBlock Text="{Binding ItemCount}" FontWeight="Bold" Foreground="Black" FontSize="22" VerticalAlignment="Bottom" />
@@ -109,7 +110,7 @@
   IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="AddBaseButton_Click">
                 <materialDesign:PackIcon Kind="Add"  Height="35"    Width="35" />
             </Button>
-
+            <Button x:Name="Exit" Content="{  materialDesign:PackIcon Kind=ExitRun, Size=45}" HorizontalAlignment="Left" Margin="926,92,0,0" VerticalAlignment="Top" Height="54" Width="77" Click="Exit_Click"/>
         </Grid>
     </Grid>
 </Window>

@@ -88,12 +88,12 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-               
+
                     <TextBlock Grid.Column="0" Grid.Row="3" Text="Package in transfer:" FontWeight="Bold"/>
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="Butrry status:" FontWeight="Bold"/>
                     <TextBlock Grid.Column="0" Grid.Row="5" Text="Drone status:" FontWeight="Bold"/>
                     <TextBlock Grid.Column="0" Grid.Row="6" Text="Location:" FontWeight="Bold"/>
-                   
+
                     <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Path=PackageInTransfer}"  MouseLeftButtonDown="TextBlock_PreviewMouseRightButtonDownPackegeWindow" />
                     <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Path=ButrryStatus}"/>
                     <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding Path=DroneStatus}"/>
@@ -120,7 +120,7 @@
             <Label Name="SirealNumberLabel" Content="{Binding SerialNumber}"  HorizontalAlignment="Left" Margin="125,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="131"/>
 
         </Grid>
-
+        <Button x:Name="Delete" Visibility="{Binding ElementName=DroneCharge1View, Path=Visibility}" Content="{materialDesign:PackIcon Kind=Delete, Size=30 }" HorizontalAlignment="Left" Margin="169,340,0,0" VerticalAlignment="Top" Height="44" Width="62" Click="Delete_Click"/>
     </Grid>
 
 </Window>

@@ -227,5 +227,21 @@ namespace PL
         {
             PackagesListView.ItemsSource = bl.PackageToDateLists(to.SelectedDate);
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Closing += PackagesList_Closing;
+            this.Close();
+        }
+
+        private void PackagesList_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = false;
+        }
     }
 }

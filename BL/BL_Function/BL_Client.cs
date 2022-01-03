@@ -170,29 +170,7 @@ namespace BlApi
             try
             {
                 dalObj.DeleteClient(id);
-               foreach (var packege in dalObj.PackegeList(x=>true))
-                {
-                   
-                    //cancel paceges how dont send yet
-                    if(packege.SendClient==id&&packege.CollectPackageForShipment is null)
-                    {
-                        packegesDelete.Add(packege.SerialNumber);
-                        for (int i = 0; i < dronesListInBl.Count; i++)
-                        {
-                            if (dronesListInBl[i].NumPackage == packege.SerialNumber)
-                            {
-                                var drone = dronesListInBl[i];
-                                drone.DroneStatus = DroneStatus.Free;
-                                drone.NumPackage = 0;
-                                dronesListInBl[i] = drone;
-                                break;
-                            }
-                        }
-
-                    }
-                }
-               foreach(var packege in packegesDelete)
-                dalObj.DeletePackege(packege);
+               
             }
             catch(DO.ItemNotFoundException ex)
             {

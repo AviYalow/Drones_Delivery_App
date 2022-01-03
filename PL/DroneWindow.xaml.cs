@@ -320,5 +320,16 @@ namespace PL
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
         }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            { bl.DeleteDrone(drone.SerialNumber);
+                MessageBox.Show($"Drone number {drone.SerialNumber} deleted!");
+                Closing += DroneWindow_Closing;
+                this.Close();
+            }catch(Exception ex)
+            { MessageBox.Show(ex.ToString(), "ERROR"); }
+        }
     }
 }
