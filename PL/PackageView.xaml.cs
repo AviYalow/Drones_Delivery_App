@@ -40,6 +40,7 @@ namespace PL
                 bl = bL;
                 changFromClient = change;
                 DataToCmb(SendClient);
+                WeightCmb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
@@ -80,6 +81,7 @@ namespace PL
             {
                 
                 package = bl.ShowPackage(serialNumber);
+                WeightCmb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
                 this.DataContext = package;
                 MainGrid.DataContext = package;
                 DataGridPackege.DataContext = package;

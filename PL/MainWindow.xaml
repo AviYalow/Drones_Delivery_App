@@ -24,11 +24,27 @@
             </Grid.ColumnDefinitions>
         </Grid>
         <Grid/>
-        <Button x:Name="DroneMainButton" Content="Drones" HorizontalAlignment="Left" Margin="283,135,0,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="DroneMainButton_Click"/>
-        <Button x:Name="PackagesButton" Content="Packages" HorizontalAlignment="Right" Margin="0,239,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="PackagesButton_Click" />
-        <Button x:Name="BaseStationsButton" Content="BaseStations" HorizontalAlignment="Right" Margin="0,346,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="BaseStationsButton_Click" />
-        <Button x:Name="ClientsButton" Content="Clients" HorizontalAlignment="Right" Margin="0,31,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="ClientsButton_Click" />
-        <Button x:Name="Exit" Content="{  materialDesign:PackIcon Kind=ExitToApp, Size=45}" HorizontalAlignment="Left" Margin="632,473,0,0" VerticalAlignment="Top" Height="54" Width="77" Click="Exit_Click" Grid.Row="1"/>
+        <Button x:Name="DroneMainButton" Content="Drones" HorizontalAlignment="Left" Margin="283,135,0,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="DroneMainButton_Click"
+                  Style="{StaticResource MaterialDesignRaisedButton}"
+    materialDesign:ButtonProgressAssist.Value="-1"
+    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+    materialDesign:ButtonProgressAssist.IsIndeterminate="True"/>
+        <Button x:Name="PackagesButton" Content="Packages" HorizontalAlignment="Right" Margin="0,239,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="PackagesButton_Click"   Style="{StaticResource MaterialDesignRaisedButton}"
+    materialDesign:ButtonProgressAssist.Value="-1"
+    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+    materialDesign:ButtonProgressAssist.IsIndeterminate="True"/>
+        <Button x:Name="BaseStationsButton" Content="BaseStations" HorizontalAlignment="Right" Margin="0,346,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="BaseStationsButton_Click"   Style="{StaticResource MaterialDesignRaisedButton}"
+    materialDesign:ButtonProgressAssist.Value="-1"
+    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+    materialDesign:ButtonProgressAssist.IsIndeterminate="True" />
+        <Button x:Name="ClientsButton" Content="Clients" HorizontalAlignment="Right" Margin="0,31,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="ClientsButton_Click"   Style="{StaticResource MaterialDesignRaisedButton}"
+    materialDesign:ButtonProgressAssist.Value="-1"
+    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+    materialDesign:ButtonProgressAssist.IsIndeterminate="True" />
+        <Button x:Name="Exit" Content="{  materialDesign:PackIcon Kind=ExitToApp, Size=45}" HorizontalAlignment="Left" Margin="632,473,0,0" VerticalAlignment="Top" Height="54" Width="77" Click="Exit_Click" Grid.Row="1"   Style="{StaticResource MaterialDesignRaisedButton}"
+    materialDesign:ButtonProgressAssist.Value="-1"
+    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+    materialDesign:ButtonProgressAssist.IsIndeterminate="True"/>
 
     </Grid>
 </Window>

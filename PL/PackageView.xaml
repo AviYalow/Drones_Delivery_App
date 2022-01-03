@@ -10,6 +10,31 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="PackageView" Height="700" Width="1200" ResizeMode="NoResize">
+    <Window.Resources>
+        <ImageBrush x:Key="Easy" ImageSource="/easy.jpg" />
+        <ImageBrush x:Key="Medium" ImageSource="/medium.jpg" />
+        <ImageBrush x:Key="Heavy" ImageSource="/heavy.jpg" />
+    </Window.Resources>
+    <Window.Style>
+        <Style TargetType="{x:Type Window}">
+            <Style.Triggers>
+
+                <DataTrigger Binding="{Binding ElementName=WeightCmb, Path=SelectedItem}" Value="null">
+                    <Setter Property="Background" Value="White"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=WeightCmb, Path=SelectedItem}" Value="Easy">
+                    <Setter Property="Background" Value="{DynamicResource Easy}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=WeightCmb, Path=SelectedItem}" Value="Medium">
+                    <Setter Property="Background" Value="{DynamicResource Medium}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=WeightCmb, Path=SelectedItem}" Value="Heavy">
+                    <Setter Property="Background" Value="{DynamicResource Heavy}"/>
+                </DataTrigger>
+                
+            </Style.Triggers>
+        </Style>
+    </Window.Style>
     <Grid x:Name="MainGrid">
         <Grid x:Name="AddGrid"  Visibility="Collapsed">
             <Label Name="TitelPackegeViewLabel" Content="New Packege" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="62" Width="235" FontSize="34"/>

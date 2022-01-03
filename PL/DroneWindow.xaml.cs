@@ -35,7 +35,7 @@ namespace PL
             try
             {
                 InitializeComponent();
-
+               
                 droneToList = new DroneToList();
                 this.DataContext = drone;
                 SirialNumberTextBox.DataContext = droneToList;
@@ -221,6 +221,8 @@ namespace PL
 
         private void WeightChoseCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+          var a=  WeightChoseCombo.SelectedIndex;
             InputMissingWightLabel.Visibility = Visibility.Collapsed;
             droneToList.WeightCategory = (BO.WeightCategories)WeightChoseCombo.SelectedItem;
 
@@ -294,6 +296,7 @@ namespace PL
 
         private void ModelComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
             try
             {
                 if (drone != null)

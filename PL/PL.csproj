@@ -7,17 +7,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="36914617-3d-delivery-drone-with-a-package-on-white-background.jpg" />
+    <None Remove="5-challenges-that-the-drone-1.jpg" />
+    <None Remove="Amazon-Drone.jpg" />
     <None Remove="base station list.jfif" />
     <None Remove="BaseStationView.jpg" />
     <None Remove="clienticon.png" />
+    <None Remove="Drone-Delivery.jpg" />
+    <None Remove="Drone-Delivery.png" />
+    <None Remove="droneDelivery.jpg" />
     <None Remove="DroneIcon.png" />
     <None Remove="drones.jpg" />
+    <None Remove="easy.jpg" />
+    <None Remove="heavy.jpg" />
     <None Remove="img_art.png" />
+    <None Remove="louis-michel-lebeau-deli-04.jpg" />
     <None Remove="Manager-icon.png" />
     <None Remove="Mastercard_Controlcenter.jpg" />
+    <None Remove="medium.jpg" />
     <None Remove="ok-icon.jpg" />
     <None Remove="ok.jpg" />
     <None Remove="return.png" />
+    <None Remove="‏‏BaseStationView - עותק.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,17 +46,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="36914617-3d-delivery-drone-with-a-package-on-white-background.jpg" />
+    <Resource Include="5-challenges-that-the-drone-1.jpg" />
+    <Resource Include="Amazon-Drone.jpg" />
     <Resource Include="base station list.jfif" />
     <Resource Include="BaseStationView.jpg" />
     <Resource Include="clienticon.png" />
+    <Resource Include="Drone-Delivery.jpg" />
+    <Resource Include="Drone-Delivery.png" />
+    <Resource Include="droneDelivery.jpg" />
     <Resource Include="DroneIcon.png" />
     <Resource Include="drones.jpg" />
+    <Resource Include="easy.jpg" />
+    <Resource Include="heavy.jpg" />
     <Resource Include="img_art.png" />
+    <Resource Include="louis-michel-lebeau-deli-04.jpg" />
     <Resource Include="Manager-icon.png" />
     <Resource Include="Mastercard_Controlcenter.jpg" />
+    <Resource Include="medium.jpg" />
     <Resource Include="ok-icon.jpg" />
     <Resource Include="ok.jpg" />
     <Resource Include="return.png" />
+    <Resource Include="‏‏BaseStationView - עותק.jpg" />
   </ItemGroup>
 
   <ItemGroup>
