@@ -180,4 +180,10 @@
     <WeightCategory>Heavy</WeightCategory>
     <Active>true</Active>
   </Drone>
+  <Drone>
+    <SerialNumber>15151</SerialNumber>
+    <Model>Blockchains</Model>
+    <WeightCategory>Medium</WeightCategory>
+    <Active>true</Active>
+  </Drone>
 </ArrayOfDrone>
