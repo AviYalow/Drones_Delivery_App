@@ -253,12 +253,21 @@ namespace PL
 
         private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ListView list = sender as ListView;
-            HeaderedContentControl control = sender as HeaderedContentControl;
             try
             {
-                list.ItemsSource = (bl.SortList(control.Name, list.ItemsSource as IEnumerable<DroneInCharge>));
+                HeaderedContentControl control = sender as HeaderedContentControl;
+                if (control.Name.LastOrDefault() == 'S')
+                {
+                    control.Name = control.Name.Remove(control.Name.Count() - 1);
+                    ListPackegeFromClient.ItemsSource = (bl.SortList(control.Name, ListPackegeFromClient.ItemsSource as IEnumerable<PackageAtClient>));
+                }
+                if (control.Name.LastOrDefault() == 'P')
+                {
+                    control.Name = control.Name.Remove(control.Name.Count() - 1);
+                    ListPackegeToClient.ItemsSource = (bl.SortList(control.Name, ListPackegeToClient.ItemsSource as IEnumerable<PackageAtClient>));
+                }
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "ERROR");

@@ -80,7 +80,7 @@ namespace PL
         {
             if (getingClientCmb.SelectedItem is null)
             {
-                clientListView.ItemsSource = bl.ClientActiveHowSendPackegesToLists(false);
+                clientListView.ItemsSource = bl.ClientActiveHowGetingPackegesToLists(false);
             }
             else if (getingClientCmb.SelectedItem == GetItem)
             { clientListView.ItemsSource = bl.ClientActiveHowGetingPackegesToLists(); }
