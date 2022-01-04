@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DO;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,14 +14,14 @@ namespace Dal
     {
         static string dir = @"xml\";
 
-        static XMLTools ()
+        static XMLTools()
         {
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
 
         }
 
-        #region save load with XNLSerializer
+        #region save load with XMLElement
         /// <summary>
         /// saves the list in the file with XElement
         /// </summary>
@@ -63,6 +64,7 @@ namespace Dal
             }
         }
 
+        #endregion
         /// <summary>
         /// saves the list in the file with XMLSerializer
         /// </summary>
@@ -91,7 +93,7 @@ namespace Dal
         /// <typeparam name="T"></typeparam>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        public static List<T> LoadListFromXMLSerializer <T>(string filePath)
+        public static List<T> LoadListFromXMLSerializer<T>(string filePath)
         {
             try
             {
@@ -112,7 +114,7 @@ namespace Dal
                 throw new DO.XMLFileLoadCreateException(filePath, $"fail to load xml file: {filePath}", ex);
             }
         }
-        #endregion
+
     }
 }
 
