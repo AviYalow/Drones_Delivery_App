@@ -3,7 +3,7 @@
   <Base_Station>
     <baseNumber>2873</baseNumber>
     <NameBase>DSO</NameBase>
-    <NumberOfChargingStations>4294967295</NumberOfChargingStations>
+    <NumberOfChargingStations>4294967291</NumberOfChargingStations>
     <longitude>34.627143</longitude>
     <latitude>31.790133</latitude>
     <Active>false</Active>
@@ -11,7 +11,7 @@
   <Base_Station>
     <baseNumber>7769</baseNumber>
     <NameBase>QKP</NameBase>
-    <NumberOfChargingStations>4</NumberOfChargingStations>
+    <NumberOfChargingStations>4294967294</NumberOfChargingStations>
     <longitude>34.736002</longitude>
     <latitude>32.00949</latitude>
     <Active>true</Active>
@@ -19,7 +19,7 @@
   <Base_Station>
     <baseNumber>9347</baseNumber>
     <NameBase>FDD</NameBase>
-    <NumberOfChargingStations>2</NumberOfChargingStations>
+    <NumberOfChargingStations>4294967295</NumberOfChargingStations>
     <longitude>34.627143</longitude>
     <latitude>31.790133</latitude>
     <Active>true</Active>
@@ -27,7 +27,7 @@
   <Base_Station>
     <baseNumber>6844</baseNumber>
     <NameBase>NXM</NameBase>
-    <NumberOfChargingStations>2</NumberOfChargingStations>
+    <NumberOfChargingStations>4294967293</NumberOfChargingStations>
     <longitude>34.736002</longitude>
     <latitude>32.00949</latitude>
     <Active>true</Active>

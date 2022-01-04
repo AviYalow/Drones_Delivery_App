@@ -14,6 +14,7 @@ namespace Dal
     {
         //Using a design pattern of singelton
         #region singelton
+        private static readonly Lazy<DalXml> lazy = new Lazy<DalXml>(() => new DalXml());
         static readonly DalXml instance = new DalXml();
         /// <summary>
         /// static constructor to ensure instance init is done just before first use
@@ -33,7 +34,7 @@ namespace Dal
         /// <summary>
         /// the public Instance property for use. returns the instance
         /// </summary>
-        public static DalXml Instance { get => instance; }// The public Instance property to use
+        public static DalXml Instance { get { return lazy.Value; } }// The public Instance property to use
 
         #region DS XML Files Path
         /// <summary>
