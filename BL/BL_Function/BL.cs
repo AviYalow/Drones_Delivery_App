@@ -10,7 +10,7 @@ namespace BlApi
 {
     sealed partial class BL : IBL
     {
-      
+
         #region singelton
         /// <summary>
         /// This implemention of singelton implicitly uses LazyThreadSafetyMode.ExecutionAndPublication 
@@ -21,16 +21,16 @@ namespace BlApi
         new Lazy<BL>(() => new BL());
         public static BL Instance { get { return lazy.Value; } }
         #endregion
-         
-        
+
+
         IDal dalObj;
         List<DroneToList> dronesListInBl = new List<DroneToList>();
-       
+
         double heaviElctric, mediomElctric, easyElctric, freeElctric, chargingPerMinute;
-        event Func<DroneToList,bool> droneToListFilter = null;
-      event Func<ClientToList, bool> clientToListFilter = null;
+        event Func<DroneToList, bool> droneToListFilter = null;
+        event Func<ClientToList, bool> clientToListFilter = null;
         event Func<DO.Package, bool> packegeToListFilter = null;
-        
+
 
         /// <summary>
         /// ctor
@@ -41,7 +41,7 @@ namespace BlApi
             {
                 dalObj = DalFactory.GetDal();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ex.ToString();
                 return;
@@ -66,7 +66,7 @@ namespace BlApi
             {
                 dronesListInBl.Add(drone.droneFromDal());
             }
-            
+
 
             for (int i = 0; i < dronesListInBl.Count; i++)
             {
@@ -135,14 +135,20 @@ namespace BlApi
                     if (new_drone.DroneStatus == DroneStatus.Maintenance)
                     {
                         new_drone.ButrryStatus = random.Next(21);
-                        int k = random.Next(dalObj.BaseStationList(x => true).Count());
+                        DO.Base_Station base_;
+                        int safe = 5;
+                        do
+                        {
+                            safe--;
+                            int k = random.Next(dalObj.BaseStationList(x => true).Count());
 
-                        DO.Base_Station base_ = dalObj.BaseStationList(x => true).Skip(k).FirstOrDefault();
+                            base_ = dalObj.BaseStationList(x => true).Skip(k).FirstOrDefault();
+                        } while (base_.NumberOfChargingStations <= 0||safe>0);
                         var updateBase = base_;
                         dalObj.DroneToCharge(new_drone.SerialNumber, base_.baseNumber);
                         new_drone.NumPackage = 0;
                         new_drone.Location = BaseLocation(base_.baseNumber);
-                      
+
                     }
 
                     //drone lottery in free
@@ -154,7 +160,7 @@ namespace BlApi
                         new_drone.NumPackage = 0;
                         new_drone.Location = ClientLocation(package1.GetingClient);
                         new_drone.ButrryStatus = random.Next((int)buttryDownWithNoPackege(new_drone.Location, ClosestBase(ClientLocation(package1.GetingClient)).Location) + 1, 100);
-                      
+
                     }
                     for (int p = 0; p < dronesListInBl.Count; p++)
                     {
@@ -204,7 +210,7 @@ namespace BlApi
             if (property is null)
                 throw new TheListIsEmptyException();
             return from x in drones
-                   orderby property.GetValue(x) 
+                   orderby property.GetValue(x)
                    select x;
 
         }

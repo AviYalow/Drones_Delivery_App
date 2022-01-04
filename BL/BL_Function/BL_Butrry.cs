@@ -124,9 +124,7 @@ namespace BlApi
 
             drone.ButrryStatus = buttry > 100 ? 100 : buttry + drone.ButrryStatus;
             drone.DroneStatus = DroneStatus.Free;
-            var baseStation = dalObj.BaseStationByNumber(information.Value.idBaseStation);
-            baseStation.NumberOfChargingStations++;
-            dalObj.UpdateBase(baseStation);
+       
             dalObj.FreeDroneFromCharge(drone.SerialNumber);
             dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == drone.SerialNumber)] = drone;
 

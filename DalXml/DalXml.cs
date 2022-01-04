@@ -22,15 +22,21 @@ namespace Dal
         static DalXml() { //DataSrc.Initialize();
 
             
-                List<BatteryLoad> droneInCharge = XMLTools.LoadListFromXMLSerializer<BatteryLoad>(@"BatteryLoadXml.xml");
-                droneInCharge.Clear();
-                XMLTools.SaveListToXMLSerializer(droneInCharge, @"BatteryLoadXml.xml");
+          
             
         }
         /// <summary>
         ///  constructor. default => private
         /// </summary>
-        DalXml() { }
+        DalXml() {
+            List<BatteryLoad> droneInCharge = XMLTools.LoadListFromXMLSerializer<BatteryLoad>(@"BatteryLoadXml.xml");
+            foreach (var drone in droneInCharge)
+            {
+                FreeDroneFromCharge(drone.IdDrone);
+            }
+            droneInCharge.Clear();
+            XMLTools.SaveListToXMLSerializer(droneInCharge, @"BatteryLoadXml.xml");
+        }
         /// <summary>
         /// the public Instance property for use. returns the instance
         /// </summary>
@@ -407,10 +413,21 @@ namespace Dal
         {
             List<BatteryLoad> droneInCharge = XMLTools.LoadListFromXMLSerializer<BatteryLoad>(DroneInChargePath);
 
-            int i = droneInCharge.FindIndex(x => x.IdDrone == drone);
-            if (i == -1)
+            BatteryLoad? droneInChargeItem = droneInCharge.Find(x => x.IdDrone == drone);
+            if (droneInChargeItem is null)
                 throw (new ItemNotFoundException("drone", drone));
-                droneInCharge.RemoveAt(i);
+            Base_Station base_ = BaseStationByNumber(droneInChargeItem.Value.idBaseStation);
+            if (base_.baseNumber == 0)
+                throw (new ItemNotFoundException("Base Station", droneInChargeItem.Value.idBaseStation));
+            base_.NumberOfChargingStations++;
+            UpdateBase(base_);
+
+            droneInCharge.Remove(droneInChargeItem.Value);
+
+          //  int i = droneInCharge.FindIndex(x => x.IdDrone == drone);
+          //  if (i == -1)
+          //      throw (new ItemNotFoundException("drone", drone));
+          //      droneInCharge.RemoveAt(i);
             XMLTools.SaveListToXMLSerializer(droneInCharge, DroneInChargePath);
         }
 

@@ -167,10 +167,16 @@ namespace Dal
         /// <param name="drone"> drone number</param>
         public void FreeDroneFromCharge(uint drone)
         {
-            int i = DataSource.droneInCharge.FindIndex(x => x.IdDrone == drone);
-                if (i == -1)
+            BatteryLoad? droneInCharge = DataSource.droneInCharge.Find(x => x.IdDrone == drone);
+                if (droneInCharge is null)
                 throw (new ItemNotFoundException("drone", drone));
-            DataSource.droneInCharge.RemoveAt(i);
+                Base_Station base_  = DataSource.base_Stations.Find(x => x.baseNumber == droneInCharge.Value.idBaseStation);
+            if (base_.baseNumber==0)
+                throw (new ItemNotFoundException("Base Station", droneInCharge.Value.idBaseStation));
+            base_.NumberOfChargingStations++;
+            UpdateBase(base_);
+
+            DataSource.droneInCharge.Remove(droneInCharge.Value);
            
         }
 
