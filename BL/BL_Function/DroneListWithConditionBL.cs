@@ -7,6 +7,7 @@ using BlApi;
 using BO;
 using DalApi;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace BlApi
 {
@@ -20,6 +21,7 @@ namespace BlApi
         /// return list of drones
         /// </summary>
         /// <returns> return list of drones</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> DroneToLists()
         {
             if (dronesListInBl.Count == 0)
@@ -30,7 +32,7 @@ namespace BlApi
                    select drone.Clone();
 
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> AllDroneToLists()
         {
             if (dronesListInBl.Count == 0)
@@ -48,6 +50,7 @@ namespace BlApi
         /// return list of drones by spsific status
         /// </summary>
         /// <returns> return list of drones</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> DroneToListsByStatus(DroneStatus? droneStatus = null)
         {
 
@@ -66,6 +69,7 @@ namespace BlApi
         /// return list of drones by maximum weight
         /// </summary>
         /// <returns> return list of drones</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> DroneToListsByWhight(WeightCategories? weight = null)
         {
             droneToListFilter -= selectByWeihgt;
@@ -82,6 +86,7 @@ namespace BlApi
         /// return list of drones by they can make delivery for packege
         /// </summary>
         /// <returns> return list of drones</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> DroneToListPasibalForPackege(Package package)
         {
             droneToListFilter -= selectByPackege;
@@ -96,6 +101,7 @@ namespace BlApi
             return FilterDronesList();
 
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> DroneToListFilterByNumber(string num)
         {
             droneToListFilter -= selectBynumber;
@@ -113,12 +119,13 @@ namespace BlApi
         /// return filter list
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> FilterDronesList()
         {
 
             return filerList(DroneToLists(), droneToListFilter);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<uint>DronesNumber()
         { 
             return from drone in dronesListInBl

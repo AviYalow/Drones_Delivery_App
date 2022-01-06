@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace BlApi
 {
@@ -17,6 +18,7 @@ namespace BlApi
         /// </summary>
         /// <param name="packageInTransfer"> package</param>
         /// <returns> percentage of battery needed</returns>
+         [MethodImpl(MethodImplOptions.Synchronized)]
         double buttryDownPackegeDelivery(PackageInTransfer packageInTransfer)
         {
 
@@ -49,6 +51,7 @@ namespace BlApi
         /// <param name="fromLocation"> source location</param>
         /// <param name="toLocation"> destination location</param>
         /// <returns> percentage of battery needed</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         double buttryDownWithNoPackege(Location fromLocation, Location toLocation)
         {
 
@@ -61,6 +64,7 @@ namespace BlApi
         /// send drone to charge
         /// </summary>
         /// <param name="droneNumber">serial number of drone</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DroneToCharge(uint droneNumber)
         {
 
@@ -108,6 +112,7 @@ namespace BlApi
         /// <param name="droneNumber">serial number of the drone</param>
         /// <param name="timeInCharge"> the time that the drone in charge </param>
         /// <returns> butrry Status of the  drone</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double FreeDroneFromCharging(uint droneNumber, int number = -1)
         {
             //locking for drone
@@ -138,6 +143,7 @@ namespace BlApi
         /// </summary>
         /// <param name="baseNumber"> serial number of the base station</param>
         /// <param name="number"> amount of drone to release</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void FreeBaseFromDrone(uint baseNumber, int number = -1)
         {
             if (number != -1)
@@ -182,6 +188,7 @@ namespace BlApi
         /// </summary>
         /// <param name="span">charging time the drone was</param>
         /// <returns> percentage of battery</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         double droneChrgingAlredy(TimeSpan span)
         {
             var time = ((double)(span).TotalMinutes); var butrryPerMinute = (chargingPerMinute);
@@ -195,6 +202,7 @@ namespace BlApi
         /// <param name="drone"> drone</param>
         /// <param name="package"> package</param>
         /// <returns> percentage of battery </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         double batteryCalculationForFullShipping(Location drone, Package package)
         {
             return buttryDownWithNoPackege(drone, ClientLocation(package.SendClient.Id)) + buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package)) +

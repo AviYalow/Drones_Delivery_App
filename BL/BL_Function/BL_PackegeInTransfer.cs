@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 using DalApi;
+using System.Runtime.CompilerServices;
+
 namespace BlApi
 {
     partial class BL : IBL
@@ -15,6 +17,7 @@ namespace BlApi
         /// </summary>
         /// <param name="package">Packege object </param>
         /// <returns> PackegeInTrnansfer object</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         PackageInTransfer convertPackegeBlToPackegeInTrnansfer(Package package)
         {
             var returnPackege = new PackageInTransfer { Priority = package.Priority, SendClient = package.SendClient, RecivedClient = package.RecivedClient, SerialNum = package.SerialNumber, WeightCatgory = package.WeightCatgory, Source = ClientLocation(package.SendClient.Id), Destination = ClientLocation(package.RecivedClient.Id) };
@@ -27,6 +30,7 @@ namespace BlApi
         /// A package is collected by a drone
         /// </summary>
         /// <param name="droneNumber">A drone number that collects the package</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void CollectPackegForDelivery(uint droneNumber)
         {
             var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber && x.DroneStatus != DroneStatus.Delete);
@@ -59,6 +63,7 @@ namespace BlApi
         /// A package that arrived at the destination
         /// </summary>
         /// <param name="droneNumber">A drone number that takes the package</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void PackegArrive(uint droneNumber)
         {
             var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber && x.DroneStatus != DroneStatus.Delete);
@@ -89,6 +94,7 @@ namespace BlApi
         /// Assignment between a package and a drone
         /// </summary>
         /// <param name="droneNumber"> serial number of a drone</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ConnectPackegeToDrone(uint droneNumber)
         {
             var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber && x.DroneStatus != DroneStatus.Delete);
@@ -144,6 +150,7 @@ namespace BlApi
         /// </summary>
         /// <param name="package"> packege in data layer</param>
         /// <returns> packegeInTrnansfer object in the logical layer</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         PackageInTransfer convertPackegeDalToPackegeInTrnansfer(DO.Package package)
         {
             var returnPackege = new PackageInTransfer

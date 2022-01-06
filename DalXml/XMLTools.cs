@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
@@ -27,6 +28,7 @@ namespace Dal
         /// </summary>
         /// <param name="rootElem"></param>
         /// <param name="filePath"></param>
+         [MethodImpl(MethodImplOptions.Synchronized)]
         public static void SaveListToXMLElement(XElement rootElem, string filePath)
         {
             try
@@ -43,6 +45,7 @@ namespace Dal
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public static XElement LoadListFromXMLElement(string filePath)
         {
             try
@@ -71,6 +74,7 @@ namespace Dal
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         /// <param name="filePath"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public static void SaveListToXMLSerializer<T>(List<T> list, string filePath)
         {
             try
@@ -93,6 +97,7 @@ namespace Dal
         /// <typeparam name="T"></typeparam>
         /// <param name="filePath"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public static List<T> LoadListFromXMLSerializer<T>(string filePath)
         {
             try

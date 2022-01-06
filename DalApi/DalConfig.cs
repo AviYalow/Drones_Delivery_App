@@ -4,9 +4,11 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace DalApi
 {
+    
     class DalConfig
     {
         internal static string DalName;

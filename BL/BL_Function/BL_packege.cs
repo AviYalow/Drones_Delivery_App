@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
-
+using System.Runtime.CompilerServices;
 using DalApi;
 namespace BlApi
 {
@@ -15,6 +15,7 @@ namespace BlApi
         /// </summary>
         /// <param name="package"> packege to add</param>
         /// <returns> serial number of the packege</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public uint AddPackege(Package package)
         {
             uint packegeNum = 0;
@@ -56,6 +57,7 @@ namespace BlApi
         /// Updating fields of a particular package in the data layer
         /// </summary>
         /// <param name="package"> particular package</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdatePackegInDal(Package package)
         {
             try
@@ -71,6 +73,7 @@ namespace BlApi
         /// </summary>
         /// <param name="number">serial number of package</param>
         /// <returns> package in the logical layer</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Package ShowPackage(uint number)
         {
 
@@ -90,6 +93,7 @@ namespace BlApi
         /// delete packege 
         /// </summary>
         /// <param name="number"> serial nummber of package</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeletePackege(uint number)
         {
             try
@@ -124,6 +128,7 @@ namespace BlApi
         /// </summary>
         /// <param name="dataPackege"> package in the data layer </param>
         /// <returns>  package in the logical layer</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         Package convertPackegeDalToBl(DO.Package dataPackege)
         {
             return new Package

@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 using DalApi;
 using DO;
 using Ds;
-
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
     sealed partial class DalObject : DalApi.IDal
     {
-        
+
         /// <summary>
         /// Adding a new package
         /// </summary>
         /// <param name="package"></param>
         /// <returns>Returns the serial number of the new package</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public uint AddPackage(Package package)
         {
             package.ReceivingDelivery = DateTime.Now;
@@ -37,6 +38,7 @@ namespace Dal
         /// </summary>
         /// <param name="packageNumber">serial number of the package that needs 
         /// to connect to drone </param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ConnectPackageToDrone(uint packageNumber, uint drone_sirial_number)
         {
             int i = DataSource.packages.FindIndex(x=>x.SerialNumber==packageNumber);
@@ -61,6 +63,7 @@ namespace Dal
         /// Updated package collected
         /// </summary>
         /// <param name="packageNumber">serial number of the package</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void PackageCollected(uint packageNumber)
         {
             int i = DataSource.packages.FindIndex(x=>x.SerialNumber==packageNumber);
@@ -78,6 +81,7 @@ namespace Dal
         /// Update that package has arrived at destination
         /// </summary>
         /// <param name="packageNumber">serial number of the package</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void PackageArrived(uint packageNumber)
         {
             int i = DataSource.packages.FindIndex(x => x.SerialNumber == packageNumber);
@@ -95,6 +99,7 @@ namespace Dal
         /// </summary>
         /// <param name="packageNumber">Serial number of a particular package</param>
         /// <returns> string of data</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Package packegeByNumber(uint packageNumber)
         {
             int i = DataSource.packages.FindIndex(x => x.SerialNumber == packageNumber);
@@ -107,6 +112,7 @@ namespace Dal
         /// <summary>
         /// return the list of all packages
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Package> PackegeList(Predicate<Package> predicate)
         {
             // return DataSource.packages.Where(predicate).Select(x => x);
@@ -116,12 +122,13 @@ namespace Dal
 
         }
 
-  
+
 
         /// <summary>
         /// delete a spsific packege
         /// </summary>
         /// <param name="sirial"> package number</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeletePackege(uint sirial)
         {
             int i = DataSource.packages.FindIndex(x => x.SerialNumber == sirial);
@@ -134,6 +141,7 @@ namespace Dal
         /// Updating fields of a particular package
         /// </summary>
         /// <param name="package">particular package</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdatePackege(Package package)
         {
             int i = DataSource.packages.FindIndex(x => x.SerialNumber == package.SerialNumber);

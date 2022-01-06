@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
-
+using System.Runtime.CompilerServices;
 using DalApi;
 namespace BlApi
 {
@@ -16,6 +16,7 @@ namespace BlApi
         /// </summary>
         /// <param name="droneToList"> droneToList object</param>
         /// <returns> drone object </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         Drone convertDroneToListToDrone( DroneToList droneToList)
         {
 
@@ -27,6 +28,7 @@ namespace BlApi
         /// </summary>
         /// <param name="siralNuber"> serial number of the drone</param>
         /// <returns> drone founded </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneToList SpecificDrone(uint siralNuber)
         {
             var drone = dronesListInBl.Find(x => x.SerialNumber == siralNuber && x.DroneStatus != DroneStatus.Delete);

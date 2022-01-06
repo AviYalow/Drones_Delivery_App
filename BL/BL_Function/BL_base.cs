@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using BlApi;
 using BO;
 using DalApi;
+using System.Runtime.CompilerServices;
+
 namespace BlApi
 {
    partial class BL : IBL
@@ -15,6 +17,7 @@ namespace BlApi
         /// </summary>
         /// <param name="location"> particular location</param>
         /// <returns> the most collset base station </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation ClosestBase(Location location,bool toCharge=false)
         {
             BaseStation baseStation = new BaseStation();
@@ -63,6 +66,7 @@ namespace BlApi
         /// </summary>
         /// <param name="base_number"> serial number of base station</param>
         /// <returns> Location of the base station</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Location BaseLocation(uint base_number)
         {
             DO.Base_Station base_Station = new DO.Base_Station();
@@ -85,6 +89,7 @@ namespace BlApi
         /// add base station
         /// </summary>
         /// <param name="baseStation"> serial number of the base station</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddBase(BaseStation baseStation)
         {
             try
@@ -112,6 +117,7 @@ namespace BlApi
         /// <param name="base_">serial number of the base station</param>
         /// <param name="newName"> new name</param>
         /// <param name="newNumber"> charging states</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateBase(uint base_, string newName, string newNumber)
         {
             var baseUpdat = new DO.Base_Station();
@@ -145,6 +151,7 @@ namespace BlApi
         /// </summary>
         /// <param name="baseNume"> serial number</param>
         /// <returns> base station </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation BaseByNumber(uint baseNume)
         {
             try
@@ -162,7 +169,7 @@ namespace BlApi
                 throw new ItemNotFoundException(ex);
             }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneInCharge>DroneINChargePerBase(uint base_)
             {
             return from drone in dalObj.ChargingDroneList(x => x.idBaseStation == base_)
@@ -176,6 +183,7 @@ namespace BlApi
         /// delete base station
         /// </summary>
         /// <param name="base_">serial number</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteBase(uint base_)
         {
             try
@@ -193,7 +201,7 @@ namespace BlApi
 
             }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStationToList BaseStationWhitSpscificDrone(uint drone)
         {
             return dalObj.BaseStationByNumber(dalObj.ChargingDroneList(x => x.IdDrone == drone)

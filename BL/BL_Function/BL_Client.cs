@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using BO;
 using System.Collections;
 using DalApi;
+using System.Runtime.CompilerServices;
+
 namespace BlApi
 {
     partial class BL : IBL
@@ -15,6 +17,7 @@ namespace BlApi
         /// </summary>
         /// <param name="id"> id client</param>
         /// <returns> client location</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Location ClientLocation(uint id)
         {
             DO.Client client = new DO.Client();
@@ -36,6 +39,7 @@ namespace BlApi
         /// add client
         /// </summary>
         /// <param name="client"> client to add</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddClient(Client client)
         {
             //checking id
@@ -68,6 +72,7 @@ namespace BlApi
         /// help mathod to chack phone number
         /// </summary>
         /// <param name="fon"> phone number</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         void chekingFon(string fon)
         {
             if (fon.Count() < 10)
@@ -88,6 +93,7 @@ namespace BlApi
         /// Update fields at a client
         /// </summary>
         /// <param name="client"> client </param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateClient( Client client)
         {
             //checking id
@@ -123,6 +129,7 @@ namespace BlApi
         /// </summary>
         /// <param name="id"> client ID</param>
         /// <returns> client</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Client GetingClient(uint id)
         {
             try
@@ -162,6 +169,7 @@ namespace BlApi
         /// delete client
         /// </summary>
         /// <param name="id"> client id</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteClient (uint id)
         {
             List<uint>packegesDelete = new List<uint>();

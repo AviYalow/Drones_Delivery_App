@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace DalApi
 {
     public static class DalFactory
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public static IDal GetDal()
         {
             string dalType = DalConfig.DalName;

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace BlApi
 {
@@ -15,6 +16,7 @@ namespace BlApi
         /// </summary>
         /// <param name="drone"> drone to add</param>
         /// <param name="base_"> serial number of base station for first chraging</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(DroneToList drone, uint base_)
         {
             try
@@ -54,6 +56,7 @@ namespace BlApi
         /// </summary>
         /// <param name="drone"> serial number of drone</param>
         /// <param name="location"> new location</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDronelocation(uint drone, Location location)
         {
 
@@ -69,6 +72,7 @@ namespace BlApi
         /// </summary>
         /// <param name="droneId"> serial number of the drone</param>
         /// <param name="newName"> new name to change</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneName(uint droneId, DroneModel newName)
         {
             DO.Drone droneInData;
@@ -94,6 +98,7 @@ namespace BlApi
         /// </summary>
         /// <param name="droneNum"> serial number of the drone</param>
         /// <returns> drone founded</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(uint droneNum)
         {
 
@@ -126,6 +131,7 @@ namespace BlApi
         /// delete drone 
         /// </summary>
         /// <param name="droneNum"> serial number of the drone</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDrone(uint droneNum)
         {
             var drone = dronesListInBl.Find(x => x.SerialNumber == droneNum && x.DroneStatus != DroneStatus.Delete);

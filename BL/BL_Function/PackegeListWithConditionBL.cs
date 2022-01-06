@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 using BO;
-
+using System.Runtime.CompilerServices;
 using DalApi;
+
 namespace BlApi
 {
     partial class BL : IBL
@@ -24,6 +25,7 @@ namespace BlApi
         /// list of packages
         /// </summary>
         /// <returns>list of packages</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> PackageToLists()
         {
 
@@ -41,6 +43,7 @@ namespace BlApi
         /// packeges thir only crate
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> PackageWithNoDroneToLists(bool filterPackege = true)
         {
 
@@ -59,6 +62,7 @@ namespace BlApi
         /// packege they get to the resive client
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> PackageArriveLists(bool filterPackege = true)
         {
 
@@ -75,6 +79,7 @@ namespace BlApi
         /// packege thier collected but not arrive
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> PackageCollectedButNotArriveLists(bool filterPackege = true)
         {
 
@@ -91,6 +96,7 @@ namespace BlApi
         /// packege thet connect to drone but not collected
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> PackageConnectedButNutCollectedLists(bool filterPackege = true)
         {
 
@@ -108,6 +114,7 @@ namespace BlApi
         /// </summary>
         /// <param name="weight"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> PackageWeightLists(WeightCategories? weight = null)
         {
 
@@ -131,6 +138,7 @@ namespace BlApi
         /// </summary>
         /// <param name="priority"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> PackagePriorityLists(Priority? priority = null)
         {
 
@@ -148,7 +156,7 @@ namespace BlApi
                    select x.convertPackegeDalToPackegeToList(dalObj);
 
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> PackageFromDateLists(DateTime? date = null)
         {
 
@@ -166,7 +174,7 @@ namespace BlApi
                    select x.convertPackegeDalToPackegeToList(dalObj);
 
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> PackageToDateLists(DateTime? date = null)
         {
 
@@ -184,7 +192,7 @@ namespace BlApi
                    select x.convertPackegeDalToPackegeToList(dalObj);
 
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> PackegeBySpsificStatus(PackageStatus? status=null)
         {
             if(status!=null)

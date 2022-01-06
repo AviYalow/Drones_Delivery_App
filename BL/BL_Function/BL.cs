@@ -5,6 +5,7 @@ using DalApi;
 using BO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace BlApi
 {
@@ -182,6 +183,7 @@ namespace BlApi
         /// <param name="location1">the first location</param>
         /// <param name="location2"> the second location</param>
         /// <returns> distance </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double Distans(Location location1, Location location2)
         {
             return dalObj.Distance(location1.Longitude, location1.Latitude, location2.Longitude, location2.Latitude);
@@ -192,6 +194,7 @@ namespace BlApi
         /// </summary>
         /// <param name="point"> a point</param>
         /// <returns>point in the form of degrees</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string PointToDegree(double point)
         {
             return dalObj.PointToDegree(point);
@@ -203,6 +206,7 @@ namespace BlApi
         /// <param name="obj">ordenry list by this parameter parameter </param>
         /// <param name="drones">ordener this list </param>
         /// <returns>ordenry list</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<T> SortList<T>(string obj, IEnumerable<T> drones = null)
         {
 
@@ -221,6 +225,7 @@ namespace BlApi
         /// <param name="list">full list </param>
         /// <param name="func">event func</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         IEnumerable<T> filerList<T>(IEnumerable<T> list, Func<T, bool> func)
         {
 

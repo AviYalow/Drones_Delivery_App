@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 using BO;
-
+using System.Runtime.CompilerServices;
 using DalApi;
+
 namespace BlApi
 {
     public interface IBL

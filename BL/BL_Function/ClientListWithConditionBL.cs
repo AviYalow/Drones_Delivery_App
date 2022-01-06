@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 using BO;
-
+using System.Runtime.CompilerServices;
 using DalApi;
+
 namespace BlApi
 {
     partial class BL : IBL
@@ -20,12 +21,13 @@ namespace BlApi
         Func<ClientToList, bool> clientActiveHowGetingPackeges = client => client.received > 0 || client.OnTheWay > 0;
         Func<ClientToList, bool> clientById = null;
 
- 
+
 
         /// <summary>
         /// list of clients activ
         /// </summary>
         /// <returns> list of clients</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> ClientToLists(bool filter = true)
         {
             if(!filter)
@@ -41,6 +43,7 @@ namespace BlApi
         /// IEnumerable of client how send packege
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> ClientActiveHowSendPackegesToLists(bool filter = true)
         {
             clientToListFilter -= clientHowSendPackege;
@@ -56,6 +59,7 @@ namespace BlApi
         /// IEnumerable of client how send packege and arrive
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> ClientActiveHowSendAndArrivePackegesToLists(bool filter = true)
         {
             clientToListFilter -= clientHowSendPackege;
@@ -70,6 +74,7 @@ namespace BlApi
         /// IEnumerable of client how send packege and not arrive
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> ClientActiveHowSendPackegesAndNotArriveToLists(bool filter = true)
         {
             clientToListFilter -= clientHowSendPackege;
@@ -84,6 +89,7 @@ namespace BlApi
         /// IEnumerable of client how need to get packege 
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndNotArriveToLists(bool filter = true)
         {
 
@@ -98,6 +104,7 @@ namespace BlApi
         /// IEnumerable of client how need to get packege and they get 
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndArriveToLists(bool filter = true)
         {
             clientToListFilter -= clientHowGetingPackegesAndNotArrive;
@@ -112,6 +119,7 @@ namespace BlApi
         /// IEnumerable of client how need to get packege and they not get 
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> ClientActiveHowGetingPackegesToLists(bool filter = true)
         {
             clientToListFilter -= clientHowGetingPackegesAndNotArrive;
@@ -122,20 +130,20 @@ namespace BlApi
             return FilterClientList();
 
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientInPackage> ClientInPackagesList(bool filter = true)
         {
             return from client in dalObj.CilentList(x => true)
                    select new ClientInPackage { Id = client.Id, Name = client.Name };
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> FilterClientList(bool active =true)
         {
 
             return from client in filerList(ClientToLists(active), clientToListFilter)
                    select client.Clone();
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<uint> ClientById(string id)
         {
             clientById= x => x.ID.ToString().StartsWith(id);

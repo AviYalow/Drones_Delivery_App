@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 using BO;
-
+using System.Runtime.CompilerServices;
 using DalApi;
 
 namespace BlApi
@@ -17,6 +17,7 @@ namespace BlApi
         /// show base station list 
         /// </summary>
         /// <returns> base station list </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationToList> BaseStationToLists()
         {
 
@@ -32,6 +33,7 @@ namespace BlApi
         /// return base station with free place for drone
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationToList> BaseStationWhitFreeChargingStationToLists()
         {
             var base_ = from x in dalObj.BaseStationList(x => x.NumberOfChargingStations > 0&&x.Active)
@@ -39,7 +41,7 @@ namespace BlApi
            
             return base_;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationToList> AllBaseStation()
         {
             try

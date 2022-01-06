@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using DalApi;
 using DO;
 using Ds;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
     sealed partial class DalObject : DalApi.IDal
     {
 
-        
+
         /// <summary>
         ///Adding a new base station
         /// </summary>
@@ -21,6 +22,7 @@ namespace Dal
         /// <param name="numOfCharging">The amount of charging stations at the station </param>
         /// <param name="latitude">Latitude of the station</param>
         /// <param name="longitude">Longitude of the station</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(uint base_num, string name, uint numOfCharging, double latitude, double longitude)
         {
             
@@ -44,6 +46,7 @@ namespace Dal
         /// Adding a new base station
         /// </summary>
         /// <param name="base_Station"> Base Station to add</param>
+         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Base_Station base_Station)
         {
             if (DataSource.base_Stations.Any(x => x.baseNumber == base_Station.baseNumber))
@@ -57,6 +60,7 @@ namespace Dal
         /// </summary>
         /// <param name="baseNum">Desired base station number</param>
         /// <returns> String of data </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Base_Station BaseStationByNumber(uint baseNum)
         {
 
@@ -70,6 +74,7 @@ namespace Dal
         /// <summary>
         /// return a list of all the base stations
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Base_Station> BaseStationList(Predicate<Base_Station> predicate)
         {
             return from base_ in DataSource.base_Stations
@@ -79,12 +84,13 @@ namespace Dal
         }
 
 
-       
+
 
         /// <summary>
         /// delete a spsific base for list
         /// </summary>
         /// <param name="sirial"> Base Station number</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteBase(uint sirial)
         {
             var baseDeleteNumber = DataSource.base_Stations.FindIndex(x => x.baseNumber == sirial);
@@ -102,6 +108,7 @@ namespace Dal
         /// update fileds at a given base station
         /// </summary>
         /// <param name="base_"> a given base station </param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateBase(Base_Station base_)
         {
             int i = DataSource.base_Stations.FindIndex(x => x.baseNumber == base_.baseNumber);
