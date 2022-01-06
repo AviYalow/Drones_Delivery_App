@@ -20,14 +20,16 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationToList> BaseStationToLists()
         {
-
-            var base_ = from x in dalObj.BaseStationList(x => x.Active)
+            lock (dalObj)
+            {
+                var base_ = from x in dalObj.BaseStationList(x => x.Active)
                         select x.convertBaseInDalToBaseStationList(dalObj);
 
             if (base_.Count() == 0)
                 return null;
-            
+
             return base_;
+        }
         }
         /// <summary>
         /// return base station with free place for drone
@@ -36,22 +38,28 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationToList> BaseStationWhitFreeChargingStationToLists()
         {
-            var base_ = from x in dalObj.BaseStationList(x => x.NumberOfChargingStations > 0&&x.Active)
+            lock (dalObj)
+            {
+                var base_ = from x in dalObj.BaseStationList(x => x.NumberOfChargingStations > 0 && x.Active)
                         select x.convertBaseInDalToBaseStationList(dalObj);
-           
+
             return base_;
+        }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationToList> AllBaseStation()
         {
-            try
+            lock (dalObj)
             {
-                return from base_ in dalObj.BaseStationList(x => true)
-                       select base_.convertBaseInDalToBaseStationList(dalObj);
-            }
-            catch(Exception)
-            {
-                return null;
+                try
+                {
+                    return from base_ in dalObj.BaseStationList(x => true)
+                           select base_.convertBaseInDalToBaseStationList(dalObj);
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
             }
         }
         

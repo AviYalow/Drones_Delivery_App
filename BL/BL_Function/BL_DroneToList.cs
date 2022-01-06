@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using DalApi;
 namespace BlApi
 {
-   partial class BL:IBL
+    partial class BL : IBL
     {
 
         /// <summary>
@@ -17,11 +17,13 @@ namespace BlApi
         /// <param name="droneToList"> droneToList object</param>
         /// <returns> drone object </returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        Drone convertDroneToListToDrone( DroneToList droneToList)
+        Drone convertDroneToListToDrone(DroneToList droneToList)
         {
-
-            return new Drone { SerialNumber = droneToList.SerialNumber, ButrryStatus = droneToList.ButrryStatus, DroneStatus = droneToList.DroneStatus, Location = droneToList.Location, Model = droneToList.Model, WeightCategory = droneToList.WeightCategory, PackageInTransfer = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(droneToList.NumPackage)) };
+            lock (dalObj)
+            {
+                return new Drone { SerialNumber = droneToList.SerialNumber, ButrryStatus = droneToList.ButrryStatus, DroneStatus = droneToList.DroneStatus, Location = droneToList.Location, Model = droneToList.Model, WeightCategory = droneToList.WeightCategory, PackageInTransfer = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(droneToList.NumPackage)) };
         }
+    }
 
         /// <summary>
         /// find specific drone in the list of the drones
@@ -31,10 +33,13 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneToList SpecificDrone(uint siralNuber)
         {
-            var drone = dronesListInBl.Find(x => x.SerialNumber == siralNuber && x.DroneStatus != DroneStatus.Delete);
+            lock (dalObj)
+            {
+                var drone = dronesListInBl.Find(x => x.SerialNumber == siralNuber && x.DroneStatus != DroneStatus.Delete);
             if (drone is null)
                 throw new ItemNotFoundException("drone", siralNuber);
             return drone.Clone();
+        }
 
         }
     }

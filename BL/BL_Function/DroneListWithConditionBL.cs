@@ -24,22 +24,28 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> DroneToLists()
         {
-            if (dronesListInBl.Count == 0)
-                return null;
+            lock (dalObj)
+            {
+                if (dronesListInBl.Count == 0)
+                    return null;
 
-            return from drone in dronesListInBl
-                   where drone.DroneStatus != DroneStatus.Delete
-                   select drone.Clone();
+                return from drone in dronesListInBl
+                       where drone.DroneStatus != DroneStatus.Delete
+                       select drone.Clone();
+            }
 
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> AllDroneToLists()
         {
-            if (dronesListInBl.Count == 0)
-                return null;
+            lock (dalObj)
+            {
+                if (dronesListInBl.Count == 0)
+                    return null;
 
-            return from drone in filerList(dronesListInBl, droneToListFilter)
-                   select drone.Clone();
+                return from drone in filerList(dronesListInBl, droneToListFilter)
+                       select drone.Clone();
+            }
 
            
 
@@ -53,15 +59,17 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> DroneToListsByStatus(DroneStatus? droneStatus = null)
         {
+            lock (dalObj)
+            {
+                droneToListFilter -= selectByStatus;
+                selectByStatus = x => x.DroneStatus == droneStatus;
+                if (dronesListInBl.Count == 0)
+                    return null;
+                if (droneStatus != null)
+                    droneToListFilter += selectByStatus;
 
-            droneToListFilter -= selectByStatus;
-            selectByStatus = x => x.DroneStatus == droneStatus;
-            if (dronesListInBl.Count == 0)
-                return null;
-            if (droneStatus != null)
-                droneToListFilter += selectByStatus;
-
-            return FilterDronesList();
+                return FilterDronesList();
+            }
 
         }
 
@@ -72,14 +80,17 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> DroneToListsByWhight(WeightCategories? weight = null)
         {
-            droneToListFilter -= selectByWeihgt;
-            selectByWeihgt = x => x.WeightCategory >= weight;
-            if (dronesListInBl.Count == 0)
-                return null;
-            if (weight != null)
-                droneToListFilter += selectByWeihgt;
+            lock (dalObj)
+            {
+                droneToListFilter -= selectByWeihgt;
+                selectByWeihgt = x => x.WeightCategory >= weight;
+                if (dronesListInBl.Count == 0)
+                    return null;
+                if (weight != null)
+                    droneToListFilter += selectByWeihgt;
 
-            return FilterDronesList();
+                return FilterDronesList();
+            }
         }
 
         /// <summary>
@@ -89,29 +100,35 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> DroneToListPasibalForPackege(Package package)
         {
-            droneToListFilter -= selectByPackege;
-            selectByPackege = x => x.WeightCategory >= package.WeightCatgory &&
-            x.DroneStatus == DroneStatus.Free &&
-            x.ButrryStatus > batteryCalculationForFullShipping(x.Location, package);
-            if (dronesListInBl.Count == 0)
-                return null;
-            if (package != null)
-                droneToListFilter += selectByPackege;
+            lock (dalObj)
+            {
+                droneToListFilter -= selectByPackege;
+                selectByPackege = x => x.WeightCategory >= package.WeightCatgory &&
+                x.DroneStatus == DroneStatus.Free &&
+                x.ButrryStatus > batteryCalculationForFullShipping(x.Location, package);
+                if (dronesListInBl.Count == 0)
+                    return null;
+                if (package != null)
+                    droneToListFilter += selectByPackege;
 
-            return FilterDronesList();
+                return FilterDronesList();
+            }
 
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> DroneToListFilterByNumber(string num)
         {
-            droneToListFilter -= selectBynumber;
-            selectBynumber = x => x.SerialNumber.ToString().StartsWith(num);
-            if (dronesListInBl.Count == 0)
-                return null;
-            if (num != "")
-                droneToListFilter += selectBynumber;
+            lock (dalObj)
+            {
+                droneToListFilter -= selectBynumber;
+                selectBynumber = x => x.SerialNumber.ToString().StartsWith(num);
+                if (dronesListInBl.Count == 0)
+                    return null;
+                if (num != "")
+                    droneToListFilter += selectBynumber;
 
-            return FilterDronesList();
+                return FilterDronesList();
+            }
 
         }
 
@@ -122,8 +139,10 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> FilterDronesList()
         {
-
-            return filerList(DroneToLists(), droneToListFilter);
+            lock (dalObj)
+            {
+                return filerList(DroneToLists(), droneToListFilter);
+            }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<uint>DronesNumber()

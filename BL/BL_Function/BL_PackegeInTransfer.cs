@@ -20,10 +20,13 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         PackageInTransfer convertPackegeBlToPackegeInTrnansfer(Package package)
         {
-            var returnPackege = new PackageInTransfer { Priority = package.Priority, SendClient = package.SendClient, RecivedClient = package.RecivedClient, SerialNum = package.SerialNumber, WeightCatgory = package.WeightCatgory, Source = ClientLocation(package.SendClient.Id), Destination = ClientLocation(package.RecivedClient.Id) };
+            lock (dalObj)
+            {
+                var returnPackege = new PackageInTransfer { Priority = package.Priority, SendClient = package.SendClient, RecivedClient = package.RecivedClient, SerialNum = package.SerialNumber, WeightCatgory = package.WeightCatgory, Source = ClientLocation(package.SendClient.Id), Destination = ClientLocation(package.RecivedClient.Id) };
             returnPackege.Distance = Distans(returnPackege.Source, returnPackege.Destination);
             returnPackege.InTheWay = (package.PackageArrived != new DateTime()) ? true : false;
             return returnPackege;
+        }
         }
 
         /// <summary>
@@ -33,7 +36,9 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void CollectPackegForDelivery(uint droneNumber)
         {
-            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber && x.DroneStatus != DroneStatus.Delete);
+            lock (dalObj)
+            {
+                var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber && x.DroneStatus != DroneStatus.Delete);
             if (drone == null)
                 throw new ItemNotFoundException("Drone", droneNumber);
             try
@@ -58,6 +63,7 @@ namespace BlApi
                 throw new ItemNotFoundException(ex);
             }
         }
+        }
 
         /// <summary>
         /// A package that arrived at the destination
@@ -66,7 +72,9 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void PackegArrive(uint droneNumber)
         {
-            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber && x.DroneStatus != DroneStatus.Delete);
+            lock (dalObj)
+            {
+                var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber && x.DroneStatus != DroneStatus.Delete);
             if (drone == null)
                 throw new ItemNotFoundException("Drone", droneNumber);
             try
@@ -87,7 +95,9 @@ namespace BlApi
             {
                 throw new ItemNotFoundException(ex);
             }
-
+                catch(Exception)
+                { }
+        }
         }
 
         /// <summary>
@@ -97,51 +107,59 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void ConnectPackegeToDrone(uint droneNumber)
         {
-            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber && x.DroneStatus != DroneStatus.Delete);
-            if (drone is null)
-            { throw new ItemNotFoundException("Drone", droneNumber); }
-            if (drone.DroneStatus != DroneStatus.Free)
-            { throw new DroneCantMakeDliveryException(); }
-
-
-            DO.Package returnPackege = new DO.Package { SerialNumber = 0 };
-            foreach
-            (var packege in dalObj.PackegeList(x => x.OperatorSkimmerId == 0 &&
-            batteryCalculationForFullShipping(drone.Location, convertPackegeDalToBl(x)) < drone.ButrryStatus &&
-            (WeightCategories)x.WeightCatgory <= drone.WeightCategory))
-
+            lock (dalObj)
             {
-                if (returnPackege.Priority < packege.Priority)
-                    returnPackege = packege;
-                else if (returnPackege.Priority == packege.Priority)
-                    if (returnPackege.WeightCatgory < packege.WeightCatgory)
-                        returnPackege = packege;
-                    else if (returnPackege.WeightCatgory == packege.WeightCatgory)
-                        if (Distans(drone.Location, ClientLocation(packege.SendClient)) < Distans(drone.Location, ClientLocation(returnPackege.SendClient)))
-                            returnPackege = packege;
-
-            }
-            if (returnPackege.SerialNumber == 0)
-                throw new DroneCantMakeDliveryException();
-            drone.NumPackage = returnPackege.SerialNumber;
-            drone.DroneStatus = DroneStatus.Work;
-            try
-            {
-                dalObj.ConnectPackageToDrone(returnPackege.SerialNumber, droneNumber);
-            }
-            catch(DO.ItemNotFoundException ex)
-            {
-                throw new ItemNotFoundException(ex);
-            }
-            for (int i = 0; i < dronesListInBl.Count; i++)
-            {
-                if (dronesListInBl[i].SerialNumber == drone.SerialNumber)
+                try
                 {
-                    dronesListInBl[i] = drone;
-                    break;
-                }
-            }
+                    var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber && x.DroneStatus != DroneStatus.Delete);
+                    if (drone is null)
+                    { throw new ItemNotFoundException("Drone", droneNumber); }
+                    if (drone.DroneStatus != DroneStatus.Free)
+                    { throw new DroneCantMakeDliveryException(); }
 
+
+                    DO.Package returnPackege = new DO.Package { SerialNumber = 0 };
+                    foreach
+                    (var packege in dalObj.PackegeList(x => x.OperatorSkimmerId == 0 &&
+                    batteryCalculationForFullShipping(drone.Location, convertPackegeDalToBl(x)) < drone.ButrryStatus &&
+                    (WeightCategories)x.WeightCatgory <= drone.WeightCategory))
+
+                    {
+                        if (returnPackege.Priority < packege.Priority)
+                            returnPackege = packege;
+                        else if (returnPackege.Priority == packege.Priority)
+                            if (returnPackege.WeightCatgory < packege.WeightCatgory)
+                                returnPackege = packege;
+                            else if (returnPackege.WeightCatgory == packege.WeightCatgory)
+                                if (Distans(drone.Location, ClientLocation(packege.SendClient)) < Distans(drone.Location, ClientLocation(returnPackege.SendClient)))
+                                    returnPackege = packege;
+
+                    }
+                    if (returnPackege.SerialNumber == 0)
+                        throw new DroneCantMakeDliveryException();
+                    drone.NumPackage = returnPackege.SerialNumber;
+                    drone.DroneStatus = DroneStatus.Work;
+                    try
+                    {
+                        dalObj.ConnectPackageToDrone(returnPackege.SerialNumber, droneNumber);
+                    }
+                    catch (DO.ItemNotFoundException ex)
+                    {
+                        throw new ItemNotFoundException(ex);
+                    }
+
+                    for (int i = 0; i < dronesListInBl.Count; i++)
+                    {
+                        if (dronesListInBl[i].SerialNumber == drone.SerialNumber)
+                        {
+                            dronesListInBl[i] = drone;
+                            break;
+                        }
+                    }
+                }
+                catch(Exception)
+                { }
+        }
 
         }
 
@@ -153,19 +171,31 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         PackageInTransfer convertPackegeDalToPackegeInTrnansfer(DO.Package package)
         {
-            var returnPackege = new PackageInTransfer
+            lock (dalObj)
             {
-                SerialNum = package.SerialNumber,
-                WeightCatgory = (WeightCategories)package.WeightCatgory,
-                Priority = (Priority)package.Priority,
-                Source = ClientLocation(package.SendClient).Clone(),
-                Destination = ClientLocation(package.GetingClient).Clone(),
-                SendClient = dalObj.CilentByNumber(package.SendClient).clientInPackageFromDal(),
-                RecivedClient = dalObj.CilentByNumber(package.GetingClient).clientInPackageFromDal()
-            };
-            returnPackege.Distance = Distans(returnPackege.Source, returnPackege.Destination);
-            returnPackege.InTheWay = (package.PackageArrived is null && package.OperatorSkimmerId != 0) ? true : false;
-            return returnPackege;
+                try
+                {
+                    var returnPackege = new PackageInTransfer
+                    {
+                        SerialNum = package.SerialNumber,
+                        WeightCatgory = (WeightCategories)package.WeightCatgory,
+                        Priority = (Priority)package.Priority,
+                        Source = ClientLocation(package.SendClient).Clone(),
+                        Destination = ClientLocation(package.GetingClient).Clone(),
+                        SendClient = dalObj.CilentByNumber(package.SendClient).clientInPackageFromDal(),
+                        RecivedClient = dalObj.CilentByNumber(package.GetingClient).clientInPackageFromDal()
+                    };
+                    returnPackege.Distance = Distans(returnPackege.Source, returnPackege.Destination);
+                    returnPackege.InTheWay = (package.PackageArrived is null && package.OperatorSkimmerId != 0) ? true : false;
+                    return returnPackege;
+                }
+                catch(DO.ItemNotFoundException ex)
+                {
+                    throw new ItemNotFoundException(ex);
+                }
+                catch(Exception)
+                { return null; }
+        }
         }
 
     }

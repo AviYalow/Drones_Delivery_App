@@ -54,10 +54,12 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         double buttryDownWithNoPackege(Location fromLocation, Location toLocation)
         {
-
-            double distans = Distans(fromLocation, toLocation);
+            lock (dalObj)
+            {
+                double distans = Distans(fromLocation, toLocation);
             double buttry = ((distans / (double)SpeedDrone.Free) * (double)ButrryPer.Minute) * freeElctric;
             return buttry;
+        }
         }
 
         /// <summary>
@@ -68,14 +70,15 @@ namespace BlApi
         public void DroneToCharge(uint droneNumber)
         {
 
-
-            var drone = SpecificDrone(droneNumber);
-            BaseStation baseStation = ClosestBase(drone.Location,true);
+            lock (dalObj)
+            {
+                var drone = SpecificDrone(droneNumber);
+            BaseStation baseStation = ClosestBase(drone.Location, true);
             if (drone.DroneStatus != DroneStatus.Free)
             {
                 throw new DroneStillAtWorkException();
             }
-            
+
             double buttry = buttryDownWithNoPackege(drone.Location, baseStation.Location);
             if (drone.ButrryStatus - buttry < 0)
             {
@@ -102,7 +105,7 @@ namespace BlApi
             {
                 throw new ItemFoundExeption(ex);
             }
-
+        }
 
         }
 
@@ -115,8 +118,10 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public double FreeDroneFromCharging(uint droneNumber, int number = -1)
         {
-            //locking for drone
-            var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber);
+            lock (dalObj)
+            {
+                //locking for drone
+                var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber);
             if (drone == null)
                 throw new ItemNotFoundException("Drone", droneNumber);
             //locking the drone in charge
@@ -129,12 +134,13 @@ namespace BlApi
 
             drone.ButrryStatus = buttry > 100 ? 100 : buttry + drone.ButrryStatus;
             drone.DroneStatus = DroneStatus.Free;
-       
+
             dalObj.FreeDroneFromCharge(drone.SerialNumber);
             dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == drone.SerialNumber)] = drone;
 
 
             return drone.ButrryStatus;
+        }
 
         }
 
@@ -146,39 +152,42 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void FreeBaseFromDrone(uint baseNumber, int number = -1)
         {
-            if (number != -1)
-
-                try
-                {
-                    if (dalObj.ChargingDroneList(x => x.idBaseStation == baseNumber).Count() - number < 0)
-                    {
-                        throw (new TryToPullOutMoreDrone());
-                    }
-                }
-                catch (DO.ItemNotFoundException ex)
-                {
-                    throw new ItemNotFoundException(ex);
-                }
-
-
-            int i = 0;
-            var returnDrone = new DroneInCharge();
-            List<DroneInCharge> list = new List<DroneInCharge>();
-            foreach (var droneChrging in dalObj.ChargingDroneList(x => x.idBaseStation == baseNumber))
+            lock (dalObj)
             {
                 if (number != -1)
-                {
-                    if (i <= number)
+
+                    try
                     {
+                        if (dalObj.ChargingDroneList(x => x.idBaseStation == baseNumber).Count() - number < 0)
+                        {
+                            throw (new TryToPullOutMoreDrone());
+                        }
+                    }
+                    catch (DO.ItemNotFoundException ex)
+                    {
+                        throw new ItemNotFoundException(ex);
+                    }
+
+
+                int i = 0;
+                var returnDrone = new DroneInCharge();
+                List<DroneInCharge> list = new List<DroneInCharge>();
+                foreach (var droneChrging in dalObj.ChargingDroneList(x => x.idBaseStation == baseNumber))
+                {
+                    if (number != -1)
+                    {
+                        if (i <= number)
+                        {
+                            //FreeDroneFromCharging(droneChrging.IdDrone, droneChrging.EntringDrone - DateTime.Now);
+                            FreeDroneFromCharging(droneChrging.IdDrone);
+                            i++;
+
+                        }
+                    }
+                    else
                         //FreeDroneFromCharging(droneChrging.IdDrone, droneChrging.EntringDrone - DateTime.Now);
                         FreeDroneFromCharging(droneChrging.IdDrone);
-                        i++;
-
-                    }
                 }
-                else
-                    //FreeDroneFromCharging(droneChrging.IdDrone, droneChrging.EntringDrone - DateTime.Now);
-                    FreeDroneFromCharging(droneChrging.IdDrone);
             }
 
         }
@@ -205,8 +214,11 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         double batteryCalculationForFullShipping(Location drone, Package package)
         {
-            return buttryDownWithNoPackege(drone, ClientLocation(package.SendClient.Id)) + buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package)) +
+            lock (dalObj)
+            {
+                return buttryDownWithNoPackege(drone, ClientLocation(package.SendClient.Id)) + buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package)) +
                 buttryDownWithNoPackege(ClosestBase(ClientLocation(package.RecivedClient.Id)).Location, ClientLocation(package.RecivedClient.Id));
+            }
         }
     }
 }

@@ -20,7 +20,9 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Location ClientLocation(uint id)
         {
-            DO.Client client = new DO.Client();
+            lock (dalObj)
+            {
+                DO.Client client = new DO.Client();
             try
             {
                 client = dalObj.CilentByNumber(id);
@@ -34,6 +36,7 @@ namespace BlApi
             location_client.Longitude = client.Longitude;
             return location_client;
         }
+        }
 
         /// <summary>
         /// add client
@@ -42,29 +45,32 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddClient(Client client)
         {
-            //checking id
-            if (client.Id < 100000000)
-            { throw new NumberNotEnoughException(9); }
-            if (client.Id > 999999999)
-            { throw new NumberMoreException(); }
-      
-            //chcing phon number
-            chekingFon(client.Phone);
+            lock (dalObj)
+            {
+                //checking id
+                if (client.Id < 100000000)
+                { throw new NumberNotEnoughException(9); }
+                if (client.Id > 999999999)
+                { throw new NumberMoreException(); }
 
-            try
-            {
-                dalObj.AddClient(new DO.Client
+                //chcing phon number
+                chekingFon(client.Phone);
+
+                try
                 {
-                    Id = client.Id,
-                    Latitude = client.Location.Latitude,
-                    Longitude = client.Location.Longitude,
-                    Name = client.Name,
-                    PhoneNumber = client.Phone
-                });
-            }
-            catch (DO.ItemFoundException ex)
-            {
-                throw (new ItemFoundExeption(ex));
+                    dalObj.AddClient(new DO.Client
+                    {
+                        Id = client.Id,
+                        Latitude = client.Location.Latitude,
+                        Longitude = client.Location.Longitude,
+                        Name = client.Name,
+                        PhoneNumber = client.Phone
+                    });
+                }
+                catch (DO.ItemFoundException ex)
+                {
+                    throw (new ItemFoundExeption(ex));
+                }
             }
         }
 
@@ -78,14 +84,14 @@ namespace BlApi
             if (fon.Count() < 10)
             { throw new NumberNotEnoughException(10); }
             if (fon.Count() > 10)
-                
+
             { throw new NumberMoreException(); }
             if (fon[0] != '0' || fon[1] != '5')
             { throw new StartingException("0,5"); }
             if (fon.Any(c => c < '0' || c > '9'))
             { throw new IllegalDigitsException(); }
-            
-           
+
+        
 
         }
 
@@ -94,10 +100,12 @@ namespace BlApi
         /// </summary>
         /// <param name="client"> client </param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateClient( Client client)
+        public void UpdateClient(Client client)
         {
-            //checking id
-            if (client.Id < 100000000)
+            lock (dalObj)
+            {
+                //checking id
+                if (client.Id < 100000000)
             { throw new NumberNotEnoughException(9); }
             if (client.Id > 999999999)
             { throw new NumberMoreException(); }
@@ -121,7 +129,7 @@ namespace BlApi
             {
                 throw new ItemNotFoundException(ex);
             }
-
+        }
         }
 
         /// <summary>
@@ -132,28 +140,30 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Client GetingClient(uint id)
         {
-            try
+            lock (dalObj)
+            {
+                try
             {
                 var client = dalObj.CilentByNumber(id);
                 var loc = new Location();
                 loc.Latitude = client.Latitude;
                 loc.Longitude = client.Longitude;
-                var returnClient = new Client { Id = client.Id, Name = client.Name, Phone = client.PhoneNumber, Location=loc};
+                var returnClient = new Client { Id = client.Id, Name = client.Name, Phone = client.PhoneNumber, Location = loc };
                 returnClient.ToClient = new List<PackageAtClient>();
                 var packege = dalObj.PackegeList(x => x.GetingClient == id);
-                
+
 
                 if (packege.Count() != 0)
                     foreach (var packegeInList in packege)
                     {
-                        returnClient.ToClient.Add(packegeInList.convretPackegeDalToPackegeAtClient(packegeInList.GetingClient,dalObj));
+                        returnClient.ToClient.Add(packegeInList.convretPackegeDalToPackegeAtClient(packegeInList.GetingClient, dalObj));
                     }
                 returnClient.FromClient = new List<PackageAtClient>();
                 packege = dalObj.PackegeList(x => x.SendClient == id);
                 if (packege.Count() != 0)
                     foreach (var packegeInList in packege)
                     {
-                        returnClient.FromClient.Add(packegeInList.convretPackegeDalToPackegeAtClient(packegeInList.SendClient,dalObj));
+                        returnClient.FromClient.Add(packegeInList.convretPackegeDalToPackegeAtClient(packegeInList.SendClient, dalObj));
                     }
                 return returnClient;
             }
@@ -162,7 +172,7 @@ namespace BlApi
                 throw new ItemNotFoundException(ex);
             }
 
-
+        }
         }
 
         /// <summary>
@@ -172,17 +182,19 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteClient (uint id)
         {
-            List<uint>packegesDelete = new List<uint>();
-            try
+            lock (dalObj)
             {
-                dalObj.DeleteClient(id);
-               
-            }
-            catch(DO.ItemNotFoundException ex)
-            {
-                throw new ItemNotFoundException(ex);
-            }
+                List<uint> packegesDelete = new List<uint>();
+                try
+                {
+                    dalObj.DeleteClient(id);
 
+                }
+                catch (DO.ItemNotFoundException ex)
+                {
+                    throw new ItemNotFoundException(ex);
+                }
+            }
         }
 
         

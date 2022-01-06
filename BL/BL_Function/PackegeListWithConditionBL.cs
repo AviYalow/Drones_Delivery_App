@@ -28,14 +28,14 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> PackageToLists()
         {
-
-            if (dalObj.PackegeList(x => true).Count() == 0)
+            lock (dalObj)
+            {
+                if (dalObj.PackegeList(x => true).Count() == 0)
                 return null;
 
-
-           
             return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
                    select x.convertPackegeDalToPackegeToList(dalObj);
+        }
 
 
         }
@@ -46,9 +46,10 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> PackageWithNoDroneToLists(bool filterPackege = true)
         {
+            lock (dalObj)
+            {
 
-
-            packegeToListFilter -= noDronePackegeFilter;
+                packegeToListFilter -= noDronePackegeFilter;
             if (PackageToLists().Count() == 0)
                 return null;
             if (filterPackege)
@@ -56,6 +57,7 @@ namespace BlApi
 
             return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
                    select x.convertPackegeDalToPackegeToList(dalObj);
+        }
 
         }
         /// <summary>
@@ -65,8 +67,9 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> PackageArriveLists(bool filterPackege = true)
         {
-
-            packegeToListFilter -= arrivePackegeFilter;
+            lock (dalObj)
+            {
+                packegeToListFilter -= arrivePackegeFilter;
             if (PackageToLists().Count() == 0)
                 return null;
             if (filterPackege)
@@ -75,6 +78,7 @@ namespace BlApi
             return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
                    select x.convertPackegeDalToPackegeToList(dalObj);
         }
+        }
         /// <summary>
         /// packege thier collected but not arrive
         /// </summary>
@@ -82,8 +86,9 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> PackageCollectedButNotArriveLists(bool filterPackege = true)
         {
-
-            packegeToListFilter -= CollectedandNotArrivePackegeFilter;
+            lock (dalObj)
+            {
+                packegeToListFilter -= CollectedandNotArrivePackegeFilter;
             if (PackageToLists().Count() == 0)
                 return null;
             if (filterPackege)
@@ -92,6 +97,7 @@ namespace BlApi
             return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
                    select x.convertPackegeDalToPackegeToList(dalObj);
         }
+        }
         /// <summary>
         /// packege thet connect to drone but not collected
         /// </summary>
@@ -99,8 +105,10 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> PackageConnectedButNutCollectedLists(bool filterPackege = true)
         {
+            lock (dalObj)
+            {
 
-            packegeToListFilter -= connectedButNutCollectedPackegeFilter;
+                packegeToListFilter -= connectedButNutCollectedPackegeFilter;
             if (PackageToLists().Count() == 0)
                 return null;
             if (filterPackege)
@@ -108,6 +116,7 @@ namespace BlApi
 
             return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
                    select x.convertPackegeDalToPackegeToList(dalObj);
+        }
         }
         /// <summary>
         /// filter packeg list by weight
@@ -118,9 +127,10 @@ namespace BlApi
         public IEnumerable<PackageToList> PackageWeightLists(WeightCategories? weight = null)
         {
 
+            lock (dalObj)
+            {
 
-
-            packegeToListFilter -= weightPackegeFilter;
+                packegeToListFilter -= weightPackegeFilter;
             if (PackageToLists().Count() == 0)
                 return null;
             if (weight != null)
@@ -131,6 +141,7 @@ namespace BlApi
             }
             return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
                    select x.convertPackegeDalToPackegeToList(dalObj);
+        }
 
         }
         /// <summary>
@@ -143,8 +154,9 @@ namespace BlApi
         {
 
 
-
-            packegeToListFilter -= priorityPackegeFilter;
+            lock (dalObj)
+            {
+                packegeToListFilter -= priorityPackegeFilter;
             if (PackageToLists().Count() == 0)
                 return null;
             if (priority != null)
@@ -154,6 +166,7 @@ namespace BlApi
             }
             return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
                    select x.convertPackegeDalToPackegeToList(dalObj);
+        }
 
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -161,8 +174,9 @@ namespace BlApi
         {
 
 
-
-            packegeToListFilter -= fromDateFilter;
+            lock (dalObj)
+            {
+                packegeToListFilter -= fromDateFilter;
             if (PackageToLists().Count() == 0)
                 return null;
             if (date != null)
@@ -172,6 +186,7 @@ namespace BlApi
             }
             return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
                    select x.convertPackegeDalToPackegeToList(dalObj);
+        }
 
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -179,8 +194,9 @@ namespace BlApi
         {
 
 
-
-            packegeToListFilter -= toDateFilter;
+            lock (dalObj)
+            {
+                packegeToListFilter -= toDateFilter;
             if (PackageToLists().Count() == 0)
                 return null;
             if (date != null)
@@ -190,30 +206,33 @@ namespace BlApi
             }
             return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
                    select x.convertPackegeDalToPackegeToList(dalObj);
+        }
 
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<PackageToList> PackegeBySpsificStatus(PackageStatus? status=null)
+        public IEnumerable<PackageToList> PackegeBySpsificStatus(PackageStatus? status = null)
         {
-            if(status!=null)
-            switch (status)
+            lock (dalObj)
             {
-                case PackageStatus.Create:
+                if (status != null)
+                switch (status)
+                {
+                    case PackageStatus.Create:
                         packegeToListFilter += noDronePackegeFilter;
                         break;
-                case PackageStatus.Assign:
+                    case PackageStatus.Assign:
                         packegeToListFilter += connectedButNutCollectedPackegeFilter;
-                       
+
                         break;
-                case PackageStatus.Collected:
+                    case PackageStatus.Collected:
                         packegeToListFilter += CollectedandNotArrivePackegeFilter;
                         break;
-                case PackageStatus.Arrived:
+                    case PackageStatus.Arrived:
                         packegeToListFilter += arrivePackegeFilter;
                         break;
-                default:
-                    break;
-            }
+                    default:
+                        break;
+                }
             else
             {
                 packegeToListFilter -= noDronePackegeFilter;
@@ -223,6 +242,7 @@ namespace BlApi
             }
             return from x in filerList(dalObj.PackegeList(x => true), packegeToListFilter)
                    select x.convertPackegeDalToPackegeToList(dalObj);
+        }
         }
 
       

@@ -20,45 +20,48 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation ClosestBase(Location location,bool toCharge=false)
         {
-            BaseStation baseStation = new BaseStation();
-            baseStation.Location = new Location();
-            try
+            lock (dalObj)
             {
-
-                Location base_location = new Location();
-
-                double? distans = null, distans2;
-                foreach (DO.Base_Station base_ in dalObj.BaseStationList(x => x.Active))
+                BaseStation baseStation = new BaseStation();
+                baseStation.Location = new Location();
+                try
                 {
-                    base_location.Latitude = base_.latitude;
-                    base_location.Longitude = base_.longitude;
-                    distans2 = Distans(location, base_location);
-                    if(toCharge)
-                    {
-                        if (base_.NumberOfChargingStations <= 0)
-                            continue;
-                    }
-                    if ((distans > distans2 || distans == null))
-                    {
 
-                        distans = distans2;
-                        baseStation = new BaseStation
+                    Location base_location = new Location();
+
+                    double? distans = null, distans2;
+                    foreach (DO.Base_Station base_ in dalObj.BaseStationList(x => x.Active))
+                    {
+                        base_location.Latitude = base_.latitude;
+                        base_location.Longitude = base_.longitude;
+                        distans2 = Distans(location, base_location);
+                        if (toCharge)
                         {
-                            Location = base_location.Clone(),
-                            Name = base_.NameBase,
-                            SerialNum = base_.baseNumber,
-                            FreeState = base_.NumberOfChargingStations,
-                            DronesInChargeList = null
-                        };
+                            if (base_.NumberOfChargingStations <= 0)
+                                continue;
+                        }
+                        if ((distans > distans2 || distans == null))
+                        {
 
+                            distans = distans2;
+                            baseStation = new BaseStation
+                            {
+                                Location = base_location.Clone(),
+                                Name = base_.NameBase,
+                                SerialNum = base_.baseNumber,
+                                FreeState = base_.NumberOfChargingStations,
+                                DronesInChargeList = null
+                            };
+
+                        }
                     }
                 }
+                catch (DO.ItemNotFoundException ex)
+                {
+                    throw (new ItemNotFoundException(ex));
+                }
+                return baseStation;
             }
-            catch (DO.ItemNotFoundException ex)
-            {
-                throw (new ItemNotFoundException(ex));
-            }
-            return baseStation;
         }
 
         /// <summary>
@@ -69,20 +72,23 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Location BaseLocation(uint base_number)
         {
-            DO.Base_Station base_Station = new DO.Base_Station();
-            try
+            lock (dalObj)
             {
-                base_Station = dalObj.BaseStationByNumber(base_number);
-            }
-            catch (DO.ItemNotFoundException ex)
-            {
-                throw (new ItemNotFoundException(ex));
-            }
-            Location base_location = new Location();
+                DO.Base_Station base_Station = new DO.Base_Station();
+                try
+                {
+                    base_Station = dalObj.BaseStationByNumber(base_number);
+                }
+                catch (DO.ItemNotFoundException ex)
+                {
+                    throw (new ItemNotFoundException(ex));
+                }
+                Location base_location = new Location();
 
-            base_location.Latitude = base_Station.latitude;
-            base_location.Longitude = base_Station.longitude;
-            return base_location;
+                base_location.Latitude = base_Station.latitude;
+                base_location.Longitude = base_Station.longitude;
+                return base_location;
+            }
         }
 
         /// <summary>
@@ -92,23 +98,25 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddBase(BaseStation baseStation)
         {
-            try
+            lock (dalObj)
             {
-                dalObj.AddStation(new DO.Base_Station
+                try
                 {
-                    baseNumber = baseStation.SerialNum,
-                    NameBase = baseStation.Name,
-                    NumberOfChargingStations = baseStation.FreeState,
-                    latitude = baseStation.Location.Latitude,
-                    longitude = baseStation.Location.Longitude,
-                    Active = true
-                }) ;
+                    dalObj.AddStation(new DO.Base_Station
+                    {
+                        baseNumber = baseStation.SerialNum,
+                        NameBase = baseStation.Name,
+                        NumberOfChargingStations = baseStation.FreeState,
+                        latitude = baseStation.Location.Latitude,
+                        longitude = baseStation.Location.Longitude,
+                        Active = true
+                    });
+                }
+                catch (DO.ItemFoundException ex)
+                {
+                    throw (new ItemFoundExeption(ex));
+                }
             }
-            catch (DO.ItemFoundException ex)
-            {
-                throw (new ItemFoundExeption(ex));
-            }
-
         }
 
         /// <summary>
@@ -120,7 +128,9 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateBase(uint base_, string newName, string newNumber)
         {
-            var baseUpdat = new DO.Base_Station();
+            lock (dalObj)
+            {
+                var baseUpdat = new DO.Base_Station();
             try
             {
                 baseUpdat = dalObj.BaseStationByNumber(base_);
@@ -140,10 +150,11 @@ namespace BlApi
                     throw new InputErrorException();
                 int droneInCharge = dalObj.ChargingDroneList(x => x.idBaseStation == base_).Count();
                 baseUpdat.NumberOfChargingStations = (droneInCharge <= number) ?
-                    number : throw new UpdateChargingPositionsException(droneInCharge, base_);
+                   ( number-(uint)droneInCharge) : throw new UpdateChargingPositionsException(droneInCharge, base_);
 
             }
             dalObj.UpdateBase(baseUpdat);
+        }
         }
 
         /// <summary>
@@ -154,7 +165,9 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation BaseByNumber(uint baseNume)
         {
-            try
+            lock (dalObj)
+            {
+                try
             {
                 var baseStation = dalObj.BaseStationByNumber(baseNume);
                 var baseReturn = new BaseStation { SerialNum = baseNume, Location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude }, Name = baseStation.NameBase, FreeState = baseStation.NumberOfChargingStations };
@@ -169,13 +182,17 @@ namespace BlApi
                 throw new ItemNotFoundException(ex);
             }
         }
+        }
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<DroneInCharge>DroneINChargePerBase(uint base_)
+        public IEnumerable<DroneInCharge> DroneINChargePerBase(uint base_)
+        {
+            lock (dalObj)
             {
-            return from drone in dalObj.ChargingDroneList(x => x.idBaseStation == base_)
-             let butrry = (SpecificDrone(drone.IdDrone).ButrryStatus + droneChrgingAlredy(DateTime.Now - drone.EntringDrone))
-             let newButrry = (butrry > 100) ? 100 : butrry
-             select new DroneInCharge { ButrryStatus = newButrry, SerialNum = drone.IdDrone };
+                return from drone in dalObj.ChargingDroneList(x => x.idBaseStation == base_)
+                   let butrry = (SpecificDrone(drone.IdDrone).ButrryStatus + droneChrgingAlredy(DateTime.Now - drone.EntringDrone))
+                   let newButrry = (butrry > 100) ? 100 : butrry
+                   select new DroneInCharge { ButrryStatus = newButrry, SerialNum = drone.IdDrone };
+        }
         }
 
 
@@ -186,7 +203,9 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteBase(uint base_)
         {
-            try
+            lock (dalObj)
+            {
+                try
             {
 
                 dalObj.DeleteBase(base_);
@@ -201,11 +220,15 @@ namespace BlApi
 
             }
         }
+        }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStationToList BaseStationWhitSpscificDrone(uint drone)
         {
-            return dalObj.BaseStationByNumber(dalObj.ChargingDroneList(x => x.IdDrone == drone)
+            lock (dalObj)
+            {
+                return dalObj.BaseStationByNumber(dalObj.ChargingDroneList(x => x.IdDrone == drone)
                 .FirstOrDefault().idBaseStation).convertBaseInDalToBaseStationList(dalObj);
+            }
 
         }
 

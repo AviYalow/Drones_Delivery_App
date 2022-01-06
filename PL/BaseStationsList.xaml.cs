@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 using BO;
 using BlApi;
 
@@ -24,24 +25,35 @@ namespace PL
     public partial class BaseStationsList : Window
     {
         IBL bl;
+       
+     internal static  ObservableCollection<BaseStationToList> lists;
         CollectionView view;
         PropertyGroupDescription groupDescription;
         public BaseStationsList(BlApi.IBL bL)
         {
             InitializeComponent();
             bl = bL;
-            BaseListView.ItemsSource = bl.BaseStationToLists();
-          
+            lists = new ObservableCollection<BaseStationToList>(bl.BaseStationToLists());
+            DataContext = lists;
+            lists.CollectionChanged += Lists_CollectionChanged;
+            //   BaseListView.DataContext = lists;
+         
+         
             view = (CollectionView)CollectionViewSource.GetDefaultView(BaseListView.ItemsSource);
             groupDescription = new PropertyGroupDescription("FreeState");
         }
-    
+
+        private void Lists_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            DataContext = lists;
+        }
+
         private void BaseListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (BaseListView.SelectedItem != null)
             {
-                new BaseStationView(bl, (BaseStationToList)BaseListView.SelectedItem).ShowDialog();
-                BaseListView.ItemsSource = bl.BaseStationToLists();
+                new BaseStationView(bl, (BaseStationToList)BaseListView.SelectedItem).Show();
+                // BaseListView.ItemsSource = bl.BaseStationToLists();
             }
         }
 
@@ -50,7 +62,12 @@ namespace PL
             HeaderedContentControl control = sender as HeaderedContentControl;
             try
             {
-                BaseListView.ItemsSource = bl.SortList(control.Name, BaseListView.ItemsSource as IEnumerable<BO.DroneToList>);
+                var b=bl.BaseStationToLists()as ObservableCollection<BaseStationToList>;
+                var a= bl.SortList(control.Name, (IEnumerable<BaseStationToList>)lists) as ObservableCollection<BaseStationToList>;
+               (bl.SortList(control.Name, (IEnumerable<BaseStationToList>)lists)).ConvertIenmurbleToObserve(lists);
+             //   lists = bl.SortList(control.Name, (IEnumerable<BaseStationToList>)lists) as ObservableCollection<BaseStationToList>;
+            //   DataContext = lists;
+                
             }
             catch (Exception ex)
             {
@@ -64,38 +81,45 @@ namespace PL
             {
                 if (FiletrListCmb.SelectedItem == BaseStationActive)
                 {
-                    BaseListView.ItemsSource = bl.BaseStationToLists();
+                    bl.BaseStationToLists(). ConvertIenmurbleToObserve(lists);
+                   
+                    
                 }
                 if (FiletrListCmb.SelectedItem == BaseStationWithFreeChargingStation)
                 {
-                    BaseListView.ItemsSource = bl.BaseStationWhitFreeChargingStationToLists();
+                    bl.BaseStationWhitFreeChargingStationToLists().ConvertIenmurbleToObserve(lists);
+                  
+        
                 }
                 else
-                    BaseListView.ItemsSource = bl.AllBaseStation();
+                    bl.AllBaseStation().ConvertIenmurbleToObserve(lists);
+              
+             
             }
-            catch(Exception ex)
+            catch (Exception ex)
             { MessageBox.Show(ex.ToString(), "ERROR"); }
         }
 
         private void ChoceDroneCmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ChoceGroupCmb.SelectedItem == ChoceGroupCmb.Items[0]|| ChoceGroupCmb.SelectedItem is null)
+            if (ChoceGroupCmb.SelectedItem == ChoceGroupCmb.Items[0] || ChoceGroupCmb.SelectedItem is null)
             { view.GroupDescriptions.Clear(); }
             else
-            { view = (CollectionView)CollectionViewSource.GetDefaultView(BaseListView.ItemsSource);
+            {
+                view = (CollectionView)CollectionViewSource.GetDefaultView(BaseListView.ItemsSource);
                 view.GroupDescriptions.Add(groupDescription);
             }
-          
+
         }
 
         private void AddBaseButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                new BaseStationView(bl).ShowDialog();
-                BaseListView.ItemsSource = bl.BaseStationToLists();
+                new BaseStationView( bl).Show();
+           
             }
-            catch(Exception ex)
+            catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
         }
 
@@ -115,4 +139,6 @@ namespace PL
             e.Cancel = false;
         }
     }
+
+
 }

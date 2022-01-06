@@ -30,7 +30,6 @@ namespace PL
         BlApi.IBL bl;
         BaseStation baseStation;
         
-
         int numberOfChargingStation;
         public BaseStationView(BlApi.IBL bL)
         {
@@ -40,7 +39,7 @@ namespace PL
                 bl = bL;
                 baseStation = new BaseStation();
                 baseStation.Location = new Location();
-             
+                
                 DataContext = baseStation;
                 LongitudeText.DataContext = baseStation.Location;
                 Latitudtext.DataContext = baseStation.Location;
@@ -48,7 +47,7 @@ namespace PL
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
 
-
+            
 
         }
         public BaseStationView(BlApi.IBL bL, BaseStationToList base_)
@@ -71,18 +70,19 @@ namespace PL
             try
             {
                 baseStation = bl.BaseByNumber(base_);
+
                 SerialText.IsEnabled = false;
                 DataContext = baseStation;
                 LongitudeText.DataContext = baseStation.Location;
                 Latitudtext.DataContext = baseStation.Location;
                 NewChrgingStatimText.Visibility = Visibility.Visible;
                 NewChrgingStatimLabel.Visibility = Visibility.Visible;
-                numberOfChargingStation =(int) baseStation.FreeState+baseStation.DronesInChargeList.Count();
+                numberOfChargingStation = (int)baseStation.FreeState + baseStation.DronesInChargeList.Count();
                 NewChrgingStatimText.Text = numberOfChargingStation.ToString();
-               
+
                 AddButton.Visibility = Visibility.Collapsed;
                 TitelLabel.Content = "Base Station update";
-                
+
 
                 DroneCharge1View.Visibility = Visibility.Visible;
 
@@ -126,7 +126,11 @@ namespace PL
                 bl.AddBase(baseStation);
                 MessageBox.Show("Add base Station Succes!");
                 numberOfChargingStation = (int)baseStation.FreeState;
+                BaseStationsList.lists.Add(new BaseStationToList { Active = "Active", BusyState = 0, FreeState = baseStation.FreeState, Name = baseStation.Name, SerialNum = baseStation.SerialNum });
                 ctorByItems(baseStation.SerialNum);
+                
+
+
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString(), "ERROE"); }
@@ -154,12 +158,14 @@ namespace PL
             {
                 if (e.Key == Key.Enter)
                     if (AddButton.Visibility != Visibility.Visible)
-                        if (MessageBox.Show("Do you want to update the base name?", "Update", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        if (MessageBox.Show("Do you want to update the number of charching station?", "Update", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                         {
                             try
                             {
                                 bl.UpdateBase(baseStation.SerialNum, "", text.Text);
                                 MessageBox.Show("Update seccsed!");
+                                bl.BaseStationToLists().ConvertIenmurbleToObserve(BaseStationsList.lists);
+                                
                                 ctorByItems(baseStation.SerialNum);
                             }
                             catch (Exception ex)
@@ -168,7 +174,7 @@ namespace PL
                                 text.Text = numberOfChargingStation.ToString();
                             }
                         }
-                else
+                        else
                             text.Text = numberOfChargingStation.ToString();
             }
             //allow get out of the text box
@@ -202,6 +208,9 @@ namespace PL
 
             return;
         }
+
+    
+
         private void PreviewKeyDownWhitDot(object sender, KeyEventArgs e)
         {
             TextBox text = sender as TextBox;
@@ -282,8 +291,6 @@ namespace PL
             }
         }
 
-
-
         private void Latitudtext_GotFocus(object sender, RoutedEventArgs e)
         {
             if (((TextBox)sender).Text == "0")
@@ -317,9 +324,6 @@ namespace PL
             }
         }
 
-
-
-
         private void NameText_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -331,6 +335,7 @@ namespace PL
                         try
                         {
                             bl.UpdateBase(baseStation.SerialNum, ((TextBox)sender).Text, "");
+
                             MessageBox.Show("Update seccsed!");
                             ctorByItems(baseStation.SerialNum);
                         }
@@ -340,7 +345,7 @@ namespace PL
                         }
                     }
                     else
-                       ( (TextBox)sender).Text = baseStation.Name;
+                        ((TextBox)sender).Text = baseStation.Name;
                 }
             }
         }
@@ -369,7 +374,8 @@ namespace PL
                 MessageBox.Show($"Base number{baseStation.SerialNum} deleted!");
                 this.Closing += BaseStationView_Closing;
                 this.Close();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "ERROR");
             }

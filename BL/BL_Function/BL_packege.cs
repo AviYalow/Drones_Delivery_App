@@ -18,7 +18,9 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public uint AddPackege(Package package)
         {
-            uint packegeNum = 0;
+            lock (dalObj)
+            {
+                uint packegeNum = 0;
             try
             {
                 if (package.Priority > Priority.Regular || package.WeightCatgory > WeightCategories.Heavy)
@@ -46,10 +48,12 @@ namespace BlApi
             {
                 throw (new ItemFoundExeption(ex));
             }
-
+catch(Exception)
+                { }
 
 
             return packegeNum;
+        }
 
         }
 
@@ -60,12 +64,17 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdatePackegInDal(Package package)
         {
-            try
+            lock (dalObj)
             {
-                dalObj.UpdatePackege(package.convertPackageBltopackegeDal());
+                try
+                {
+                    dalObj.UpdatePackege(package.convertPackageBltopackegeDal());
+                }
+                catch (DO.ItemNotFoundException ex)
+                { throw new ItemNotFoundException(ex); }
+                catch(Exception)
+                { }
             }
-            catch (DO.ItemNotFoundException ex)
-            { throw new ItemNotFoundException(ex); }
         }
 
         /// <summary>
@@ -76,15 +85,21 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Package ShowPackage(uint number)
         {
-
-            try
+            lock (dalObj)
             {
-                var dataPackege = dalObj.packegeByNumber(number);
-                return convertPackegeDalToBl(dataPackege);
-            }
-            catch (DO.ItemNotFoundException ex)
-            {
-                throw new ItemNotFoundException(ex);
+                try
+                {
+                    var dataPackege = dalObj.packegeByNumber(number);
+                    return convertPackegeDalToBl(dataPackege);
+                }
+                catch (DO.ItemNotFoundException ex)
+                {
+                    throw new ItemNotFoundException(ex);
+                }
+                catch(Exception)
+                {
+                    return null;
+                }
             }
 
         }
@@ -96,30 +111,35 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeletePackege(uint number)
         {
-            try
+            lock (dalObj)
             {
-                var packege = dalObj.packegeByNumber(number);
-                //cheack the packege not send yet
-                if (packege.PackageAssociation != null)
-                { throw new ThePackegeAlredySendException(); }
-                if (packege.OperatorSkimmerId != 0)
+                try
                 {
-                    var drone = SpecificDrone(packege.OperatorSkimmerId);
-                    drone.DroneStatus = DroneStatus.Free;
-
-                    drone.NumPackage = 0;
-
-                    for (int i = 0; i < dronesListInBl.Count; i++)
+                    var packege = dalObj.packegeByNumber(number);
+                    //cheack the packege not send yet
+                    if (packege.PackageAssociation != null)
+                    { throw new ThePackegeAlredySendException(); }
+                    if (packege.OperatorSkimmerId != 0)
                     {
-                        if (dronesListInBl[i].SerialNumber == drone.SerialNumber)
-                            dronesListInBl[i] = drone;
+                        var drone = SpecificDrone(packege.OperatorSkimmerId);
+                        drone.DroneStatus = DroneStatus.Free;
+
+                        drone.NumPackage = 0;
+
+                        for (int i = 0; i < dronesListInBl.Count; i++)
+                        {
+                            if (dronesListInBl[i].SerialNumber == drone.SerialNumber)
+                                dronesListInBl[i] = drone;
+                        }
                     }
+                    dalObj.DeletePackege(number);
                 }
-                dalObj.DeletePackege(number);
-            }
-            catch (DO.ItemNotFoundException ex)
-            {
-                throw new ItemNotFoundException(ex);
+                catch (DO.ItemNotFoundException ex)
+                {
+                    throw new ItemNotFoundException(ex);
+                }
+                catch(Exception)
+                {  }
             }
         }
 
@@ -131,19 +151,33 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         Package convertPackegeDalToBl(DO.Package dataPackege)
         {
-            return new Package
+            lock (dalObj)
             {
-                SerialNumber = dataPackege.SerialNumber,
-                SendClient = dalObj.CilentByNumber(dataPackege.SendClient).clientInPackageFromDal(),
-                CollectPackage = dataPackege.CollectPackageForShipment,
-                Create_package = dataPackege.ReceivingDelivery,
-                Drone = dataPackege.OperatorSkimmerId != 0 ? SpecificDrone(dataPackege.OperatorSkimmerId).droneToDroneInPackage() : null,
-                PackageArrived = dataPackege.PackageArrived,
-                PackageAssociation = dataPackege.PackageAssociation,
-                Priority = (Priority)dataPackege.Priority,
-                RecivedClient = dalObj.CilentByNumber(dataPackege.GetingClient).clientInPackageFromDal(),
-                WeightCatgory = (WeightCategories)dataPackege.WeightCatgory
-            };
+                try
+                {
+                    return new Package
+                    {
+                        SerialNumber = dataPackege.SerialNumber,
+                        SendClient = dalObj.CilentByNumber(dataPackege.SendClient).clientInPackageFromDal(),
+                        CollectPackage = dataPackege.CollectPackageForShipment,
+                        Create_package = dataPackege.ReceivingDelivery,
+                        Drone = dataPackege.OperatorSkimmerId != 0 ? SpecificDrone(dataPackege.OperatorSkimmerId).droneToDroneInPackage() : null,
+                        PackageArrived = dataPackege.PackageArrived,
+                        PackageAssociation = dataPackege.PackageAssociation,
+                        Priority = (Priority)dataPackege.Priority,
+                        RecivedClient = dalObj.CilentByNumber(dataPackege.GetingClient).clientInPackageFromDal(),
+                        WeightCatgory = (WeightCategories)dataPackege.WeightCatgory
+                    };
+                }
+                catch(DO.ItemNotFoundException ex)
+                {
+                    throw new ItemNotFoundException(ex);
+                }
+                catch(Exception)
+                {
+                    return null;
+                }
+            }
 
         }
     }

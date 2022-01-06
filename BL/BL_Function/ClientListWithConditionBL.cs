@@ -30,12 +30,15 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> ClientToLists(bool filter = true)
         {
-            if(!filter)
-            return from client in dalObj.CilentList(x => true)
-                   select client.convertClientDalToClientToList(dalObj);
-            else
-                return from client in dalObj.CilentList(x => x.Active)
-                       select client.convertClientDalToClientToList(dalObj);
+            lock (dalObj)
+            {
+                if (!filter)
+                    return from client in dalObj.CilentList(x => true)
+                           select client.convertClientDalToClientToList(dalObj);
+                else
+                    return from client in dalObj.CilentList(x => x.Active)
+                           select client.convertClientDalToClientToList(dalObj);
+            }
 
         }
 
@@ -46,12 +49,15 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> ClientActiveHowSendPackegesToLists(bool filter = true)
         {
-            clientToListFilter -= clientHowSendPackege;
-            clientToListFilter -= clientHowSendPackegeAndThePackegeArrive;
-            clientToListFilter -= clientHowSendPackegeAndThePackegeNotArrive;
-            if (filter)
-                clientToListFilter += clientHowSendPackege;
-            return FilterClientList();
+            lock (dalObj)
+            {
+                clientToListFilter -= clientHowSendPackege;
+                clientToListFilter -= clientHowSendPackegeAndThePackegeArrive;
+                clientToListFilter -= clientHowSendPackegeAndThePackegeNotArrive;
+                if (filter)
+                    clientToListFilter += clientHowSendPackege;
+                return FilterClientList();
+            }
 
         }
 
@@ -62,12 +68,15 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> ClientActiveHowSendAndArrivePackegesToLists(bool filter = true)
         {
-            clientToListFilter -= clientHowSendPackege;
-            clientToListFilter -= clientHowSendPackegeAndThePackegeArrive;
-            clientToListFilter -= clientHowSendPackegeAndThePackegeNotArrive;
-            if (filter)
-                clientToListFilter += clientHowSendPackegeAndThePackegeArrive;
-            return FilterClientList();
+            lock (dalObj)
+            {
+                clientToListFilter -= clientHowSendPackege;
+                clientToListFilter -= clientHowSendPackegeAndThePackegeArrive;
+                clientToListFilter -= clientHowSendPackegeAndThePackegeNotArrive;
+                if (filter)
+                    clientToListFilter += clientHowSendPackegeAndThePackegeArrive;
+                return FilterClientList();
+            }
 
         }
         /// <summary>
@@ -77,12 +86,15 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> ClientActiveHowSendPackegesAndNotArriveToLists(bool filter = true)
         {
-            clientToListFilter -= clientHowSendPackege;
-            clientToListFilter -= clientHowSendPackegeAndThePackegeArrive;
-            clientToListFilter -= clientHowSendPackegeAndThePackegeNotArrive;
-            if (filter)
-                clientToListFilter += clientHowSendPackegeAndThePackegeNotArrive;
-            return FilterClientList();
+            lock (dalObj)
+            {
+                clientToListFilter -= clientHowSendPackege;
+                clientToListFilter -= clientHowSendPackegeAndThePackegeArrive;
+                clientToListFilter -= clientHowSendPackegeAndThePackegeNotArrive;
+                if (filter)
+                    clientToListFilter += clientHowSendPackegeAndThePackegeNotArrive;
+                return FilterClientList();
+            }
 
         }
         /// <summary>
@@ -92,13 +104,15 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndNotArriveToLists(bool filter = true)
         {
-
-            clientToListFilter -= clientHowGetingPackegesAndNotArrive;
-            clientToListFilter -= clientHowGetingPackegesAndArrive;
-            clientToListFilter -= clientActiveHowGetingPackeges;
-            if (filter)
-                clientToListFilter += clientHowGetingPackegesAndNotArrive;
-            return FilterClientList();
+            lock (dalObj)
+            {
+                clientToListFilter -= clientHowGetingPackegesAndNotArrive;
+                clientToListFilter -= clientHowGetingPackegesAndArrive;
+                clientToListFilter -= clientActiveHowGetingPackeges;
+                if (filter)
+                    clientToListFilter += clientHowGetingPackegesAndNotArrive;
+                return FilterClientList();
+            }
         }
         /// <summary>
         /// IEnumerable of client how need to get packege and they get 
@@ -107,12 +121,15 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndArriveToLists(bool filter = true)
         {
-            clientToListFilter -= clientHowGetingPackegesAndNotArrive;
-            clientToListFilter -= clientHowGetingPackegesAndArrive;
-            clientToListFilter -= clientActiveHowGetingPackeges;
-            if (filter)
-                clientToListFilter += clientHowGetingPackegesAndArrive;
-            return FilterClientList();
+            lock (dalObj)
+            {
+                clientToListFilter -= clientHowGetingPackegesAndNotArrive;
+                clientToListFilter -= clientHowGetingPackegesAndArrive;
+                clientToListFilter -= clientActiveHowGetingPackeges;
+                if (filter)
+                    clientToListFilter += clientHowGetingPackegesAndArrive;
+                return FilterClientList();
+            }
 
         }
         /// <summary>
@@ -122,36 +139,47 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> ClientActiveHowGetingPackegesToLists(bool filter = true)
         {
-            clientToListFilter -= clientHowGetingPackegesAndNotArrive;
-            clientToListFilter -= clientHowGetingPackegesAndArrive;
-            clientToListFilter -= clientActiveHowGetingPackeges;
-            if (filter)
-                clientToListFilter += clientActiveHowGetingPackeges;
-            return FilterClientList();
+            lock (dalObj)
+            {
+                clientToListFilter -= clientHowGetingPackegesAndNotArrive;
+                clientToListFilter -= clientHowGetingPackegesAndArrive;
+                clientToListFilter -= clientActiveHowGetingPackeges;
+                if (filter)
+                    clientToListFilter += clientActiveHowGetingPackeges;
+                return FilterClientList();
+            }
 
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientInPackage> ClientInPackagesList(bool filter = true)
         {
-            return from client in dalObj.CilentList(x => true)
-                   select new ClientInPackage { Id = client.Id, Name = client.Name };
+            lock (dalObj)
+            {
+                return from client in dalObj.CilentList(x => true)
+                       select new ClientInPackage { Id = client.Id, Name = client.Name };
+            }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> FilterClientList(bool active =true)
         {
-
-            return from client in filerList(ClientToLists(active), clientToListFilter)
-                   select client.Clone();
+            lock (dalObj)
+            {
+                return from client in filerList(ClientToLists(active), clientToListFilter)
+                       select client.Clone();
+            }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<uint> ClientById(string id)
         {
-            clientById= x => x.ID.ToString().StartsWith(id);
-            clientToListFilter -= clientById;
-            if (id!="")
-                clientToListFilter += clientById;
-            return from client in filerList(ClientToLists(), clientToListFilter)
-                   select  client.ID ;
+            lock (dalObj)
+            {
+                clientById = x => x.ID.ToString().StartsWith(id);
+                clientToListFilter -= clientById;
+                if (id != "")
+                    clientToListFilter += clientById;
+                return from client in filerList(ClientToLists(), clientToListFilter)
+                       select client.ID;
+            }
 
         }
     }

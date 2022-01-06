@@ -18,7 +18,7 @@
     </Window.Background>
     <Grid>
         <Grid>
-            <ListView x:Name="BaseListView" Margin="0,150,0,106" Background="#FF28EB28"  Foreground="#DD2B00FF" MouseDoubleClick="BaseListView_MouseDoubleClick">
+            <ListView x:Name="BaseListView" ItemsSource="{Binding}" Margin="0,150,0,106" Background="#FF28EB28"  Foreground="#DD2B00FF" MouseDoubleClick="BaseListView_MouseDoubleClick">
                 <ListView.View>
                     <GridView x:Name="ListviewGridToDroneList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
                         <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNum}" x:Name="Serial"   >
@@ -107,7 +107,7 @@
             <Button x:Name="AddBaseButton" HorizontalAlignment="Left" Margin="723,89,0,0" VerticalAlignment="Top"
                 Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
   ToolTip="MaterialDesignFloatingActionDarkButton"
-  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="AddBaseButton_Click">
+ Click="AddBaseButton_Click">
                 <materialDesign:PackIcon Kind="Add"  Height="35"    Width="35" />
             </Button>
             <Button x:Name="Exit" Content="{  materialDesign:PackIcon Kind=ExitRun, Size=45}" HorizontalAlignment="Left" Margin="926,92,0,0" VerticalAlignment="Top" Height="54" Width="77" Click="Exit_Click"/>
