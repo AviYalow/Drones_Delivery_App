@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 using  BO;
 
 namespace PL
@@ -23,6 +24,7 @@ namespace PL
       
         BlApi.IBL bl;
         CollectionView view;
+        internal static ObservableCollection<PackageToList> lists;
         PropertyGroupDescription groupDescription;
         public PackagesList(BlApi.IBL bl)
         {
@@ -31,9 +33,9 @@ namespace PL
                 InitializeComponent();
                 this.bl = bl;
 
-                PackagesListView.ItemsSource = bl.PackageToLists();
 
-
+                lists = new ObservableCollection<PackageToList>(bl.PackageToLists());
+                DataContext = lists;
                 WeightCombo.Items.Add("");
                 StatusCombo.Items.Add("");
                 PrioCombo.Items.Add("");
@@ -57,7 +59,7 @@ namespace PL
             HeaderedContentControl control = sender as HeaderedContentControl;
             try
             {
-                PackagesListView.ItemsSource = bl.SortList(control.Name, PackagesListView.ItemsSource as IEnumerable<BO.PackageToList>);
+               bl.SortList(control.Name, lists).ConvertIenmurbleToObserve(lists);
             }
             catch (Exception ex)
             {
@@ -103,14 +105,14 @@ namespace PL
                     return;
                 if (WeightCombo.SelectedItem == WeightCombo.Items[0])
                 {
-                    PackagesListView.ItemsSource = bl.PackageWeightLists();
+                     bl.PackageWeightLists().ConvertIenmurbleToObserve(lists);
 
 
                 }
                 else if (WeightCombo.SelectedItem != WeightCombo.Items[0])
                 {
 
-                    PackagesListView.ItemsSource = bl.PackageWeightLists((BO.WeightCategories)WeightCombo.SelectedItem);
+                     bl.PackageWeightLists((BO.WeightCategories)WeightCombo.SelectedItem).ConvertIenmurbleToObserve(lists);
 
                 }
             }
@@ -129,9 +131,9 @@ namespace PL
                 if (StatusCombo.SelectedItem is null)
                     return;
                 if (StatusCombo.SelectedItem == StatusCombo.Items[0])
-                    PackagesListView.ItemsSource = bl.PackegeBySpsificStatus();
+                    bl.PackegeBySpsificStatus().ConvertIenmurbleToObserve(lists);
                 else
-                    PackagesListView.ItemsSource = bl.PackegeBySpsificStatus((PackageStatus)StatusCombo.SelectedItem);
+                    bl.PackegeBySpsificStatus((PackageStatus)StatusCombo.SelectedItem).ConvertIenmurbleToObserve(lists);
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
@@ -146,12 +148,12 @@ namespace PL
                 if (PrioCombo.SelectedItem == PrioCombo.Items[0])
                 {
 
-                    PackagesListView.ItemsSource = bl.PackagePriorityLists();
+                    bl.PackagePriorityLists().ConvertIenmurbleToObserve(lists);
 
                 }
                 else
                 {
-                    PackagesListView.ItemsSource = bl.PackagePriorityLists((Priority)PrioCombo.SelectedItem);
+                    bl.PackagePriorityLists((Priority)PrioCombo.SelectedItem).ConvertIenmurbleToObserve(lists);
                 }
             }
             catch (Exception ex)
@@ -164,7 +166,7 @@ namespace PL
             try
             {
                 from.SelectedDate = null;
-                PackagesListView.ItemsSource = bl.PackageFromDateLists();
+                bl.PackageFromDateLists().ConvertIenmurbleToObserve(lists);
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
@@ -175,7 +177,7 @@ namespace PL
             try
             {
                 to.SelectedDate = null;
-                PackagesListView.ItemsSource = bl.PackageToDateLists();
+                bl.PackageToDateLists().ConvertIenmurbleToObserve(lists);
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
@@ -185,8 +187,8 @@ namespace PL
         {
             try
             {
-                new PackageView(bl).ShowDialog();
-                PackagesListView.ItemsSource = bl.PackageToLists();
+                new PackageView(bl).Show();
+               bl.PackageToLists().ConvertIenmurbleToObserve(lists);
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
@@ -198,8 +200,8 @@ namespace PL
             {
                 if (PackagesListView.SelectedItem != null)
                 {
-                    new PackageView(bl, (BO.PackageToList)PackagesListView.SelectedItem).ShowDialog();
-                    PackagesListView.ItemsSource = bl.PackageToLists();
+                    new PackageView(bl, (BO.PackageToList)PackagesListView.SelectedItem).Show();
+                     bl.PackageToLists().ConvertIenmurbleToObserve(lists);
                     PackagesListView.SelectedItem = null;
                 }
             }
@@ -211,8 +213,8 @@ namespace PL
         {
             try
             {
-                new PackageView(bl).ShowDialog();
-                PackagesListView.ItemsSource = bl.PackageToLists();
+                new PackageView(bl).Show();
+                bl.PackageToLists().ConvertIenmurbleToObserve(lists);
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
@@ -220,12 +222,12 @@ namespace PL
 
         private void from_DataContextChanged(object sender, RoutedEventArgs e)
         {
-            PackagesListView.ItemsSource = bl.PackageFromDateLists(from.SelectedDate);
+            bl.PackageFromDateLists(from.SelectedDate).ConvertIenmurbleToObserve(lists);
         }
 
         private void to_DataContextChanged(object sender, RoutedEventArgs e)
         {
-            PackagesListView.ItemsSource = bl.PackageToDateLists(to.SelectedDate);
+            bl.PackageToDateLists(to.SelectedDate).ConvertIenmurbleToObserve(lists);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

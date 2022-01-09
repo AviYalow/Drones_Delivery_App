@@ -26,6 +26,7 @@ namespace Dal
           
             if (DataSource.clients.Any(x=>x.Id==client.Id&&x.Active))
                 throw (new ItemFoundException("Client", client.Id));
+            client.Active = true;
             DataSource.clients.Add(client);
 
 

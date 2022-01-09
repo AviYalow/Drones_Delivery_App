@@ -15,7 +15,7 @@
             <RowDefinition Height="315*"/>
             <RowDefinition Height="65*"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="clientListView" Grid.Row="1" MouseDoubleClick="clientListView_MouseDoubleClick">
+        <ListView x:Name="clientListView" ItemsSource="{Binding}" Grid.Row="1" MouseDoubleClick="clientListView_MouseDoubleClick">
             <ListView.View>
                 <GridView x:Name="ListviewGridToClientsList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
                     <GridViewColumn  DisplayMemberBinding="{Binding ID}" x:Name="IDNme"   >
@@ -60,7 +60,7 @@
         <Button x:Name="AddDroneButton" HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="93" Click="Button_Click" Grid.Row="2" 
               Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
   ToolTip="MaterialDesignFloatingActionDarkButton"
-  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Margin="60,0,0,0">
+   Margin="60,0,0,0">
             <!--materialDesign:PackIcon Kind="Alarm" Height="{StaticResource IconSize}"  Width="{StaticResource IconSize}" />-->
             <materialdesignin:PackIcon Kind="Add" Height="78" Width="81" HorizontalAlignment="Center"   />
 

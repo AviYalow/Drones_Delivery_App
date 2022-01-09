@@ -53,7 +53,7 @@ namespace PL
             if (BaseListView.SelectedItem != null)
             {
                 new BaseStationView(bl, (BaseStationToList)BaseListView.SelectedItem).Show();
-                // BaseListView.ItemsSource = bl.BaseStationToLists();
+                
             }
         }
 
@@ -62,11 +62,9 @@ namespace PL
             HeaderedContentControl control = sender as HeaderedContentControl;
             try
             {
-                var b=bl.BaseStationToLists()as ObservableCollection<BaseStationToList>;
-                var a= bl.SortList(control.Name, (IEnumerable<BaseStationToList>)lists) as ObservableCollection<BaseStationToList>;
-               (bl.SortList(control.Name, (IEnumerable<BaseStationToList>)lists)).ConvertIenmurbleToObserve(lists);
-             //   lists = bl.SortList(control.Name, (IEnumerable<BaseStationToList>)lists) as ObservableCollection<BaseStationToList>;
-            //   DataContext = lists;
+                
+             bl.SortList(control.Name,lists).ConvertIenmurbleToObserve(lists);
+         
                 
             }
             catch (Exception ex)

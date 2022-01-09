@@ -7,10 +7,11 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Collections.ObjectModel;
 
 namespace BlApi
 {
-    sealed partial class BL : IBL
+   internal sealed partial class BL : IBL
     {
 
         #region singelton
@@ -21,7 +22,7 @@ namespace BlApi
 
         private static readonly Lazy<BL> lazy =
         new Lazy<BL>(() => new BL());
-        public static BL Instance { get { return lazy.Value; } }
+        internal static BL Instance { get { return lazy.Value; } }
         #endregion
 
 
@@ -219,13 +220,15 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<T> SortList<T>(string obj, IEnumerable<T> drones = null)
         {
-
-            PropertyInfo property = typeof(T).GetProperty(obj);
-            if (property is null)
-                throw new TheListIsEmptyException();
-            return from x in drones
-                   orderby property.GetValue(x)
-                   select x.Clone();
+            
+            
+                PropertyInfo property = typeof(T).GetProperty(obj);
+                if (property is null)
+                    throw new TheListIsEmptyException();
+                return from x in drones
+                       orderby property.GetValue(x)
+                       select x.Clone();
+            
 
         }
         /// <summary>

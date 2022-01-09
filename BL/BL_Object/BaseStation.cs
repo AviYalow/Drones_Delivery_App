@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace BO
 {
@@ -16,7 +17,7 @@ namespace BO
         public string Name { get; set; }
         public Location Location { get; set; }
         public uint FreeState { get; set; }
-        public IEnumerable<DroneInCharge> DronesInChargeList { get; set; }
+        public ObservableCollection<DroneInCharge> DronesInChargeList { get; set; }
         public override string ToString()
         {
             String print= "";

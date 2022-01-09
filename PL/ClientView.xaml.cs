@@ -61,8 +61,7 @@ namespace PL
             letitudeTextBox.DataContext = client.Location;
             longditue.DataContext = client.Location;
             TitelClientLabel.Content = "Updte Client Window";
-            ListPackegeFromClient.ItemsSource = client.FromClient;
-            ListPackegeToClient.ItemsSource = client.ToClient;
+         
             ListPackegeFromClient.Visibility = Visibility.Visible;
             OkButton.Visibility = Visibility.Collapsed;
             foreach (var c in client.Phone.Skip(3))
@@ -101,6 +100,7 @@ namespace PL
             {
                 bl.AddClient(client);
                 MessageBox.Show("Add client \n" + client.ToString() + "\nsucceed!");
+                ClientsLIst.lists.Add(new ClientToList { Active = true, ID = client.Id, Name = client.Name, Arrived =0, NotArrived =0, OnTheWay =0, Phone = client.Phone, received = 0 });
                 ctorUpdateClient(client.Id);
             }
             catch(Exception ex)
@@ -232,6 +232,7 @@ namespace PL
                 try
                 {
                     bl.UpdateClient(client);
+                    ctorUpdateClient(client.Id);
                     MessageBox.Show("Update seccsed!");
 
                 }
@@ -258,13 +259,13 @@ namespace PL
                 HeaderedContentControl control = sender as HeaderedContentControl;
                 if (control.Name.LastOrDefault() == 'S')
                 {
-                    control.Name = control.Name.Remove(control.Name.Count() - 1);
-                    ListPackegeFromClient.ItemsSource = (bl.SortList(control.Name, ListPackegeFromClient.ItemsSource as IEnumerable<PackageAtClient>));
-                }
+                   control.Name = control.Name.Remove(control.Name.Count() - 1);
+                    bl.SortList(control.Name,client.FromClient).ConvertIenmurbleToObserve(client.FromClient);
+               }
                 if (control.Name.LastOrDefault() == 'P')
                 {
                     control.Name = control.Name.Remove(control.Name.Count() - 1);
-                    ListPackegeToClient.ItemsSource = (bl.SortList(control.Name, ListPackegeToClient.ItemsSource as IEnumerable<PackageAtClient>));
+                    bl.SortList(control.Name, client.ToClient).ConvertIenmurbleToObserve(client.ToClient);
                 }
             }
 
@@ -281,7 +282,10 @@ namespace PL
 
                 new PackageView(bl, ((PackageAtClient)ListPackegeFromClient.SelectedItem).SerialNum, StatusPackegeWindow.SendClient).ShowDialog();
                 this.client = bl.GetingClient(client.Id);
+            
                 ListPackegeFromClient.SelectedItem = null;
+                if(ClientsLIst.lists!=null)
+                bl.FilterClientList().ConvertIenmurbleToObserve(ClientsLIst.lists);
                 this.DataContext = this.client;
             }
         }
@@ -295,6 +299,10 @@ namespace PL
                 ListPackegeToClient.SelectedItem = null;
                 this.client = bl.GetingClient(client.Id);
                 this.DataContext = this.client;
+ 
+                ListPackegeFromClient.SelectedItem = null;
+                if (ClientsLIst.lists != null)
+                    bl.FilterClientList().ConvertIenmurbleToObserve(ClientsLIst.lists);
             }
         }
 
@@ -302,8 +310,10 @@ namespace PL
         {
             new PackageView(bl,client.Id.ToString(),StatusPackegeWindow.SendClient,clientMode).ShowDialog();
             this.client = bl.GetingClient(client.Id);
+            if (ClientsLIst.lists != null)
+                bl.FilterClientList().ConvertIenmurbleToObserve(ClientsLIst.lists);
             this.DataContext = this.client;
-            ListPackegeFromClient.ItemsSource = client.FromClient;
+            
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
@@ -314,6 +324,8 @@ namespace PL
                 {
                     bl.DeleteClient(client.Id);
                     MessageBox.Show($"client {client.Id.ToString()} deleted!");
+                    if (ClientsLIst.lists != null)
+                        bl.FilterClientList().ConvertIenmurbleToObserve(ClientsLIst.lists);
                     this.Closing += ClientView_Closing;
                     this.Close();
 

@@ -7,6 +7,7 @@ using BO;
 using System.Collections;
 using DalApi;
 using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 
 namespace BlApi
 {
@@ -149,7 +150,7 @@ namespace BlApi
                 loc.Latitude = client.Latitude;
                 loc.Longitude = client.Longitude;
                 var returnClient = new Client { Id = client.Id, Name = client.Name, Phone = client.PhoneNumber, Location = loc };
-                returnClient.ToClient = new List<PackageAtClient>();
+                returnClient.ToClient = new ObservableCollection<PackageAtClient>();
                 var packege = dalObj.PackegeList(x => x.GetingClient == id);
 
 
@@ -158,7 +159,7 @@ namespace BlApi
                     {
                         returnClient.ToClient.Add(packegeInList.convretPackegeDalToPackegeAtClient(packegeInList.GetingClient, dalObj));
                     }
-                returnClient.FromClient = new List<PackageAtClient>();
+                returnClient.FromClient = new ObservableCollection<PackageAtClient>();
                 packege = dalObj.PackegeList(x => x.SendClient == id);
                 if (packege.Count() != 0)
                     foreach (var packegeInList in packege)

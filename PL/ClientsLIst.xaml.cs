@@ -11,6 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
+using BlApi;
+using BO;
+
 
 namespace PL
 {
@@ -22,13 +26,16 @@ namespace PL
         CollectionView view;
         PropertyGroupDescription groupDescription;
         BlApi.IBL bl;
+        internal static ObservableCollection<ClientToList> lists = new ObservableCollection<ClientToList>();
         public ClientsLIst(BlApi.IBL bl)
         {
             InitializeComponent();
             this.bl = bl;
+            lists = new(bl.ClientToLists());
+            DataContext = lists;
             view = (CollectionView)CollectionViewSource.GetDefaultView(clientListView.ItemsSource);
             groupDescription = new PropertyGroupDescription("Name");
-            clientListView.ItemsSource = bl.ClientToLists();
+           
         }
 
         private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -36,7 +43,7 @@ namespace PL
             HeaderedContentControl control = sender as HeaderedContentControl;
             try
             {
-                clientListView.ItemsSource = bl.SortList(control.Name, clientListView.ItemsSource as IEnumerable<BO.ClientToList>);
+                bl.SortList(control.Name, lists).ConvertIenmurbleToObserve(lists);
             }
             catch (Exception ex)
             {
@@ -46,16 +53,16 @@ namespace PL
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new ClientView(bl).ShowDialog();
-            clientListView.ItemsSource = bl.FilterClientList();
+            new ClientView(bl).Show();
+          
         }
 
         private void clientListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (clientListView.SelectedItem != null)
             {
-                new ClientView(bl, (BO.ClientToList)clientListView.SelectedItem).ShowDialog();
-                clientListView.ItemsSource = bl.FilterClientList();
+                new ClientView(bl, (BO.ClientToList)clientListView.SelectedItem).Show();
+              
                 clientListView.SelectedItem = null;
             }
         }
@@ -66,14 +73,14 @@ namespace PL
         {
            if(SenderClientCmb.SelectedItem is null)
             {
-                clientListView.ItemsSource = bl.ClientActiveHowSendPackegesToLists(false);
+                bl.ClientActiveHowSendPackegesToLists(false).ConvertIenmurbleToObserve(lists);
             }
            else if(SenderClientCmb.SelectedItem == SendItem)
-            { clientListView.ItemsSource = bl.ClientActiveHowSendPackegesToLists(); }
+            {  bl.ClientActiveHowSendPackegesToLists().ConvertIenmurbleToObserve(lists); }
             else if (SenderClientCmb.SelectedItem == SendItemAndPackegeArrive)
-            { clientListView.ItemsSource = bl.ClientActiveHowSendAndArrivePackegesToLists(); }
+            { bl.ClientActiveHowSendAndArrivePackegesToLists().ConvertIenmurbleToObserve(lists); }
             else if (SenderClientCmb.SelectedItem == SendItemAndPackegeNotArrive)
-            { clientListView.ItemsSource = bl.ClientActiveHowSendPackegesAndNotArriveToLists(); }
+            { bl.ClientActiveHowSendPackegesAndNotArriveToLists().ConvertIenmurbleToObserve(lists); }
         }
 
         private void GetingClientCmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -83,19 +90,19 @@ namespace PL
                 clientListView.ItemsSource = bl.ClientActiveHowGetingPackegesToLists(false);
             }
             else if (getingClientCmb.SelectedItem == GetItem)
-            { clientListView.ItemsSource = bl.ClientActiveHowGetingPackegesToLists(); }
+            { bl.ClientActiveHowGetingPackegesToLists().ConvertIenmurbleToObserve(lists); }
             else if (getingClientCmb.SelectedItem == GetItemAndPackegeArrive)
-            { clientListView.ItemsSource = bl.ClientActiveHowGetingPackegesAndArriveToLists(); }
+            { bl.ClientActiveHowGetingPackegesAndArriveToLists().ConvertIenmurbleToObserve(lists); }
             else if (getingClientCmb.SelectedItem == GetItemAndPackegeNotArrive)
-            { clientListView.ItemsSource = bl.ClientActiveHowGetingPackegesAndNotArriveToLists(); }
+            { bl.ClientActiveHowGetingPackegesAndNotArriveToLists().ConvertIenmurbleToObserve(lists); }
         }
 
         private void AllClient_Checked(object sender, RoutedEventArgs e)
         {
             if(!AllClient.IsChecked.Value)
-            clientListView.ItemsSource = bl.FilterClientList(false);
+            bl.FilterClientList(false).ConvertIenmurbleToObserve(lists);
             if (AllClient.IsChecked.Value)
-                clientListView.ItemsSource = bl.FilterClientList();
+                bl.FilterClientList().ConvertIenmurbleToObserve(lists);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

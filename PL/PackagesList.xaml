@@ -56,7 +56,7 @@
 
         </Grid>
 
-        <ListView x:Name="PackagesListView" Grid.Row="2" Margin="-9,4,9,10" Background="#FF24B1C7" MouseDoubleClick="PackagesListView_MouseDoubleClick_1" >
+        <ListView x:Name="PackagesListView" ItemsSource="{Binding}" Grid.Row="2" Margin="-9,4,9,10" Background="#FF24B1C7" MouseDoubleClick="PackagesListView_MouseDoubleClick_1" >
             <ListView.View>
                 <GridView x:Name="ListviewGridToPackagesList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
                     <GridViewColumn  DisplayMemberBinding="{Binding SerialNumber}" x:Name="Serial"   >
