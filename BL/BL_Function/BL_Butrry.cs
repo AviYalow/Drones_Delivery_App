@@ -18,7 +18,7 @@ namespace BlApi
         /// </summary>
         /// <param name="packageInTransfer"> package</param>
         /// <returns> percentage of battery needed</returns>
-         [MethodImpl(MethodImplOptions.Synchronized)]
+        [MethodImpl(MethodImplOptions.Synchronized)]
         double buttryDownPackegeDelivery(PackageInTransfer packageInTransfer)
         {
 

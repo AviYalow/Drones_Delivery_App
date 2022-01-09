@@ -106,7 +106,7 @@
                     </Style>
                 </ComboBox.ItemContainerStyle>
             </ComboBox>
-            <Label Name="DroneLabel"   VerticalAlignment="Top"       Grid.RowSpan="9" Width="auto" Height="387" Grid.Column="1" Margin="5,14,-5,0" >
+            <Label Name="DroneLabel"   VerticalAlignment="Top"       Grid.RowSpan="7" Width="auto" Height="321" Grid.Column="1" Margin="5,14,-5,0" >
 
                 <Grid  >
                     <Grid.RowDefinitions >
@@ -152,6 +152,8 @@
             <Label Name="Statuslabel" Content="Status:" HorizontalAlignment="Left" Margin="8,41,0,0" Grid.Row="3" VerticalAlignment="Top" Width="82" FontWeight="Bold" Grid.RowSpan="2"/>
             <ComboBox Name="StatusComb"    HorizontalAlignment="Left" Margin="125,37,0,0" Grid.Row="3" VerticalAlignment="Top" Width="131" Height="29" SelectionChanged="StatusComb_SelectionChanged" Grid.RowSpan="2" />
             <Label Name="SirealNumberLabel" Content="{Binding SerialNumber}"  HorizontalAlignment="Left" Margin="125,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="131"/>
+            <Button Content="Simulator" Grid.Column="1" HorizontalAlignment="Left" Margin="289,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="93" Click="Simulator_Click"/>
+            <Button Content="Manual" Grid.Column="1" HorizontalAlignment="Left" Margin="189,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="93" Height="32" Click="Manual_Click"/>
 
         </Grid>
         <Button x:Name="Delete" Visibility="{Binding ElementName=DroneLabel, Path=Visibility}" Content="{materialDesign:PackIcon Kind=Delete, Size=30 }" HorizontalAlignment="Left" Margin="169,340,0,0" VerticalAlignment="Top" Height="44" Width="62" Click="Delete_Click"/>

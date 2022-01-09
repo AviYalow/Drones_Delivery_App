@@ -334,5 +334,16 @@ namespace PL
             }catch(Exception ex)
             { MessageBox.Show(ex.ToString(), "ERROR"); }
         }
+
+        private void Simulator_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        private void Manual_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

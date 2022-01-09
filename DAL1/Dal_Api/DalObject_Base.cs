@@ -38,7 +38,7 @@ namespace Dal
                 longitude = longitude,
                 Active = true
 
-            }) ;
+            });
 
         }
 
@@ -46,7 +46,7 @@ namespace Dal
         /// Adding a new base station
         /// </summary>
         /// <param name="base_Station"> Base Station to add</param>
-         [MethodImpl(MethodImplOptions.Synchronized)]
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Base_Station base_Station)
         {
             if (DataSource.base_Stations.Any(x => x.baseNumber == base_Station.baseNumber))
