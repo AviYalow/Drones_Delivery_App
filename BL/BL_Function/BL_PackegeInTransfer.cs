@@ -18,7 +18,7 @@ namespace BlApi
         /// <param name="package">Packege object </param>
         /// <returns> PackegeInTrnansfer object</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        PackageInTransfer convertPackegeBlToPackegeInTrnansfer(Package package)
+        public PackageInTransfer convertPackegeBlToPackegeInTrnansfer(Package package)
         {
             lock (dalObj)
             {
