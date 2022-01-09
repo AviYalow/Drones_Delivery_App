@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         Title="PackageView" Height="700" Width="1200" ResizeMode="NoResize">
     <Window.Resources>
-        <ImageBrush x:Key="Easy" ImageSource="/easy.jpg" />
+        <ImageBrush x:Key="Easy" ImageSource="/depositphotos_70711715-stock-photo-quadrocopter-drone-delivering-package.jpg" />
         <ImageBrush x:Key="Medium" ImageSource="/medium.jpg" />
         <ImageBrush x:Key="Heavy" ImageSource="/heavy.jpg" />
     </Window.Resources>

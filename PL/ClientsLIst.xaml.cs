@@ -26,7 +26,7 @@ namespace PL
         CollectionView view;
         PropertyGroupDescription groupDescription;
         BlApi.IBL bl;
-        internal static ObservableCollection<ClientToList> lists = new ObservableCollection<ClientToList>();
+         ObservableCollection<ClientToList> lists = new ObservableCollection<ClientToList>();
         public ClientsLIst(BlApi.IBL bl)
         {
             InitializeComponent();
@@ -53,7 +53,7 @@ namespace PL
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new ClientView(bl).Show();
+            new ClientView(bl,false,lists).Show();
           
         }
 
@@ -61,7 +61,7 @@ namespace PL
         {
             if (clientListView.SelectedItem != null)
             {
-                new ClientView(bl, (BO.ClientToList)clientListView.SelectedItem).Show();
+                new ClientView(bl,lists, (BO.ClientToList)clientListView.SelectedItem).Show();
               
                 clientListView.SelectedItem = null;
             }

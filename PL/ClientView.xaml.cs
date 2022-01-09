@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,11 +25,13 @@ namespace PL
         Client client;
         IBL bl;
         bool clientMode;
+        ObservableCollection<ClientToList> list;
 
-        public ClientView(BlApi.IBL bL,bool clientView=false)
+        public ClientView(BlApi.IBL bL,bool clientView=false, ObservableCollection<ClientToList> lists = null)
         {
             InitializeComponent();
             bl = bL;
+            list = lists;
             client = new Client { ToClient = null, FromClient = null, Phone = "" };
             DataContext = client;
             clientMode = clientView;
@@ -38,17 +41,19 @@ namespace PL
 
         }
 
-        public ClientView(BlApi.IBL bL, ClientToList clientFromList,bool clientView= false)
+        public ClientView(BlApi.IBL bL, ObservableCollection<ClientToList> lists, ClientToList clientFromList,bool clientView= false)
         {
             InitializeComponent();
             bl = bL;
             clientMode = clientView;
+            list = lists;
             ctorUpdateClient(clientFromList.ID);
 
         }
-        public ClientView(BlApi.IBL bL, uint clientFromList, bool clientView = false)
+        public ClientView(BlApi.IBL bL, uint clientFromList, bool clientView = false, ObservableCollection<ClientToList> lists=null)
         {
             InitializeComponent();
+            list = lists;
             bl = bL;
             clientMode = clientView;
             ctorUpdateClient(clientFromList);
@@ -100,7 +105,7 @@ namespace PL
             {
                 bl.AddClient(client);
                 MessageBox.Show("Add client \n" + client.ToString() + "\nsucceed!");
-                ClientsLIst.lists.Add(new ClientToList { Active = true, ID = client.Id, Name = client.Name, Arrived =0, NotArrived =0, OnTheWay =0, Phone = client.Phone, received = 0 });
+               list.Add(new ClientToList { Active = true, ID = client.Id, Name = client.Name, Arrived =0, NotArrived =0, OnTheWay =0, Phone = client.Phone, received = 0 });
                 ctorUpdateClient(client.Id);
             }
             catch(Exception ex)
@@ -284,8 +289,8 @@ namespace PL
                 this.client = bl.GetingClient(client.Id);
             
                 ListPackegeFromClient.SelectedItem = null;
-                if(ClientsLIst.lists!=null)
-                bl.FilterClientList().ConvertIenmurbleToObserve(ClientsLIst.lists);
+                if(list!=null)
+                bl.FilterClientList().ConvertIenmurbleToObserve(list);
                 this.DataContext = this.client;
             }
         }
@@ -301,8 +306,8 @@ namespace PL
                 this.DataContext = this.client;
  
                 ListPackegeFromClient.SelectedItem = null;
-                if (ClientsLIst.lists != null)
-                    bl.FilterClientList().ConvertIenmurbleToObserve(ClientsLIst.lists);
+                if (list != null)
+                    bl.FilterClientList().ConvertIenmurbleToObserve(list);
             }
         }
 
@@ -310,8 +315,8 @@ namespace PL
         {
             new PackageView(bl,client.Id.ToString(),StatusPackegeWindow.SendClient,clientMode).ShowDialog();
             this.client = bl.GetingClient(client.Id);
-            if (ClientsLIst.lists != null)
-                bl.FilterClientList().ConvertIenmurbleToObserve(ClientsLIst.lists);
+            if (list != null)
+                bl.FilterClientList().ConvertIenmurbleToObserve(list);
             this.DataContext = this.client;
             
         }
@@ -324,8 +329,8 @@ namespace PL
                 {
                     bl.DeleteClient(client.Id);
                     MessageBox.Show($"client {client.Id.ToString()} deleted!");
-                    if (ClientsLIst.lists != null)
-                        bl.FilterClientList().ConvertIenmurbleToObserve(ClientsLIst.lists);
+                    if (list != null)
+                        bl.FilterClientList().ConvertIenmurbleToObserve(list);
                     this.Closing += ClientView_Closing;
                     this.Close();
 

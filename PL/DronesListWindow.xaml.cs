@@ -23,7 +23,7 @@ namespace PL
     public partial class DronesListWindow : Window
     {
         BlApi.IBL bl;
-      internal static  ObservableCollection<DroneToList> lists;
+      ObservableCollection<DroneToList> lists;
         CollectionView view;
         PropertyGroupDescription groupDescription;
         BO.DroneToList drone;
@@ -92,9 +92,8 @@ namespace PL
             {
                 if (DronesListView.SelectedItem != null)
                 {
-                    new DroneWindow(bl, (BO.DroneToList)DronesListView.SelectedItem).Show();
-                 /*   DronesListView.ItemsSource = bl.FilterDronesList();
-                    DronesListView.SelectedItem = null;*/
+                    new DroneWindow(bl, ((BO.DroneToList)DronesListView.SelectedItem).SerialNumber,lists).Show();
+                 
                 }
             }catch (Exception ex)
             {
@@ -106,8 +105,8 @@ namespace PL
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow( bl).ShowDialog();
-            DronesListView.ItemsSource = bl.FilterDronesList();
+            new DroneWindow( bl,lists).ShowDialog();
+          
         }
 
         private void Button_Return_Click(object sender, RoutedEventArgs e)

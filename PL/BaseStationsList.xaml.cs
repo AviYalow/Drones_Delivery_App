@@ -26,7 +26,7 @@ namespace PL
     {
         IBL bl;
        
-     internal static  ObservableCollection<BaseStationToList> lists;
+      ObservableCollection<BaseStationToList> lists;
         CollectionView view;
         PropertyGroupDescription groupDescription;
         public BaseStationsList(BlApi.IBL bL)
@@ -35,24 +35,21 @@ namespace PL
             bl = bL;
             lists = new ObservableCollection<BaseStationToList>(bl.BaseStationToLists());
             DataContext = lists;
-            lists.CollectionChanged += Lists_CollectionChanged;
-            //   BaseListView.DataContext = lists;
+            
+            
          
          
             view = (CollectionView)CollectionViewSource.GetDefaultView(BaseListView.ItemsSource);
             groupDescription = new PropertyGroupDescription("FreeState");
         }
 
-        private void Lists_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            DataContext = lists;
-        }
+      
 
         private void BaseListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (BaseListView.SelectedItem != null)
             {
-                new BaseStationView(bl, (BaseStationToList)BaseListView.SelectedItem).Show();
+                new BaseStationView(bl, (BaseStationToList)BaseListView.SelectedItem,lists).Show();
                 
             }
         }
@@ -114,7 +111,7 @@ namespace PL
         {
             try
             {
-                new BaseStationView( bl).Show();
+                new BaseStationView( bl,lists).Show();
            
             }
             catch (Exception ex)

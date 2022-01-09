@@ -31,7 +31,7 @@
         <TextBox x:Name="Latitudtext" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="32,435,0,0" Text="{Binding Path=Latitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" GotFocus="Latitudtext_GotFocus" LostFocus="LongitudeText_LostFocus"/>
         <TextBox x:Name="LongitudeText" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="33,505,0,0" Text="{Binding Path=Longitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" GotFocus="Latitudtext_GotFocus" LostFocus="LongitudeText_LostFocus"/>
         <Button x:Name="AddButton"  Content="ADD"  HorizontalAlignment="Left" Margin="66,654,0,0" VerticalAlignment="Top" Click="AddButton_Click"/>
-        <ListView x:Name="DroneCharge1View"  Visibility="Collapsed" Margin="464,135,8,329" DataContext="{Binding  }" RenderTransformOrigin="0.5,0.5" Height="auto" Foreground="#DDFFFFFF" MouseDoubleClick="DroneCharge1View_MouseDoubleClick" Background="#891054DA">
+        <ListView x:Name="DroneCharge1View"  Visibility="Collapsed" Margin="464,135,8,329" ItemsSource="{Binding Path=DronesInChargeList}" RenderTransformOrigin="0.5,0.5" Height="auto" Foreground="#DDFFFFFF" MouseDoubleClick="DroneCharge1View_MouseDoubleClick" Background="#891054DA">
 
             <ListView.RenderTransform>
                 <TransformGroup>

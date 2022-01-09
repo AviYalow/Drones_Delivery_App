@@ -24,7 +24,7 @@ namespace PL
       
         BlApi.IBL bl;
         CollectionView view;
-        internal static ObservableCollection<PackageToList> lists;
+         ObservableCollection<PackageToList> lists;
         PropertyGroupDescription groupDescription;
         public PackagesList(BlApi.IBL bl)
         {
@@ -200,7 +200,7 @@ namespace PL
             {
                 if (PackagesListView.SelectedItem != null)
                 {
-                    new PackageView(bl, (BO.PackageToList)PackagesListView.SelectedItem).Show();
+                    new PackageView(bl,lists, ((BO.PackageToList)PackagesListView.SelectedItem).SerialNumber).Show();
                      bl.PackageToLists().ConvertIenmurbleToObserve(lists);
                     PackagesListView.SelectedItem = null;
                 }
@@ -213,8 +213,8 @@ namespace PL
         {
             try
             {
-                new PackageView(bl).Show();
-                bl.PackageToLists().ConvertIenmurbleToObserve(lists);
+                new PackageView(bl,lists).Show();
+                
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }

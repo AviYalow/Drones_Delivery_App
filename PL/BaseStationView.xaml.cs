@@ -28,20 +28,20 @@ namespace PL
     public partial class BaseStationView : Window
     {
         BlApi.IBL bl;
-      BaseStation baseStation;
-        
-        
+        BaseStation baseStation;
+        ObservableCollection<BaseStationToList> lists;
+
         int numberOfChargingStation;
-        public BaseStationView(BlApi.IBL bL)
+        public BaseStationView(BlApi.IBL bL, ObservableCollection<BaseStationToList> lists)
         {
             try
             {
                 InitializeComponent();
                 bl = bL;
-                
+                this.lists = lists;
                 baseStation = new BaseStation();
                 baseStation.Location = new Location();
-                
+
                 DataContext = baseStation;
                 LongitudeText.DataContext = baseStation.Location;
                 Latitudtext.DataContext = baseStation.Location;
@@ -49,16 +49,16 @@ namespace PL
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
 
-            
+
 
         }
-        public BaseStationView(BlApi.IBL bL, BaseStationToList base_)
+        public BaseStationView(BlApi.IBL bL, BaseStationToList base_, ObservableCollection<BaseStationToList> lists)
         {
             try
             {
                 InitializeComponent();
                 bl = bL;
-                
+                this.lists = lists;
                 ctorByItems(base_.SerialNum);
             }
             catch (Exception ex)
@@ -89,7 +89,7 @@ namespace PL
                 DroneCharge1View.Visibility = Visibility.Visible;
 
 
-                DroneCharge1View.ItemsSource = baseStation.DronesInChargeList;
+                
             }
             catch (Exception ex)
             {
@@ -128,9 +128,9 @@ namespace PL
                 bl.AddBase(baseStation);
                 MessageBox.Show("Add base Station Succes!");
                 numberOfChargingStation = (int)baseStation.FreeState;
-                BaseStationsList.lists.Add(new BaseStationToList { Active = "Active", BusyState = 0, FreeState = baseStation.FreeState, Name = baseStation.Name, SerialNum = baseStation.SerialNum });
+                lists.Add(new BaseStationToList { Active = "Active", BusyState = 0, FreeState = baseStation.FreeState, Name = baseStation.Name, SerialNum = baseStation.SerialNum });
                 ctorByItems(baseStation.SerialNum);
-                
+
 
 
             }
@@ -166,8 +166,8 @@ namespace PL
                             {
                                 bl.UpdateBase(baseStation.SerialNum, "", text.Text);
                                 MessageBox.Show("Update seccsed!");
-                                bl.BaseStationToLists().ConvertIenmurbleToObserve(BaseStationsList.lists);
-                                
+                                bl.BaseStationToLists().ConvertIenmurbleToObserve(lists);
+
                                 ctorByItems(baseStation.SerialNum);
                             }
                             catch (Exception ex)
@@ -307,8 +307,8 @@ namespace PL
         {
             try
             {
-                
-                new DroneWindow(bl, (((DroneInCharge)DroneCharge1View.SelectedItem).SerialNum)).ShowDialog();
+
+                new DroneWindow(bl, (((DroneInCharge)DroneCharge1View.SelectedItem).SerialNum), baseStation.DronesInChargeList).ShowDialog();
             }
             catch (Exception ex)
             {
@@ -318,7 +318,9 @@ namespace PL
             {
                 baseStation = bl.BaseByNumber(baseStation.SerialNum);
                 DataContext = baseStation;
-                DroneCharge1View.ItemsSource = baseStation.DronesInChargeList;
+                bl.BaseStationToLists().ConvertIenmurbleToObserve(lists);
+
+
 
 
             }
@@ -337,6 +339,7 @@ namespace PL
                             bl.UpdateBase(baseStation.SerialNum, ((TextBox)sender).Text, "");
 
                             MessageBox.Show("Update seccsed!");
+                            bl.BaseStationToLists().ConvertIenmurbleToObserve(lists);
                             ctorByItems(baseStation.SerialNum);
                         }
                         catch (Exception ex)
@@ -352,7 +355,7 @@ namespace PL
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-        
+
             e.Cancel = true;
         }
 
