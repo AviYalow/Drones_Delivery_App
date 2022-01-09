@@ -13,7 +13,7 @@ namespace BlApi
     public interface IBL
     {
         #region Threading
-       public void PlayThred(uint droneNumber , Action action, Func<bool> StopChecking);
+        public void PlayThred(uint droneNumber, Action action, Func<bool> StopChecking);
         #endregion
 
         #region Creat
@@ -279,9 +279,16 @@ namespace BlApi
         /// </summary>
         /// <returns></returns>
         public IEnumerable<BaseStationToList> BaseStationWhitFreeChargingStationToLists();
-
+        /// <summary>
+        /// return All base station include not activ base
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<BaseStationToList> AllBaseStation();
-
+        /// <summary>
+        /// return base wite spsific drone 
+        /// </summary>
+        /// <param name="drone"></param>
+        /// <returns></returns>
         public BaseStationToList BaseStationWhitSpscificDrone(uint drone);
 
         /// <summary>
@@ -307,42 +314,61 @@ namespace BlApi
         /// <returns> list of clients</returns>
         public IEnumerable<ClientToList> ClientToLists(bool filter = true);
 
-
         /// <summary>
         /// IEnumerable of client how need to get packege and they not get 
         /// </summary>
         /// <returns></returns>
         public IEnumerable<ClientToList> ClientActiveHowGetingPackegesToLists(bool filter = true);
+
         /// <summary>
         /// IEnumerable of client how need to get packege and they get 
         /// </summary>
         /// <returns></returns>
         public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndArriveToLists(bool filter = true);
+
         /// <summary>
         /// IEnumerable of client how need to get packege 
         /// </summary>
         /// <returns></returns>
         public IEnumerable<ClientToList> ClientActiveHowGetingPackegesAndNotArriveToLists(bool filter = true);
+
         /// <summary>
         /// IEnumerable of client how send packege and not arrive
         /// </summary>
         /// <returns></returns>
         public IEnumerable<ClientToList> ClientActiveHowSendPackegesAndNotArriveToLists(bool filter = true);
+
         /// <summary>
         /// IEnumerable of client how send packege and arrive
         /// </summary>
         /// <returns></returns>
         public IEnumerable<ClientToList> ClientActiveHowSendAndArrivePackegesToLists(bool filter = true);
+
         /// <summary>
         /// IEnumerable of client how send packege
         /// </summary>
         /// <returns></returns>
         public IEnumerable<ClientToList> ClientActiveHowSendPackegesToLists(bool filter = true);
 
+        /// <summary>
+        /// return Id's client list
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IEnumerable<uint> ClientById(string id);
 
+        /// <summary>
+        /// return client list by filter
+        /// </summary>
+        /// <param name="active"></param>
+        /// <returns></returns>
         public IEnumerable<ClientToList> FilterClientList(bool active = true);
 
+        /// <summary>
+        /// return client list it clientInPackege type
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         public IEnumerable<ClientInPackage> ClientInPackagesList(bool filter = true);
 
         /// <summary>

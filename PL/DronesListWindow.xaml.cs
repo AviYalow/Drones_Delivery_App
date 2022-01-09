@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BlApi;
+using BO;
 
 namespace PL
 {
@@ -20,7 +23,7 @@ namespace PL
     public partial class DronesListWindow : Window
     {
         BlApi.IBL bl;
-
+      internal static  ObservableCollection<DroneToList> lists;
         CollectionView view;
         PropertyGroupDescription groupDescription;
         BO.DroneToList drone;
@@ -31,7 +34,7 @@ namespace PL
                 InitializeComponent();
 
                 this.bl = bl;
-
+                lists = new ObservableCollection<DroneToList>(bl.FilterDronesList());
                 WeightSelctor.Items.Add("");
                 StatusSelector.Items.Add("");
                 foreach (var item in Enum.GetValues(typeof(BO.WeightCategories)))
@@ -39,7 +42,7 @@ namespace PL
                 foreach (var item in Enum.GetValues(typeof(BO.DroneStatus)))
                     StatusSelector.Items.Add(item);
                 drone = new BO.DroneToList();
-                DronesListView.ItemsSource = bl.FilterDronesList();
+                DataContext = lists;
 
                 view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
                 groupDescription = new PropertyGroupDescription("Model");
@@ -55,10 +58,10 @@ namespace PL
                     return;
                 if (WeightSelctor.SelectedItem == WeightSelctor.Items[0])
                 {
-                    DronesListView.ItemsSource = bl.DroneToListsByWhight();
+                    bl.DroneToListsByWhight().ConvertIenmurbleToObserve(lists);
                 }
                 else
-                    DronesListView.ItemsSource = bl.DroneToListsByWhight((BO.WeightCategories)WeightSelctor.SelectedItem);
+                     bl.DroneToListsByWhight((BO.WeightCategories)WeightSelctor.SelectedItem).ConvertIenmurbleToObserve(lists);
             }
             catch (Exception ex) { MessageBox.Show(ex.ToString()); }
         }
@@ -71,11 +74,11 @@ namespace PL
                     return;
                 if (StatusSelector.SelectedItem == StatusSelector.Items[0])
                 {
-                    DronesListView.ItemsSource = bl.DroneToListsByStatus();
+                     bl.DroneToListsByStatus().ConvertIenmurbleToObserve(lists);
 
                 }
                 else
-                    DronesListView.ItemsSource = bl.DroneToListsByStatus((BO.DroneStatus)StatusSelector.SelectedItem);
+                    bl.DroneToListsByStatus((BO.DroneStatus)StatusSelector.SelectedItem).ConvertIenmurbleToObserve(lists);
             }
             catch(Exception ex)
 
@@ -89,9 +92,9 @@ namespace PL
             {
                 if (DronesListView.SelectedItem != null)
                 {
-                    new DroneWindow(bl, (BO.DroneToList)DronesListView.SelectedItem).ShowDialog();
-                    DronesListView.ItemsSource = bl.FilterDronesList();
-                    DronesListView.SelectedItem = null;
+                    new DroneWindow(bl, (BO.DroneToList)DronesListView.SelectedItem).Show();
+                 /*   DronesListView.ItemsSource = bl.FilterDronesList();
+                    DronesListView.SelectedItem = null;*/
                 }
             }catch (Exception ex)
             {
@@ -131,7 +134,7 @@ namespace PL
             HeaderedContentControl control = sender as HeaderedContentControl;
             try
             {
-                DronesListView.ItemsSource = bl.SortList(control.Name, DronesListView.ItemsSource as IEnumerable<BO.DroneToList>);
+                bl.SortList(control.Name,lists).ConvertIenmurbleToObserve(lists);
             }
             catch (Exception ex)
             {
@@ -184,7 +187,7 @@ namespace PL
             TextBox text = sender as TextBox;
             if (text.Text.Any(x => x < '0' || x > '9'))
                 return;
-            DronesListView.ItemsSource = bl.DroneToListFilterByNumber(text.Text);
+            bl.DroneToListFilterByNumber(text.Text).ConvertIenmurbleToObserve(lists);
         }
 
         private void gropListCB_Checked(object sender, RoutedEventArgs e)

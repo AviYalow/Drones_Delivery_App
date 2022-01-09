@@ -28,7 +28,8 @@ namespace PL
     public partial class BaseStationView : Window
     {
         BlApi.IBL bl;
-        BaseStation baseStation;
+      BaseStation baseStation;
+        
         
         int numberOfChargingStation;
         public BaseStationView(BlApi.IBL bL)
@@ -37,6 +38,7 @@ namespace PL
             {
                 InitializeComponent();
                 bl = bL;
+                
                 baseStation = new BaseStation();
                 baseStation.Location = new Location();
                 
@@ -209,8 +211,6 @@ namespace PL
             return;
         }
 
-    
-
         private void PreviewKeyDownWhitDot(object sender, KeyEventArgs e)
         {
             TextBox text = sender as TextBox;
@@ -307,7 +307,7 @@ namespace PL
         {
             try
             {
-
+                
                 new DroneWindow(bl, (((DroneInCharge)DroneCharge1View.SelectedItem).SerialNum)).ShowDialog();
             }
             catch (Exception ex)
@@ -352,6 +352,7 @@ namespace PL
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+        
             e.Cancel = true;
         }
 

@@ -150,6 +150,11 @@ namespace BlApi
             }
 
         }
+        /// <summary>
+        /// return client list it clientInPackege type
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientInPackage> ClientInPackagesList(bool filter = true)
         {
@@ -159,6 +164,11 @@ namespace BlApi
                        select new ClientInPackage { Id = client.Id, Name = client.Name };
             }
         }
+        /// <summary>
+        /// return client list by filter
+        /// </summary>
+        /// <param name="active"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ClientToList> FilterClientList(bool active =true)
         {
@@ -168,6 +178,11 @@ namespace BlApi
                        select client.Clone();
             }
         }
+        /// <summary>
+        /// return Id's client list
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<uint> ClientById(string id)
         {

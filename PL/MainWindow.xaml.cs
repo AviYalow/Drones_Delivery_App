@@ -59,23 +59,23 @@ namespace PL
         private void DroneMainButton_Click(object sender, RoutedEventArgs e)
         {
             
-            new DronesListWindow( bL).ShowDialog();
+            new DronesListWindow( bL).Show();
             
         }
 
         private void BaseStationsButton_Click(object sender, RoutedEventArgs e)
         {
-            new BaseStationsList(bL).ShowDialog();
+            new BaseStationsList(bL).Show();
         }
 
         private void PackagesButton_Click(object sender, RoutedEventArgs e)
         {
-            new PackagesList(bL).ShowDialog();
+            new PackagesList(bL).Show();
         }
 
         private void ClientsButton_Click(object sender, RoutedEventArgs e)
         {
-            new ClientsLIst(bL).ShowDialog();
+            new ClientsLIst(bL).Show();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

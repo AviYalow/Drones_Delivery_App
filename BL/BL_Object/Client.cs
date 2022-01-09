@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,8 +17,8 @@ namespace BO
         public string Phone { get; set; }
         public Location Location { get; set; }
 
-        public List<PackageAtClient> FromClient { get; set; }
-        public List<PackageAtClient> ToClient { get; set; }
+        public ObservableCollection<PackageAtClient> FromClient { get; set; }
+        public ObservableCollection<PackageAtClient> ToClient { get; set; }
         public bool Active { get; set; }
 
         public override string ToString()

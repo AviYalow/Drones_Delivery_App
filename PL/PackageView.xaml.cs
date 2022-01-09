@@ -172,7 +172,10 @@ namespace PL
             try
             {
                 uint packegeNumber = bl.AddPackege(package);
+             
                 MessageBox.Show($"Packege number:{packegeNumber } Add!");
+                if(PackagesList.lists!=null)
+                PackagesList.lists.Add(new PackageToList { Drone = false, packageStatus = PackageStatus.Create, priority = package.Priority, RecivedClient = package.RecivedClient.Name, SendClient = package.SendClient.Name, SerialNumber = packegeNumber, WeightCategories = package.WeightCatgory });
                 packegeFromDialog(packegeNumber);
             }
             catch (Exception ex)
@@ -199,6 +202,9 @@ namespace PL
                 }
                 else
                     return;
+                bl.PackageToLists().ConvertIenmurbleToObserve(PackagesList.lists);
+                if (ClientsLIst.lists != null)
+                    bl.FilterClientList().ConvertIenmurbleToObserve(ClientsLIst.lists);
                 packegeFromDialog(package.SerialNumber);
 
 
@@ -219,6 +225,7 @@ namespace PL
                 }
             try
             {
+               
                 new DroneWindow(bl, package.Drone.SerialNum).ShowDialog();
                 packegeFromDialog(package.SerialNumber);
             }
@@ -234,6 +241,7 @@ namespace PL
             {
                 bl.DeletePackege(package.SerialNumber);
                 MessageBox.Show($"Packge number{package.SerialNumber} deleted!");
+                bl.PackageToLists().ConvertIenmurbleToObserve(PackagesList.lists);
                 this.Close();
             }catch(Exception ex)
             {

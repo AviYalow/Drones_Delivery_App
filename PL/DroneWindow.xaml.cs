@@ -27,6 +27,7 @@ namespace PL
         IBL bl;
         Drone drone;
         DroneToList droneToList;
+       
 
 
 
@@ -35,7 +36,7 @@ namespace PL
             try
             {
                 InitializeComponent();
-               
+                
                 droneToList = new DroneToList();
                 this.DataContext = drone;
                 SirialNumberTextBox.DataContext = droneToList;
@@ -57,6 +58,7 @@ namespace PL
             try
             {
                 InitializeComponent();
+                
                 ctorUpdateDronWindow(bl, droneFromListView);
             }
             catch (Exception ex)
@@ -68,6 +70,7 @@ namespace PL
         {try
             {
                 InitializeComponent();
+              
                 ctorUpdateDronWindow(bl, droneFromListView.SerialNumber);
             }
             catch (Exception ex) { MessageBox.Show(ex.ToString()); }
@@ -121,6 +124,7 @@ namespace PL
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            
             e.Cancel = true;
 
         }
@@ -260,10 +264,16 @@ namespace PL
                         {
                             case DroneStatus.Free:
                                 bl.FreeDroneFromCharging(drone.SerialNumber);
+                                if (BaseStationsList.lists != null)
+                                    bl.BaseStationToLists().ConvertIenmurbleToObserve(BaseStationsList.lists);
                                 MessageBox.Show($"Drone number {drone.SerialNumber} free from charge");
                                 break;
                             case DroneStatus.Maintenance:
                                 bl.DroneToCharge(drone.SerialNumber);
+                                if (BaseStationsList.lists != null)
+                                    bl.BaseStationToLists().ConvertIenmurbleToObserve(BaseStationsList.lists);
+                                if (BaseStationsList.lists != null)
+                                    bl.BaseStationToLists().ConvertIenmurbleToObserve(BaseStationsList.lists);
                                 MessageBox.Show($"Drone number {drone.SerialNumber} send to charge");
                                 break;
                             case DroneStatus.Work:
@@ -278,7 +288,7 @@ namespace PL
                                 break;
 
                         }
-
+                        bl.FilterDronesList().ConvertIenmurbleToObserve(DronesListWindow.lists);
                         ctorUpdateDronWindow(bl, drone.SerialNumber);
 
 
@@ -305,6 +315,9 @@ namespace PL
                         bl.UpdateDroneName(drone.SerialNumber, (DroneModel)ModelComboBox.SelectedItem);
 
                         DroneLabel.DataContext = bl.GetDrone(drone.SerialNumber);
+                        bl.FilterDronesList().ConvertIenmurbleToObserve(DronesListWindow.lists);
+                        if(drone.DroneStatus==DroneStatus.Work&&PackagesList.lists !=null)
+                            bl.PackageToLists().ConvertIenmurbleToObserve(PackagesList.lists);
                     }
                 if (drone is null)
                     droneToList.Model = (DroneModel)ModelComboBox.SelectedItem;
@@ -319,6 +332,7 @@ namespace PL
             {
                 new PackageView(bl, drone.PackageInTransfer.SerialNum).ShowDialog();
                 ctorUpdateDronWindow(bl, drone.SerialNumber);
+                bl.FilterDronesList().ConvertIenmurbleToObserve(DronesListWindow.lists);
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
@@ -329,6 +343,7 @@ namespace PL
             try
             { bl.DeleteDrone(drone.SerialNumber);
                 MessageBox.Show($"Drone number {drone.SerialNumber} deleted!");
+                bl.FilterDronesList().ConvertIenmurbleToObserve(DronesListWindow.lists);
                 Closing += DroneWindow_Closing;
                 this.Close();
             }catch(Exception ex)

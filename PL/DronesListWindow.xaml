@@ -43,7 +43,7 @@
         </TextBox>
 
 
-        <ListView x:Name="DronesListView" Margin="0,120,0,136" Grid.RowSpan="2" Background="LightGreen" MouseDoubleClick="ChoseDrone" Foreground="#DD00FFE8">
+        <ListView x:Name="DronesListView" ItemsSource="{Binding}" Margin="0,120,0,136" Grid.RowSpan="2" Background="LightGreen" MouseDoubleClick="ChoseDrone" Foreground="#DD00FFE8">
             <ListView.View>
                 <GridView x:Name="ListviewGridToDroneList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
                     <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNumber}" x:Name="Serial"   >
@@ -122,8 +122,8 @@
         <Button x:Name="AddDroneButton" HorizontalAlignment="Left" Height="78" Margin="115,400,0,0" VerticalAlignment="Top" Width="93" Click="Button_Click" Grid.Row="1" 
               Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
   ToolTip="MaterialDesignFloatingActionDarkButton"
-  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
-            <!--materialDesign:PackIcon Kind="Alarm" Height="{StaticResource IconSize}"  Width="{StaticResource IconSize}" />-->
+ >
+            
             <materialdesignin:PackIcon Kind="Add" Height="78" Width="81" HorizontalAlignment="Center"   />
 
         </Button>

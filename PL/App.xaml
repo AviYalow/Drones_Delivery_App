@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PL"
              xmlns:materialdesignin="http://materialdesigninxaml.net/winfx/xaml/themes"
-             StartupUri="MainWindow.xaml"  
+             StartupUri="MainWindow.xaml"   
              >
-
+    
     <Application.Resources>
         <ResourceDictionary>
             <LinearGradientBrush x:Name="LinearGradientBrush1" x:Key="LinearGradientBrush1">

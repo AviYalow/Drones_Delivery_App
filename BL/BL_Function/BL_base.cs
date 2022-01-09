@@ -7,6 +7,7 @@ using BlApi;
 using BO;
 using DalApi;
 using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 
 namespace BlApi
 {
@@ -172,9 +173,9 @@ namespace BlApi
                 var baseStation = dalObj.BaseStationByNumber(baseNume);
                 var baseReturn = new BaseStation { SerialNum = baseNume, Location = new Location { Latitude = baseStation.latitude, Longitude = baseStation.longitude }, Name = baseStation.NameBase, FreeState = baseStation.NumberOfChargingStations };
 
-                baseReturn.DronesInChargeList = new List<DroneInCharge>();
+                baseReturn.DronesInChargeList = new ObservableCollection<DroneInCharge>(DroneINChargePerBase(baseNume));
 
-                baseReturn.DronesInChargeList = DroneINChargePerBase(baseNume);
+              
                 return baseReturn;
             }
             catch (DO.ItemNotFoundException ex)

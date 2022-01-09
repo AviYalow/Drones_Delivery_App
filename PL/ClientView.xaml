@@ -80,7 +80,7 @@
             <Label Name="latitudelabel" Content="Latitude:" HorizontalAlignment="Left" Margin="11,19,0,0" Grid.Row="4" VerticalAlignment="Top" Width="82" FontWeight="Bold"/>
             <TextBox Name="letitudeTextBox" Text="{Binding Path=Latitude, Mode=TwoWay}"   HorizontalAlignment="Left" Margin="81,11,0,0" Grid.Row="4" VerticalAlignment="Top" Width="148" Height="29" PreviewKeyUp="PreviewKeyDownWhitDot"  />
 
-            <ListView Visibility="Visible" x:Name="ListPackegeFromClient" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,47,3,2" Grid.RowSpan="4" BorderBrush="Black" Background="#FFDC0E0E" SelectionChanged="ListPackegeFromClient_SelectionChanged">
+            <ListView Visibility="Visible" ItemsSource="{Binding FromClient}" x:Name="ListPackegeFromClient" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,47,3,2" Grid.RowSpan="4" BorderBrush="Black" Background="#FFDC0E0E" SelectionChanged="ListPackegeFromClient_SelectionChanged">
                 <ListView.View>
                     <GridView x:Name="ListviewGridFromClientsList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
 
@@ -90,7 +90,7 @@
                             </HeaderedContentControl>
                         </GridViewColumn>
                         <GridViewColumn  DisplayMemberBinding="{Binding WeightCatgory}" x:Name="WeightCatgoryPAc"  >
-                            <HeaderedContentControl x:Name="WeightCatgory" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"    >
+                            <HeaderedContentControl x:Name="WeightCatgoryS" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"    >
                                 <TextBox Text="Weight Catgory" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                             </HeaderedContentControl>
                         </GridViewColumn>
@@ -113,7 +113,7 @@
                 </ListView.View>
             </ListView>
             <Label Visibility="{Binding ElementName=ListPackegeFromClient, Path=Visibility }" Name="SendListlabel" Content="Packege Send:" Grid.Column="1" HorizontalAlignment="Left" Margin="30,21,0,0" VerticalAlignment="Top"/>
-            <ListView  Visibility="{Binding ElementName=ListPackegeFromClient, Path=Visibility }" x:Name="ListPackegeToClient" Grid.Row="4" Grid.ColumnSpan="2" Margin="4,45,-1,4" Grid.RowSpan="4" BorderBrush="Black" Background="#FFDC0E0E" Grid.Column="1" SelectionChanged="ListPackegeToClient_SelectionChanged">
+            <ListView  Visibility="{Binding ElementName=ListPackegeFromClient, Path=Visibility }" x:Name="ListPackegeToClient" ItemsSource="{Binding ToClient}" Grid.Row="4" Grid.ColumnSpan="2" Margin="4,45,-1,4" Grid.RowSpan="4" BorderBrush="Black" Background="#FFDC0E0E" Grid.Column="1" SelectionChanged="ListPackegeToClient_SelectionChanged">
                 <ListView.View>
                     <GridView x:Name="ListviewGridToClientsList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
 
