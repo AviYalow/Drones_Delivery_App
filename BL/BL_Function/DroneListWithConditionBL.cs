@@ -8,6 +8,7 @@ using BO;
 using DalApi;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using static BL.Cloning;
 
 namespace BlApi
 {

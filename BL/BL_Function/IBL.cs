@@ -86,13 +86,13 @@ namespace BlApi
         /// A package that arrived at the destination
         /// </summary>
         /// <param name="droneNumber">A drone number that takes the package</param>
-        public void PackegArrive(uint droneNumber);
+        public void PackegArrive(uint droneNumber, double distanse = 0);
 
         /// <summary>
         /// A package is collected by a drone
         /// </summary>
         /// <param name="droneNumber">A drone number that collects the package</param>
-        public void CollectPackegForDelivery(uint droneNumber);
+        public void CollectPackegForDelivery(uint droneNumber, double distanse = 0);
 
         //
         /// <summary>

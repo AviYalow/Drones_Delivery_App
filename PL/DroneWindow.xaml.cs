@@ -31,9 +31,6 @@ namespace PL
         ObservableCollection<DroneToList> lists;
         bool flag;
 
-
-
-
         public DroneWindow(BlApi.IBL bl, ObservableCollection<DroneToList> lists = null)
         {
             try
@@ -69,6 +66,7 @@ namespace PL
             { MessageBox.Show(ex.ToString()); }
 
         }
+
         public DroneWindow(BlApi.IBL bl, uint droneFromListView, ObservableCollection<DroneInCharge> lists)
         {
             try
@@ -82,13 +80,11 @@ namespace PL
 
         }
 
-
-
         private void ctorUpdateDronWindow(BlApi.IBL bl, uint droneFromListView)
         {
             try
             {
-              this.bl = bl;
+                this.bl = bl;
                 this.drone = bl.GetDrone(droneFromListView);
                 this.Dispatcher.Invoke(() =>
                 {
@@ -132,14 +128,11 @@ namespace PL
                     if (lists != null)
                         bl.DroneToLists().ConvertIenmurbleToObserve(lists);
 
-                  
+
                 });
             }
             catch (Exception) { }
         }
-
-    
-
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -376,16 +369,17 @@ namespace PL
 
         private void Simulator_Click(object sender, RoutedEventArgs e)
         {
+
             flag = true;
             bl.PlayThred(drone.SerialNumber, () => ctorUpdateDronWindow(bl, drone.SerialNumber), () => flag);
-        }
 
+        }
 
         private void Manual_Click(object sender, RoutedEventArgs e)
         {
             flag = false;
             bl.PlayThred(drone.SerialNumber, () => { }, () => flag);
-            
+
 
         }
 

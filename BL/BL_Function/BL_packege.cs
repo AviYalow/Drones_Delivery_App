@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using BO;
 using System.Runtime.CompilerServices;
 using DalApi;
+using static BL.Cloning;
+
 namespace BlApi
 {
     partial class BL : IBL

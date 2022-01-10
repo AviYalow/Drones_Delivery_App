@@ -5,17 +5,34 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using BlApi;
+using BO;
+using DalApi;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System.Runtime.Serialization;
+
 
 namespace BL
 {
     /// <summary>
     /// Help class for deep copy
     /// </summary>
-    static class Cloning
+  internal static class Cloning
     {
-        
-       
-            public static void CopyPropertiesTo<T, S>(this S from, T to)
+
+        public static T Clone<T>(this T source)
+        {
+
+            DataContractSerializer serializer = new DataContractSerializer(typeof(T));
+            using (MemoryStream ms = new MemoryStream())
+            {
+                serializer.WriteObject(ms, source);
+                ms.Seek(0, SeekOrigin.Begin);
+                return (T)serializer.ReadObject(ms);
+            }
+        }
+        public static void CopyPropertiesTo<T, S>(this S from, T to)
             {
                 foreach (PropertyInfo propTo in to.GetType().GetProperties())
                 {

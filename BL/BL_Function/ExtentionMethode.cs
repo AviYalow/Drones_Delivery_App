@@ -16,20 +16,10 @@ using System.Runtime.CompilerServices;
 namespace BlApi
 {
     
-       static class ExtentionMethode
+      static class ExtentionMethode
         {
 
-            internal static T Clone<T>(this T source)
-            {
-
-                DataContractSerializer serializer = new DataContractSerializer(typeof(T));
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    serializer.WriteObject(ms, source);
-                    ms.Seek(0, SeekOrigin.Begin);
-                    return (T)serializer.ReadObject(ms);
-                }
-            }
+        
 
 
             /// <summary>

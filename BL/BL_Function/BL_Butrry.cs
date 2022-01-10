@@ -213,7 +213,7 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         internal double droneChrgingAlredy(double span)
         {
-            var time = (span); var butrryPerMinute = (chargingPerMinute) / 1000;
+            var time = (span); var butrryPerMinute = (chargingPerMinute) / 60000;
             time *= butrryPerMinute;
             return time;
         }

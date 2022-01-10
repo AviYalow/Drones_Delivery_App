@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BO;
 using DalApi;
 using System.Runtime.CompilerServices;
+using static BL.Cloning;
 
 namespace BlApi
 {

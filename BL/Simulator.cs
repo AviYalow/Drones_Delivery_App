@@ -29,16 +29,19 @@ namespace BL
 
         public Simulator(BlApi.BL bl, uint droneNumber, Action action, Func<bool> StopChecking)
         {
-            BL = bl;
-            
+            try
+            {
+                BL = bl;
+
                 sw = new Stopwatch();
-                Drone drone ;
-                uint? packageSerialNum = null;
+                Drone drone;
+                bool sendToCharge = false;
+                double m = 0;
                 chargePerMiliSecond = 100 / (bl.chargingPerMinute / 60 * 1000);
 
                 new Thread(() =>
                 {
-               
+
 
                     myThread = Thread.CurrentThread;
                     while (StopChecking())
@@ -46,47 +49,53 @@ namespace BL
                         lock (bl)
                         {
                             if (!sw.IsRunning)
-                        sw.Start();
-                        drone = bl.GetDrone(droneNumber);
+                                sw.Start();
+                            drone = bl.GetDrone(droneNumber);
                             switch (drone.DroneStatus)
                             {
                                 case BO.DroneStatus.Free:
 
-                                    /*  var packlist = from item in bl.PackageWithNoDroneToLists()
-                                                     where ((BO.WeightCategories)item.WeightCategories <= drone.WeightCategory)
-                                                         && (bl.buttryDownPackegeDelivery(bl.convertPackegeBlToPackegeInTrnansfer(bl.ShowPackage(item.SerialNumber))) < drone.ButrryStatus)
-                                                     orderby item.priority descending, item.WeightCategories
-                                                     select item;
-                                      if (packlist.FirstOrDefault() != null)
-                                      {
-                                          packageSerialNum = packlist.FirstOrDefault().SerialNumber;
-                                      }*/
 
-                                    if (drone.ButrryStatus < 20)
+                                    try
                                     {
-                                        var base_ = bl.ClosestBase(drone.Location, true);
-                                        var path = sw.ElapsedMilliseconds * (double)SpeedDrone.Free * (60.0 * 60.0 * 1000);
-                                        if (path <= bl.Distans(drone.Location, base_.Location))
+                                        if ((drone.ButrryStatus < 20 || sendToCharge)&&drone.ButrryStatus<100)
                                         {
-                                            drone.ButrryStatus -= bl.buttryDownWithNoPackege(drone.Location, base_.Location);
-                                            bl.DroneToCharge(drone.SerialNumber);
+                                            var base_ = bl.ClosestBase(drone.Location, true);
+                                            var path = (sw.ElapsedMilliseconds * 100) * ((double)SpeedDrone.Easy / 60.0 / 60.0 / 10);
+                                            var a = bl.Distans(drone.Location, base_.Location);
+                                            if (path <= a)
+                                            {
+                                                drone.ButrryStatus -= bl.buttryDownWithNoPackege(a - (m) * ((double)SpeedDrone.Free / 60.0 / 60.0 / 10));
+                                                sw.Stop();
+                                                sw.Reset();
+                                                bl.DroneToCharge(drone.SerialNumber);
+                                            }
+                                            else
+                                            {
+                                                bl.dronesListInBl.Find(x => x.SerialNumber == drone.SerialNumber).ButrryStatus = drone.ButrryStatus;
+                                            }
+                                            m = sw.ElapsedMilliseconds;
                                         }
                                         else
                                         {
-
-                                            bl.dronesListInBl.Find(x => x.SerialNumber == drone.SerialNumber).ButrryStatus = drone.ButrryStatus;
-                                        }
-                                    }
-                                    else
-                                        try
-                                        {
-                                           
+                                            sw.Stop();
+                                            sw.Reset();
                                             bl.ConnectPackegeToDrone(droneNumber);
                                         }
-                                        catch(Exception)
-                                        {
 
+                                    }
+                                    catch (DroneCantMakeDliveryException)
+                                    {
+                                        lock (bl.dalObj)
+                                        {
+                                            if (bl.dalObj.PackegeList(x => true).All(x => x.OperatorSkimmerId != 0))
+                                                sendToCharge = true;
                                         }
+                                    }
+                                    catch (Exception)
+                                    {
+                                        
+                                    }
 
 
 
@@ -98,6 +107,7 @@ namespace BL
                                     if (buttry >= 100)
                                     {
                                         sw.Stop();
+                                        sw.Reset();
                                         bl.FreeDroneFromCharging(drone.SerialNumber, buttry);
 
                                     }
@@ -115,129 +125,71 @@ namespace BL
                                         switch (drone.PackageInTransfer.WeightCatgory)
                                         {
                                             case WeightCategories.Easy:
-                                                past = (sw.ElapsedMilliseconds ) * (double)SpeedDrone.Easy / (60.0 / 60.0/1000);
+                                                past = (sw.ElapsedMilliseconds * 100) * ((double)SpeedDrone.Easy / 60.0 / 60.0 / 100);
                                                 break;
                                             case WeightCategories.Medium:
-                                                past = (sw.ElapsedMilliseconds) * (double)SpeedDrone.Medium / (60.0 * 60.0 * 500);
+                                                past = (sw.ElapsedMilliseconds * 100) * ((double)SpeedDrone.Medium / 60.0 / 60.0 / 100);
                                                 break;
                                             case WeightCategories.Heavy:
-                                                past = (sw.ElapsedMilliseconds ) * (double)SpeedDrone.Heavy / (60.0 * 60.0 * 500);
+                                                past = (sw.ElapsedMilliseconds * 100) * ((double)SpeedDrone.Heavy / 60.0 / 60.0 / 100);
                                                 break;
                                             default:
                                                 break;
                                         }
-                                        drone.ButrryStatus -= bl.buttryDownPackegeDelivery(drone.PackageInTransfer, past);
+
                                         if (past >= drone.PackageInTransfer.Distance)
                                         {
                                             sw.Stop();
+                                            sw.Reset();
                                             bl.PackegArrive(droneNumber);
                                         }
-                                        
+                                        else
+                                            drone.ButrryStatus -= bl.buttryDownPackegeDelivery(drone.PackageInTransfer, ((sw.ElapsedMilliseconds * 100) - m) * ((double)SpeedDrone.Free / 60.0 / 60.0 / 100));
+
                                     }
                                     else
                                     {
-                                        
-                                        past = (sw.ElapsedMilliseconds) * (double)SpeedDrone.Free / 60.0/ 60.0/ 1000.0;
-                                        
-                                        
+
+                                        past = (sw.ElapsedMilliseconds * 100) * ((double)SpeedDrone.Free / 60.0 / 60.0 / 100);
+
+                                        var a = bl.Distans(drone.Location, drone.PackageInTransfer.Source);
                                         if (past >= bl.Distans(drone.Location, drone.PackageInTransfer.Source))
                                         {
+
                                             sw.Stop();
-                                            bl.CollectPackegForDelivery(droneNumber);
+                                            sw.Reset();
+                                            bl.CollectPackegForDelivery(droneNumber, (a - m * ((double)SpeedDrone.Free / 60.0 / 60.0 / 1000)));
+
                                         }
                                         else
-                                            drone.ButrryStatus -= bl.buttryDownWithNoPackege( past);
+                                        {
+                                            drone.ButrryStatus -= bl.buttryDownWithNoPackege(((sw.ElapsedMilliseconds) - m) * ((double)SpeedDrone.Free / 60.0 / 60.0 / 100));
+                                            bl.dronesListInBl.Find(x => x.SerialNumber == drone.SerialNumber).ButrryStatus = drone.ButrryStatus;
+                                        }
                                     }
-                                    bl.dronesListInBl.Find(x => x.SerialNumber == drone.SerialNumber).ButrryStatus = drone.ButrryStatus;
+                                    m = sw.ElapsedMilliseconds;
+
                                     break;
                                 case BO.DroneStatus.Delete:
                                     break;
                                 default:
                                     break;
                             }
-                                
+
                         }
                         action();
                         Thread.Sleep(1000);
-                    } 
+                    }
                     for (int i = 0; i < 10; i++)
                     {
                         Thread.Sleep(1000);
                     }
 
                 }).Start();
-            
 
+            }
+            catch (Exception) { }
         }
     }
 
-    /* internal class SimulatorBackGround
-     {
-         Stopwatch sw;
-         BackgroundWorker bw;
-         Drone drone;
-         BlApi.BL bl;
-         Action action;
-         Func<bool> func;
-         double chargePerMiliSec;
-
-         public SimulatorBackGround(BlApi.BL bL, uint sirial, Action action, Func<bool> func)
-         {
-             bl = bL;
-             sw = new Stopwatch();
-             bw = new BackgroundWorker();
-             drone = bl.GetDrone(sirial);
-             bw.WorkerReportsProgress = true;
-             bw.ProgressChanged += Bw_ProgressChanged;
-             bw.DoWork += Bw_DoWork;
-
-         }
-
-         private void Bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
-         {
-
-         }
-
-         private void Bw_DoWork(object sender, DoWorkEventArgs e)
-         {
-
-             switch (drone.DroneStatus)
-             {
-                 case DroneStatus.Free:
-                     if (drone.ButrryStatus < 20)
-                     { droneToCharge(); }
-                     else
-                     { droneToDelvery(); }
-                     break;
-                 case DroneStatus.Maintenance:
-                     break;
-                 case DroneStatus.Work:
-                     break;
-
-                 default:
-                     break;
-             }
-         }
-
-         private void droneToCharge()
-         {
-             try
-             {
-                 bl.DroneToCharge(drone.SerialNumber);
-                 sw.Start();
-             }
-             catch (Exception)
-             { }
-         }
-
-         private void droneToDelvery()
-         {
-             try
-             {
-                 bl.ConnectPackegeToDrone(drone.SerialNumber);
-             }
-             catch (Exception)
-             { }
-         }
-     }*/
 }

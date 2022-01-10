@@ -206,6 +206,7 @@ namespace PL
                 }
                 else
                     return;
+                if(lists != null)
                 bl.PackageToLists().ConvertIenmurbleToObserve(lists);
                
                 packegeFromDialog(package.SerialNumber);
