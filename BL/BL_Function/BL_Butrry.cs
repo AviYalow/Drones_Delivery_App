@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BO;
 using DalApi;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace BlApi
 {
@@ -19,23 +20,23 @@ namespace BlApi
         /// <param name="packageInTransfer"> package</param>
         /// <returns> percentage of battery needed</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public double buttryDownPackegeDelivery(PackageInTransfer packageInTransfer)
+        internal double buttryDownPackegeDelivery(PackageInTransfer packageInTransfer, double distance = 0)
         {
 
             double battery_drop = 0;
-
+            distance = distance == 0 ? packageInTransfer.Distance : distance;
             switch (packageInTransfer.WeightCatgory)
             {
                 case WeightCategories.Easy:
-                    battery_drop = ((packageInTransfer.Distance / (double)SpeedDrone.Easy) * (double)ButrryPer.Minute);
+                    battery_drop = ((distance / (double)SpeedDrone.Easy) * (double)ButrryPer.Minute);
                     battery_drop *= easyElctric;
                     break;
                 case WeightCategories.Medium:
-                    battery_drop = ((packageInTransfer.Distance / (double)SpeedDrone.Medium) * (double)ButrryPer.Minute);
+                    battery_drop = ((distance / (double)SpeedDrone.Medium) * (double)ButrryPer.Minute);
                     battery_drop *= mediomElctric;
                     break;
                 case WeightCategories.Heavy:
-                    battery_drop = ((packageInTransfer.Distance / (double)SpeedDrone.Heavy) * (double)ButrryPer.Minute);
+                    battery_drop = ((distance / (double)SpeedDrone.Heavy) * (double)ButrryPer.Minute);
                     battery_drop *= heaviElctric;
                     break;
                 default:
@@ -52,7 +53,7 @@ namespace BlApi
         /// <param name="toLocation"> destination location</param>
         /// <returns> percentage of battery needed</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        double buttryDownWithNoPackege(Location fromLocation, Location toLocation)
+     internal   double buttryDownWithNoPackege(Location fromLocation, Location toLocation)
         {
             lock (dalObj)
             {
@@ -116,7 +117,7 @@ namespace BlApi
         /// <param name="timeInCharge"> the time that the drone in charge </param>
         /// <returns> butrry Status of the  drone</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public double FreeDroneFromCharging(uint droneNumber, int number = -1)
+        public double FreeDroneFromCharging(uint droneNumber, double number = -1)
         {
             lock (dalObj)
             {
@@ -130,7 +131,8 @@ namespace BlApi
             if (information is null)
                 throw new ItemNotFoundException("Drone", droneNumber);
             //calcoulet how mach he chraging alredy
-            double buttry = droneChrgingAlredy(DateTime.Now - information.Value.EntringDrone);
+            double buttry =number==-1? droneChrgingAlredy((DateTime.Now - information.Value.EntringDrone).TotalMilliseconds):
+                    number;
 
             drone.ButrryStatus = buttry > 100 ? 100 : buttry + drone.ButrryStatus;
             drone.DroneStatus = DroneStatus.Free;
@@ -139,7 +141,7 @@ namespace BlApi
             dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == drone.SerialNumber)] = drone;
 
 
-            return drone.ButrryStatus;
+            return drone.ButrryStatus.Value;
         }
 
         }
@@ -198,9 +200,9 @@ namespace BlApi
         /// <param name="span">charging time the drone was</param>
         /// <returns> percentage of battery</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        double droneChrgingAlredy(TimeSpan span)
+      internal  double droneChrgingAlredy(double span)
         {
-            var time = ((double)(span).TotalMinutes); var butrryPerMinute = (chargingPerMinute);
+            var time = (span); var butrryPerMinute = (chargingPerMinute)/1000;
             time *= butrryPerMinute;
             return time;
         }

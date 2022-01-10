@@ -29,11 +29,12 @@ namespace PL
         Drone drone;
         DroneToList droneToList;
         ObservableCollection<DroneToList> lists;
-       // ObservableCollection<DroneInCharge> DronesInCharge;
+        bool flag;
 
 
 
-        public DroneWindow(BlApi.IBL bl,ObservableCollection<DroneToList>lists=null)
+
+        public DroneWindow(BlApi.IBL bl, ObservableCollection<DroneToList> lists = null)
         {
             try
             {
@@ -51,28 +52,29 @@ namespace PL
                 BaseChosingCombo.ItemsSource = bl.BaseStationWhitFreeChargingStationToLists();
                 DroneLabel.Visibility = Visibility.Hidden;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
         }
 
-        public DroneWindow(BlApi.IBL bl, uint droneFromListView,ObservableCollection<DroneToList>lists=null)
+        public DroneWindow(BlApi.IBL bl, uint droneFromListView, ObservableCollection<DroneToList> lists = null)
         {
             try
             {
                 InitializeComponent();
                 this.lists = lists;
+                SirialNumberTextBox.DataContext = drone;
                 ctorUpdateDronWindow(bl, droneFromListView);
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
 
         }
-        public DroneWindow(BlApi.IBL bl, uint droneFromListView, ObservableCollection<DroneInCharge> lists )
+        public DroneWindow(BlApi.IBL bl, uint droneFromListView, ObservableCollection<DroneInCharge> lists)
         {
             try
             {
                 InitializeComponent();
-               // this.DronesInCharge = lists;
+                SirialNumberTextBox.DataContext = drone;
                 ctorUpdateDronWindow(bl, droneFromListView);
             }
             catch (Exception ex)
@@ -84,53 +86,64 @@ namespace PL
 
         private void ctorUpdateDronWindow(BlApi.IBL bl, uint droneFromListView)
         {
-            
-            this.bl = bl;
-            this.drone = bl.GetDrone(droneFromListView);
-
-            SirialNumberTextBox.DataContext = drone;
-            this.DataContext = this.drone;
-            TitelDroneLabel.Content = "Updte Drone Window";
-            SirialNumberTextBox.IsEnabled = false;
-            SirialNumberTextBox.DataContext = droneToList;
-            BaseChosingCombo.Text = this.drone.Location.ToString();
-
-            ModelComboBox.ItemsSource = Enum.GetValues(typeof(DroneModel));
-            ModelComboBox.SelectedItem = this.drone.Model;
-            DroneLabel.DataContext = bl.GetDrone(droneFromListView);
-            StatusComb.SelectedItem = null;
-            StatusComb.Items.Clear();
-            if (this.drone.DroneStatus == DroneStatus.Free)
+            try
             {
-                foreach (var status in Enum.GetValues(typeof(DroneStatus)))
+              this.bl = bl;
+                this.drone = bl.GetDrone(droneFromListView);
+                this.Dispatcher.Invoke(() =>
                 {
-                    StatusComb.Items.Add(status);
-                    StatusComb.IsEnabled = true;
-                }
-                                  
-            }
-                
-            else if (this.drone.DroneStatus == DroneStatus.Maintenance)
-            {
-                StatusComb.Items.Add(DroneStatus.Maintenance);
-                StatusComb.Items.Add(DroneStatus.Free);
-                StatusComb.IsEnabled = true;
+                    this.DataContext = this.drone;
+                    TitelDroneLabel.Content = "Updte Drone Window";
+                    SirialNumberTextBox.IsEnabled = false;
+                    SirialNumberTextBox.DataContext = droneToList;
+                    BaseChosingCombo.Text = this.drone.Location.ToString();
 
+                    ModelComboBox.ItemsSource = Enum.GetValues(typeof(DroneModel));
+                    ModelComboBox.SelectedItem = this.drone.Model;
+                    DroneLabel.DataContext = bl.GetDrone(drone.SerialNumber);
+                    StatusComb.SelectedItem = null;
+                    StatusComb.Items.Clear();
+                    if (this.drone.DroneStatus == DroneStatus.Free)
+                    {
+                        foreach (var status in Enum.GetValues(typeof(DroneStatus)))
+                        {
+                            StatusComb.Items.Add(status);
+                            StatusComb.IsEnabled = true;
+                        }
+
+                    }
+
+                    else if (this.drone.DroneStatus == DroneStatus.Maintenance)
+                    {
+                        StatusComb.Items.Add(DroneStatus.Maintenance);
+                        StatusComb.Items.Add(DroneStatus.Free);
+                        StatusComb.IsEnabled = true;
+
+                    }
+                    else if (this.drone.DroneStatus == DroneStatus.Work)
+                    {
+                        StatusComb.Items.Add(DroneStatus.Work);
+                        StatusComb.IsEnabled = false;
+                    }
+                    OkButton.Visibility = Visibility.Collapsed;
+                    StatusComb.SelectedItem = drone.DroneStatus;
+                    LocationLabel.Visibility = Visibility.Collapsed;
+                    BaseChosingCombo.Visibility = Visibility.Collapsed;
+                    if (lists != null)
+                        bl.DroneToLists().ConvertIenmurbleToObserve(lists);
+
+                  
+                });
             }
-            else if (this.drone.DroneStatus == DroneStatus.Work)
-            {
-                StatusComb.Items.Add(DroneStatus.Work);
-                StatusComb.IsEnabled = false;
-            }
-            OkButton.Visibility = Visibility.Collapsed;
-            StatusComb.SelectedItem = drone.DroneStatus;
-            LocationLabel.Visibility = Visibility.Collapsed;
-            BaseChosingCombo.Visibility = Visibility.Collapsed;
+            catch (Exception) { }
         }
+
+    
+
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            
+
             e.Cancel = true;
 
         }
@@ -232,7 +245,7 @@ namespace PL
         private void WeightChoseCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-          var a=  WeightChoseCombo.SelectedIndex;
+            var a = WeightChoseCombo.SelectedIndex;
             InputMissingWightLabel.Visibility = Visibility.Collapsed;
             droneToList.WeightCategory = (BO.WeightCategories)WeightChoseCombo.SelectedItem;
 
@@ -260,7 +273,7 @@ namespace PL
 
         private void StatusComb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (drone != null&& StatusComb.SelectedItem!=null&&(DroneStatus)StatusComb.SelectedItem!=drone.DroneStatus)
+            if (drone != null && StatusComb.SelectedItem != null && (DroneStatus)StatusComb.SelectedItem != drone.DroneStatus)
             {
                 DroneStatus droneStatus = (DroneStatus)StatusComb.SelectedItem;
                 if (droneStatus != drone.DroneStatus)
@@ -270,14 +283,14 @@ namespace PL
                         {
                             case DroneStatus.Free:
                                 bl.FreeDroneFromCharging(drone.SerialNumber);
-                              
-                                    
+
+
                                 MessageBox.Show($"Drone number {drone.SerialNumber} free from charge");
                                 break;
                             case DroneStatus.Maintenance:
                                 bl.DroneToCharge(drone.SerialNumber);
-                               
-                                    
+
+
                                 MessageBox.Show($"Drone number {drone.SerialNumber} send to charge");
                                 break;
                             case DroneStatus.Work:
@@ -292,8 +305,8 @@ namespace PL
                                 break;
 
                         }
-                        if(lists!=null)
-                        bl.FilterDronesList().ConvertIenmurbleToObserve(lists);
+                        if (lists != null)
+                            bl.FilterDronesList().ConvertIenmurbleToObserve(lists);
                         ctorUpdateDronWindow(bl, drone.SerialNumber);
 
 
@@ -301,7 +314,7 @@ namespace PL
 
                     catch (Exception ex)
                     {
-                     
+
                         StatusComb.SelectedItem = drone.DroneStatus;
                         MessageBox.Show(ex.ToString(), "ERROR");
                     }
@@ -311,7 +324,7 @@ namespace PL
 
         private void ModelComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
             try
             {
                 if (drone != null)
@@ -321,7 +334,7 @@ namespace PL
 
                         DroneLabel.DataContext = bl.GetDrone(drone.SerialNumber);
                         bl.FilterDronesList().ConvertIenmurbleToObserve(lists);
-                       
+
                     }
                 if (drone is null)
                     droneToList.Model = (DroneModel)ModelComboBox.SelectedItem;
@@ -345,24 +358,32 @@ namespace PL
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             try
-            { bl.DeleteDrone(drone.SerialNumber);
+            {
+                bl.DeleteDrone(drone.SerialNumber);
                 MessageBox.Show($"Drone number {drone.SerialNumber} deleted!");
                 bl.FilterDronesList().ConvertIenmurbleToObserve(lists);
                 Closing += DroneWindow_Closing;
                 this.Close();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             { MessageBox.Show(ex.ToString(), "ERROR"); }
         }
 
         private void Simulator_Click(object sender, RoutedEventArgs e)
         {
-
+            flag = true;
+            bl.PlayThred(drone.SerialNumber, () => ctorUpdateDronWindow(bl, drone.SerialNumber), () => flag);
         }
 
 
         private void Manual_Click(object sender, RoutedEventArgs e)
         {
+            flag = false;
+            bl.PlayThred(drone.SerialNumber, () => { }, () => flag);
+            
 
         }
+
+
     }
 }

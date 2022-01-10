@@ -190,9 +190,9 @@ namespace BlApi
             lock (dalObj)
             {
                 return from drone in dalObj.ChargingDroneList(x => x.idBaseStation == base_)
-                   let butrry = (SpecificDrone(drone.IdDrone).ButrryStatus + droneChrgingAlredy(DateTime.Now - drone.EntringDrone))
+                   let butrry = (SpecificDrone(drone.IdDrone).ButrryStatus + droneChrgingAlredy((DateTime.Now - drone.EntringDrone).TotalMilliseconds))
                    let newButrry = (butrry > 100) ? 100 : butrry
-                   select new DroneInCharge { ButrryStatus = newButrry, SerialNum = drone.IdDrone };
+                   select new DroneInCharge { ButrryStatus = newButrry.Value, SerialNum = drone.IdDrone };
         }
         }
 

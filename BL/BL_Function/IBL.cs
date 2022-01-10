@@ -45,7 +45,7 @@ namespace BlApi
 
         #endregion
 
-        #region Updat
+        #region Update
 
         #region Drone
         /// <summary>
@@ -73,7 +73,7 @@ namespace BlApi
         /// <param name="droneNumber">serial number of the drone</param>
         /// <param name="timeInCharge"> the time that the drone in charge </param>
         /// <returns> butrry Status of the  drone</returns>
-        public double FreeDroneFromCharging(uint droneNumber, int number = -1);
+        public double FreeDroneFromCharging(uint droneNumber, double number = -1);
 
         /// <summary>
         /// Assignment between a package and a drone
@@ -407,6 +407,8 @@ namespace BlApi
         /// <param name="number"> serial nummber of package</param>
         public void DeletePackege(uint number);
         #endregion
+
+     
 
     }
 }

@@ -186,7 +186,7 @@ namespace BlApi
                         RecivedClient = dalObj.CilentByNumber(package.GetingClient).clientInPackageFromDal()
                     };
                     returnPackege.Distance = Distans(returnPackege.Source, returnPackege.Destination);
-                    returnPackege.InTheWay = (package.PackageArrived is null && package.OperatorSkimmerId != 0) ? true : false;
+                    returnPackege.InTheWay = (package.PackageArrived is null&&package.CollectPackageForShipment!=null && package.OperatorSkimmerId != 0) ? true : false;
                     return returnPackege;
                 }
                 catch(DO.ItemNotFoundException ex)

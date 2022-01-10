@@ -21,7 +21,7 @@ namespace BlApi
         {
             lock (dalObj)
             {
-                return new Drone { SerialNumber = droneToList.SerialNumber, ButrryStatus = droneToList.ButrryStatus, DroneStatus = droneToList.DroneStatus, Location = droneToList.Location, Model = droneToList.Model, WeightCategory = droneToList.WeightCategory, PackageInTransfer = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(droneToList.NumPackage)) };
+                return new Drone { SerialNumber = droneToList.SerialNumber, ButrryStatus = droneToList.ButrryStatus.Value, DroneStatus = droneToList.DroneStatus, Location = droneToList.Location, Model = droneToList.Model, WeightCategory = droneToList.WeightCategory, PackageInTransfer = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(droneToList.NumPackage)) };
         }
     }
 

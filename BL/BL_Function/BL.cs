@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Collections.ObjectModel;
+using BL;
 
 namespace BlApi
 {
@@ -23,13 +24,14 @@ namespace BlApi
         private static readonly Lazy<BL> lazy =
         new Lazy<BL>(() => new BL());
         internal static BL Instance { get { return lazy.Value; } }
+        private Simulator simulator;
         #endregion
 
 
        internal IDal dalObj;
-        List<DroneToList> dronesListInBl = new List<DroneToList>();
+      internal  List<DroneToList> dronesListInBl = new List<DroneToList>();
 
-        double heaviElctric, mediomElctric, easyElctric, freeElctric, chargingPerMinute;
+      internal  double heaviElctric, mediomElctric, easyElctric, freeElctric, chargingPerMinute;
         event Func<DroneToList, bool> droneToListFilter = null;
         event Func<ClientToList, bool> clientToListFilter = null;
         event Func<DO.Package, bool> packegeToListFilter = null;
@@ -254,9 +256,11 @@ namespace BlApi
             }
         }
        public void PlayThred(uint droneNumber, Action action, Func<bool> StopChecking)
-        { 
+        {
 
-     //  new Thread((object obj)=>
+           
+            simulator = new Simulator(this, droneNumber, action, StopChecking);
+     
         }
     }
 }

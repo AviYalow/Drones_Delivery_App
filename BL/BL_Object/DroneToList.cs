@@ -16,7 +16,7 @@ namespace BO
         public DroneModel Model { get; set; }
         public WeightCategories WeightCategory { get; set; }
 
-        public double ButrryStatus { get; set; }
+        public double? ButrryStatus { get; set; }
         public DroneStatus DroneStatus { get; set; }
         public Location Location { get; set; }
         public uint NumPackage { get; set; }
