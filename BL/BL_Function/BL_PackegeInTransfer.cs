@@ -34,7 +34,7 @@ namespace BlApi
         /// </summary>
         /// <param name="droneNumber">A drone number that collects the package</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void CollectPackegForDelivery(uint droneNumber)
+        public void CollectPackegForDelivery(uint droneNumber,double distanse=0)
         {
             lock (dalObj)
             {
@@ -48,7 +48,8 @@ namespace BlApi
                 { new FunctionErrorException("ShowPackage||AddPackege"); }
 
                 Location location = ClientLocation(pacege.SendClient.Id).Clone();
-                drone.ButrryStatus -= buttryDownWithNoPackege(drone.Location, location);
+
+                drone.ButrryStatus -= distanse == 0? buttryDownWithNoPackege(drone.Location, location): buttryDownWithNoPackege(distanse);
 
                 if (drone.ButrryStatus < 0)
                 { new FunctionErrorException("BatteryCalculationForFullShipping"); }
@@ -70,7 +71,7 @@ namespace BlApi
         /// </summary>
         /// <param name="droneNumber">A drone number that takes the package</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void PackegArrive(uint droneNumber)
+        public void PackegArrive(uint droneNumber, double distanse = 0)
         {
             lock (dalObj)
             {
@@ -82,7 +83,7 @@ namespace BlApi
                 var packege = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.NumPackage));
                 if (packege.InTheWay == false)
                     throw new PackegeNotAssctionOrCollectedException();
-                drone.ButrryStatus -= buttryDownPackegeDelivery(packege);
+                drone.ButrryStatus -=buttryDownPackegeDelivery(packege,distanse);
 
                 drone.Location = ClientLocation(packege.RecivedClient.Id).Clone();
                 drone.DroneStatus = DroneStatus.Free;

@@ -53,14 +53,25 @@ namespace BlApi
         /// <param name="toLocation"> destination location</param>
         /// <returns> percentage of battery needed</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-     internal   double buttryDownWithNoPackege(Location fromLocation, Location toLocation)
+        internal double buttryDownWithNoPackege(Location fromLocation, Location toLocation)
         {
             lock (dalObj)
             {
                 double distans = Distans(fromLocation, toLocation);
-            double buttry = ((distans / (double)SpeedDrone.Free) * (double)ButrryPer.Minute) * freeElctric;
-            return buttry;
+                double buttry = ((distans / (double)SpeedDrone.Free) * (double)ButrryPer.Minute) * freeElctric;
+                return buttry;
+            }
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        internal double buttryDownWithNoPackege(double distance)
+        {
+            lock (dalObj)
+            {
+               
+                double buttry = ((distance / (double)SpeedDrone.Free) * (double)ButrryPer.Minute) * freeElctric;
+                return buttry;
+            }
         }
 
         /// <summary>
@@ -74,39 +85,39 @@ namespace BlApi
             lock (dalObj)
             {
                 var drone = SpecificDrone(droneNumber);
-            BaseStation baseStation = ClosestBase(drone.Location, true);
-            if (drone.DroneStatus != DroneStatus.Free)
-            {
-                throw new DroneStillAtWorkException();
-            }
+                BaseStation baseStation = ClosestBase(drone.Location, true);
+                if (drone.DroneStatus != DroneStatus.Free)
+                {
+                    throw new DroneStillAtWorkException();
+                }
 
-            double buttry = buttryDownWithNoPackege(drone.Location, baseStation.Location);
-            if (drone.ButrryStatus - buttry < 0)
-            {
-                throw new NoButrryToTripException(buttry);
-            }
+                double buttry = buttryDownWithNoPackege(drone.Location, baseStation.Location);
+                if (drone.ButrryStatus - buttry < 0)
+                {
+                    throw new NoButrryToTripException(buttry);
+                }
 
-            try
-            {
+                try
+                {
 
-                if (baseStation.FreeState <= 0)
-                    throw (new NoPlaceForChargeException(baseStation.SerialNum));
-                dalObj.DroneToCharge(droneNumber, baseStation.SerialNum);
-                drone.DroneStatus = DroneStatus.Maintenance;
-                drone.Location = baseStation.Location;
-                dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == droneNumber)] = drone;
+                    if (baseStation.FreeState <= 0)
+                        throw (new NoPlaceForChargeException(baseStation.SerialNum));
+                    dalObj.DroneToCharge(droneNumber, baseStation.SerialNum);
+                    drone.DroneStatus = DroneStatus.Maintenance;
+                    drone.Location = baseStation.Location;
+                    dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == droneNumber)] = drone;
 
 
+                }
+                catch (DO.ItemNotFoundException ex)
+                {
+                    throw (new ItemNotFoundException(ex));
+                }
+                catch (DO.ItemFoundException ex)
+                {
+                    throw new ItemFoundExeption(ex);
+                }
             }
-            catch (DO.ItemNotFoundException ex)
-            {
-                throw (new ItemNotFoundException(ex));
-            }
-            catch (DO.ItemFoundException ex)
-            {
-                throw new ItemFoundExeption(ex);
-            }
-        }
 
         }
 
@@ -123,26 +134,26 @@ namespace BlApi
             {
                 //locking for drone
                 var drone = dronesListInBl.Find(x => x.SerialNumber == droneNumber);
-            if (drone == null)
-                throw new ItemNotFoundException("Drone", droneNumber);
-            //locking the drone in charge
-            DO.BatteryLoad? information = dalObj.ChargingDroneList(x => x.IdDrone == droneNumber).FirstOrDefault();
+                if (drone == null)
+                    throw new ItemNotFoundException("Drone", droneNumber);
+                //locking the drone in charge
+                DO.BatteryLoad? information = dalObj.ChargingDroneList(x => x.IdDrone == droneNumber).FirstOrDefault();
 
-            if (information is null)
-                throw new ItemNotFoundException("Drone", droneNumber);
-            //calcoulet how mach he chraging alredy
-            double buttry =number==-1? droneChrgingAlredy((DateTime.Now - information.Value.EntringDrone).TotalMilliseconds):
-                    number;
+                if (information is null)
+                    throw new ItemNotFoundException("Drone", droneNumber);
+                //calcoulet how mach he chraging alredy
+                double buttry = number == -1 ? droneChrgingAlredy((DateTime.Now - information.Value.EntringDrone).TotalMilliseconds) :
+                        number;
 
-            drone.ButrryStatus = buttry > 100 ? 100 : buttry + drone.ButrryStatus;
-            drone.DroneStatus = DroneStatus.Free;
+                drone.ButrryStatus = buttry > 100 ? 100 : buttry + drone.ButrryStatus;
+                drone.DroneStatus = DroneStatus.Free;
 
-            dalObj.FreeDroneFromCharge(drone.SerialNumber);
-            dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == drone.SerialNumber)] = drone;
+                dalObj.FreeDroneFromCharge(drone.SerialNumber);
+                dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == drone.SerialNumber)] = drone;
 
 
-            return drone.ButrryStatus.Value;
-        }
+                return drone.ButrryStatus.Value;
+            }
 
         }
 
@@ -200,9 +211,9 @@ namespace BlApi
         /// <param name="span">charging time the drone was</param>
         /// <returns> percentage of battery</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-      internal  double droneChrgingAlredy(double span)
+        internal double droneChrgingAlredy(double span)
         {
-            var time = (span); var butrryPerMinute = (chargingPerMinute)/1000;
+            var time = (span); var butrryPerMinute = (chargingPerMinute) / 1000;
             time *= butrryPerMinute;
             return time;
         }

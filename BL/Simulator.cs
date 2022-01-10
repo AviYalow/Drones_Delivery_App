@@ -64,11 +64,29 @@ namespace BL
 
                                     if (drone.ButrryStatus < 20)
                                     {
+                                        var base_ = bl.ClosestBase(drone.Location, true);
+                                        var path = sw.ElapsedMilliseconds * (double)SpeedDrone.Free * (60.0 * 60.0 * 1000);
+                                        if (path <= bl.Distans(drone.Location, base_.Location))
+                                        {
+                                            drone.ButrryStatus -= bl.buttryDownWithNoPackege(drone.Location, base_.Location);
+                                            bl.DroneToCharge(drone.SerialNumber);
+                                        }
+                                        else
+                                        {
 
-                                        bl.DroneToCharge(drone.SerialNumber);
+                                            bl.dronesListInBl.Find(x => x.SerialNumber == drone.SerialNumber).ButrryStatus = drone.ButrryStatus;
+                                        }
                                     }
                                     else
-                                        bl.ConnectPackegeToDrone(droneNumber);
+                                        try
+                                        {
+                                           
+                                            bl.ConnectPackegeToDrone(droneNumber);
+                                        }
+                                        catch(Exception)
+                                        {
+
+                                        }
 
 
 
@@ -97,26 +115,39 @@ namespace BL
                                         switch (drone.PackageInTransfer.WeightCatgory)
                                         {
                                             case WeightCategories.Easy:
-                                                past = (sw.ElapsedMilliseconds / 1000) * bl.easyElctric;
+                                                past = (sw.ElapsedMilliseconds ) * (double)SpeedDrone.Easy / (60.0 / 60.0/1000);
                                                 break;
                                             case WeightCategories.Medium:
-                                                past = (sw.ElapsedMilliseconds / 1000) * bl.easyElctric;
+                                                past = (sw.ElapsedMilliseconds) * (double)SpeedDrone.Medium / (60.0 * 60.0 * 500);
                                                 break;
                                             case WeightCategories.Heavy:
-                                                past = (sw.ElapsedMilliseconds / 1000) * bl.easyElctric;
+                                                past = (sw.ElapsedMilliseconds ) * (double)SpeedDrone.Heavy / (60.0 * 60.0 * 500);
                                                 break;
                                             default:
                                                 break;
                                         }
+                                        drone.ButrryStatus -= bl.buttryDownPackegeDelivery(drone.PackageInTransfer, past);
                                         if (past >= drone.PackageInTransfer.Distance)
+                                        {
+                                            sw.Stop();
                                             bl.PackegArrive(droneNumber);
-                                        drone.ButrryStatus -= bl.buttryDownPackegeDelivery(drone.PackageInTransfer, sw.ElapsedMilliseconds);
+                                        }
+                                        
                                     }
                                     else
-                                        past = (sw.ElapsedMilliseconds / 1000) * bl.freeElctric;
-                                    if (past >= bl.Distans(drone.Location, drone.PackageInTransfer.Source))
-                                        bl.CollectPackegForDelivery(droneNumber);
-                                    drone.ButrryStatus -= bl.buttryDownWithNoPackege(drone.Location, drone.PackageInTransfer.Source);
+                                    {
+                                        
+                                        past = (sw.ElapsedMilliseconds) * (double)SpeedDrone.Free / 60.0/ 60.0/ 1000.0;
+                                        
+                                        
+                                        if (past >= bl.Distans(drone.Location, drone.PackageInTransfer.Source))
+                                        {
+                                            sw.Stop();
+                                            bl.CollectPackegForDelivery(droneNumber);
+                                        }
+                                        else
+                                            drone.ButrryStatus -= bl.buttryDownWithNoPackege( past);
+                                    }
                                     bl.dronesListInBl.Find(x => x.SerialNumber == drone.SerialNumber).ButrryStatus = drone.ButrryStatus;
                                     break;
                                 case BO.DroneStatus.Delete:

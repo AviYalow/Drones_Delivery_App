@@ -254,6 +254,11 @@ namespace PL
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (flag)
+            {
+                flag = false;
+                bl.PlayThred(drone.SerialNumber, () => { }, () => flag);
+            }
             Closing += DroneWindow_Closing;
             this.Close();
         }
