@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,13 +10,15 @@ namespace PO
     /// <summary>
     /// base station to list
     /// </summary>
-    public class BaseStationToList
+    public class BaseStationToList: BO.BaseStationToList, INotifyPropertyChanged
     {
         public uint SerialNum { get; init; }
         public string Name { get; set; }
         public uint FreeState { get; set; }
         public uint BusyState { get; set; }
         public string Active { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public override string ToString()
         {

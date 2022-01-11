@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace PO
     /// <summary>
     /// Package To List
     /// </summary>
-    public class PackageToList
+    public class PackageToList:BO.PackageToList, INotifyPropertyChanged
     {
         public uint SerialNumber { get; set; }
         public string SendClient { get; set; }
@@ -18,6 +19,8 @@ namespace PO
         public WeightCategories WeightCategories { get; set; }
         public PackageStatus packageStatus { get; set; }
         public bool Drone { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public override string ToString()
         {

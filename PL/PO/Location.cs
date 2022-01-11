@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +10,12 @@ namespace PO
     /// <summary>
     /// Location
     /// </summary>
-    public class Location
+    public class Location:BO.Location, INotifyPropertyChanged
     {
         public double Longitude { get; set; }
         public double Latitude { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public override string ToString()
         {

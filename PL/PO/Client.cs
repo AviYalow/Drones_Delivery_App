@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace PO
     /// <summary>
     ///client 
     /// </summary>
-    public class Client
+    public class Client:BO.Client, INotifyPropertyChanged
     {
         public uint Id { get; init; }
         public string Name { get; set; }
@@ -20,6 +21,8 @@ namespace PO
         public ObservableCollection<PackageAtClient> FromClient { get; set; }
         public ObservableCollection<PackageAtClient> ToClient { get; set; }
         public bool Active { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public override string ToString()
         {

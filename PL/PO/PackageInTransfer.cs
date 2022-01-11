@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace PO
     /// <summary>
     /// Package In Transfer
     /// </summary>
-    public class PackageInTransfer
+    public class PackageInTransfer:BO.PackageInTransfer, INotifyPropertyChanged
     {
         public uint SerialNum { get; set; }
         public WeightCategories WeightCatgory { get; set; }
@@ -20,6 +21,9 @@ namespace PO
         public Location Source { get; set; }
         public Location Destination { get; set; }
         public double Distance { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public override string ToString()
         {
             String print = "";

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace PO
 {
     /// <summary>
     /// base station
     /// </summary>
-  public  class BaseStation
+  public  class BaseStation: BO.BaseStation, INotifyPropertyChanged
     {
 
         public uint SerialNum { get; init; }
@@ -18,6 +19,9 @@ namespace PO
         public Location Location { get; set; }
         public uint FreeState { get; set; }
         public ObservableCollection<DroneInCharge> DronesInChargeList { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public override string ToString()
         {
             String print= "";

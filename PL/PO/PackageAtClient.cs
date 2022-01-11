@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace PO
     /// <summary>
     /// Package At Client
     /// </summary>
-    public class PackageAtClient
+    public class PackageAtClient: BO.PackageAtClient, INotifyPropertyChanged
     {
         public uint SerialNum { get; set; }
         public WeightCategories WeightCatgory { get; set; }
@@ -20,6 +21,8 @@ namespace PO
         //The other client in the package.
         //The receiver for the sender and sender for the receiver
         public ClientInPackage Client2 { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public override string ToString()
         {

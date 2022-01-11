@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace PO
     /// <summary>
     /// Drone To List
     /// </summary>
-    public class DroneToList
+    public class DroneToList: BO.DroneToList, INotifyPropertyChanged
     {
         
         public uint SerialNumber { get; set; }
@@ -20,6 +21,8 @@ namespace PO
         public DroneStatus DroneStatus { get; set; }
         public Location Location { get; set; }
         public uint NumPackage { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public override string ToString()
         {
