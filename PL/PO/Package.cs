@@ -3,16 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace PO
 {
     /// <summary>
     /// Package
     /// </summary>
-    public class Package
+    public class Package: BO.Package,INotifyPropertyChanged
     {
-        public uint SerialNumber { get; init; }
-        public ClientInPackage SendClient { get; set; }
+        
+
+        
+        public ClientInPackage SendClient
+        {
+            get
+            {
+                return (ClientInPackage) base.SendClient;
+            }
+            set
+            {
+              base.SendClient = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("SendClient"));
+                }
+            }
+
+        }
 
         public ClientInPackage RecivedClient { get; set; }
         public WeightCategories WeightCatgory { get; set; }
@@ -30,6 +48,9 @@ namespace PO
 
         //Time of arrival of the package to the recipient
         public DateTime? PackageArrived { get; set; }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
         public override string ToString()
         {
             String print = "";

@@ -9,10 +9,13 @@ namespace PO
     /// <summary>
     /// Client In Package
     /// </summary>
-    public class ClientInPackage
+    public class ClientInPackage:BO.ClientInPackage
     {
         public uint Id { get; set; }
         public string Name { get; set; }
+
+        
+
 
         public override string ToString()
         {
