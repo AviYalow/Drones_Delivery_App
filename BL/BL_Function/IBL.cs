@@ -189,8 +189,18 @@ namespace BlApi
         public IEnumerable<DroneToList> FilterDronesList();
 
         public IEnumerable<DroneInCharge> DroneINChargePerBase(uint base_);
-
+        /// <summary>
+        /// return all drone thier sirial number start with num
+        /// </summary>
+        /// <param name="num">parmeter of chcing</param>
+        /// <returns></returns>
         public IEnumerable<DroneToList> DroneToListFilterByNumber(string num);
+
+        /// <summary>
+        /// return all drone include unactiv drones
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<DroneToList> AllDroneToLists();
 
         public IEnumerable<uint> DronesNumber();
 

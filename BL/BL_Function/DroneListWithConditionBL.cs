@@ -36,6 +36,10 @@ namespace BlApi
             }
 
         }
+        /// <summary>
+        /// return all drone include unactiv drones
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> AllDroneToLists()
         {
@@ -116,6 +120,11 @@ namespace BlApi
             }
 
         }
+        /// <summary>
+        /// return all drone thier sirial number start with num
+        /// </summary>
+        /// <param name="num">parmeter of chcing</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> DroneToListFilterByNumber(string num)
         {
