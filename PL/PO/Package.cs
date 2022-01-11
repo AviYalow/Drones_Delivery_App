@@ -15,7 +15,7 @@ namespace PO
         
 
         
-        public ClientInPackage SendClient
+       public ClientInPackage SendClient
         {
             get
             {
@@ -51,41 +51,6 @@ namespace PO
 
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public override string ToString()
-        {
-            String print = "";
-            print += $"Serial Number: {SerialNumber},\n";
-            print += $"Send Client: {SendClient.Name},\n";
-            print += $"Recived Client: {RecivedClient.Name},\n";
-            print += $"Weight Category: {WeightCatgory},\n";
-            print += $"priority: {Priority},\n";
-            print += Drone is null ? "drone: no drone\n" : $"drone: {Drone},\n";
-            print += $"Delivery time create a package: {Create_package},\n";
-            print += $"Time to assign:";
-            if (PackageAssociation != DateTime.MinValue)
-                print += $"{PackageAssociation},\n";
-            else
-            {
-                print += "packege not assoction yet\n";
-                return print;
-            }
-            print += $"Time Package collection:";
-            if (CollectPackage != DateTime.MinValue)
-                print += $"{CollectPackage},\n";
-            else
-            { print += "packege not collect yet\n"; return print; }
-
-
-            print += $"Time of arrival:";
-            if (PackageArrived != DateTime.MinValue)
-                print += $"{ PackageArrived}\n";
-            else
-            {
-                print += "packege not arrive yet\n";
-                return print;
-            }
-
-            return print;
-        }
+   
     }
 }
