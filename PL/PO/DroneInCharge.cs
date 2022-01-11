@@ -12,8 +12,35 @@ namespace PO
     /// </summary>
     public class DroneInCharge: BO.DroneInCharge, INotifyPropertyChanged
     {
-        public uint SerialNum { get; set; }
-        public double ButrryStatus { get; set; }
+        public uint SerialNum
+        {
+            get
+            {
+                return base.SerialNum;
+            }
+            set
+            {
+                base.SerialNum = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("SerialNum"));
+                }
+            }
+        }
+        public double ButrryStatus {
+            get
+            {
+                return base.ButrryStatus;
+            }
+            set
+            {
+                base.ButrryStatus = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("ButrryStatus"));
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

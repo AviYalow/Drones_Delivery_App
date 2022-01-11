@@ -12,9 +12,48 @@ namespace PO
     /// </summary>
     public class DroneInPackage : BO.DroneInPackage , INotifyPropertyChanged
     {
-        public uint SerialNum { get; set; }
-        public double ButrryStatus { get; set; }
-        public Location Location { get; set; }
+        public uint SerialNum {
+            get
+            {
+                return base.SerialNum;
+            }
+            set
+            {
+                base.SerialNum = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("SerialNum"));
+                }
+            }
+        }
+        public double ButrryStatus {
+            get
+            {
+                return base.ButrryStatus;
+            }
+            set
+            {
+                base.ButrryStatus = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("ButrryStatus"));
+                }
+            }
+        }
+        public Location Location {
+            get
+            {
+                return (Location)base.Location;
+            }
+            set
+            {
+                base.Location = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Location"));
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -13,14 +13,84 @@ namespace PO
     /// </summary>
     public class PackageAtClient: BO.PackageAtClient, INotifyPropertyChanged
     {
-        public uint SerialNum { get; set; }
-        public WeightCategories WeightCatgory { get; set; }
-        public Priority Priority { get; set; }
-        public PackageStatus PackageStatus { get; set; }
+        public uint SerialNum {
+            get
+            {
+                return base.SerialNum;
+            }
+            set
+            {
+                base.SerialNum = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("SerialNum"));
+                }
+            }
+        }
+        public WeightCategories WeightCatgory {
+            get
+            {
+                return (WeightCategories)base.WeightCatgory;
+            }
+            set
+            {
+                base.WeightCatgory = (BO.WeightCategories)value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("WeightCatgory"));
+                }
+            }
+        }
+        public Priority Priority {
+            get
+            {
+                return (Priority)base.Priority;
+            }
+
+
+            set
+            {
+                base.Priority = (BO.Priority)value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Priority"));
+                }
+            }
+        }
+        public PackageStatus PackageStatus
+        {
+            get
+            {
+                return (PackageStatus)base.PackageStatus;
+            }
+
+
+            set
+            {
+                base.PackageStatus = (BO.PackageStatus)value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("PackageStatus"));
+                }
+            }
+        }
        
         //The other client in the package.
         //The receiver for the sender and sender for the receiver
-        public ClientInPackage Client2 { get; set; }
+        public ClientInPackage Client2 {
+            get
+            {
+                return (ClientInPackage)base.Client2;
+            }
+            set
+            {
+                base.Client2 = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Client2"));
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

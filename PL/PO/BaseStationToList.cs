@@ -12,11 +12,79 @@ namespace PO
     /// </summary>
     public class BaseStationToList: BO.BaseStationToList, INotifyPropertyChanged
     {
-        public uint SerialNum { get; init; }
-        public string Name { get; set; }
-        public uint FreeState { get; set; }
-        public uint BusyState { get; set; }
-        public string Active { get; set; }
+        public uint SerialNum
+        {
+            get
+            {
+                return base.SerialNum;
+            }
+            init
+            {
+                base.SerialNum = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("SerialNum"));
+                }
+            }
+        }
+        public string Name
+        {
+            get
+            {
+                return base.Name;
+            }
+            set
+            {
+                base.Name = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Name"));
+                }
+            }
+        }
+        public uint FreeState {
+            get
+            {
+                return base.FreeState;
+            }
+            set
+            {
+                base.FreeState = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("FreeState"));
+                }
+            }
+        }
+        public uint BusyState {
+            get
+            {
+                return base.BusyState;
+            }
+            set
+            {
+                base.BusyState = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("BusyState"));
+                }
+            }
+        }
+        public string Active
+        {
+            get
+            {
+                return base.Active;
+            }
+            set
+            {
+                base.Active = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Active"));
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

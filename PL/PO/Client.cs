@@ -13,14 +13,119 @@ namespace PO
     /// </summary>
     public class Client:BO.Client, INotifyPropertyChanged
     {
-        public uint Id { get; init; }
-        public string Name { get; set; }
-        public string Phone { get; set; }
-        public Location Location { get; set; }
+        public uint Id
+        {
+            get
+            {
+                return base.Id;
+            }
+            init
+            {
+                base.Id = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Id"));
+                }
+            }
+        }
+        public string Name {
+            get
+            {
+                return base.Name;
+            }
+            set
+            {
+                base.Name = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Name"));
+                }
+            }
+        }
+        public string Phone {
+            get
+            {
+                return base.Name;
+            }
+            set
+            {
+                base.Name = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Name"));
+                }
+            }
+        }
+        public Location Location
+        {
+            get
+            {
+                return (Location)base.Location;
+            }
+            set
+            {
+                base.Location = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Location"));
+                }
+            }
+        }
 
-        public ObservableCollection<PackageAtClient> FromClient { get; set; }
-        public ObservableCollection<PackageAtClient> ToClient { get; set; }
-        public bool Active { get; set; }
+        public ObservableCollection<PackageAtClient> FromClient {
+            get
+            {
+                ObservableCollection<PackageAtClient> tmp = null;
+                foreach (var item in base.FromClient)
+                    tmp.Add((PackageAtClient)item);
+                return tmp;
+            }
+            set
+            {
+                ObservableCollection<BO.PackageAtClient> tmp = null;
+                foreach (var item in value)
+                    tmp.Add((BO.PackageAtClient)item);
+                base.FromClient = tmp;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("FromClient"));
+                }
+            }
+        }
+        public ObservableCollection<PackageAtClient> ToClient {
+            get
+            {
+                ObservableCollection<PackageAtClient> tmp = null;
+                foreach (var item in base.ToClient)
+                    tmp.Add((PackageAtClient)item);
+                return tmp;
+            }
+            set
+            {
+                ObservableCollection<BO.PackageAtClient> tmp = null;
+                foreach (var item in value)
+                    tmp.Add((BO.PackageAtClient)item);
+                base.ToClient = tmp;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("ToClient"));
+                }
+            }
+        }
+        public bool Active {
+            get
+            {
+                return base.Active;
+            }
+            set
+            {
+                base.Active = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Active"));
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -14,11 +14,85 @@ namespace PO
   public  class BaseStation: BO.BaseStation, INotifyPropertyChanged
     {
 
-        public uint SerialNum { get; init; }
-        public string Name { get; set; }
-        public Location Location { get; set; }
-        public uint FreeState { get; set; }
-        public ObservableCollection<DroneInCharge> DronesInChargeList { get; set; }
+        public uint SerialNum {
+            get
+            {
+                return base.SerialNum;
+            }
+            init
+            {
+                base.SerialNum = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("SerialNum"));
+                }
+            }
+        }
+
+        public string Name {
+            get
+            {
+                return base.Name;
+            }
+            set
+            {
+                base.Name = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Name"));
+                }
+            }
+        }
+        public Location Location
+        {
+            get
+            {
+                return (Location)base.Location;
+            }
+            set
+            {
+                base.Location = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Location"));
+                }
+            }
+        }
+        public uint FreeState
+        {
+            get
+            {
+                return base.FreeState;
+            }
+            set
+            {
+                base.FreeState = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("FreeState"));
+                }
+            }
+        }
+        public ObservableCollection<DroneInCharge> DronesInChargeList {
+            get
+            {
+                ObservableCollection<DroneInCharge> tmp = null;
+                foreach(var item in base.DronesInChargeList)
+                         tmp.Add((DroneInCharge)item);
+                return tmp; 
+            }
+            set
+            {
+                ObservableCollection<BO.DroneInCharge> tmp = null;
+                foreach (var item in value)
+                    tmp.Add((BO.DroneInCharge)item);
+                base.DronesInChargeList = tmp;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("DronesInChargeList"));
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -96,22 +96,75 @@ namespace PO
                 base.Drone = value;
                 if (PropertyChanged != null)
                 {
-                    PropertyChanged(this, new PropertyChangedEventArgs("SendClient"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("Drone"));
                 }
             }
         }
 
         //Delivery time create a package
-        public DateTime? Create_package { get; set; }
+        public DateTime? Create_package {
+            get
+            {
+                return base.Create_package;
+            }
+            set
+            {
+                base.Create_package = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Create_package"));
+                }
+            }
+        }
 
         //Time to assign the package to a drone
-        public DateTime? PackageAssociation { get; set; }
+        public DateTime? PackageAssociation
+        {
+            get
+            {
+                return base.PackageAssociation;
+            }
+            set
+            {
+                base.PackageAssociation = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("PackageAssociation"));
+                }
+            }
+        }
 
         //Package collection time from the sender
-        public DateTime? CollectPackage { get; set; }
+        public DateTime? CollectPackage {
+            get
+            {
+                return base.CollectPackage;
+            }
+            set
+            {
+                base.CollectPackage = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("CollectPackage"));
+                }
+            }
+        }
 
         //Time of arrival of the package to the recipient
-        public DateTime? PackageArrived { get; set; }
+        public DateTime? PackageArrived {
+            get
+            {
+                return base.PackageArrived;
+            }
+            set
+            {
+                base.PackageArrived = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("PackageArrived"));
+                }
+            }
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

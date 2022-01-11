@@ -12,15 +12,110 @@ namespace PO
     /// </summary>
     public class Drone: BO.Drone, INotifyPropertyChanged
     {
-        public uint SerialNumber { get; init; }
-        public DroneModel Model { get; set; }
+        public uint SerialNumber {
+            get
+            {
+                return base.SerialNumber;
+            }
+            init
+            {
+                base.SerialNumber = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("SerialNumber"));
+                }
+            }
+        }
+        public DroneModel Model
+        {
+            get
+            {
+                return (DroneModel)base.Model;
+            }
+            set
+            {
+                base.Model = (BO.DroneModel)value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Model"));
+                }
+            }
+        }
 
-        public WeightCategories WeightCategory { get; set; }
-        public PackageInTransfer PackageInTransfer { get; set; }
+        public WeightCategories WeightCategory
+        {
+            get
+            {
+                return (WeightCategories)base.WeightCategory;
+            }
+            set
+            {
+                base.WeightCategory = (BO.WeightCategories)value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("WeightCategory"));
+                }
+            }
+        }
+        public PackageInTransfer PackageInTransfer
+        {
+            get
+            {
+                return (PackageInTransfer)base.PackageInTransfer;
+            }
+            set
+            {
+                base.PackageInTransfer = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("PackageInTransfer"));
+                }
+            }
+        }
 
-        public double ButrryStatus { get; set; }
-        public DroneStatus DroneStatus { get; set; }
-        public Location Location { get; set; }
+        public double ButrryStatus {
+            get
+            {
+                return base.ButrryStatus;
+            }
+            set
+            {
+                base.ButrryStatus = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("ButrryStatus"));
+                }
+            }
+        }
+        public DroneStatus DroneStatus {
+            get
+            {
+                return (DroneStatus)base.DroneStatus;
+            }
+            set
+            {
+                base.DroneStatus = (BO.DroneStatus)value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("DroneStatus"));
+                }
+            }
+        }
+        public Location Location
+        {
+            get
+            {
+                return (Location)base.Location;
+            }
+            set
+            {
+                base.Location = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Location"));
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
