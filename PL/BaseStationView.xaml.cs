@@ -18,6 +18,7 @@ using Mapsui.Layers;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Collections.Specialized;
+using PO;
 
 namespace PL
 {
@@ -28,8 +29,9 @@ namespace PL
     public partial class BaseStationView : Window
     {
         BlApi.IBL bl;
-        BaseStation baseStation;
+        BaseStationModel baseStation;
         ObservableCollection<BaseStationToList> lists;
+        private int _noOfErrorsOnScreen = 0;
 
         int numberOfChargingStation;
         public BaseStationView(BlApi.IBL bL, ObservableCollection<BaseStationToList> lists)
@@ -39,12 +41,11 @@ namespace PL
                 InitializeComponent();
                 bl = bL;
                 this.lists = lists;
-                baseStation = new BaseStation();
+                baseStation = new BaseStationModel();
                 baseStation.Location = new Location();
 
                 DataContext = baseStation;
-                LongitudeText.DataContext = baseStation.Location;
-                Latitudtext.DataContext = baseStation.Location;
+        
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
@@ -59,37 +60,29 @@ namespace PL
                 InitializeComponent();
                 bl = bL;
                 this.lists = lists;
+                baseStation = new BaseStationModel();
+
                 ctorByItems(base_.SerialNum);
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
 
-
+            
         }
 
         private void ctorByItems(uint base_)
         {
             try
             {
-                baseStation = bl.BaseByNumber(base_);
 
                 SerialText.IsEnabled = false;
-                DataContext = baseStation;
-                LongitudeText.DataContext = baseStation.Location;
-                Latitudtext.DataContext = baseStation.Location;
-                NewChrgingStatimText.Visibility = Visibility.Visible;
-                NewChrgingStatimLabel.Visibility = Visibility.Visible;
-                numberOfChargingStation = (int)baseStation.FreeState + baseStation.DronesInChargeList.Count();
-                NewChrgingStatimText.Text = numberOfChargingStation.ToString();
 
+                DroneCharge1View.Visibility = Visibility.Visible;
+                updateBase(base_);
+                DataContext = baseStation;
                 AddButton.Visibility = Visibility.Collapsed;
                 TitelLabel.Content = "Base Station update";
 
-
-                DroneCharge1View.Visibility = Visibility.Visible;
-
-
-                
             }
             catch (Exception ex)
             {
@@ -100,29 +93,16 @@ namespace PL
 
         }
 
+        private void updateBase(uint base_)
+        {
+              bl.BaseByNumber(base_).BaseFromBl(baseStation);
+            numberOfChargingStation = (int)baseStation.FreeState + baseStation.DronesInChargeList.Count();
+            
+        }
+
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SerialText.Text == "" || FreeStateText.Text == "" ||
-                Latitudtext.Text == "0" || Latitudtext.Text == "" ||
-                LongitudeText.Text == "0" || LongitudeText.Text == "")
-            {
-                if (SerialText.Text == "0" || SerialText.Text == "")
-                {
-                    SerialText.BorderBrush = Brushes.Red;
-
-                }
-                if (FreeStateText.Text == "0" || FreeStateText.Text == "")
-                {
-                    FreeStateText.BorderBrush = Brushes.Red;
-                }
-                if (Latitudtext.Text == "0" || Latitudtext.Text == "")
-                {
-                    Latitudtext.BorderBrush = Brushes.Red;
-                }
-                if (LongitudeText.Text == "0" || LongitudeText.Text == "")
-                { LongitudeText.BorderBrush = Brushes.Red; }
-                return;
-            }
+       
             try
             {
                 bl.AddBase(baseStation);
@@ -156,7 +136,7 @@ namespace PL
                 ((TextBox)sender).BorderBrush = Brushes.Transparent;
                 ((TextBox)sender).BorderBrush = Brushes.Transparent;
             }
-            if ((text.Name) == "NewChrgingStatimText")
+            if ((text.Name) == "FreeStateText")
             {
                 if (e.Key == Key.Enter)
                     if (AddButton.Visibility != Visibility.Visible)
@@ -168,7 +148,7 @@ namespace PL
                                 MessageBox.Show("Update seccsed!");
                                 bl.BaseStationToLists().ConvertIenmurbleToObserve(lists);
 
-                                ctorByItems(baseStation.SerialNum);
+                                updateBase(baseStation.SerialNum);
                             }
                             catch (Exception ex)
                             {
@@ -283,7 +263,7 @@ namespace PL
             HeaderedContentControl control = sender as HeaderedContentControl;
             try
             {
-                DroneCharge1View.ItemsSource = (bl.SortList(control.Name, DroneCharge1View.ItemsSource as IEnumerable<DroneInCharge>));
+                 bl.SortList(control.Name, baseStation.DronesInChargeList ).ConvertIenmurbleToObserve(baseStation.DronesInChargeList);
             }
             catch (Exception ex)
             {
@@ -307,8 +287,7 @@ namespace PL
         {
             try
             {
-
-                new DroneWindow(bl, (((DroneInCharge)DroneCharge1View.SelectedItem).SerialNum), baseStation.DronesInChargeList).ShowDialog();
+                new DroneWindow(bl, (((DroneInCharge)DroneCharge1View.SelectedItem).SerialNum)).ShowDialog();
             }
             catch (Exception ex)
             {
@@ -316,12 +295,8 @@ namespace PL
             }
             finally
             {
-                baseStation = bl.BaseByNumber(baseStation.SerialNum);
-                DataContext = baseStation;
+                updateBase(baseStation.SerialNum);
                 bl.BaseStationToLists().ConvertIenmurbleToObserve(lists);
-
-
-
 
             }
         }
@@ -339,8 +314,7 @@ namespace PL
                             bl.UpdateBase(baseStation.SerialNum, ((TextBox)sender).Text, "");
 
                             MessageBox.Show("Update seccsed!");
-                            bl.BaseStationToLists().ConvertIenmurbleToObserve(lists);
-                            ctorByItems(baseStation.SerialNum);
+                            updateBase(baseStation.SerialNum);
                         }
                         catch (Exception ex)
                         {
@@ -383,6 +357,25 @@ namespace PL
             {
                 MessageBox.Show(ex.ToString(), "ERROR");
             }
+        }
+
+        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _noOfErrorsOnScreen == 0;
+            e.Handled = true;
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void Error(object sender, ValidationErrorEventArgs e)
+        {
+            if (e.Action == ValidationErrorEventAction.Added)
+                _noOfErrorsOnScreen++;
+            else
+                _noOfErrorsOnScreen--;
         }
     }
 }

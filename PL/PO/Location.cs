@@ -10,31 +10,37 @@ namespace PO
     /// <summary>
     /// Location
     /// </summary>
-    public class Location:BO.Location, INotifyPropertyChanged
+    public class LocationModel : INotifyPropertyChanged
     {
+        static LocationModel location = new();
+
+        double longitude;
+        double latitude;
+
         public double Longitude
         {
             get
             {
-                return base.Longitude;
+                return longitude;
             }
             set
             {
-                base.Longitude = value;
+                longitude = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Longitude"));
                 }
             }
         }
-        public double Latitude {
+        public double Latitude
+        {
             get
             {
-                return base.Latitude;
+                return latitude;
             }
             set
             {
-                base.Latitude = value;
+               latitude = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Latitude"));
@@ -43,6 +49,36 @@ namespace PO
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+
+        public static implicit operator LocationModel(BO.Location locationOld)
+        {
+            if (locationOld is null)
+                return null;
+            location.Longitude = locationOld.Longitude;
+            location.Latitude = locationOld.Latitude;
+
+            return location;
+        }
+
+        public static implicit operator BO.Location(LocationModel locationOld)
+        {
+            if (locationOld is null)
+                return null;
+            return new BO.Location
+            {
+                Longitude = locationOld.longitude,
+                Latitude = locationOld.latitude
+            };
+
+
+        }
+
+
+
+
+
+
 
         public override string ToString()
         {
@@ -54,8 +90,8 @@ namespace PO
             print += Longitude >= 0 ? "E " : "W ";
             return print;
         }
-        
-           
+
+
 
     }
 }

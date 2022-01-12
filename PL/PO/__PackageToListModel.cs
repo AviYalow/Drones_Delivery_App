@@ -10,9 +10,9 @@ namespace PO
     /// <summary>
     /// Package To List
     /// </summary>
-    public class PackageToList:BO.PackageToList, INotifyPropertyChanged
+    public class PackageToListModel:BO.PackageToList, INotifyPropertyChanged
     {
-        public uint SerialNumber
+        public new uint SerialNumber
         {
             get
             {
@@ -27,7 +27,7 @@ namespace PO
                 }
             }
         }
-        public string SendClient
+        public new string SendClient
         {
             get
             {
@@ -42,7 +42,7 @@ namespace PO
                 }
             }
         }
-        public string RecivedClient {
+        public new string RecivedClient {
             get
             {
                 return base.RecivedClient;
@@ -56,11 +56,11 @@ namespace PO
                 }
             }
         }
-        public Priority priority
+        public new PriorityView priority
         {
             get
             {
-                return (Priority)base.priority;
+                return (PriorityView)base.priority;
             }
 
 
@@ -73,10 +73,10 @@ namespace PO
                 }
             }
         }
-        public WeightCategories WeightCategories {
+        public new WeightCategoriesView WeightCategories {
             get
             {
-                return (WeightCategories)base.WeightCategories;
+                return (WeightCategoriesView)base.WeightCategories;
             }
             set
             {
@@ -87,11 +87,11 @@ namespace PO
                 }
             }
         }
-        public PackageStatus packageStatus
+        public new PackageStatusView packageStatus
         {
             get
             {
-                return (PackageStatus)base.packageStatus;
+                return (PackageStatusView)base.packageStatus;
             }
             set
             {
@@ -102,7 +102,7 @@ namespace PO
                 }
             }
         }
-        public bool Drone
+        public new bool Drone
         {
             get
             {
@@ -120,17 +120,7 @@ namespace PO
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public override string ToString()
-        {
-            String print = "";
-            print += $"Serial Number: {SerialNumber},\n";
-            print += $"Send Client: {SendClient},\n";
-            print += $"Recived Client: {RecivedClient},\n";
-            print += $"Weight Category: {WeightCategories},\n";
-            print += $"Priority: {priority},\n";
-            print += $"Package Status: {packageStatus},\n";
-            return print;
-        }
+       
 
     }
 }

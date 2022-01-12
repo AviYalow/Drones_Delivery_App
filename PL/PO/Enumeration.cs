@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace PO
 {
-    public enum DroneModel { Blockchains, Prime_Air, Quadcopter, Cargo, BigContainers, FlyingSky }
-    public enum WeightCategories { Easy, Medium, Heavy }
-    public enum Priority { Immediate, quick, Regular }
-    public enum PackageStatus { Create, Assign, Collected, Arrived }
-    public enum DroneStatus { Free, Maintenance, Work,Delete }
-    public enum SpeedDrone { Free = 25, Easy = 20, Medium = 15, Heavy = 12 }
-    public enum ButrryPer { Minute = 60 }
+  //  public enum DroneModel { Blockchains, Prime_Air, Quadcopter, Cargo, BigContainers, FlyingSky }
+    public enum WeightCategoriesView { Easy, Medium, Heavy }
+    public enum PriorityView { Immediate, quick, Regular }
+    public enum PackageStatusView { Create, Assign, Collected, Arrived }
+   // public enum DroneStatus { Free, Maintenance, Work,Delete }
+    public enum SpeedDroneView { Free = 25, Easy = 20, Medium = 15, Heavy = 12 }
+    public enum ButrryPerView { Minute = 60 }
     
 }

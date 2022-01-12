@@ -103,6 +103,7 @@ namespace BlApi
                     if (baseStation.FreeState <= 0)
                         throw (new NoPlaceForChargeException(baseStation.SerialNum));
                     dalObj.DroneToCharge(droneNumber, baseStation.SerialNum);
+                    drone.ButrryStatus -= buttry;
                     drone.DroneStatus = DroneStatus.Maintenance;
                     drone.Location = baseStation.Location;
                     dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == droneNumber)] = drone;

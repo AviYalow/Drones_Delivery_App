@@ -20,6 +20,10 @@
      FontFamily="{DynamicResource MaterialDesignFont}">
 
     <Grid Name="MainGrid">
+        <Grid.CommandBindings>
+            <CommandBinding Command="New" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
+            
+        </Grid.CommandBindings>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="557*"/>
             <ColumnDefinition Width="243*"/>
@@ -43,22 +47,50 @@
 
             </Grid.RowDefinitions>
             <Label Name="TitelClientLabel" Content="Add Client" FontSize="15" Foreground="#FF1432F0" Background="Transparent"/>
-            <TextBox x:Name="idTextBox" Text="{Binding Path=Id, Mode=TwoWay}" IsEnabled="{Binding ElementName=OkButton, Path=IsVisible}"  Margin="83,3,0,21"   Width="157"   HorizontalAlignment="Left" BorderBrush="#FF0E1015" PreviewKeyUp="PreviewKeyDownWhitNoDot" Grid.Row="1"   />
+            <TextBox x:Name="idTextBox"   IsEnabled="{Binding ElementName=OkButton, Path=IsVisible}"  Margin="83,3,0,21"   Width="157" MaxLength="9"   HorizontalAlignment="Left" BorderBrush="#FF0E1015" Grid.Row="1" LostFocus="idTextBox_LostFocus" Validation.Error="Error"  >
+                <TextBox.Text>
+                    <Binding Path="Id" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            <local:InputERRORValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <Label x:Name="IdLabel" Content="ID:"  HorizontalAlignment="Left" FontWeight="Bold" FontStyle="Normal" Margin="23,22,0,16" Grid.Row="1"/>
             <Label  Name="nameLabel" Content="Name:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Width="72" HorizontalAlignment="Left" FontWeight="Bold" Margin="15,29,0,0"/>
 
             <Label Name="PhoneLabel"  Content="Phone:" Grid.Row="3" VerticalAlignment="Top" Width="51" HorizontalAlignment="Left" FontWeight="Bold" Margin="17,23,0,0"/>
-            <TextBox Name="phoneTextBox" MaxLength="7"     HorizontalAlignment="Left" Margin="181,31,0,0" Grid.Row="3" VerticalAlignment="Top" Width="129"   />
+            <TextBox Name="endphoneTextBox" MaxLength="7" Validation.Error="Error"    HorizontalAlignment="Left" Margin="181,31,0,0" Grid.Row="3" VerticalAlignment="Top" Width="129"   >
+                <TextBox.Text>
+                    <Binding Path="EndPhone" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            <local:InputERRORValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+           
 
-            <Button  Name="OkButton"     Grid.Row="7"   VerticalAlignment="Center" Height="50" Click="OkButton_Click" Margin="50,0,421,0" RenderTransformOrigin="0.528,1.35"  >
+            <Button  Name="OkButton"  Command="New"    Grid.Row="7"   VerticalAlignment="Center" Height="50" Click="OkButton_Click" Margin="50,0,421,0" RenderTransformOrigin="0.528,1.35"  >
                 <Button.Background>
                     <ImageBrush ImageSource="/ok.jpg"/>
                 </Button.Background>
 
             </Button>
-            <Button x:Name="updateButton" Visibility="{Binding ElementName=AddPAckegeButton, Path=Visibility}" Content="Update" Margin="71,11,445,15" Click="updateButton_Click" Grid.Row="7" />
+            <Button x:Name="updateButton" Command="" Visibility="{Binding ElementName=AddPAckegeButton, Path=Visibility}" Content="Update" Margin="71,11,445,15" Click="updateButton_Click" Grid.Row="7" />
             <Label Name="LonditudeLabel"  Content="Londitude:" HorizontalAlignment="Left"  Grid.Row="5" VerticalAlignment="Top" Width="74" FontWeight="Bold" Margin="6,11,0,0" />
-            <TextBox  Name="longditue" Text="{Binding Path=Longitude, Mode=TwoWay}" Width="148"  HorizontalAlignment="Left" Height="29" Margin="88,4,0,0" Grid.Row="5" VerticalAlignment="Top" PreviewKeyUp="PreviewKeyDownWhitDot"  />
+            <TextBox  Name="longditue" Validation.Error="Error" Width="148"  HorizontalAlignment="Left" Height="29" Margin="88,4,0,0" Grid.Row="5" VerticalAlignment="Top"  >
+                <TextBox.Text>
+                    <Binding Path="Location.Longitude" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            <local:InputERRORWithPointValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
 
 
@@ -70,15 +102,28 @@
                     <ImageBrush ImageSource="/return.png" />
                 </Button.Background>
             </Button>
-            <Label Name="InputMissingIdLabel" Visibility="Collapsed" Content="Input is missing!"  HorizontalAlignment="Left" Margin="124,20,0,0" Grid.Row="1" VerticalAlignment="Top" Width="127" Foreground="#FFEA1111"/>
-            <Label Name="InputMissingNameLabel" Content="Input is missing!" Visibility="Collapsed"  HorizontalAlignment="Left" Margin="126,15,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127" Foreground="#FFEA1111"/>
-            <Label Name="InputMissingPhoneLabel" Content="Input is missing!" Visibility="Collapsed" HorizontalAlignment="Left" Margin="126,30,0,0" Grid.Row="3" VerticalAlignment="Top" Width="127" Foreground="#FFEA1111"/>
-            <Label Name="InputMissingLocationLabel" Content="Input is missing!" Visibility="Collapsed" HorizontalAlignment="Left" Margin="126,10,0,0" Grid.Row="5" VerticalAlignment="Top" Width="126" Foreground="#FFEA1111" Height="26"/>
-            <TextBox Text="{Binding Path=Name, Mode=TwoWay}" Name="nameTextBox"  HorizontalAlignment="Left" Margin="81,29,0,0" Grid.Row="2" VerticalAlignment="Top" Width="147" />
 
+            <TextBox  Validation.Error="Error" Name="nameTextBox"  HorizontalAlignment="Left" Margin="81,29,0,0" Grid.Row="2" VerticalAlignment="Top" Width="147" >
+                <TextBox.Text>
+                    <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            </TextBox>
 
             <Label Name="latitudelabel" Content="Latitude:" HorizontalAlignment="Left" Margin="11,19,0,0" Grid.Row="4" VerticalAlignment="Top" Width="82" FontWeight="Bold"/>
-            <TextBox Name="letitudeTextBox" Text="{Binding Path=Latitude, Mode=TwoWay}"   HorizontalAlignment="Left" Margin="81,11,0,0" Grid.Row="4" VerticalAlignment="Top" Width="148" Height="29" PreviewKeyUp="PreviewKeyDownWhitDot"  />
+            <TextBox Name="letitudeTextBox"  Validation.Error="Error"   HorizontalAlignment="Left" Margin="81,11,0,0" Grid.Row="4" VerticalAlignment="Top" Width="148" Height="29"  >
+                <TextBox.Text>
+                    <Binding Path="Location.Latitude" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            <local:InputERRORWithPointValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
             <ListView Visibility="Visible" ItemsSource="{Binding FromClient}" x:Name="ListPackegeFromClient" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,47,3,2" Grid.RowSpan="4" BorderBrush="Black" Background="#FFDC0E0E" SelectionChanged="ListPackegeFromClient_SelectionChanged">
                 <ListView.View>
@@ -150,13 +195,20 @@
   ToolTip="MaterialDesignFloatingActionMiniDarkButton"   Height="35" Grid.Column="2" Click="AddPAckegeButton_Click">
                 <materialdesignin:PackIcon Kind="Add" />
             </Button>
-            <ComboBox Name="StartPhoneCmb" HorizontalAlignment="Left" Height="35" Margin="75,20,0,0" Grid.Row="3" VerticalAlignment="Top" Width="87" SelectionChanged="StartPhoneCmb_SelectionChanged">
+            <ComboBox Name="StartPhoneCmb" HorizontalAlignment="Left" Text="{Binding Path=StartPhone}"  Validation.Error="Error" Height="35" Margin="75,20,0,0" Grid.Row="3" VerticalAlignment="Top" Width="87">
                 <ComboBoxItem Content="054"/>
                 <ComboBoxItem Content="052"/>
                 <ComboBoxItem Content="053"/>
                 <ComboBoxItem Content="059"/>
                 <ComboBoxItem Content="050"/>
-
+                
+                <ComboBox.SelectedItem>
+                    <Binding Path="StartPhone" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                        <Binding.ValidationRules >
+                            <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ComboBox.SelectedItem>
             </ComboBox>
             <Button x:Name="Delete" Visibility="{Binding ElementName=Delete, Path=Visibility}" Margin="448,13,45,13" Grid.Row="7" Content="Delete" Click="Delete_Click" />
         </Grid>

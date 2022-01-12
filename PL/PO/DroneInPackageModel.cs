@@ -10,44 +10,48 @@ namespace PO
     /// <summary>
     /// Drone In Package
     /// </summary>
-    public class DroneInPackage : BO.DroneInPackage , INotifyPropertyChanged
+    public class DroneInPackageModel :  INotifyPropertyChanged
     {
-        public uint SerialNum {
+        uint serialNum;
+        double butrryStatus;
+        LocationModel location;
+
+        public  uint SerialNum {
             get
             {
-                return base.SerialNum;
+                return serialNum;
             }
             set
             {
-                base.SerialNum = value;
+                serialNum = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("SerialNum"));
                 }
             }
         }
-        public double ButrryStatus {
+        public  double ButrryStatus {
             get
             {
-                return base.ButrryStatus;
+                return butrryStatus;
             }
             set
             {
-                base.ButrryStatus = value;
+               butrryStatus = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("ButrryStatus"));
                 }
             }
         }
-        public Location Location {
+        public  LocationModel  Location {
             get
             {
-                return (Location)base.Location;
+                return location;
             }
             set
             {
-                base.Location = value;
+               location = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Location"));
@@ -55,6 +59,29 @@ namespace PO
             }
         }
 
+        public static implicit operator DroneInPackageModel(BO.DroneInPackage drone)
+        {
+            if (drone is null)
+                return null;
+            return new DroneInPackageModel
+            {
+                ButrryStatus = drone.ButrryStatus,
+                Location = drone.Location,
+                SerialNum = drone.SerialNum
+            };
+        }
+
+        public static implicit operator BO.DroneInPackage(DroneInPackageModel drone)
+        {
+            if (drone is null)
+                return null;
+            return new DroneInPackageModel
+            {
+                ButrryStatus = drone.ButrryStatus,
+                Location = drone.Location,
+                SerialNum = drone.SerialNum
+            };
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         public override string ToString()

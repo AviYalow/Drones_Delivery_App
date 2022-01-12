@@ -14,6 +14,7 @@ using BO;
 using BlApi;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PO;
 
 namespace PL
 {
@@ -22,70 +23,63 @@ namespace PL
     /// </summary>
     public partial class ClientView : Window
     {
-        Client client;
+        ClientModel client;
         IBL bl;
         bool clientMode;
         ObservableCollection<ClientToList> list;
+        private int _noOfErrorsOnScreen = 0;
 
         public ClientView(BlApi.IBL bL,bool clientView=false, ObservableCollection<ClientToList> lists = null)
         {
             InitializeComponent();
             bl = bL;
             list = lists;
-            client = new Client { ToClient = null, FromClient = null, Phone = "" };
+            client =new();
+            client.Location = new();
             DataContext = client;
             clientMode = clientView;
-            letitudeTextBox.DataContext = client.Location;
-            longditue.DataContext = client.Location;
+           
             ListPackegeFromClient.Visibility = Visibility.Collapsed;
 
         }
 
         public ClientView(BlApi.IBL bL, ObservableCollection<ClientToList> lists, ClientToList clientFromList,bool clientView= false)
         {
-            InitializeComponent();
-            bl = bL;
-            clientMode = clientView;
-            list = lists;
-            ctorUpdateClient(clientFromList.ID);
+            ctorupdate(bL, lists, clientFromList.ID, clientView);
 
         }
+
+        private void ctorupdate(IBL bL, ObservableCollection<ClientToList> lists, uint clientFromList, bool clientView)
+        {
+            InitializeComponent();
+            list = lists;
+            bl = bL;
+            client = new();
+            client.Location = new();
+            clientMode = clientView;
+            
+            this.DataContext = this.client;
+            UpdateClient(clientFromList);
+            
+        }
+
         public ClientView(BlApi.IBL bL, uint clientFromList, bool clientView = false, ObservableCollection<ClientToList> lists=null)
         {
-            InitializeComponent();
-            list = lists;
-            bl = bL;
-            clientMode = clientView;
-            ctorUpdateClient(clientFromList);
 
+            ctorupdate(bL, lists, clientFromList, clientView);
         }
-        private void ctorUpdateClient(uint id)
+        private void UpdateClient(uint id)
         {
-            this.client = bl.GetingClient(id);
-            this.DataContext = this.client;
-            letitudeTextBox.DataContext = client.Location;
-            longditue.DataContext = client.Location;
+             bl.GetingClient(id).clientFromBl(this.client);
+            
+         
             TitelClientLabel.Content = "Updte Client Window";
          
             ListPackegeFromClient.Visibility = Visibility.Visible;
             OkButton.Visibility = Visibility.Collapsed;
-            foreach (var c in client.Phone.Skip(3))
-            {
-                phoneTextBox.Text += c;
-            }
-            foreach (var c in client.Phone.Take(3))
-            {
-                
-                StartPhoneCmb.Text += c;
-            }
-            foreach (ComboBoxItem item in StartPhoneCmb.Items)
-            {
-                if (item.Content.ToString() == StartPhoneCmb.Text)
-                {
-                    StartPhoneCmb.SelectedItem = item;
-                    break;
-                }
-            }
+        
+               
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -105,130 +99,14 @@ namespace PL
             {
                 bl.AddClient(client);
                 MessageBox.Show("Add client \n" + client.ToString() + "\nsucceed!");
-               list.Add(new ClientToList { Active = true, ID = client.Id, Name = client.Name, Arrived =0, NotArrived =0, OnTheWay =0, Phone = client.Phone, received = 0 });
-                ctorUpdateClient(client.Id);
+               list.Add(client);
+                UpdateClient(client.Id);
             }
             catch(Exception ex)
             { MessageBox.Show(ex.ToString(), "ERROR"); }
         }
-        private void PreviewKeyDownWhitNoDot(object sender, KeyEventArgs e)
-        {
-            TextBox text = sender as TextBox;
-
-            if (text == null) return;
-            if (e == null) return;
-            if (text.Text.All(x => x >= '0' && x <= '9'))
-            {
-
-                ((TextBox)sender).Background = Brushes.Transparent;
-                ((TextBox)sender).BorderBrush = Brushes.Transparent;
-                OkButton.IsEnabled = true;
-            }
-            if (text.Text != "0" || text.Text != "")
-            {
-                ((TextBox)sender).BorderBrush = Brushes.Transparent;
-                ((TextBox)sender).BorderBrush = Brushes.Transparent;
-            }
-
-            //allow get out of the text box
-            if (e.Key == Key.Enter || e.Key == Key.Return || e.Key == Key.Tab)
-                return;
-
-            //allow list of system keys (add other key here if you want to allow)
-            if (e.Key == Key.Escape || e.Key == Key.Back || e.Key == Key.Delete ||
-                e.Key == Key.CapsLock || e.Key == Key.LeftShift || e.Key == Key.Home || e.Key == Key.End ||
-                e.Key == Key.Insert || e.Key == Key.Down || e.Key == Key.Right || e.Key == Key.NumPad0
-                || e.Key == Key.NumPad1 || e.Key == Key.NumPad2 || e.Key == Key.NumPad3 || e.Key == Key.NumPad4 || e.Key == Key.NumPad5
-                || e.Key == Key.NumPad6 || e.Key == Key.NumPad7 || e.Key == Key.NumPad8 || e.Key == Key.NumPad9
-                )
-                return;
-
-            char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
-
-            //allow control system keys
-            if (Char.IsControl(c)) return;
-
-            //allow digits (without Shift or Alt)
-            if (Char.IsDigit(c))
-                if (!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightAlt)))
-                    return; //let this key be written inside the textbox
-
-            //forbid letters a
-            //nd signs (#,$, %, ...)
-
-            ((TextBox)sender).Background = Brushes.Red;
-            OkButton.IsEnabled = false;
-            updateButton.IsEnabled = false;
-
-            return;
-        }
-        private void PreviewKeyDownWhitDot(object sender, KeyEventArgs e)
-        {
-            TextBox text = sender as TextBox;
-
-            if (text == null) return;
-            if (e == null) return;
-            if (text.Text.All(x => x >= '0' && x <= '9'))
-            {
-                ((TextBox)sender).BorderBrush = Brushes.Transparent;
-                ((TextBox)sender).Background = Brushes.Transparent;
-                OkButton.IsEnabled = true;
-            }
-            if (text.Text.Count(x => x == '.') > 1)
-            {
-                ((TextBox)sender).BorderBrush = Brushes.Transparent;
-                ((TextBox)sender).Background = Brushes.Transparent;
-                OkButton.IsEnabled = true;
-            }
-            if (text.Text != "0" || text.Text != "")
-            {
-
-                ((TextBox)sender).BorderBrush = Brushes.Transparent;
-            }
-
-            //allow get out of the text box
-            if (e.Key == Key.Enter || e.Key == Key.Return || e.Key == Key.Tab)
-                return;
-
-            //allow list of system keys (add other key here if you want to allow)
-            if (e.Key == Key.Escape || e.Key == Key.Back || e.Key == Key.Delete ||
-                e.Key == Key.CapsLock || e.Key == Key.LeftShift || e.Key == Key.Home || e.Key == Key.End ||
-                e.Key == Key.Insert || e.Key == Key.Down || e.Key == Key.Right || e.Key == Key.NumPad0
-                || e.Key == Key.NumPad1 || e.Key == Key.NumPad2 || e.Key == Key.NumPad3 || e.Key == Key.NumPad4 || e.Key == Key.NumPad5
-                || e.Key == Key.NumPad6 || e.Key == Key.NumPad7 || e.Key == Key.NumPad8 || e.Key == Key.NumPad9
-                )
-                return;
-            if (e.Key == Key.Decimal || e.Key == Key.OemPeriod)
-            {
-
-                if (text.Text.StartsWith('.') || text.Text.Count(x => x == '.') > 1)
-                {
-                    ((TextBox)sender).Background = Brushes.Red;
-                    OkButton.IsEnabled = false;
-                    updateButton.IsEnabled = false;
-
-                    return;
-                }
-                return;
-            }
-            char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
-
-            //allow control system keys
-            if (Char.IsControl(c)) return;
-
-            //allow digits (without Shift or Alt)
-            if (Char.IsDigit(c))
-                if (!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightAlt)))
-                    return; //let this key be written inside the textbox
-
-            //forbid letters a
-            //nd signs (#,$, %, ...)
-
-            ((TextBox)sender).Background = Brushes.Red;
-            OkButton.IsEnabled = false;
-
-            return;
-        }
+    
+    
 
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
@@ -237,7 +115,7 @@ namespace PL
                 try
                 {
                     bl.UpdateClient(client);
-                    ctorUpdateClient(client.Id);
+                    UpdateClient(client.Id);
                     MessageBox.Show("Update seccsed!");
 
                 }
@@ -249,13 +127,7 @@ namespace PL
             }
         }
 
-        private void StartPhoneCmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var text = (sender as ComboBox).Text;
-            foreach(var c in client.Phone.Skip(4).SkipWhile(x => x == '-'))
-            text +=c;
-            client.Phone = text;
-        }
+        
 
         private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -286,7 +158,7 @@ namespace PL
             {
 
                 new PackageView(bl, ((PackageAtClient)ListPackegeFromClient.SelectedItem).SerialNum, StatusPackegeWindow.SendClient).ShowDialog();
-                this.client = bl.GetingClient(client.Id);
+                 bl.GetingClient(client.Id).clientFromBl(this.client);
             
                 ListPackegeFromClient.SelectedItem = null;
                 if(list!=null)
@@ -302,7 +174,7 @@ namespace PL
 
                 new PackageView(bl, ((PackageAtClient)ListPackegeToClient.SelectedItem).SerialNum, StatusPackegeWindow.GetingClient, clientMode).ShowDialog();
                 ListPackegeToClient.SelectedItem = null;
-                this.client = bl.GetingClient(client.Id);
+                 bl.GetingClient(client.Id).clientFromBl(this.client );
                 this.DataContext = this.client;
  
                 ListPackegeFromClient.SelectedItem = null;
@@ -314,10 +186,10 @@ namespace PL
         private void AddPAckegeButton_Click(object sender, RoutedEventArgs e)
         {
             new PackageView(bl,client.Id.ToString(),StatusPackegeWindow.SendClient,clientMode).ShowDialog();
-            this.client = bl.GetingClient(client.Id);
+            bl.GetingClient(client.Id).clientFromBl(this.client);
             if (list != null)
                 bl.FilterClientList().ConvertIenmurbleToObserve(list);
-            this.DataContext = this.client;
+            
             
         }
 
@@ -346,6 +218,31 @@ namespace PL
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
+        }
+
+        private void idTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (idTextBox.Text == "")
+                idTextBox.Text = "0";
+        }
+
+        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _noOfErrorsOnScreen == 0;
+            e.Handled = true;
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void Error(object sender, ValidationErrorEventArgs e)
+        {
+            if (e.Action == ValidationErrorEventAction.Added)
+                _noOfErrorsOnScreen++;
+            else
+                _noOfErrorsOnScreen--;
         }
     }
 }

@@ -4,16 +4,17 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BO;
 
 namespace PO 
 {
     /// <summary>
     /// Drone To List
     /// </summary>
-    public class DroneToList: BO.DroneToList, INotifyPropertyChanged
+    public class DroneToListModel : BO.DroneToList, INotifyPropertyChanged
     {
         
-        public uint SerialNumber {
+        public new uint SerialNumber {
             get
             {
                 return base.SerialNumber;
@@ -27,7 +28,7 @@ namespace PO
                 }
             }
         }
-        public DroneModel Model
+        public new DroneModel Model
         {
             get
             {
@@ -42,10 +43,10 @@ namespace PO
                 }
             }
         }
-        public WeightCategories WeightCategory {
+        public new WeightCategoriesView WeightCategory {
             get
             {
-                return (WeightCategories)base.WeightCategory;
+                return (WeightCategoriesView)base.WeightCategory;
             }
             set
             {
@@ -57,7 +58,7 @@ namespace PO
             }
         }
 
-        public double? ButrryStatus
+        public new double? ButrryStatus
         {
             get
             {
@@ -72,7 +73,7 @@ namespace PO
                 }
             }
         }
-        public DroneStatus DroneStatus
+        public new DroneStatus DroneStatus
         {
             get
             {
@@ -87,11 +88,11 @@ namespace PO
                 }
             }
         }
-        public Location Location
+        public new LocationModel  Location
         {
             get
             {
-                return (Location)base.Location;
+                return (LocationModel )base.Location;
             }
             set
             {
@@ -102,7 +103,7 @@ namespace PO
                 }
             }
         }
-        public uint NumPackage
+        public new uint NumPackage
         {
             get
             {

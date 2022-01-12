@@ -4,37 +4,42 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace PO
 {
     /// <summary>
     /// Drone In Charge
     /// </summary>
-    public class DroneInCharge: BO.DroneInCharge, INotifyPropertyChanged
+    public class DroneInChargeModel :  INotifyPropertyChanged
     {
+        uint serialNum;
+        double butrryStatus;
+        
         public uint SerialNum
         {
             get
             {
-                return base.SerialNum;
+                return serialNum;
             }
             set
             {
-                base.SerialNum = value;
+                serialNum = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("SerialNum"));
                 }
             }
         }
-        public double ButrryStatus {
+        public double ButrryStatus
+        {
             get
             {
-                return base.ButrryStatus;
+                return butrryStatus;
             }
             set
             {
-                base.ButrryStatus = value;
+                butrryStatus = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("ButrryStatus"));
@@ -44,13 +49,27 @@ namespace PO
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public override string ToString()
+        public static implicit operator BO.DroneInCharge(DroneInChargeModel drone)
         {
-            String print = "";
-            print += $"Siral Number: {SerialNum},\n";
-            print += $"Butrry Status: {ButrryStatus}\n";
-            return print;
+            if (drone is null)
+                return null;
+            return new BO.DroneInCharge
+            {
+                ButrryStatus = drone.ButrryStatus,
+                SerialNum = drone.SerialNum
+            };
+        }
+        public static implicit operator DroneInChargeModel(BO.DroneInCharge drone)
+        {
+            if (drone is null)
+                return null;
+            return new DroneInChargeModel
+            {
+                ButrryStatus = drone.ButrryStatus,
+                SerialNum = drone.SerialNum
+            };
         }
 
+       
     }
 }

@@ -4,22 +4,37 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BO;
+using static BL.Cloning;
+using System.Windows;
 
 namespace PO
 {
     /// <summary>
     /// Drone
     /// </summary>
-    public class Drone: BO.Drone, INotifyPropertyChanged
+    public class DroneItemModel :  INotifyPropertyChanged
     {
-        public uint SerialNumber {
+
+        static BO.Drone Drone = new();
+        // static DroneItemModel itemModel = new();
+
+        private uint serialNumber;
+        private DroneModel model;
+        WeightCategories weightCategory;
+        double butrryStatus;
+        DroneStatus droneStatus;
+        LocationModel location;
+        PackageInTransferModel packageInTransfer;
+        public uint SerialNumber
+        {
             get
             {
-                return base.SerialNumber;
+                return serialNumber;
             }
-            init
+            set
             {
-                base.SerialNumber = value;
+                serialNumber = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("SerialNumber"));
@@ -30,86 +45,91 @@ namespace PO
         {
             get
             {
-                return (DroneModel)base.Model;
+                return model;
             }
             set
             {
-                base.Model = (BO.DroneModel)value;
+                model = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Model"));
                 }
             }
         }
-
         public WeightCategories WeightCategory
         {
             get
             {
-                return (WeightCategories)base.WeightCategory;
+                return weightCategory;
             }
             set
             {
-                base.WeightCategory = (BO.WeightCategories)value;
+                weightCategory = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("WeightCategory"));
                 }
             }
         }
-        public PackageInTransfer PackageInTransfer
+        public PackageInTransferModel PackageInTransfer
         {
             get
             {
-                return (PackageInTransfer)base.PackageInTransfer;
+                return packageInTransfer;
             }
             set
             {
-                base.PackageInTransfer = value;
+                packageInTransfer = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("PackageInTransfer"));
                 }
             }
         }
-
-        public double ButrryStatus {
+        public double ButrryStatus
+        {
             get
             {
-                return base.ButrryStatus;
+              
+                return butrryStatus;
             }
             set
             {
-                base.ButrryStatus = value;
-                if (PropertyChanged != null)
+                butrryStatus = value;
+                
+                   
+                    if (PropertyChanged != null)
                 {
-                    PropertyChanged(this, new PropertyChangedEventArgs("ButrryStatus"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("butrryStatus"));
                 }
             }
         }
-        public DroneStatus DroneStatus {
+     
+
+        public DroneStatus DroneStatus
+        {
             get
             {
-                return (DroneStatus)base.DroneStatus;
+                return droneStatus;
             }
             set
             {
-                base.DroneStatus = (BO.DroneStatus)value;
+                droneStatus = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("DroneStatus"));
                 }
             }
         }
-        public Location Location
+        public LocationModel Location
         {
             get
             {
-                return (Location)base.Location;
+                return location;
             }
             set
             {
-                base.Location = value;
+                location = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Location"));
@@ -119,20 +139,47 @@ namespace PO
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public override string ToString()
+
+
+  
+        public static implicit operator BO.Drone(DroneItemModel model)
         {
-            String print = "";
-            print += $"Serial Number: {SerialNumber},\n";
-            print += $"model: {Model},\n";
-            print+= $"Weight Category: {WeightCategory},\n";
-            print += $"Package in transfer:\n";
-            print +=(PackageInTransfer != null)?  $" {PackageInTransfer,3}":'0';
-            print += $"Butrry status: {ButrryStatus},\n";
-            print += $"Drone status: {DroneStatus},\n";
-            print += $"Location:\n{Location}\n";
-           
-            return print;
+            if (model is null)
+                return null;
+            return new BO.Drone
+            {
+                WeightCategory = model.WeightCategory,
+                SerialNumber = model.SerialNumber,
+                ButrryStatus = model.ButrryStatus,
+                Model = model.Model,
+                DroneStatus = model.DroneStatus,
+                PackageInTransfer = model.PackageInTransfer,
+                Location = new Location { Latitude = model.Location.Latitude, Longitude = model.Location.Longitude }
+
+
+            };
+        }
+        public static implicit operator BO.DroneToList(DroneItemModel model)
+        {
+            if (model is null)
+                return null;
+            uint packege = model.PackageInTransfer is null ? 0 : model.packageInTransfer.SerialNum;
+            return new DroneToList
+            {
+                ButrryStatus = model.butrryStatus,
+                Model = model.model,
+                DroneStatus = model.droneStatus,
+                Location = model.Location,
+                NumPackage = packege,
+                SerialNumber = model.serialNumber,
+                WeightCategory = model.WeightCategory
+            };
+
         }
 
+
+
     }
+
+  
 }

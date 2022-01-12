@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BO;
 
 namespace PO    
 {
@@ -11,30 +12,36 @@ namespace PO
     /// <summary>
     /// Package At Client
     /// </summary>
-    public class PackageAtClient: BO.PackageAtClient, INotifyPropertyChanged
+    public class PackageAtClientModel: INotifyPropertyChanged
     {
+        ClientInPackageModel client2;
+        Priority priority;
+        uint serialNum;
+        WeightCategories weightCatgory;
+        PackageStatus packageStatus;
+
         public uint SerialNum {
             get
             {
-                return base.SerialNum;
+                return serialNum;
             }
             set
             {
-                base.SerialNum = value;
+                serialNum = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("SerialNum"));
                 }
             }
         }
-        public WeightCategories WeightCatgory {
+        public  WeightCategories WeightCatgory {
             get
             {
-                return (WeightCategories)base.WeightCatgory;
+                return weightCatgory;
             }
             set
             {
-                base.WeightCatgory = (BO.WeightCategories)value;
+                weightCatgory = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("WeightCatgory"));
@@ -44,30 +51,30 @@ namespace PO
         public Priority Priority {
             get
             {
-                return (Priority)base.Priority;
+                return priority;
             }
 
 
             set
             {
-                base.Priority = (BO.Priority)value;
+               priority = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Priority"));
                 }
             }
         }
-        public PackageStatus PackageStatus
+        public  PackageStatus PackageStatus
         {
             get
             {
-                return (PackageStatus)base.PackageStatus;
+                return packageStatus;
             }
 
 
             set
             {
-                base.PackageStatus = (BO.PackageStatus)value;
+               packageStatus = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("PackageStatus"));
@@ -77,20 +84,52 @@ namespace PO
        
         //The other client in the package.
         //The receiver for the sender and sender for the receiver
-        public ClientInPackage Client2 {
+        public  ClientInPackageModel  Client2 {
             get
             {
-                return (ClientInPackage)base.Client2;
+                return client2;
             }
             set
             {
-                base.Client2 = value;
+               client2 = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Client2"));
                 }
             }
         }
+
+
+        public static implicit operator PackageAtClientModel(BO.PackageAtClient package)
+        {
+            if (package is null)
+                return null;
+            return new PackageAtClientModel
+            {
+                SerialNum = package.SerialNum,
+                Client2 = package.Client2,
+                Priority = package.Priority,
+                WeightCatgory = package.WeightCatgory,
+                PackageStatus = package.PackageStatus
+
+            };
+        }
+
+        public static implicit operator PackageAtClient(PackageAtClientModel package)
+        {
+            if (package is null)
+                return null;
+            return new PackageAtClient
+            {
+                SerialNum = package.SerialNum,
+                Client2 = package.Client2,
+                Priority = package.Priority,
+                WeightCatgory = package.WeightCatgory,
+                PackageStatus = package.PackageStatus
+
+            };
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

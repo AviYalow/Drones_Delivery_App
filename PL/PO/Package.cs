@@ -4,25 +4,60 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using BO;
 
 namespace PO
 {
     /// <summary>
     /// Package
     /// </summary>
-    public class Package: BO.Package, INotifyPropertyChanged
+    public class PackageModel:  INotifyPropertyChanged
     {
-        
-        
-       public ClientInPackage SendClient
+        uint serialNumber;
+        ClientInPackageModel sendClient;
+
+        ClientInPackageModel recivedClient;
+        WeightCategories weightCatgory;
+        Priority priority;
+        DroneInPackageModel drone;
+
+        //Delivery time create a package
+        DateTime? create_package;
+
+        //Time to assign the package to a drone
+        DateTime? packageAssociation;
+
+        //Package collection time from the sender
+        DateTime? collectPackage;
+
+        //Time of arrival of the package to the recipient
+        DateTime? packageArrived;
+
+        public uint SerialNumber
         {
             get
             {
-                return (ClientInPackage) base.SendClient;
+                return serialNumber;
             }
             set
             {
-              base.SendClient = value;
+               serialNumber = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("SerialNumber"));
+                }
+            }
+
+        }
+        public  ClientInPackage  SendClient
+        {
+            get
+            {
+                return sendClient;
+            }
+            set
+            {
+              sendClient = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("SendClient"));
@@ -31,17 +66,17 @@ namespace PO
 
         }
 
-        public ClientInPackage RecivedClient
+        public  ClientInPackage  RecivedClient
         {
             get
             {
-                return (ClientInPackage)base.RecivedClient;
+                return recivedClient;
             }
 
 
             set
             {
-                base.RecivedClient = value;
+                recivedClient = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("RecivedClient"));
@@ -49,17 +84,17 @@ namespace PO
             }
         }
         
-        public WeightCategories WeightCatgory
+        public  WeightCategories WeightCatgory
         {
             get
             {
-                return (WeightCategories)base.WeightCatgory;
+                return weightCatgory;
             }
 
 
             set
             {
-                base.WeightCatgory = (BO.WeightCategories)value;
+                weightCatgory = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("WeightCatgory"));
@@ -67,17 +102,17 @@ namespace PO
             }
         }
         
-        public Priority Priority
+        public  Priority Priority
         {
             get
             {
-                return (Priority)base.Priority;
+                return priority;
             }
 
 
             set
             {
-                base.Priority = (BO.Priority)value;
+                priority = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Priority"));
@@ -85,15 +120,15 @@ namespace PO
             }
         }
       
-        public DroneInPackage Drone
+        public  DroneInPackageModel Drone
         {
             get
             {
-                return (DroneInPackage) base.Drone;
+                return drone;
             }
             set
             {
-                base.Drone = value;
+                drone = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Drone"));
@@ -102,14 +137,14 @@ namespace PO
         }
 
         //Delivery time create a package
-        public DateTime? Create_package {
+        public  DateTime? Create_package {
             get
             {
-                return base.Create_package;
+                return create_package;
             }
             set
             {
-                base.Create_package = value;
+                create_package = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Create_package"));
@@ -118,15 +153,15 @@ namespace PO
         }
 
         //Time to assign the package to a drone
-        public DateTime? PackageAssociation
+        public  DateTime? PackageAssociation
         {
             get
             {
-                return base.PackageAssociation;
+                return packageAssociation;
             }
             set
             {
-                base.PackageAssociation = value;
+                packageAssociation = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("PackageAssociation"));
@@ -135,14 +170,14 @@ namespace PO
         }
 
         //Package collection time from the sender
-        public DateTime? CollectPackage {
+        public  DateTime? CollectPackage {
             get
             {
-                return base.CollectPackage;
+                return collectPackage;
             }
             set
             {
-                base.CollectPackage = value;
+                collectPackage = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("CollectPackage"));
@@ -151,14 +186,14 @@ namespace PO
         }
 
         //Time of arrival of the package to the recipient
-        public DateTime? PackageArrived {
+        public  DateTime? PackageArrived {
             get
             {
-                return base.PackageArrived;
+                return packageArrived;
             }
             set
             {
-                base.PackageArrived = value;
+                packageArrived = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("PackageArrived"));
@@ -166,6 +201,26 @@ namespace PO
             }
         }
 
+
+        public static implicit operator Package(PackageModel package)
+        {
+            if (package is null)
+                return null;
+            return new Package
+            {
+                CollectPackage = package.CollectPackage,
+                Create_package = package.Create_package,
+                Drone = package.Drone,
+                PackageArrived = package.PackageArrived,
+                PackageAssociation = package.PackageAssociation,
+                Priority = package.Priority,
+                RecivedClient = package.RecivedClient,
+                SendClient = package.SendClient,
+                SerialNumber = package.SerialNumber,
+                WeightCatgory = package.WeightCatgory
+            };
+        }
+       
 
         public event PropertyChangedEventHandler PropertyChanged;
    

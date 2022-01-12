@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using BO;
 using System.Windows.Shapes;
-
+using PO;
 using System.Globalization;
 using System.Collections.ObjectModel;
 using BlApi;
@@ -26,11 +26,13 @@ namespace PL
     public partial class PackageView : Window
     {
         BlApi.IBL bl;
-        Package package;
+        PackageModel package=new();
+        
         PackageStatus packageStatus;
         StatusPackegeWindow changFromClient;
         ObservableCollection<PackageToList> lists;
         bool clientMode;
+        private int _noOfErrorsOnScreen = 0;
 
         public PackageView(BlApi.IBL bL,string SendClient="", StatusPackegeWindow change =StatusPackegeWindow. NotClient, bool clientMode = false)
         {
@@ -83,11 +85,10 @@ namespace PL
             try
             {
                 
-                package = bl.ShowPackage(serialNumber);
+                  bl.ShowPackage(serialNumber).packegeBlToMOdel(package);
                 WeightCmb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
                 this.DataContext = package;
-                MainGrid.DataContext = package;
-                DataGridPackege.DataContext = package;
+               
                 AddGrid.Visibility = Visibility.Collapsed;
                 UpdateGrid.Visibility = Visibility.Visible;
                 statusSelectorSurce();
@@ -142,16 +143,15 @@ namespace PL
             {
                 WeightCmb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
                 AddGrid.Visibility = Visibility.Visible;
-                package = new Package { SendClient = new ClientInPackage(), RecivedClient = new ClientInPackage() };
+                
+               
                 if(SendClient!="")
                 {
                     uint id;
                     uint.TryParse(SendClient,out id);
-                    package.SendClient.Id = id;
-                    SendClientCMB.ItemsSource = bl.ClientInPackagesList().Where(x => x.Id == id);
-                    SendClientCMB.SelectedItem = SendClientCMB.Items[0];
-
-
+                    package.SendClient =  bl.ClientInPackagesList().FirstOrDefault(x => x.Id == id);
+                    SendClientCMB.Items.Add(package.SendClient);
+                 SendClientCMB.SelectedItem = SendClientCMB.Items[0];
 
                 }
                 else
@@ -268,14 +268,25 @@ namespace PL
         {
             e.Cancel = true;
         }
-    }
-    public class NotEmptyValidationRule : ValidationRule
-    {
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+
+        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            return string.IsNullOrWhiteSpace((value ?? "").ToString())
-                ? new ValidationResult(false, "Field is required.")
-                : ValidationResult.ValidResult;
+            e.CanExecute = _noOfErrorsOnScreen == 0;
+            e.Handled = true;
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void Error(object sender, ValidationErrorEventArgs e)
+        {
+            if (e.Action == ValidationErrorEventAction.Added)
+                _noOfErrorsOnScreen++;
+            else
+                _noOfErrorsOnScreen--;
         }
     }
+ 
 }

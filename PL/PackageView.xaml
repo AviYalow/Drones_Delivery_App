@@ -15,6 +15,11 @@
         <ImageBrush x:Key="Medium" ImageSource="/medium.jpg" />
         <ImageBrush x:Key="Heavy" ImageSource="/heavy.jpg" />
     </Window.Resources>
+    <Window.CommandBindings>
+      
+            <CommandBinding Command="New" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
+        
+    </Window.CommandBindings>
     <Window.Style>
         <Style TargetType="{x:Type Window}">
             <Style.Triggers>
@@ -38,8 +43,8 @@
     <Grid x:Name="MainGrid">
         <Grid x:Name="AddGrid"  Visibility="Collapsed">
             <Label Name="TitelPackegeViewLabel" Content="New Packege" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="62" Width="235" FontSize="34"/>
-            <ComboBox Name="SendClientCMB"  HorizontalAlignment="Left" Margin="148,92,0,0" VerticalAlignment="Top"  
-            Style="{StaticResource MaterialDesignOutlinedComboBox}" FontSize="18" materialDesign:HintAssist.Hint="Send Client" materialDesign:TextFieldAssist.HasClearButton="True"  Width="291" Height="59"
+            <ComboBox Name="SendClientCMB" HorizontalAlignment="Left" Margin="148,92,0,0" VerticalAlignment="Top"  
+            Validation.Error="Error" FontSize="18" materialDesign:HintAssist.Hint="Send Client"  Width="291" Height="59"
                   >
                 <ComboBox.SelectedItem>
                     <Binding  Path="SendClient"  Mode="TwoWay"  UpdateSourceTrigger="PropertyChanged">
@@ -50,18 +55,18 @@
                 </ComboBox.SelectedItem>
 
             </ComboBox>
-            <ComboBox Name="ResiveClientCMB" HorizontalAlignment="Left" Margin="148,194,0,0" VerticalAlignment="Top" 
-             Style="{StaticResource MaterialDesignOutlinedComboBox}" FontSize="18" materialDesign:HintAssist.Hint="Resive Client" materialDesign:TextFieldAssist.HasClearButton="True"  Width="291" Height="62" >
+            <ComboBox Name="ResiveClientCMB" Validation.Error="Error" HorizontalAlignment="Left" Margin="148,194,0,0" VerticalAlignment="Top" 
+              FontSize="18" materialDesign:HintAssist.Hint="Resive Client"   Width="291" Height="62" >
                 <ComboBox.SelectedItem>
                     <Binding Path="RecivedClient"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <local:NotEmptyValidationRule  ValidatesOnTargetUpdated="True"    />
+                            <local:NotEmptyByItemValidationRule  ValidatesOnTargetUpdated="True"    />
                         </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.SelectedItem>
 
             </ComboBox>
-            <ComboBox Name="PraiyurtyCMB"  HorizontalAlignment="Left"  Margin="150,294,0,0" VerticalAlignment="Top" 
+            <ComboBox Name="PraiyurtyCMB" Validation.Error="Error"  HorizontalAlignment="Left"  Margin="150,294,0,0" VerticalAlignment="Top" 
               Style="{StaticResource MaterialDesignOutlinedComboBox}" FontSize="18" materialDesign:HintAssist.Hint="Priority" materialDesign:TextFieldAssist.HasClearButton="True" Width="291" Height="57">
                 <ComboBox.SelectedItem>
                     <Binding Path="Priority" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -84,7 +89,7 @@
 
             </ComboBox>
 
-            <Button x:Name="AddButton" Click="Button_Click" Content="ADD" HorizontalAlignment="Left" Margin="191,501,0,0" VerticalAlignment="Top" Height="52" Width="107" Visibility="{Binding ElementName=TitelPackegeViewLabel,Path=Visibility}" >
+            <Button x:Name="AddButton" Command="New" Click="Button_Click" Content="ADD" HorizontalAlignment="Left" Margin="191,501,0,0" VerticalAlignment="Top" Height="52" Width="107" Visibility="{Binding ElementName=TitelPackegeViewLabel,Path=Visibility}" >
 
             </Button>
         </Grid>

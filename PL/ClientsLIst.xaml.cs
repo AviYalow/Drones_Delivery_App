@@ -53,15 +53,22 @@ namespace PL
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new ClientView(bl,false,lists).Show();
+            try
+            {
+                new ClientView(bl, false, lists).Show();
+            }catch(Exception)
+            { }
           
         }
 
         private void clientListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (clientListView.SelectedItem != null)
-            {
-                new ClientView(bl,lists, (BO.ClientToList)clientListView.SelectedItem).Show();
+            {try
+                {
+                    new ClientView(bl, lists, (BO.ClientToList)clientListView.SelectedItem).Show();
+                }catch(Exception)
+                { }
               
                 clientListView.SelectedItem = null;
             }

@@ -282,5 +282,19 @@ namespace BO
             return $"The packege not assioction or collected yet ";
         }
     }
+
+    /// <summary>
+    ///  Exception when the packege not assioction or collected yet 
+    /// </summary>
+    public class DroneTryToStartSecondeSimolatorException : Exception
+    {
+        uint drone;
+        public DroneTryToStartSecondeSimolatorException(uint drone) : base() { this.drone = drone; }
+        protected DroneTryToStartSecondeSimolatorException(SerializationInfo serializableAttribute, StreamingContext context) : base(serializableAttribute, context) { }
+        public override string ToString()
+        {
+            return $"This drone number{drone} try to start seconde simolation! ";
+        }
+    }
 }
 
