@@ -52,7 +52,7 @@ namespace BlApi
         ///  send drone to charge
         /// </summary>
         /// <param name="dronenumber">serial number of drone</param>
-        public void DroneToCharge(uint dronenumber);
+        public void DroneToCharge(uint dronenumber, double? distanse = null);
 
         /// <summary>
         /// update new location for drone

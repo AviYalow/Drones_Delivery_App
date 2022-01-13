@@ -17,6 +17,7 @@ namespace BO
         public Priority priority { get; set; }
         public WeightCategories WeightCategories { get; set; }
         public PackageStatus packageStatus { get; set; }
+        public DateTime? Create { get; set; }
         public bool Drone { get; set; }
 
         public override string ToString()

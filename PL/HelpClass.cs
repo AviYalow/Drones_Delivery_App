@@ -24,24 +24,38 @@ namespace PL
             lock (ts)lock(ienumerable)
             {
 
-                    
+                    var pointer = ts.GetEnumerator();
                     try
                     {
                         int i = 0;
+                        bool stopFlag = false;
+                        int stop = ts.Count();
                         foreach (var item in ienumerable)
                         {
-                            if (i < ts.Count())
+
+                            if (i<stop)
                             {
-                                ts[i] = item   ;
+                                ts[i] = item;
                                 i++;
+
                             }
                             else
+                            {
+                                stopFlag = true;
                                 ts.Add(item);
+                            }
+                           
                         }
+                        if (!stopFlag)
+                            while (i < stop)
+                            {
+                                ts.RemoveAt(i);
+                                stop--;
+                            }
 
                         return ts;
                     }
-                    catch(Exception)
+                    catch(Exception )
                     {
                         return ts;
                     }

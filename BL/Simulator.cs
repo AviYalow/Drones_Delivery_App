@@ -34,6 +34,7 @@ namespace BL
             Drone drone;
             bool sendToCharge = false;
             double m = 0;
+            SpeedDrone speed=SpeedDrone.Free;
 
             try
             {
@@ -125,12 +126,15 @@ namespace BL
                                             {
                                                 case WeightCategories.Easy:
                                                     past = clculetPast(SpeedDrone.Easy);
+                                                    speed = SpeedDrone.Easy;
                                                     break;
                                                 case WeightCategories.Medium:
                                                     past = clculetPast(SpeedDrone.Medium);
+                                                    speed = SpeedDrone.Medium;
                                                     break;
                                                 case WeightCategories.Heavy:
                                                     past = clculetPast(SpeedDrone.Heavy);
+                                                    speed = SpeedDrone.Heavy;
                                                     break;
                                                 default:
                                                     break;
@@ -139,7 +143,7 @@ namespace BL
                                             if (past >= drone.PackageInTransfer.Distance)
                                             {
                                                 stopWatch();
-                                                bl.PackegArrive(droneNumber);
+                                                bl.PackegArrive(droneNumber, distanseToButtry(m,speed));
                                             }
                                             else
                                                 drone.ButrryStatus -= bl.buttryDownPackegeDelivery(drone.PackageInTransfer, distanseToButtry(m, SpeedDrone.Free));
@@ -199,7 +203,7 @@ namespace BL
 
         private static double endTravel(double m, double a)
         {
-            return a - (m) * ((double)SpeedDrone.Free / 60.0 / 60.0 / 100);
+            return a - (m) * ((double)SpeedDrone.Free / (60.0 * 60.0 * 1000));
         }
 
         private static void changebuttry(BlApi.BL bl, Drone drone)
@@ -209,12 +213,12 @@ namespace BL
 
         private double clculetPast(SpeedDrone speed)
         {
-            return (sw.ElapsedMilliseconds * 100) * ((double)speed / 60.0 / 60.0 / 100);
+            return (sw.ElapsedMilliseconds ) * ((double)speed / (60.0 * 60.0 * 1000));
         }
 
         private double distanseToButtry(double m, SpeedDrone speed)
         {
-            return ((sw.ElapsedMilliseconds * 100) - m) * ((double)speed / 60.0 / 60.0 / 100);
+            return ((sw.ElapsedMilliseconds) - m) * (((double)speed / (60.0 * 60.0 * 1000)));
         }
 
         private void stopWatch()
