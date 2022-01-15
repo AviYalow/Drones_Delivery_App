@@ -14,6 +14,9 @@ using BlApi;
 
 namespace BL
 {
+    /// <summary>
+    /// Simulator of drone travel
+    /// </summary>
     internal class Simulator
     {
 
@@ -21,12 +24,9 @@ namespace BL
         private Thread myThread;
         Stopwatch sw;
         double chargePerMiliSecond;
-
         private const double SPEED = 1.0;
         private const int DELAY = 1000;
-        //private const double TIME_STEP = DELAY / 1000.0;
-        //private const double STEP = VELOCITY / TIME_STEP;
-
+        
         public Simulator(BlApi.BL bl, uint droneNumber, Action action, Func<bool> StopChecking)
         {
             try
@@ -58,6 +58,7 @@ namespace BL
 
                                     try
                                     {
+                                        //If there if not enough battery to take a package
                                         if ((drone.ButrryStatus < 20 || sendToCharge) && drone.ButrryStatus < 100)
                                         {
                                             var base_ = bl.ClosestBase(drone.Location, true);
@@ -75,6 +76,7 @@ namespace BL
                                             }
                                             m = sw.ElapsedMilliseconds;
                                         }
+                                        // else , take a package
                                         else
                                         {
                                             stopWatch();
