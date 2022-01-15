@@ -18,7 +18,7 @@ namespace BL
     /// <summary>
     /// Help class for deep copy
     /// </summary>
-  internal static class Cloning
+  public static class Cloning
     {
 
         public static T Clone<T>(this T source)

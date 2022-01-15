@@ -10,9 +10,9 @@ namespace PO
     /// <summary>
     /// base station to list
     /// </summary>
-    public class BaseStationToList: BO.BaseStationToList, INotifyPropertyChanged
+    public class BaseStationToListModel : BO.BaseStationToList, INotifyPropertyChanged
     {
-        public uint SerialNum
+        public new uint SerialNum
         {
             get
             {
@@ -27,7 +27,7 @@ namespace PO
                 }
             }
         }
-        public string Name
+        public new string Name
         {
             get
             {
@@ -42,7 +42,7 @@ namespace PO
                 }
             }
         }
-        public uint FreeState {
+        public new uint FreeState {
             get
             {
                 return base.FreeState;
@@ -56,7 +56,7 @@ namespace PO
                 }
             }
         }
-        public uint BusyState {
+        public new uint BusyState {
             get
             {
                 return base.BusyState;
@@ -70,7 +70,7 @@ namespace PO
                 }
             }
         }
-        public string Active
+        public new string Active
         {
             get
             {

@@ -24,20 +24,20 @@
             </Grid.ColumnDefinitions>
         </Grid>
         <Grid/>
-        <Button x:Name="DroneMainButton" Content="Drones" HorizontalAlignment="Left" Margin="283,135,0,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="DroneMainButton_Click"
+        <Button x:Name="DroneMainButton" Content="Drones" HorizontalAlignment="Left" Margin="286,135,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="DroneMainButton_Click"
                   Style="{StaticResource MaterialDesignRaisedButton}"
     materialDesign:ButtonProgressAssist.Value="-1"
     materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
     materialDesign:ButtonProgressAssist.IsIndeterminate="True"/>
-        <Button x:Name="PackagesButton" Content="Packages" HorizontalAlignment="Right" Margin="0,239,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="PackagesButton_Click"   Style="{StaticResource MaterialDesignRaisedButton}"
+        <Button x:Name="PackagesButton" Content="Packages" HorizontalAlignment="Right" Margin="286,239,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="PackagesButton_Click"   Style="{StaticResource MaterialDesignRaisedButton}"
     materialDesign:ButtonProgressAssist.Value="-1"
     materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
     materialDesign:ButtonProgressAssist.IsIndeterminate="True"/>
-        <Button x:Name="BaseStationsButton" Content="BaseStations" HorizontalAlignment="Right" Margin="0,346,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="BaseStationsButton_Click"   Style="{StaticResource MaterialDesignRaisedButton}"
+        <Button x:Name="BaseStationsButton" Content="BaseStations" HorizontalAlignment="Right" Margin="286,346,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="BaseStationsButton_Click"   Style="{StaticResource MaterialDesignRaisedButton}"
     materialDesign:ButtonProgressAssist.Value="-1"
     materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
     materialDesign:ButtonProgressAssist.IsIndeterminate="True" />
-        <Button x:Name="ClientsButton" Content="Clients" HorizontalAlignment="Right" Margin="0,31,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="ClientsButton_Click"   Style="{StaticResource MaterialDesignRaisedButton}"
+        <Button x:Name="ClientsButton" Content="Clients" HorizontalAlignment="Right" Margin="286,31,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="ClientsButton_Click"   Style="{StaticResource MaterialDesignRaisedButton}"
     materialDesign:ButtonProgressAssist.Value="-1"
     materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
     materialDesign:ButtonProgressAssist.IsIndeterminate="True" />

@@ -98,7 +98,9 @@ namespace BlApi
                 SerialNumber = package.SerialNumber,
                 priority = (Priority)package.Priority,
                 WeightCategories = (WeightCategories)package.WeightCatgory,
-                Drone = package.OperatorSkimmerId == 0 ? false : true
+                Drone = package.OperatorSkimmerId == 0 ? false : true,
+                Create = package.ReceivingDelivery
+                
                     
 
                 };

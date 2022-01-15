@@ -23,35 +23,33 @@ namespace BlApi
             lock (dalObj)
             {
                 try
-            {
+                {
+                    var baseStation = BaseByNumber(base_);
+                    drone.Location = baseStation.Location;
+                    if (drone.WeightCategory > WeightCategories.Heavy)
+                        throw new InputErrorException();
 
-                drone.Location = BaseLocation(base_);
-                if (drone.WeightCategory > WeightCategories.Heavy)
-                    throw new InputErrorException();
 
+
+                    drone.DroneStatus =baseStation.FreeState>0? DroneStatus.Maintenance : DroneStatus.Free;
+
+                    Random random = new Random();
+
+                    dalObj.AddDrone(new DO.Drone { SerialNumber = drone.SerialNumber, Model = (DO.DroneModel)drone.Model, WeightCategory = (DO.WeightCategories)drone.WeightCategory });
+
+
+                    drone.ButrryStatus = random.Next(20, 41);
+
+
+                    dronesListInBl.Add(drone);
+                    if(drone.DroneStatus==DroneStatus.Maintenance)
+                    dalObj.DroneToCharge(drone.SerialNumber, base_);
+                }
+                catch (DO.ItemFoundException ex)
+                {
+                    throw (new ItemFoundExeption(ex));
+                }
             }
-            catch (DO.ItemNotFoundException ex)
-            {
-                throw (new ItemNotFoundException(ex));
-            }
-            drone.DroneStatus = DroneStatus.Maintenance;
-
-            Random random = new Random();
-            try
-            {
-                dalObj.AddDrone(new DO.Drone { SerialNumber = drone.SerialNumber, Model = (DO.DroneModel)drone.Model, WeightCategory = (DO.WeightCategories)drone.WeightCategory });
-            }
-            catch (DO.ItemFoundException ex)
-            {
-                throw (new ItemFoundExeption(ex));
-            }
-            drone.ButrryStatus = random.Next(20, 41);
-
-
-            dronesListInBl.Add(drone);
-
-            dalObj.DroneToCharge(drone.SerialNumber, base_);
-        }
         }
 
         /// <summary>
@@ -65,10 +63,10 @@ namespace BlApi
             lock (dalObj)
             {
                 int i = dronesListInBl.FindIndex(x => x.SerialNumber == drone && x.DroneStatus != DroneStatus.Delete);
-            if (i == -1)
-                throw (new ItemNotFoundException("Drone", drone));
-            dronesListInBl[i].Location = location.Clone();
-        }
+                if (i == -1)
+                    throw (new ItemNotFoundException("Drone", drone));
+                dronesListInBl[i].Location = location.Clone();
+            }
         }
 
         /// <summary>
@@ -82,22 +80,22 @@ namespace BlApi
             lock (dalObj)
             {
                 DO.Drone droneInData;
-            try
-            {
+                try
+                {
 
-                droneInData = dalObj.DroneByNumber(droneId);
+                    droneInData = dalObj.DroneByNumber(droneId);
+                }
+                catch (DO.ItemNotFoundException ex)
+                {
+                    throw new ItemNotFoundException(ex);
+                }
+                int i = dronesListInBl.FindIndex(x => x.SerialNumber == droneId && x.DroneStatus != DroneStatus.Delete);
+                if (i == -1)
+                    throw new ItemNotFoundException("Drone", droneId);
+                dronesListInBl[i].Model = newName;
+                droneInData.Model = newName.covertDroneModelBlToDal();
+                dalObj.UpdateDrone(droneInData);
             }
-            catch (DO.ItemNotFoundException ex)
-            {
-                throw new ItemNotFoundException(ex);
-            }
-            int i = dronesListInBl.FindIndex(x => x.SerialNumber == droneId && x.DroneStatus != DroneStatus.Delete);
-            if (i == -1)
-                throw new ItemNotFoundException("Drone", droneId);
-            dronesListInBl[i].Model = newName;
-            droneInData.Model = newName.covertDroneModelBlToDal();
-            dalObj.UpdateDrone(droneInData);
-        }
         }
 
         /// <summary>
@@ -148,7 +146,7 @@ namespace BlApi
                 if (drone is null)
                     throw new ItemNotFoundException("Drone", droneNum);
                 //chack the drone not in middel of delivery
-                if (drone.DroneStatus == DroneStatus.Work && !(dalObj.packegeByNumber(drone.NumPackage).CollectPackageForShipment is null))
+                if (drone.DroneStatus == DroneStatus.Work)
                     throw new DroneStillAtWorkException();
 
                 dalObj.DeleteDrone(droneNum);
@@ -165,7 +163,7 @@ namespace BlApi
 
         }
 
-    
+
 
     }
 }

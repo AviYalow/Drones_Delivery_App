@@ -258,9 +258,15 @@ namespace BlApi
        public void PlayThred(uint droneNumber, Action action, Func<bool> StopChecking)
         {
 
-           
-            simulator = new Simulator(this, droneNumber, action, StopChecking);
-     
+            try
+            {
+                simulator = new Simulator(this, droneNumber, action, StopChecking);
+            }
+          
+            catch (DroneTryToStartSecondeSimolatorException)
+            { throw new DroneTryToStartSecondeSimolatorException(droneNumber); }
+            catch (Exception) { }
+
         }
     }
 }

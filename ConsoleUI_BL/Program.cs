@@ -757,7 +757,7 @@ namespace ConsoleUI_BL
 
             }
 
-            bl.UpdateClient(ref client);
+            bl.UpdateClient( client);
         }
 
         /// <summary>

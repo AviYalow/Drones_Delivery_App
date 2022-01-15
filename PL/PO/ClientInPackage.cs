@@ -4,43 +4,69 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BO;
 
 namespace PO
 {
     /// <summary>
     /// Client In Package
     /// </summary>
-    public class ClientInPackage: BO.ClientInPackage, INotifyPropertyChanged
+    public class ClientInPackageModel :  INotifyPropertyChanged
     {
-        public uint Id
+        
+        private uint id;
+        private string name;
+        public  uint Id
         {
             get
             {
-                return base.Id;
+                return id;
             }
             set
             {
-                base.Id = value;
+                id = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Id"));
                 }
             }
         }
-        public string Name
+        public  string Name
         {
             get
             {
-                return base.Name;
+                return name;
             }
             set
             {
-                base.Name = value;
+                name = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Name"));
                 }
             }
+        }
+
+        public static implicit operator ClientInPackageModel(ClientInPackage clientBl)
+        {
+            if (clientBl is null)
+                return null;
+            return new ClientInPackageModel
+            {
+                Id = clientBl.Id,
+                Name = clientBl.Name
+            };
+        }
+        public static implicit operator ClientInPackage(ClientInPackageModel client)
+        {
+            if (client is null)
+                return null;
+            return new ClientInPackage
+          {
+              Id = client.Id,
+              Name = client.Name
+          };
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

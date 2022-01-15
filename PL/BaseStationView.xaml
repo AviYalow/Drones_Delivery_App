@@ -18,19 +18,67 @@
 
     </Window.Background>
     <Grid>
-
+        <Grid.Resources>
+            <local:TitelBaseViewConverter x:Key="convertTytelToVisblity"/>
+            <local:BoolToVisibaleConverter x:Key="opessetFromVisibilty"/>
+        </Grid.Resources>
+        <Grid.CommandBindings>
+            <CommandBinding Command="New" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
+        </Grid.CommandBindings>
         <Label Name="TitelLabel" FontSize="35" Content="Add Base Station" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
         <Label Name="serialNumberLabel" FontSize="25" Content="serial Number:" HorizontalAlignment="Left" Margin="24,123,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
         <Label Name="NameLabel" Content="Name:" FontSize="25" HorizontalAlignment="Left" Margin="35,211,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
         <Label Name="NumberChargingStationLabel" FontSize="25" Content="Free Charging Stations:" HorizontalAlignment="Left" Margin="28,308,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
         <Label Name="LatitudeLabel" Content="Latitude:" FontSize="25" HorizontalAlignment="Left" Margin="32,471,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
         <Label Name="LongitudeLabel" Content="Longitude:" FontSize="25" HorizontalAlignment="Left" Margin="33,385,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
-        <TextBox x:Name="SerialText" HorizontalAlignment="Left" FontSize="25" Margin="32,160,0,0" Text="{Binding Path=SerialNum,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitNoDot" LostFocus="LongitudeText_LostFocus"/>
-        <TextBox x:Name="NameText" HorizontalAlignment="Left"  FontSize="25" Margin="33,247,0,0" Text="{Binding Path=Name,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="184" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyDown="NameText_PreviewKeyDown"/>
-        <TextBox x:Name="FreeStateText" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" FontSize="25" Margin="35,345,0,0" Text="{Binding Path=FreeState,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="163" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitNoDot" LostFocus="LongitudeText_LostFocus"/>
-        <TextBox x:Name="Latitudtext" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="32,435,0,0" Text="{Binding Path=Latitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" GotFocus="Latitudtext_GotFocus" LostFocus="LongitudeText_LostFocus"/>
-        <TextBox x:Name="LongitudeText" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="33,505,0,0" Text="{Binding Path=Longitude,Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" GotFocus="Latitudtext_GotFocus" LostFocus="LongitudeText_LostFocus"/>
-        <Button x:Name="AddButton"  Content="ADD"  HorizontalAlignment="Left" Margin="66,654,0,0" VerticalAlignment="Top" Click="AddButton_Click"/>
+        <TextBox x:Name="SerialText" Validation.Error="Error" IsEnabled="{Binding ElementName=Listvi1ewGridToDroneList,Converter={StaticResource opessetFromVisibilty}}" HorizontalAlignment="Left" FontSize="25" Margin="32,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitNoDot" LostFocus="LongitudeText_LostFocus">
+            <TextBox.Text>
+                <Binding Path="SerialNum" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True"  />
+                    </Binding.ValidationRules>
+                </Binding>
+                
+            </TextBox.Text>
+        </TextBox>
+        <TextBox x:Name="NameText" Validation.Error="Error" HorizontalAlignment="Left"  FontSize="25" Margin="33,247,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="184" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyDown="NameText_PreviewKeyDown">
+            <TextBox.Text>
+                <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True"  />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox x:Name="FreeStateText" Validation.Error="Error" HorizontalAlignment="Left" FontSize="25" Margin="35,345,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="163" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitNoDot" LostFocus="LongitudeText_LostFocus">
+            <TextBox.Text>
+                <Binding Path="FreeState" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True"  />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <TextBox x:Name="Latitudtext" Validation.Error="Error" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="32,435,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" GotFocus="Latitudtext_GotFocus" LostFocus="LongitudeText_LostFocus">
+            <TextBox.Text>
+                <Binding  Path="Location.Latitude" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True"  />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox x:Name="LongitudeText" Validation.Error="Error" FontSize="25" IsEnabled="{Binding ElementName=SerialText, Path=IsEnabled}" HorizontalAlignment="Left" Margin="33,505,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="191" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitDot" GotFocus="Latitudtext_GotFocus" LostFocus="LongitudeText_LostFocus">
+            <TextBox.Text>
+                <Binding Path="Location.Longitude" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True"  />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Button x:Name="AddButton" Command="New"  Content="ADD"  HorizontalAlignment="Left" Margin="66,654,0,0" VerticalAlignment="Top" Click="AddButton_Click"/>
         <ListView x:Name="DroneCharge1View"  Visibility="Collapsed" Margin="464,135,8,329" ItemsSource="{Binding Path=DronesInChargeList}" RenderTransformOrigin="0.5,0.5" Height="auto" Foreground="#DDFFFFFF" MouseDoubleClick="DroneCharge1View_MouseDoubleClick" Background="#891054DA">
 
             <ListView.RenderTransform>
@@ -58,10 +106,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Name="NewChrgingStatimLabel"  Visibility="Collapsed" Content="New number of charging station:" FontSize="20" HorizontalAlignment="Left" Margin="30,556,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF"/>
-        <TextBox  Name="NewChrgingStatimText" HorizontalAlignment="Left" Margin="34,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="163" Height="49"  
-  Visibility="Collapsed"
-  FontSize="24" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitNoDot"/>
+        <Label Name="NewChrgingStatimLabel" Content="New number of charging station:" FontSize="20" HorizontalAlignment="Left" Margin="30,556,0,0" VerticalAlignment="Top" Foreground="#DDFFFFFF" Visibility="{Binding ElementName=DroneCharge1View, Path=Visibility}"/>
+        <!--TextBox  Name="NewChrgingStatimText" HorizontalAlignment="Left" Margin="34,588,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="163" Height="49"  
+  Visibility="{Binding ElementName=DroneCharge1View, Path=Visibility}"
+  FontSize="24" Foreground="White" BorderBrush="#89FFFFFF" PreviewKeyUp="PreviewKeyDownWhitNoDot"/>-->
         <Button x:Name="Exit" Content="{  materialDesign:PackIcon Kind=ExitRun, Size=45}" HorizontalAlignment="Left" Margin="242,635,0,0" VerticalAlignment="Top" Height="54" Width="77" Click="Exit_Click"/>
         <Button x:Name="Delete" Visibility="{Binding ElementName=DroneCharge1View, Path=Visibility}" Content="{materialDesign:PackIcon Kind=Delete, Size=30 }" HorizontalAlignment="Left" Margin="560,646,0,0" VerticalAlignment="Top" Height="44" Width="62" Click="Delete_Click"/>
     </Grid>

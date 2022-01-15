@@ -5,23 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using BO;
 
 namespace PO
 {
     /// <summary>
     /// base station
     /// </summary>
-  public  class BaseStation: BO.BaseStation, INotifyPropertyChanged
+  public  class BaseStationModel:  INotifyPropertyChanged
     {
-
+        uint serialNum;
+        string name;
+        LocationModel location;
+        ObservableCollection<DroneInCharge> dronesInChargeList;
+        uint freeState;
         public uint SerialNum {
             get
             {
-                return base.SerialNum;
+                return serialNum;
             }
-            init
+            set
             {
-                base.SerialNum = value;
+                serialNum = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("SerialNum"));
@@ -29,29 +34,29 @@ namespace PO
             }
         }
 
-        public string Name {
+        public  string Name {
             get
             {
-                return base.Name;
+                return name;
             }
             set
             {
-                base.Name = value;
+                name = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Name"));
                 }
             }
         }
-        public Location Location
+        public LocationModel  Location
         {
             get
             {
-                return (Location)base.Location;
+                return location;
             }
             set
             {
-                base.Location = value;
+                location = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Location"));
@@ -62,31 +67,29 @@ namespace PO
         {
             get
             {
-                return base.FreeState;
+                return freeState;
             }
             set
             {
-                base.FreeState = value;
+                freeState = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("FreeState"));
                 }
             }
         }
-        public ObservableCollection<DroneInCharge> DronesInChargeList {
+        public ObservableCollection<DroneInCharge > DronesInChargeList {
             get
             {
-                ObservableCollection<DroneInCharge> tmp = null;
-                foreach(var item in base.DronesInChargeList)
-                         tmp.Add((DroneInCharge)item);
-                return tmp; 
+              
+                return dronesInChargeList; 
             }
             set
             {
-                ObservableCollection<BO.DroneInCharge> tmp = null;
-                foreach (var item in value)
-                    tmp.Add((BO.DroneInCharge)item);
-                base.DronesInChargeList = tmp;
+              
+                
+                    dronesInChargeList=value;
+               
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("DronesInChargeList"));
@@ -96,6 +99,28 @@ namespace PO
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        
+        public static implicit operator BaseStation(BaseStationModel base_)
+        {
+            if (base_ is null)
+                return null;
+            return new BaseStation
+            {
+                FreeState = base_.FreeState,
+                Location = base_.Location,
+                Name = base_.Name,
+                SerialNum = base_.serialNum,
+                DronesInChargeList = base_.dronesInChargeList
+            };
+        }
+
+       
+
+
+
+
+
+
         public override string ToString()
         {
             String print= "";
@@ -104,7 +129,7 @@ namespace PO
             print += $"Location: Latitude:{Location.Latitude} Longitude:{Location.Longitude},\n";
             print += $"Number of free state: {FreeState},\n";
             print += $"Drone in Charge: {DronesInChargeList.Count()},\n";
-            foreach(DroneInCharge drone in DronesInChargeList)
+            foreach(DroneInChargeModel  drone in DronesInChargeList)
             {
                print += $"Serial number: {drone.SerialNum}, butrry Status: {drone.ButrryStatus}\n";
             }

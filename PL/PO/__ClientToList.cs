@@ -10,10 +10,10 @@ namespace PO
     /// <summary>
     /// Client To List
     /// </summary>
-    public class ClientToList:BO.ClientToList, INotifyPropertyChanged
+    public class ClientToListModel :BO.ClientToList, INotifyPropertyChanged
     {
 
-        public uint ID
+        public new uint ID
         {
             get
             {
@@ -28,7 +28,7 @@ namespace PO
                 }
             }
         }
-        public string Name
+        public new string Name
         {
             get
             {
@@ -43,7 +43,7 @@ namespace PO
                 }
             }
         }
-        public string Phone
+        public new string Phone
         {
             get
             {
@@ -59,7 +59,7 @@ namespace PO
             }
         }
 
-        public uint Arrived {
+        public new uint Arrived {
             get
             {
                 return base.Arrived;
@@ -73,7 +73,7 @@ namespace PO
                 }
             }
         } //the number of package that send and arrived
-        public bool Active {
+        public new bool Active {
             get
             {
                 return base.Active;
@@ -87,7 +87,7 @@ namespace PO
                 }
             }
         }
-        public uint NotArrived {
+        public new uint NotArrived {
             get
             {
                 return base.NotArrived;
@@ -101,7 +101,7 @@ namespace PO
                 }
             }
         }//the number of package that send and hasn't arrived yet
-        public uint received
+        public new uint received
         {
             get
             {
@@ -116,7 +116,7 @@ namespace PO
                 }
             }
         }//the number of package that recived
-        public uint OnTheWay {
+        public new uint OnTheWay {
             get
             {
                 return base.OnTheWay;
@@ -133,19 +133,7 @@ namespace PO
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public override string ToString()
-        {
-            String print = "";
-            print += $"ID: {ID},\n";
-            print += $"The Name is {Name},\n";
-            print += $"Phone {Phone},\n";
-            print += $"Amount of package that send and arrived: {Arrived},\n";
-            print += $"Amount of package that send but not arrived yet: {NotArrived},\n";
-            print += $"Amount of package that recived : {received},\n";
-            print += $"Amount of package that on the way : {OnTheWay},\n";
 
-            return print;
-        }
 
 
     }

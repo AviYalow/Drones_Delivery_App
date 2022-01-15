@@ -11,60 +11,86 @@ namespace PO
     /// <summary>
     ///client 
     /// </summary>
-    public class Client:BO.Client, INotifyPropertyChanged
+    public class ClientModel : INotifyPropertyChanged
     {
+        uint id;
+        string name;
+        string endphone;
+        string startPhone;
+        LocationModel location;
+        ObservableCollection<BO.PackageAtClient> fromClient;
+        ObservableCollection<BO.PackageAtClient> toClient;
+        bool active;
+
         public uint Id
         {
             get
             {
-                return base.Id;
+                return id;
             }
-            init
+            set
             {
-                base.Id = value;
+                id = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Id"));
                 }
             }
         }
-        public string Name {
-            get
-            {
-                return base.Name;
-            }
-            set
-            {
-                base.Name = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("Name"));
-                }
-            }
-        }
-        public string Phone {
-            get
-            {
-                return base.Name;
-            }
-            set
-            {
-                base.Name = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("Name"));
-                }
-            }
-        }
-        public Location Location
+        public string Name
         {
             get
             {
-                return (Location)base.Location;
+                return name;
             }
             set
             {
-                base.Location = value;
+                name = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Name"));
+                }
+            }
+        }
+        public string EndPhone
+        {
+            get
+            {
+                return endphone;
+            }
+            set
+            {
+                endphone = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Name"));
+                }
+            }
+        }
+        public string StartPhone
+        {
+            get
+            {
+                return startPhone;
+            }
+            set
+            {
+                startPhone = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Name"));
+                }
+            }
+        }
+        public LocationModel Location
+        {
+            get
+            {
+                return location;
+            }
+            set
+            {
+                location = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Location"));
@@ -72,54 +98,46 @@ namespace PO
             }
         }
 
-        public ObservableCollection<PackageAtClient> FromClient {
+        public ObservableCollection<BO.PackageAtClient> FromClient
+        {
             get
             {
-                ObservableCollection<PackageAtClient> tmp = null;
-                foreach (var item in base.FromClient)
-                    tmp.Add((PackageAtClient)item);
-                return tmp;
+                return fromClient;
             }
             set
             {
-                ObservableCollection<BO.PackageAtClient> tmp = null;
-                foreach (var item in value)
-                    tmp.Add((BO.PackageAtClient)item);
-                base.FromClient = tmp;
+                fromClient = value;
+
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("FromClient"));
                 }
             }
         }
-        public ObservableCollection<PackageAtClient> ToClient {
+        public ObservableCollection<BO.PackageAtClient> ToClient
+        {
             get
             {
-                ObservableCollection<PackageAtClient> tmp = null;
-                foreach (var item in base.ToClient)
-                    tmp.Add((PackageAtClient)item);
-                return tmp;
+                return toClient;
             }
             set
             {
-                ObservableCollection<BO.PackageAtClient> tmp = null;
-                foreach (var item in value)
-                    tmp.Add((BO.PackageAtClient)item);
-                base.ToClient = tmp;
+                toClient = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("ToClient"));
                 }
             }
         }
-        public bool Active {
+        public bool Active
+        {
             get
             {
-                return base.Active;
+                return active;
             }
             set
             {
-                base.Active = value;
+                active = value;
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Active"));
@@ -129,29 +147,30 @@ namespace PO
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public override string ToString()
-        {
-            String print = "";
-            print += $"ID: {Id},\n";
-            print += $"Name is {Name},\n";
-            print += $"Phone: {Phone},\n";
-            print += $"Location: {Location}\n";
-            print += $"Statos client: ";
-            print += Active ? "Active\n" : "Not active\n";
-            print += "Packege from this client:\n";
-            if (FromClient != null)
-                foreach (var packege in FromClient)
-                { print += $"{packege}"; }
-            else
-                print += "0\n";
-            print += "Packege to this client:\n";
-            if (ToClient != null)
-                foreach (var packege in ToClient)
-                { print += $"{packege}"; }
-            else
-                print += "0\n";
+   
 
-            return print;
+        public static implicit operator BO.Client(ClientModel client)
+        {
+            if (client is null)
+                return null;
+            return new BO.Client
+            {
+                Active = client.Active,
+                Id = client.Id,
+                Location = client.Location,
+                Name = client.Name,
+                Phone= client.StartPhone+client.endphone,
+                FromClient = client.FromClient,
+                ToClient = client.ToClient
+
+            };
+        }
+
+        public static implicit operator BO.ClientToList(ClientModel client)
+        {
+            if (client is null)
+                return null;
+            return new BO.ClientToList { Active = true, ID = client.Id, Name = client.Name, Arrived = 0, NotArrived = 0, OnTheWay = 0, Phone = client.StartPhone + client.EndPhone, received = 0 };
         }
 
 

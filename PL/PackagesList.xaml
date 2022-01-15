@@ -89,6 +89,11 @@
                             <TextBox Text="Status" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                         </HeaderedContentControl>
                     </GridViewColumn>
+                    <GridViewColumn  DisplayMemberBinding="{Binding Create}" x:Name="packageCreatGrid"  >
+                        <HeaderedContentControl x:Name="Create" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"    >
+                            <TextBox Text="Create" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+                        </HeaderedContentControl>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
             <ListView.GroupStyle>
