@@ -223,7 +223,11 @@ namespace BL
         }
 
        
-
+        /// <summary>
+        /// update drone list
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="drone"></param>
         private  void changeDroneList(BlApi.BL bl, Drone drone)
         {
             var droneInList = bl.dronesListInBl.Find(x => x.SerialNumber == drone.SerialNumber);
