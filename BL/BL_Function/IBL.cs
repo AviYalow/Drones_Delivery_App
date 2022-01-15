@@ -13,6 +13,12 @@ namespace BlApi
     public interface IBL
     {
         #region Threading
+        /// <summary>
+        /// Running a simulator
+        /// </summary>
+        /// <param name="droneNumber"></param>
+        /// <param name="action"></param>
+        /// <param name="StopChecking"></param>
         public void PlayThred(uint droneNumber, Action action, Func<bool> StopChecking);
         #endregion
 

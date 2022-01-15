@@ -67,6 +67,7 @@ namespace BL
 
                                         try
                                         {
+                                           
                                             if ((drone.ButrryStatus <= 20 || sendToCharge) && drone.ButrryStatus < 100)
                                             {
                                                 var base_ = bl.ClosestBase(drone.Location, true);
@@ -203,26 +204,51 @@ namespace BL
             catch (Exception) { }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="a"></param>
+        /// <returns></returns>
         private static double endTravel(double m, double a)
         {
             return a - (m) * ((double)SpeedDrone.Free / (60.0 * 60.0 * 1000));
         }
 
+        /// <summary>
+        /// Updates the battery to the current amount
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="drone"></param>
         private static void changebuttry(BlApi.BL bl, Drone drone)
         {
             bl.dronesListInBl.Find(x => x.SerialNumber == drone.SerialNumber).ButrryStatus = drone.ButrryStatus;
         }
 
+        /// <summary>
+        /// Calculate the distance the drone did to the package
+        /// </summary>
+        /// <param name="speed"></param>
+        /// <returns></returns>
         private double clculetPast(SpeedDrone speed)
         {
             return (sw.ElapsedMilliseconds ) * ((double)speed / (60.0 * 60.0 * 1000));
         }
 
+        /// <summary>
+        /// Calculate the distance the drone did to the charge
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="speed"></param>
+        /// <returns></returns>
         private double distanseToButtry(double m, SpeedDrone speed)
         {
             return ((sw.ElapsedMilliseconds) - m) * (((double)speed / (60.0 * 60.0 * 1000)));
         }
 
+        /// <summary>
+        /// Stop the timer, and reset him
+        /// </summary>
         private void stopWatch()
         {
             sw.Stop();

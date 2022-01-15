@@ -43,8 +43,13 @@ namespace PL
             groupDescription = new PropertyGroupDescription("FreeState");
         }
 
-      
 
+        /// <summary>
+        /// Clicking an object from the list of base stations
+        /// Opens the station data in a new window for updating
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BaseListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (BaseListView.SelectedItem != null)
@@ -54,6 +59,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// Option to sort the list by clicking on the headings
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             HeaderedContentControl control = sender as HeaderedContentControl;
@@ -69,7 +79,11 @@ namespace PL
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+        /// <summary>
+        /// Select which base stations will be displayed in the list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FiletrListCmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -95,6 +109,11 @@ namespace PL
             { MessageBox.Show(ex.ToString(), "ERROR"); }
         }
 
+        /// <summary>
+        /// Selection of the desired display type
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ChoceDroneCmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ChoceGroupCmb.SelectedItem == ChoceGroupCmb.Items[0] || ChoceGroupCmb.SelectedItem is null)
@@ -107,6 +126,13 @@ namespace PL
 
         }
 
+
+        /// <summary>
+        /// Click the 'Add New Base Station' button. 
+        /// Opens a new window to add a new base station.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddBaseButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -117,18 +143,32 @@ namespace PL
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
         }
-
+        /// <summary>
+        /// Blocking the window closing in the regular way
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
         }
 
+        /// <summary>
+        /// Close the current window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             this.Closing += BaseStationsList_Closing;
             this.Close();
         }
 
+        /// <summary>
+        /// help function to close the current window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BaseStationsList_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = false;
