@@ -70,8 +70,7 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddClient(Client client)
         {
-           // List<Client> clients = XMLTools.LoadListFromXMLSerializer<Client>(ClientsPath);
-
+           
             XElement ClientsRootElem = XMLTools.LoadListFromXMLElement(ClientsPath);
 
             XElement err = (from item in ClientsRootElem.Elements()
@@ -95,10 +94,7 @@ namespace Dal
             XMLTools.SaveListToXMLElement(ClientsRootElem, ClientsPath);
         }
 
-        /// <summary>
-        /// Adding a new drone
-        /// </summary>
-        /// <param name="drone">drone to add</param>
+        
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone drone)
         {

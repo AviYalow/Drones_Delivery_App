@@ -9,6 +9,9 @@ using System.Runtime.CompilerServices;
 
 namespace DalApi
 {
+    /// <summary>
+    /// Implement the design pattern of a factory to getting a Dal object
+    /// </summary>
     public static class DalFactory
     {
         [MethodImpl(MethodImplOptions.Synchronized)]

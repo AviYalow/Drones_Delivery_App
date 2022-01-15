@@ -14,6 +14,9 @@ using BlApi;
 
 namespace BL
 {
+    /// <summary>
+    /// Simulator of drone travel
+    /// </summary>
     internal class Simulator
     {
 
@@ -21,7 +24,6 @@ namespace BL
         private Thread myThread;
         Stopwatch sw;
         double chargePerMiliSecond;
-
         private const double SPEED = 1.0;
         private const int DELAY = 1000;
         static Dictionary<uint, uint> keys = new();
@@ -65,6 +67,7 @@ namespace BL
 
                                         try
                                         {
+                                           
                                             if ((drone.ButrryStatus <= 20 || sendToCharge) && drone.ButrryStatus < 100)
                                             {
                                                 BaseStation base_ = new();
@@ -232,11 +235,20 @@ namespace BL
 
        
 
+          /// <summary>
+        /// Calculate the distance the drone did to the charge
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="speed"></param>
+        /// <returns></returns>
         private double distanse(double m, SpeedDrone speed)
         {
             return (sw.ElapsedMilliseconds - m)*500 * (((double)speed / (60.0 * 60.0 * 1000)));
         }
 
+        /// <summary>
+        /// Stop the timer, and reset him
+        /// </summary>
         private void stopWatch()
         {
             sw.Stop();
