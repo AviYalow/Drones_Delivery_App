@@ -32,7 +32,9 @@ namespace BlApi
 
 
                     drone.DroneStatus =baseStation.FreeState>0? DroneStatus.Maintenance : DroneStatus.Free;
-
+                    drone.LocationName = LocationName.Base;
+                    drone.LocationNext = LocationNext.None;
+                    drone.DistanseToNextLocation = 0;
                     Random random = new Random();
 
                     dalObj.AddDrone(new DO.Drone { SerialNumber = drone.SerialNumber, Model = (DO.DroneModel)drone.Model, WeightCategory = (DO.WeightCategories)drone.WeightCategory });
@@ -122,7 +124,11 @@ namespace BlApi
                         DroneStatus = drone.DroneStatus,
                         Location = drone.Location.Clone(),
                         ButrryStatus = drone.ButrryStatus.Value,
-                        PackageInTransfer = pacege
+                        PackageInTransfer = pacege,
+                        DistanseToNextLocation = drone.DistanseToNextLocation,
+                        LocationNext=drone.LocationNext,
+                        LocationName=drone.LocationName
+                        
                     };
                 }
                 catch (DO.ItemNotFoundException ex)

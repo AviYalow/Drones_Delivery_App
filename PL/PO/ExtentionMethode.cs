@@ -30,6 +30,9 @@ namespace PL
             drone.SerialNumber = model.SerialNumber;
 
             drone.WeightCategory = model.WeightCategory;
+            drone.DistanseToNextLocation = model.DistanseToNextLocation;
+            drone.LocationName = model.LocationName;
+            drone.LocationNext = model.LocationNext;
             return drone;
             
 

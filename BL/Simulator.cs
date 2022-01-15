@@ -33,7 +33,7 @@ namespace BL
             sw = new Stopwatch();
             Drone drone;
             bool sendToCharge = false;
-            double m = 0;
+            double m = 0,past=0;
             SpeedDrone speed=SpeedDrone.Free;
 
             try
@@ -67,18 +67,27 @@ namespace BL
                                         {
                                             if ((drone.ButrryStatus <= 20 || sendToCharge) && drone.ButrryStatus < 100)
                                             {
-                                                var base_ = bl.ClosestBase(drone.Location, true);
-                                                var path = distanseToButtry(m, SpeedDrone.Free);
+                                                BaseStation base_ = new();
+                                                if (drone.LocationNext==LocationNext.None)
+                                                base_ = bl.ClosestBase(drone.Location, true);
+                                                drone.LocationNext = LocationNext.Base;
+                                                
+                                                 past = distanse(m, SpeedDrone.Free);
                                                 var a = bl.Distans(drone.Location, base_.Location);
-                                                if (path >= a)
+                                                if (drone.DistanseToNextLocation -past<=0)
                                                 {
-                                                    drone.ButrryStatus -= bl.buttryDownWithNoPackege(endTravel(m, a));
-                                                    stopWatch();
-                                                    bl.DroneToCharge(drone.SerialNumber);
+                                                    sw.Stop();
+                                                    drone.ButrryStatus -= bl.buttryDownWithNoPackege(drone.DistanseToNextLocation);
+                                                    sw.Reset();
+                                                    
+                                                    bl.DroneToCharge(drone.SerialNumber, drone.DistanseToNextLocation);
+                                                    drone.DistanseToNextLocation = 0;
                                                 }
                                                 else
                                                 {
-                                                    changebuttry(bl, drone);
+                                                    drone.DistanseToNextLocation -= distanse(m, SpeedDrone.Free);
+                                                    changeDroneList(bl, drone);
+                                                   
                                                 }
                                                 m = sw.ElapsedMilliseconds;
                                             }
@@ -113,58 +122,67 @@ namespace BL
                                         }
                                         else
                                         {
-
-                                            bl.dronesListInBl.Find(x => x.SerialNumber == drone.SerialNumber).ButrryStatus = buttry;
+                                            drone.ButrryStatus = buttry;
+                                            changeDroneList(bl, drone);
                                         }
                                         break;
                                     case BO.DroneStatus.Work:
-                                        double past = 0;
+                                     
                                         if (drone.PackageInTransfer.InTheWay)
                                         {
 
                                             switch (drone.PackageInTransfer.WeightCatgory)
                                             {
                                                 case WeightCategories.Easy:
-                                                    past = clculetPast(SpeedDrone.Easy);
+                                              
+                                                    past= distanse(m, SpeedDrone.Easy);
                                                     speed = SpeedDrone.Easy;
                                                     break;
                                                 case WeightCategories.Medium:
-                                                    past = clculetPast(SpeedDrone.Medium);
+                                           
+                                                   past= distanse(m, SpeedDrone.Medium);
                                                     speed = SpeedDrone.Medium;
                                                     break;
                                                 case WeightCategories.Heavy:
-                                                    past = clculetPast(SpeedDrone.Heavy);
+                                        
+                                                   past= distanse(m, SpeedDrone.Heavy);
                                                     speed = SpeedDrone.Heavy;
                                                     break;
                                                 default:
                                                     break;
                                             }
 
-                                            if (past >= drone.PackageInTransfer.Distance)
+                                            if (drone.DistanseToNextLocation-past <= 0)
                                             {
                                                 stopWatch();
-                                                bl.PackegArrive(droneNumber, distanseToButtry(m,speed));
+                                                bl.PackegArrive(droneNumber, drone.DistanseToNextLocation);
+                                                drone.DistanseToNextLocation = 0;
                                             }
                                             else
-                                                drone.ButrryStatus -= bl.buttryDownPackegeDelivery(drone.PackageInTransfer, distanseToButtry(m, SpeedDrone.Free));
-
+                                            {
+                                                drone.ButrryStatus -= bl.buttryDownPackegeDelivery(drone.PackageInTransfer, distanse(m, speed));
+                                                drone.DistanseToNextLocation -= past;
+                                                changeDroneList(bl, drone);
+                                            }
                                         }
                                         else
                                         {
 
-                                            past = clculetPast(SpeedDrone.Free);
+                                            past = distanse(m, SpeedDrone.Free);
 
                                             var a = bl.Distans(drone.Location, drone.PackageInTransfer.Source);
-                                            if (past >= bl.Distans(drone.Location, drone.PackageInTransfer.Source))
+                                            if (drone.DistanseToNextLocation-past<=0)
                                             {
                                                 stopWatch();
-                                                bl.CollectPackegForDelivery(droneNumber, endTravel(m, a));
-
+                                             
+                                                bl.CollectPackegForDelivery(droneNumber, drone.DistanseToNextLocation);
+                                                drone.DistanseToNextLocation = 0;
                                             }
                                             else
                                             {
-                                                drone.ButrryStatus -= bl.buttryDownWithNoPackege(distanseToButtry(m, SpeedDrone.Free));
-                                                changebuttry(bl, drone);
+                                                drone.ButrryStatus -= bl.buttryDownWithNoPackege(distanse(m, SpeedDrone.Free));
+                                                drone.DistanseToNextLocation -= past;
+                                               changeDroneList(bl, drone);
                                             }
                                         }
                                         m = sw.ElapsedMilliseconds;
@@ -197,28 +215,26 @@ namespace BL
             catch (ItemNotFoundException)
             { keys.Remove(droneNumber); }
             catch (DroneTryToStartSecondeSimolatorException)
-            { throw new DroneTryToStartSecondeSimolatorException(droneNumber); }
+            { }
             catch (Exception) { }
         }
 
-        private static double endTravel(double m, double a)
+       
+
+        private  void changeDroneList(BlApi.BL bl, Drone drone)
         {
-            return a - (m) * ((double)SpeedDrone.Free / (60.0 * 60.0 * 1000));
+            var droneInList = bl.dronesListInBl.Find(x => x.SerialNumber == drone.SerialNumber);
+            droneInList.ButrryStatus = drone.ButrryStatus;
+            droneInList.DistanseToNextLocation = drone.DistanseToNextLocation;
+            droneInList.LocationNext = drone.LocationNext;
+            droneInList.LocationName = drone.LocationName;
         }
 
-        private static void changebuttry(BlApi.BL bl, Drone drone)
-        {
-            bl.dronesListInBl.Find(x => x.SerialNumber == drone.SerialNumber).ButrryStatus = drone.ButrryStatus;
-        }
+       
 
-        private double clculetPast(SpeedDrone speed)
+        private double distanse(double m, SpeedDrone speed)
         {
-            return (sw.ElapsedMilliseconds ) * ((double)speed / (60.0 * 60.0 * 1000));
-        }
-
-        private double distanseToButtry(double m, SpeedDrone speed)
-        {
-            return ((sw.ElapsedMilliseconds) - m) * (((double)speed / (60.0 * 60.0 * 1000)));
+            return (sw.ElapsedMilliseconds - m)*500 * (((double)speed / (60.0 * 60.0 * 1000)));
         }
 
         private void stopWatch()

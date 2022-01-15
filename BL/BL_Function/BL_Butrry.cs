@@ -28,15 +28,15 @@ namespace BlApi
             switch (packageInTransfer.WeightCatgory)
             {
                 case WeightCategories.Easy:
-                    battery_drop = ((distance / (double)SpeedDrone.Easy) / (double)ButrryPer.Minute);
+                    battery_drop = ((distance / ((double)SpeedDrone.Easy)) * (double)ButrryPer.Minute);
                     battery_drop *= easyElctric;
                     break;
                 case WeightCategories.Medium:
-                    battery_drop = ((distance / (double)SpeedDrone.Medium) / (double)ButrryPer.Minute);
+                    battery_drop = ((distance / ((double)SpeedDrone.Medium)) * (double)ButrryPer.Minute);
                     battery_drop *= mediomElctric;
                     break;
                 case WeightCategories.Heavy:
-                    battery_drop = ((distance / (double)SpeedDrone.Heavy) / (double)ButrryPer.Minute);
+                    battery_drop = ((distance / ((double)SpeedDrone.Heavy)) * (double)ButrryPer.Minute);
                     battery_drop *= heaviElctric;
                     break;
                 default:
@@ -58,7 +58,7 @@ namespace BlApi
             lock (dalObj)
             {
                 double distans = Distans(fromLocation, toLocation);
-                double buttry = ((distans / (double)SpeedDrone.Free)/ (double)ButrryPer.Minute) * freeElctric;
+                double buttry = ((distans / ((double)SpeedDrone.Free))* (double)ButrryPer.Minute) * freeElctric;
                 return buttry;
             }
         }
@@ -69,7 +69,8 @@ namespace BlApi
             lock (dalObj)
             {
                
-                double buttry = ((distance / (double)SpeedDrone.Free) / (double)ButrryPer.Minute) * freeElctric;
+                double buttry = ((distance / 
+                    ((double)SpeedDrone.Free) )* (double)ButrryPer.Minute) * freeElctric;
                 return buttry;
             }
         }
@@ -105,10 +106,14 @@ namespace BlApi
                         throw (new NoPlaceForChargeException(baseStation.SerialNum));
                     dalObj.DroneToCharge(droneNumber, baseStation.SerialNum);
                     drone.ButrryStatus -= buttry;
+                    drone.DistanseToNextLocation = 0;
+                    drone.LocationName = LocationName.Base;
                     drone.DroneStatus = DroneStatus.Maintenance;
                     drone.Location = baseStation.Location;
                     dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == droneNumber)] = drone;
-
+                   
+                    drone.LocationNext = LocationNext.None;
+                    
 
                 }
                 catch (DO.ItemNotFoundException ex)
@@ -215,7 +220,7 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         internal double droneChrgingAlredy(double span)
         {
-            var time = (span); var butrryPerMinute = (chargingPerMinute) / 60000;
+            var time = (span); var butrryPerMinute = chargingPerMinute / 1000;
             time *= butrryPerMinute;
             return time;
         }

@@ -57,7 +57,9 @@ namespace BlApi
                 { new FunctionErrorException("BatteryCalculationForFullShipping"); }
 
                 drone.Location = location;
-
+                    drone.LocationName = LocationName.SendClient;
+                    drone.LocationNext = LocationNext.GetinClient;
+                    drone.DistanseToNextLocation = Distans(location, ClientLocation(pacege.RecivedClient.Id));
                 dalObj.PackageCollected(pacege.SerialNum);
                 dronesListInBl[dronesListInBl.FindIndex(x => x.SerialNumber == droneNumber)] = drone;
             }
@@ -85,10 +87,15 @@ namespace BlApi
                 var packege = convertPackegeDalToPackegeInTrnansfer(dalObj.packegeByNumber(drone.NumPackage));
                 if (packege.InTheWay == false)
                     throw new PackegeNotAssctionOrCollectedException();
+            
                 drone.ButrryStatus -=buttryDownPackegeDelivery(packege,distanse);
+                
 
                 drone.Location = ClientLocation(packege.RecivedClient.Id).Clone();
-                drone.DroneStatus = DroneStatus.Free;
+                    drone.LocationName = LocationName.EndDelviry;
+                    drone.LocationNext = LocationNext.None;
+                    drone.DistanseToNextLocation = 0;
+                    drone.DroneStatus = DroneStatus.Free;
                 drone.NumPackage = 0;
                 packege.InTheWay = false;
                 dalObj.PackageArrived(packege.SerialNum);
@@ -143,6 +150,9 @@ namespace BlApi
                     if (returnPackege is null)
                         throw new DroneCantMakeDliveryException();
                     drone.NumPackage = returnPackege.Value.SerialNumber;
+                    
+                    drone.LocationNext = LocationNext.SendClient;
+                    drone.DistanseToNextLocation = Distans(drone.Location,ClientLocation(returnPackege.Value.SendClient));
                     drone.DroneStatus = DroneStatus.Work;
                     try
                     {

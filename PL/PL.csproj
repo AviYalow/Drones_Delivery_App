@@ -14,6 +14,7 @@
     <None Remove="BaseStationView.jpg" />
     <None Remove="clienticon.png" />
     <None Remove="depositphotos_70711715-stock-photo-quadrocopter-drone-delivering-package.jpg" />
+    <None Remove="drone-delivery-concept-model-package-box-blue-background-d-design-illustration-hd-image-concept-delivery-quadcopter-157633516.jpg" />
     <None Remove="Drone-Delivery.jpg" />
     <None Remove="Drone-Delivery.png" />
     <None Remove="droneDelivery.jpg" />
@@ -54,6 +55,7 @@
     <Resource Include="BaseStationView.jpg" />
     <Resource Include="clienticon.png" />
     <Resource Include="depositphotos_70711715-stock-photo-quadrocopter-drone-delivering-package.jpg" />
+    <Resource Include="drone-delivery-concept-model-package-box-blue-background-d-design-illustration-hd-image-concept-delivery-quadcopter-157633516.jpg" />
     <Resource Include="Drone-Delivery.jpg" />
     <Resource Include="Drone-Delivery.png" />
     <Resource Include="droneDelivery.jpg" />

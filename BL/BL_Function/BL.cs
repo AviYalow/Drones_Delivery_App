@@ -97,6 +97,7 @@ namespace BlApi
                                 new_drone.NumPackage = chcking_packege.SerialNumber;
                                 package = chcking_packege;
                                 new_drone.DroneStatus = DroneStatus.Work;
+                                 
                                 break;
                             }
                         }
@@ -111,23 +112,28 @@ namespace BlApi
                         //The location of the drone will be at the sender location
                         if (package.CollectPackageForShipment != null)
                         {
+                            new_drone.LocationName= LocationName.SendClient;
+                            new_drone.LocationNext =LocationNext.GetinClient;
                             new_drone.Location = ClientLocation(package.SendClient);
                             new_drone.NumPackage = package.SerialNumber;
                             min_butrry = buttryDownPackegeDelivery(packegeInTransferObject) +
                                buttryDownWithNoPackege(ClosestBase(ClientLocation(package.GetingClient)).Location, ClientLocation(package.GetingClient));
                             new_drone.ButrryStatus = random.Next((int)min_butrry + 1, 100);
+                            new_drone.DistanseToNextLocation = Distans(new_drone.Location, ClientLocation(package.GetingClient));
                         }
 
                         //If the package was associated but not collected the location
                         //Of the drone will be at the station closest to the sender
                         else if (package.PackageAssociation != null)
                         {
-
+                            new_drone.LocationName = LocationName.Base;
+                            new_drone.LocationNext = LocationNext.SendClient;
                             new_drone.Location = ClosestBase(ClientLocation(package.SendClient)).Location;
                             min_butrry = buttryDownWithNoPackege(new_drone.Location, ClientLocation(package.SendClient)) +
                                 buttryDownPackegeDelivery(packegeInTransferObject) +
                                 buttryDownWithNoPackege(ClosestBase(ClientLocation(package.GetingClient)).Location, ClientLocation(package.GetingClient));
                             new_drone.ButrryStatus = random.Next((int)min_butrry + 1, 100);
+                            new_drone.DistanseToNextLocation = Distans(new_drone.Location, ClientLocation(package.SendClient));
 
                         }
 
@@ -142,6 +148,8 @@ namespace BlApi
                         //dorne lottery in mainteance
                         if (new_drone.DroneStatus == DroneStatus.Maintenance)
                         {
+                            new_drone.LocationName = LocationName.Base;
+                            new_drone.LocationNext = LocationNext.None;
                             new_drone.ButrryStatus = random.Next(21);
                             DO.Base_Station base_;
                             int safe = 5;
@@ -156,19 +164,22 @@ namespace BlApi
                             dalObj.DroneToCharge(new_drone.SerialNumber, base_.baseNumber);
                             new_drone.NumPackage = 0;
                             new_drone.Location = BaseLocation(base_.baseNumber);
-
+                            new_drone.DistanseToNextLocation = 0;
                         }
 
                         //drone lottery in free
                         else if (new_drone.DroneStatus == DroneStatus.Free)
                         {
+                            
+                            new_drone.LocationNext = LocationNext.None;
                             //lottry drone what is lost shipment
                             int k = random.Next(dalObj.PackegeList(x => x.PackageArrived != null).Count());
                             DO.Package package1 = dalObj.PackegeList(x => x.PackageArrived != null).Skip(k).FirstOrDefault();
                             new_drone.NumPackage = 0;
                             new_drone.Location = ClientLocation(package1.GetingClient);
+                            new_drone.LocationName = LocationName.EndDelviry;
                             new_drone.ButrryStatus = random.Next((int)buttryDownWithNoPackege(new_drone.Location, ClosestBase(ClientLocation(package1.GetingClient)).Location) + 1, 100);
-
+                            new_drone.DistanseToNextLocation = 0;
                         }
                         for (int p = 0; p < dronesListInBl.Count; p++)
                         {

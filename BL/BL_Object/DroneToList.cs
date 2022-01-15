@@ -20,6 +20,10 @@ namespace BO
         public DroneStatus DroneStatus { get; set; }
         public Location Location { get; set; }
         public uint NumPackage { get; set; }
+        public LocationName LocationName { get; set; }
+        public LocationNext LocationNext { get; set; }
+        public double DistanseToNextLocation { get; set; }
+
 
         public override string ToString()
         {

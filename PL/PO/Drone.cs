@@ -13,7 +13,7 @@ namespace PO
     /// <summary>
     /// Drone
     /// </summary>
-    public class DroneItemModel :  INotifyPropertyChanged
+    public class DroneItemModel : INotifyPropertyChanged
     {
 
         static BO.Drone Drone = new();
@@ -26,6 +26,9 @@ namespace PO
         DroneStatus droneStatus;
         LocationModel location;
         PackageInTransferModel packageInTransfer;
+        LocationName locationName;
+        LocationNext locationNext;
+        double distanseToNextLocation;
         public uint SerialNumber
         {
             get
@@ -90,21 +93,21 @@ namespace PO
         {
             get
             {
-              
+
                 return butrryStatus;
             }
             set
             {
                 butrryStatus = value;
-                
-                   
-                    if (PropertyChanged != null)
+
+
+                if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("butrryStatus"));
                 }
             }
         }
-     
+
 
         public DroneStatus DroneStatus
         {
@@ -137,11 +140,56 @@ namespace PO
             }
         }
 
+        public LocationName LocationName
+        {
+            get { return locationName; }
+            set
+            {
+                locationName = value;
+
+
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("locationName"));
+                }
+            }
+        }
+        public LocationNext LocationNext
+        {
+            get
+            { return locationNext; }
+            set
+            {
+                locationNext = value;
+
+
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("locationNext"));
+                }
+            }
+        }
+        public double DistanseToNextLocation
+        {
+            get
+            { return distanseToNextLocation; }
+            set
+            {
+                distanseToNextLocation = value;
+
+
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("distanseToNextLocation"));
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
 
 
-  
+
         public static implicit operator BO.Drone(DroneItemModel model)
         {
             if (model is null)
@@ -181,5 +229,5 @@ namespace PO
 
     }
 
-  
+
 }

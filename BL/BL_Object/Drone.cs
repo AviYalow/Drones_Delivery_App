@@ -20,6 +20,9 @@ namespace BO
         public double ButrryStatus { get; set; }
         public DroneStatus DroneStatus { get; set; }
         public Location Location { get; set; }
+        public LocationName LocationName { get; set; }
+        public LocationNext LocationNext { get; set; }
+        public double DistanseToNextLocation { get; set; }
         public override string ToString()
         {
             String print = "";
@@ -31,6 +34,9 @@ namespace BO
             print += $"Butrry status: {ButrryStatus},\n";
             print += $"Drone status: {DroneStatus},\n";
             print += $"Location:\n{Location}\n";
+            print += $"The location is:{LocationName}\n";
+            print += $"The Next location is {LocationNext}\n";
+            print += $"The distance to next location is: {DistanseToNextLocation} KM\n";
            
             return print;
         }

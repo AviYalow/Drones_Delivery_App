@@ -7,7 +7,7 @@
          xmlns:materialdesignin="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
          Closing="Window_Closing"
-        Title="DroneWindow" Height="450" Width="800"
+        Title="DroneWindow" Height="500" Width="850"
          
    Icon="/DroneIcon.png"  ResizeMode="NoResize"  
      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -23,7 +23,7 @@
         <ImageBrush x:Key="Quadcopter" ImageSource="/Amazon-Drone.jpg" />
         <ImageBrush x:Key="Cargo" ImageSource="/Drone-Delivery.jpg" />
         <ImageBrush x:Key="BigContainers" ImageSource="/Drone-Delivery.png" />
-        <ImageBrush x:Key="FlyingSky" ImageSource="/louis-michel-lebeau-deli-04.jpg" />
+        <ImageBrush x:Key="FlyingSky" ImageSource="/drone-delivery-concept-model-package-box-blue-background-d-design-illustration-hd-image-concept-delivery-quadcopter-157633516.jpg" />
     </Window.Resources>
     <Window.Style>
         <Style TargetType="{x:Type Window}">
@@ -134,6 +134,9 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                         
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -145,11 +148,17 @@
                     <TextBlock Grid.Column="0" Grid.Row="1" Text="Butrry status:" FontWeight="Bold"/>
                     
                     <TextBlock Grid.Column="0" Grid.Row="2" Text="Location:" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Location Name:" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Next Location:" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="0" Grid.Row="5" Text="Distance to next location:" FontWeight="Bold"/>
 
                     <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=PackageInTransfer}"  MouseLeftButtonDown="TextBlock_PreviewMouseRightButtonDownPackegeWindow" />
                     <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=ButrryStatus, StringFormat={}{0:f}%}" />
                     
                     <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Path=Location}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Path=LocationName}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Path=LocationNext}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding Path=DistanseToNextLocation}"/>
                 </Grid>
             </Label>
 
