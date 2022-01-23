@@ -19,44 +19,44 @@ using BlApi;
 
 namespace PL
 {
-  public  enum StatusPackegeWindow {NotClient,SendClient,GetingClient }
+    public enum StatusPackegeWindow { NotClient, SendClient, GetingClient }
     /// <summary>
     /// Interaction logic for PackageView.xaml
     /// </summary>
     public partial class PackageView : Window
     {
         BlApi.IBL bl;
-        PackageModel package=new();
-        
+        PackageModel package = new();
+
         PackageStatus packageStatus;
         StatusPackegeWindow changFromClient;
         ObservableCollection<PackageToList> lists;
         bool clientMode;
         private int _noOfErrorsOnScreen = 0;
 
-        public PackageView(BlApi.IBL bL,string SendClient="", StatusPackegeWindow change =StatusPackegeWindow. NotClient, bool clientMode = false)
+        public PackageView(BlApi.IBL bL, string SendClient = "", StatusPackegeWindow change = StatusPackegeWindow.NotClient, bool clientMode = false)
         {
             try
             {
                 InitializingCtor(bL, clientMode, change);
                 DataToCmb(SendClient);
-                
+
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
         }
-        public PackageView(BlApi.IBL bL, uint packegeNum, StatusPackegeWindow change = StatusPackegeWindow.NotClient ,bool clientMode=false)
+        public PackageView(BlApi.IBL bL, uint packegeNum, StatusPackegeWindow change = StatusPackegeWindow.NotClient, bool clientMode = false)
         {
             try
             {
-                InitializingCtor(bL,clientMode,change);
+                InitializingCtor(bL, clientMode, change);
                 packegeFromDialog(packegeNum);
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
 
         }
-        public PackageView(BlApi.IBL bL, ObservableCollection<PackageToList> lists, uint packegeNum=0)
+        public PackageView(BlApi.IBL bL, ObservableCollection<PackageToList> lists, uint packegeNum = 0)
         {
             try
             {
@@ -71,12 +71,12 @@ namespace PL
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
         }
-        private void InitializingCtor(IBL bL, bool mode = false,StatusPackegeWindow status=StatusPackegeWindow.NotClient)
+        private void InitializingCtor(IBL bL, bool mode = false, StatusPackegeWindow status = StatusPackegeWindow.NotClient)
         {
             InitializeComponent();
             this.clientMode = false;
             changFromClient = StatusPackegeWindow.NotClient;
-           this. bl = bL;
+            this.bl = bL;
         }
 
 
@@ -84,11 +84,11 @@ namespace PL
         {
             try
             {
-                
-                  bl.ShowPackage(serialNumber).packegeBlToMOdel(package);
+
+                bl.ShowPackage(serialNumber).packegeBlToMOdel(package);
                 WeightCmb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
                 this.DataContext = package;
-               
+
                 AddGrid.Visibility = Visibility.Collapsed;
                 UpdateGrid.Visibility = Visibility.Visible;
                 statusSelectorSurce();
@@ -105,13 +105,13 @@ namespace PL
             {
                 packageStatus = PackageStatus.Arrived;
                 NextModeButton.Visibility = Visibility.Collapsed;
-                
-               
+
+
             }
             else if (package.CollectPackage != null)
             {
                 packageStatus = (PackageStatus.Collected);
-                if(changFromClient==StatusPackegeWindow.SendClient)
+                if (changFromClient == StatusPackegeWindow.SendClient)
                 {
                     NextModeButton.Visibility = Visibility.Collapsed;
                 }
@@ -120,7 +120,7 @@ namespace PL
             else if (package.PackageAssociation != null)
             {
                 packageStatus = (PackageStatus.Assign);
-                if (changFromClient==StatusPackegeWindow.GetingClient)
+                if (changFromClient == StatusPackegeWindow.GetingClient)
                 {
                     NextModeButton.Visibility = Visibility.Collapsed;
                 }
@@ -130,8 +130,8 @@ namespace PL
             {
                 packageStatus = (PackageStatus.Create);
                 NextModeButton.Visibility = Visibility.Collapsed;
-                if(changFromClient != StatusPackegeWindow.GetingClient)
-                DeleteButton.Visibility = Visibility.Visible;
+                if (changFromClient != StatusPackegeWindow.GetingClient)
+                    DeleteButton.Visibility = Visibility.Visible;
             }
             DronestatuseLabel.DataContext = packageStatus;
 
@@ -143,22 +143,22 @@ namespace PL
             {
                 WeightCmb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
                 AddGrid.Visibility = Visibility.Visible;
-                
-               
-                if(SendClient!="")
+
+
+                if (SendClient != "")
                 {
                     uint id;
-                    uint.TryParse(SendClient,out id);
-                    package.SendClient =  bl.ClientInPackagesList().FirstOrDefault(x => x.Id == id);
+                    uint.TryParse(SendClient, out id);
+                    package.SendClient = bl.ClientInPackagesList().FirstOrDefault(x => x.Id == id);
                     SendClientCMB.Items.Add(package.SendClient);
-                 SendClientCMB.SelectedItem = SendClientCMB.Items[0];
+                    SendClientCMB.SelectedItem = SendClientCMB.Items[0];
 
                 }
                 else
                     SendClientCMB.ItemsSource = bl.ClientInPackagesList();
                 DataContext = package;
                 ResiveClientCMB.ItemsSource = bl.ClientInPackagesList();
-               
+
                 PraiyurtyCMB.ItemsSource = Enum.GetValues(typeof(Priority));
                 WeightCmb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             }
@@ -176,10 +176,10 @@ namespace PL
             try
             {
                 uint packegeNumber = bl.AddPackege(package);
-             
+
                 MessageBox.Show($"Packege number:{packegeNumber } Add!");
-                if(lists!=null)
-               lists.Add(new PackageToList { Drone = false, packageStatus = PackageStatus.Create, priority = package.Priority, RecivedClient = package.RecivedClient.Name, SendClient = package.SendClient.Name, SerialNumber = packegeNumber, WeightCategories = package.WeightCatgory });
+                if (lists != null)
+                    lists.Add(new PackageToList { Drone = false, packageStatus = PackageStatus.Create, priority = package.Priority, RecivedClient = package.RecivedClient.Name, SendClient = package.SendClient.Name, SerialNumber = packegeNumber, WeightCategories = package.WeightCatgory });
                 packegeFromDialog(packegeNumber);
             }
             catch (Exception ex)
@@ -206,9 +206,9 @@ namespace PL
                 }
                 else
                     return;
-                if(lists != null)
-                bl.PackageToLists().ConvertIenmurbleToObserve(lists);
-               
+                if (lists != null)
+                    bl.PackageToLists().ConvertIenmurbleToObserve(lists);
+
                 packegeFromDialog(package.SerialNumber);
 
 
@@ -222,14 +222,14 @@ namespace PL
 
         private void SirialNumberDroneLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-          
-          if (changFromClient != StatusPackegeWindow.NotClient|| clientMode)
-                {
+
+            if (changFromClient != StatusPackegeWindow.NotClient || clientMode)
+            {
                 return;
-                }
+            }
             try
             {
-               
+
                 new DroneWindow(bl, package.Drone.SerialNum).ShowDialog();
                 packegeFromDialog(package.SerialNumber);
             }
@@ -247,7 +247,8 @@ namespace PL
                 MessageBox.Show($"Packge number{package.SerialNumber} deleted!");
                 bl.PackageToLists().ConvertIenmurbleToObserve(lists);
                 this.Close();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "ERROR");
             }
@@ -288,5 +289,5 @@ namespace PL
                 _noOfErrorsOnScreen--;
         }
     }
- 
+
 }

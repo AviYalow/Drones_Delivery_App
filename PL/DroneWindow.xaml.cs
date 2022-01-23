@@ -97,7 +97,7 @@ namespace PL
                 {
                     if (updeat)
                           bl.GetDrone(droneFromListView).dronefromBl(drone);
-                  //  DataContext = drone;
+              
                     TitelDroneLabel.Content = "Updte Drone Window";
                     droneModel = drone.Model;
                     addDrone = false;
@@ -185,54 +185,7 @@ namespace PL
 
         }
 
-        private void SirialNumberTextBox_PreviewKeyUp(object sender, KeyEventArgs e)
-        {
-            TextBox text = sender as TextBox;
-            if (text == null) return;
-            if (e == null) return;
-            if (text.Text.All(x => x >= '0' && x <= '9'))
-            {
-                ErrorMassegeLabel.Visibility = Visibility.Collapsed;
-                SirialNumberTextBox.Background = Brushes.White;
-                OkButton.IsEnabled = true;
-            }
-            if (text.Text != "0" || text.Text != "")
-            {
-                //InputMissingSirialNumberLabel.Visibility = Visibility.Collapsed;
-                SirialNumberTextBox.BorderBrush = Brushes.White;
-            }
-
-            //allow get out of the text box
-            if (e.Key == Key.Enter || e.Key == Key.Return || e.Key == Key.Tab)
-                return;
-
-            //allow list of system keys (add other key here if you want to allow)
-            if (e.Key == Key.Escape || e.Key == Key.Back || e.Key == Key.Delete ||
-                e.Key == Key.CapsLock || e.Key == Key.LeftShift || e.Key == Key.Home || e.Key == Key.End ||
-                e.Key == Key.Insert || e.Key == Key.Down || e.Key == Key.Right || e.Key == Key.NumPad0
-                || e.Key == Key.NumPad1 || e.Key == Key.NumPad2 || e.Key == Key.NumPad3 || e.Key == Key.NumPad4 || e.Key == Key.NumPad5
-                || e.Key == Key.NumPad6 || e.Key == Key.NumPad7 || e.Key == Key.NumPad8 || e.Key == Key.NumPad9
-                )
-                return;
-
-            char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
-
-            //allow control system keys
-            if (Char.IsControl(c)) return;
-
-            //allow digits (without Shift or Alt)
-            if (Char.IsDigit(c))
-                if (!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightAlt)))
-                    return; //let this key be written inside the textbox
-
-            //forbid letters a
-            //nd signs (#,$, %, ...)
-            ErrorMassegeLabel.Visibility = Visibility.Visible;
-            SirialNumberTextBox.Background = Brushes.Red;
-            OkButton.IsEnabled = false;
-
-            return;
-        }
+     
 
         private void WeightChoseCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

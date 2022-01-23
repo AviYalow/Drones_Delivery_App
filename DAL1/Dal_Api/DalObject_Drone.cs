@@ -154,21 +154,7 @@ namespace Dal
                 throw (new DO.ItemNotFoundException("drone", drone.SerialNumber));
         }
 
-        /// <summary>
-        /// return how much the drone is in charge
-        /// </summary>
-        /// <param name="drone"> a given drone</param>
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public TimeSpan TimeInCharge(uint drone)
-        {
-            int i = DataSource.droneInCharge.FindIndex(x => x.IdDrone == drone);
-            if (i==-1)
-            {
-                throw (new ItemNotFoundException("drone", drone));
-            }
-            return (DateTime.Now - DataSource.droneInCharge[i].EntringDrone);
-
-        }
+      
 
         /// <summary>
         /// Release a drone from charging

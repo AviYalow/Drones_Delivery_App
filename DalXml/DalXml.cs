@@ -67,6 +67,12 @@ namespace Dal
         string DroneInChargePath = @"BatteryLoadXml.xml";
 
         #endregion
+        #region function
+        #region Add
+        /// <summary>
+        /// Adding a new client
+        /// </summary>
+        /// <param name="client"> client to add</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddClient(Client client)
         {
@@ -93,8 +99,10 @@ namespace Dal
 
             XMLTools.SaveListToXMLElement(ClientsRootElem, ClientsPath);
         }
-
-        
+        /// <summary>
+        /// Adding a new drone
+        /// </summary>
+        /// <param name="drone">drone to add</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone drone)
         {
@@ -118,6 +126,11 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer(drones, DronesPath);
 
         }
+        /// <summary>
+        /// Adding a new package
+        /// </summary>
+        /// <param name="package"></param>
+        /// <returns>Returns the serial number of the new package</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public uint AddPackage(Package package)
         {
@@ -154,6 +167,14 @@ namespace Dal
             return package_num - 1;
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
+        /// <summary>
+        ///Adding a new base station
+        /// </summary>
+        /// <param name="base_num">The base station number </param>
+        /// <param name="name"> The name ot the station </param>
+        /// <param name="numOfCharging">The amount of charging stations at the station </param>
+        /// <param name="latitude">Latitude of the station</param>
+        /// <param name="longitude">Longitude of the station</param>
         public void AddStation(Base_Station base_Station)
         {
             List<Base_Station> base_Stations = XMLTools.LoadListFromXMLSerializer<Base_Station>(BaseStationPath);
@@ -164,74 +185,155 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer(base_Stations, BaseStationPath);
 
         }
+        #endregion
+        #region Update
+        /// <summary>
+        /// Release a drone from charging
+        /// </summary>
+        /// <param name="drone"> drone number</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public Base_Station BaseStationByNumber(uint baseNum)
-        {
-            List<Base_Station> base_Stations = XMLTools.LoadListFromXMLSerializer<Base_Station>(BaseStationPath);
-
-            if (!base_Stations.Any(x => x.baseNumber == baseNum))
-                throw (new ItemNotFoundException("Base station", baseNum));
-            return base_Stations[base_Stations.FindIndex(x => x.baseNumber == baseNum)];
-
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<Base_Station> BaseStationList(Predicate<Base_Station> predicate)
-        {
-            List<Base_Station> base_Stations = XMLTools.LoadListFromXMLSerializer<Base_Station>(BaseStationPath);
-
-            return from base_ in base_Stations
-                   where predicate(base_)
-                   select base_;
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<BatteryLoad> ChargingDroneList(Predicate<BatteryLoad> predicate)
+        public void FreeDroneFromCharge(uint drone)
         {
             List<BatteryLoad> droneInCharge = XMLTools.LoadListFromXMLSerializer<BatteryLoad>(DroneInChargePath);
 
-            return from x in droneInCharge
-                   where predicate(x)
-                   select x;
+            BatteryLoad? droneInChargeItem = droneInCharge.Find(x => x.IdDrone == drone);
+            if (droneInChargeItem is null)
+                throw (new ItemNotFoundException("drone", drone));
+            Base_Station base_ = BaseStationByNumber(droneInChargeItem.Value.idBaseStation);
+            if (base_.baseNumber == 0)
+                throw (new ItemNotFoundException("Base Station", droneInChargeItem.Value.idBaseStation));
+            base_.NumberOfChargingStations++;
+            UpdateBase(base_);
+
+            droneInCharge.Remove(droneInChargeItem.Value);
+
+            //  int i = droneInCharge.FindIndex(x => x.IdDrone == drone);
+            //  if (i == -1)
+            //      throw (new ItemNotFoundException("drone", drone));
+            //      droneInCharge.RemoveAt(i);
+            XMLTools.SaveListToXMLSerializer(droneInCharge, DroneInChargePath);
         }
+        /// <summary>
+        /// Update that package has arrived at destination
+        /// </summary>
+        /// <param name="packageNumber">serial number of the package</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public Client CilentByNumber(uint id)
+        public void PackageArrived(uint packageNumber)
         {
-           // List<Client> clients = XMLTools.LoadListFromXMLSerializer<Client>(ClientsPath);
+            List<Package> packages = XMLTools.LoadListFromXMLSerializer<Package>(PackagesPath);
+            int i = packages.FindIndex(x => x.SerialNumber == packageNumber);
+            if (i == -1)
+                throw (new ItemNotFoundException("package", packageNumber));
+
+            Package package = packages[i];
+            package.PackageArrived = DateTime.Now;
+            packages[i] = package;
+
+            XMLTools.SaveListToXMLSerializer(packages, PackagesPath);
+        }
+        /// <summary>
+        /// Updated package collected
+        /// </summary>
+        /// <param name="packageNumber">serial number of the package</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void PackageCollected(uint packageNumber)
+        {
+            List<Package> packages = XMLTools.LoadListFromXMLSerializer<Package>(PackagesPath);
+
+            int i = packages.FindIndex(x => x.SerialNumber == packageNumber);
+            if (i == -1)
+                throw (new ItemNotFoundException("package", packageNumber));
+
+
+            Package package = packages[i];
+            package.CollectPackageForShipment = DateTime.Now;
+            packages[i] = package;
+            XMLTools.SaveListToXMLSerializer(packages, PackagesPath);
+        }
+        /// <summary>
+        /// update fileds at a given base station
+        /// </summary>
+        /// <param name="base_"> a given base station </param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void UpdateBase(Base_Station base_)
+        {
+            List<Base_Station> base_Stations = XMLTools.LoadListFromXMLSerializer<Base_Station>(BaseStationPath);
+
+            int i = base_Stations.FindIndex(x => x.baseNumber == base_.baseNumber);
+            if (i == -1)
+                throw (new DO.ItemNotFoundException("Base Station", base_.baseNumber));
+            else
+                base_Stations[i] = base_;
+
+            XMLTools.SaveListToXMLSerializer(base_Stations, BaseStationPath);
+
+        }
+        /// <summary>
+        /// update fileds at a given client
+        /// </summary>
+        /// <param name="client"> a given client </param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void UpdateClient(Client client)
+        {
            
             XElement ClientsRootElem = XMLTools.LoadListFromXMLElement(ClientsPath);
             XElement err = (from item in ClientsRootElem.Elements()
-                            where ((item.Element("Id").Value.CompareTo(id.ToString()) == 0))
+                            where ((item.Element("Id").Value.CompareTo(client.Id.ToString()) == 0) && (item.Element("Active").Value.CompareTo("true") == 0))
                             select item).FirstOrDefault();
-           
 
-            if (err==null)
-                throw (new ItemNotFoundException("client", id));
-
-
-            return new Client
+            if (err == null)
+                throw (new DO.ItemNotFoundException("client", client.Id));
+            else
             {
-                Id = uint.Parse(err.Element("Id").Value),
-                Name = err.Element("Name").Value,
-                PhoneNumber = err.Element("PhoneNumber").Value,
-                Longitude = double.Parse(err.Element("Longitude").Value),
-                Latitude = double.Parse(err.Element("Latitude").Value),
-                Active = bool.Parse(err.Element("Active").Value)
-            };
-           
+                err.Element("Id").Value = client.Id.ToString();
+                err.Element("Name").Value = client.Name;
+                err.Element("PhoneNumber").Value = client.PhoneNumber;
+                err.Element("Longitude").Value = client.Longitude.ToString();
+                err.Element("Latitude").Value = client.Latitude.ToString();
+                err.Element("Active").Value = client.Active.ToString();
+            }
+
+            XMLTools.SaveListToXMLElement(ClientsRootElem, ClientsPath);
+
 
         }
+        /// <summary>
+        /// update fileds at a given drone
+        /// </summary>
+        /// <param name="drone"> a given drone</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<Client> CilentList(Predicate<Client> predicate)
+        public void UpdateDrone(Drone drone)
         {
-            // List<Client> clients = XMLTools.LoadListFromXMLSerializer<Client>(ClientsPath);
+            List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DronesPath);
+            int index = drones.FindIndex(x => x.SerialNumber == drone.SerialNumber && x.Active);
+            if (index != -1)
+                drones[index] = drone;
+            else
+                throw (new DO.ItemNotFoundException("drone", drone.SerialNumber));
+            XMLTools.SaveListToXMLSerializer(drones, DronesPath);
 
-            XElement ClientsRootElem = XMLTools.LoadListFromXMLElement(ClientsPath);
-
-            return from item in ClientsRootElem.Elements()
-                   let s = CilentByNumber(uint.Parse(item.Element("Id").Value))
-                   where predicate(s)
-                   select s;
-           
         }
+        /// <summary>
+        /// Updating fields of a particular package
+        /// </summary>
+        /// <param name="package">particular package</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void UpdatePackege(Package package)
+        {
+            List<Package> packages = XMLTools.LoadListFromXMLSerializer<Package>(PackagesPath);
+            int i = packages.FindIndex(x => x.SerialNumber == package.SerialNumber);
+            if (i == -1)
+                throw (new DO.ItemNotFoundException("Packege", package.SerialNumber));
+            else
+                packages[i] = package;
+            XMLTools.SaveListToXMLSerializer(packages, PackagesPath);
+        }
+
+        /// <summary>
+        /// connect package to drone
+        /// </summary>
+        /// <param name="packageNumber">serial number of the package that needs 
+        /// to connect to drone </param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void ConnectPackageToDrone(uint packageNumber, uint drone_sirial_number)
         {
@@ -256,105 +358,11 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer(packages, PackagesPath);
             XMLTools.SaveListToXMLSerializer(drones, DronesPath);
         }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DeleteBase(uint sirial)
-        {
-            List<Base_Station> base_Stations = XMLTools.LoadListFromXMLSerializer<Base_Station>(BaseStationPath);
-
-
-            var baseDeleteNumber = base_Stations.FindIndex(x => x.baseNumber == sirial);
-            if (baseDeleteNumber == -1)
-                throw (new ItemNotFoundException("Base station", sirial));
-            var baseDelete = base_Stations[baseDeleteNumber];
-            baseDelete.Active = false;
-
-            base_Stations[baseDeleteNumber] = baseDelete;
-
-            XMLTools.SaveListToXMLSerializer(base_Stations, BaseStationPath);
-
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DeleteClient(uint id)
-        {
-           // List<Client> clients = XMLTools.LoadListFromXMLSerializer<Client>(ClientsPath);
-
-            XElement ClientsRootElem = XMLTools.LoadListFromXMLElement(ClientsPath);
-            XElement err = (from item in ClientsRootElem.Elements()
-                            where ((item.Element("Id").Value.CompareTo(id.ToString()) == 0) && (item.Element("Active").Value.CompareTo("true") == 0))
-                            select item).FirstOrDefault();
-
-
-            if (err==null)
-                throw (new ItemNotFoundException("client", id));
-
-            err.Element("Active").Value = "false";
-
-
-            XMLTools.SaveListToXMLElement(ClientsRootElem, ClientsPath);
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DeleteDrone(uint sirial)
-        {
-            List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DronesPath);
-
-            if (!drones.Any(x => x.SerialNumber == sirial))
-                throw (new ItemNotFoundException("drone", sirial));
-            for (int i = 0; i < drones.Count(); i++)
-            {
-                if (drones[i].SerialNumber == sirial)
-                {
-                    var drone = drones[i];
-                    drone.Active = false;
-                    drones[i] = drone;
-                    return;
-                }
-            }
-            XMLTools.SaveListToXMLSerializer(drones, DronesPath);
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DeletePackege(uint sirial)
-        {
-            List<Package> packages = XMLTools.LoadListFromXMLSerializer<Package>(PackagesPath);
-
-            int i = packages.FindIndex(x => x.SerialNumber == sirial);
-            if (i == -1)
-                throw (new ItemNotFoundException("package", sirial));
-            packages.Remove(packages[i]);
-            XMLTools.SaveListToXMLSerializer(packages, PackagesPath);
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public double Distance(double Longitude1, double Latitude1, double Longitude2, double Latitude2)
-        {
-            return DO.Point.Distance(Longitude1, Latitude1, Longitude2, Latitude2);
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public Drone DroneByNumber(uint droneNum)
-        {
-            List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DronesPath);
-
-            if (!drones.Any(x => x.SerialNumber == droneNum && x.Active))
-                throw (new ItemNotFoundException("drone", droneNum));
-
-            foreach (Drone item in drones)
-            {
-                if (item.SerialNumber == droneNum)
-                {
-                    return item;
-
-                }
-            }
-
-            return drones[0];
-
-          
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<Drone> DroneList()
-        {
-            List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DronesPath);
-
-            return drones.ToList<Drone>();
-        }
+        /// <summary>
+        /// send drone to charge
+        /// </summary>
+        /// <param name="drone"> drone number</param>
+        /// <param name="base_"> Base station number that the drone will be sent to it </param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DroneToCharge(uint drone, uint base_)
         {
@@ -389,74 +397,13 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer(droneInCharge, DroneInChargePath);
             XMLTools.SaveListToXMLSerializer(drones, DronesPath);
         }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<double> Elctrtricity()
-        {
-            
-
-            List<string> config = XMLTools.LoadListFromXMLSerializer<string>(@"DalXmlConfig.xml");
-            double[] temp = { double.Parse(config[0]), double.Parse(config[1]), double.Parse(config[2]),
-                     double.Parse(config[3]),double.Parse(config[4])};
-
-            double[] elctricity = new double[5];
-            elctricity[(int)ButturyLoad.Free] = temp[0];
-            elctricity[(int)ButturyLoad.Easy] = temp[1];
-            elctricity[(int)ButturyLoad.Medium] = temp[2];
-            elctricity[(int)ButturyLoad.Heavy] = temp[3];
-            elctricity[(int)ButturyLoad.Charging] =temp[4];
-            return elctricity;
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void FreeDroneFromCharge(uint drone)
-        {
-            List<BatteryLoad> droneInCharge = XMLTools.LoadListFromXMLSerializer<BatteryLoad>(DroneInChargePath);
-
-            BatteryLoad? droneInChargeItem = droneInCharge.Find(x => x.IdDrone == drone);
-            if (droneInChargeItem is null)
-                throw (new ItemNotFoundException("drone", drone));
-            Base_Station base_ = BaseStationByNumber(droneInChargeItem.Value.idBaseStation);
-            if (base_.baseNumber == 0)
-                throw (new ItemNotFoundException("Base Station", droneInChargeItem.Value.idBaseStation));
-            base_.NumberOfChargingStations++;
-            UpdateBase(base_);
-
-            droneInCharge.Remove(droneInChargeItem.Value);
-
-          //  int i = droneInCharge.FindIndex(x => x.IdDrone == drone);
-          //  if (i == -1)
-          //      throw (new ItemNotFoundException("drone", drone));
-          //      droneInCharge.RemoveAt(i);
-            XMLTools.SaveListToXMLSerializer(droneInCharge, DroneInChargePath);
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void PackageArrived(uint packageNumber)
-        {
-            List<Package> packages = XMLTools.LoadListFromXMLSerializer<Package>(PackagesPath);
-            int i = packages.FindIndex(x => x.SerialNumber == packageNumber);
-            if (i == -1)
-                throw (new ItemNotFoundException("package", packageNumber));
-
-            Package package = packages[i];
-            package.PackageArrived = DateTime.Now;
-            packages[i] = package;
-
-            XMLTools.SaveListToXMLSerializer(packages, PackagesPath);
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void PackageCollected(uint packageNumber)
-        {
-            List<Package> packages = XMLTools.LoadListFromXMLSerializer<Package>(PackagesPath);
-
-            int i = packages.FindIndex(x => x.SerialNumber == packageNumber);
-            if (i == -1)
-                throw (new ItemNotFoundException("package", packageNumber));
-
-
-            Package package = packages[i];
-            package.CollectPackageForShipment = DateTime.Now;
-            packages[i] = package;
-            XMLTools.SaveListToXMLSerializer(packages, PackagesPath);
-        }
+        #endregion
+        #region Recuirs
+        /// <summary>
+        /// Display packege data 
+        /// </summary>
+        /// <param name="packageNumber">Serial number of a particular package</param>
+        /// <returns> string of data</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Package packegeByNumber(uint packageNumber)
         {
@@ -467,6 +414,170 @@ namespace Dal
                 throw (new ItemNotFoundException("package", packageNumber));
             return packages[i];
         }
+        /// <summary>
+        /// Display base station data desired   
+        /// </summary>
+        /// <param name="baseNum">Desired base station number</param>
+        /// <returns> String of data </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public Base_Station BaseStationByNumber(uint baseNum)
+        {
+            List<Base_Station> base_Stations = XMLTools.LoadListFromXMLSerializer<Base_Station>(BaseStationPath);
+
+            if (!base_Stations.Any(x => x.baseNumber == baseNum))
+                throw (new ItemNotFoundException("Base station", baseNum));
+            return base_Stations[base_Stations.FindIndex(x => x.baseNumber == baseNum)];
+
+        }
+        /// <summary>
+        /// return a list of all the base stations
+        /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<Base_Station> BaseStationList(Predicate<Base_Station> predicate)
+        {
+            List<Base_Station> base_Stations = XMLTools.LoadListFromXMLSerializer<Base_Station>(BaseStationPath);
+
+            return from base_ in base_Stations
+                   where predicate(base_)
+                   select base_;
+        }
+        /// <summary>
+        /// return list of charging drones
+        /// </summary>
+        /// <returns>return list of charging drones</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<BatteryLoad> ChargingDroneList(Predicate<BatteryLoad> predicate)
+        {
+            List<BatteryLoad> droneInCharge = XMLTools.LoadListFromXMLSerializer<BatteryLoad>(DroneInChargePath);
+
+            return from x in droneInCharge
+                   where predicate(x)
+                   select x;
+        }
+        /// <summary>
+        /// Display client data desired 
+        /// </summary>
+        /// <param name="id">ID of desired client </param>
+        /// <returns> string of data </returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public Client CilentByNumber(uint id)
+        {
+            // List<Client> clients = XMLTools.LoadListFromXMLSerializer<Client>(ClientsPath);
+
+            XElement ClientsRootElem = XMLTools.LoadListFromXMLElement(ClientsPath);
+            XElement err = (from item in ClientsRootElem.Elements()
+                            where ((item.Element("Id").Value.CompareTo(id.ToString()) == 0))
+                            select item).FirstOrDefault();
+
+
+            if (err == null)
+                throw (new ItemNotFoundException("client", id));
+
+
+            return new Client
+            {
+                Id = uint.Parse(err.Element("Id").Value),
+                Name = err.Element("Name").Value,
+                PhoneNumber = err.Element("PhoneNumber").Value,
+                Longitude = double.Parse(err.Element("Longitude").Value),
+                Latitude = double.Parse(err.Element("Latitude").Value),
+                Active = bool.Parse(err.Element("Active").Value)
+            };
+
+
+        }
+        /// <summary>
+        ///return all clients
+        /// </summary>
+        /// <returns> list of client</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<Client> CilentList(Predicate<Client> predicate)
+        {
+            // List<Client> clients = XMLTools.LoadListFromXMLSerializer<Client>(ClientsPath);
+
+            XElement ClientsRootElem = XMLTools.LoadListFromXMLElement(ClientsPath);
+
+            return from item in ClientsRootElem.Elements()
+                   let s = CilentByNumber(uint.Parse(item.Element("Id").Value))
+                   where predicate(s)
+                   select s;
+
+        }
+        /// <summary>
+        /// clculate distans between two point 
+        /// </summary>
+        /// <param name="Longitude1"></param>
+        /// <param name="Latitude1"></param>
+        /// <param name="Longitude2"></param>
+        /// <param name="Latitude2"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public double Distance(double Longitude1, double Latitude1, double Longitude2, double Latitude2)
+        {
+            return DO.Point.Distance(Longitude1, Latitude1, Longitude2, Latitude2);
+        }
+        /// <summary>
+        /// Display drone data  
+        /// </summary>
+        /// <param name="droneNum"> drone number</param>
+        /// <returns> String of data</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public Drone DroneByNumber(uint droneNum)
+        {
+            List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DronesPath);
+
+            if (!drones.Any(x => x.SerialNumber == droneNum && x.Active))
+                throw (new ItemNotFoundException("drone", droneNum));
+
+            foreach (Drone item in drones)
+            {
+                if (item.SerialNumber == droneNum)
+                {
+                    return item;
+
+                }
+            }
+
+            return drones[0];
+
+
+        }
+        /// <summary>
+        /// return list of the drones
+        /// </summary>
+        /// <returns> return list of the drones</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<Drone> DroneList()
+        {
+            List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DronesPath);
+
+            return drones.ToList<Drone>();
+        }
+        /// <summary>
+        /// Returns how much electricity the drone needs:
+        /// 0. Available, 1. Light weight 2. Medium weight 3. Heavy 4. Charging per minute
+        /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<double> Elctrtricity()
+        {
+
+
+            List<string> config = XMLTools.LoadListFromXMLSerializer<string>(@"DalXmlConfig.xml");
+            double[] temp = { double.Parse(config[0]), double.Parse(config[1]), double.Parse(config[2]),
+                     double.Parse(config[3]),double.Parse(config[4])};
+
+            double[] elctricity = new double[5];
+            elctricity[(int)ButturyLoad.Free] = temp[0];
+            elctricity[(int)ButturyLoad.Easy] = temp[1];
+            elctricity[(int)ButturyLoad.Medium] = temp[2];
+            elctricity[(int)ButturyLoad.Heavy] = temp[3];
+            elctricity[(int)ButturyLoad.Charging] = temp[4];
+            return elctricity;
+        }
+
+        /// <summary>
+        /// return the list of all packages
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Package> PackegeList(Predicate<Package> predicate)
         {
@@ -477,82 +588,107 @@ namespace Dal
                    where predicate(x)
                    select x;
         }
+        /// <summary>
+        /// Returns a point in the form of degrees
+        /// </summary>
+        /// <param name="point"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string PointToDegree(double point)
         {
             return Point.Degree(point);
         }
+        #endregion
+        #region Delete
+
+        /// <summary>
+        /// delete a spsific base for list
+        /// </summary>
+        /// <param name="sirial"> Base Station number</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateBase(Base_Station base_)
+        public void DeleteBase(uint sirial)
         {
             List<Base_Station> base_Stations = XMLTools.LoadListFromXMLSerializer<Base_Station>(BaseStationPath);
 
-            int i = base_Stations.FindIndex(x => x.baseNumber == base_.baseNumber);
-            if (i == -1)
-                throw (new DO.ItemNotFoundException("Base Station", base_.baseNumber));
-            else
-                base_Stations[i] = base_;
+
+            var baseDeleteNumber = base_Stations.FindIndex(x => x.baseNumber == sirial);
+            if (baseDeleteNumber == -1)
+                throw (new ItemNotFoundException("Base station", sirial));
+            var baseDelete = base_Stations[baseDeleteNumber];
+            baseDelete.Active = false;
+
+            base_Stations[baseDeleteNumber] = baseDelete;
 
             XMLTools.SaveListToXMLSerializer(base_Stations, BaseStationPath);
 
         }
+        /// <summary>
+        /// delete a spsific client 
+        /// </summary>
+        /// <param name="id"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateClient(Client client)
+        public void DeleteClient(uint id)
         {
-            //List<Client> clients = XMLTools.LoadListFromXMLSerializer<Client>(ClientsPath);
-            //int index = clients.FindIndex(x => x.Id == client.Id && x.Active);
-            //if (index != -1)
-            //    clients[index] = client;
-            //else
-            //    throw (new DO.ItemNotFoundException("client", client.Id));
-            //XMLTools.SaveListToXMLSerializer(clients, ClientsPath);
+            // List<Client> clients = XMLTools.LoadListFromXMLSerializer<Client>(ClientsPath);
 
             XElement ClientsRootElem = XMLTools.LoadListFromXMLElement(ClientsPath);
             XElement err = (from item in ClientsRootElem.Elements()
-                            where ((item.Element("Id").Value.CompareTo(client.Id.ToString()) == 0) && (item.Element("Active").Value.CompareTo("true") == 0))
+                            where ((item.Element("Id").Value.CompareTo(id.ToString()) == 0) && (item.Element("Active").Value.CompareTo("true") == 0))
                             select item).FirstOrDefault();
 
-            if(err==null)
-                throw (new DO.ItemNotFoundException("client", client.Id));
-            else
-            {
-                err.Element("Id").Value = client.Id.ToString();
-                err.Element("Name").Value = client.Name;
-                err.Element("PhoneNumber").Value = client.PhoneNumber;
-                err.Element("Longitude").Value = client.Longitude.ToString();
-                err.Element("Latitude").Value = client.Latitude.ToString();
-                err.Element("Active").Value = client.Active.ToString();
-            }
+
+            if (err == null)
+                throw (new ItemNotFoundException("client", id));
+
+            err.Element("Active").Value = "false";
+
 
             XMLTools.SaveListToXMLElement(ClientsRootElem, ClientsPath);
-           
-
         }
+        /// <summary>
+        /// delete a spsific drone
+        /// </summary>
+        /// <param name="sirial"> drone number</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateDrone(Drone drone)
+        public void DeleteDrone(uint sirial)
         {
             List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DronesPath);
-            int index = drones.FindIndex(x => x.SerialNumber == drone.SerialNumber && x.Active);
-            if (index != -1)
-                drones[index] = drone;
-            else
-                throw (new DO.ItemNotFoundException("drone", drone.SerialNumber));
-            XMLTools.SaveListToXMLSerializer(drones, DronesPath);
 
+            if (!drones.Any(x => x.SerialNumber == sirial))
+                throw (new ItemNotFoundException("drone", sirial));
+            for (int i = 0; i < drones.Count(); i++)
+            {
+                if (drones[i].SerialNumber == sirial)
+                {
+                    var drone = drones[i];
+                    drone.Active = false;
+                    drones[i] = drone;
+                    return;
+                }
+            }
+            XMLTools.SaveListToXMLSerializer(drones, DronesPath);
         }
+        /// <summary>
+        /// delete a spsific packege
+        /// </summary>
+        /// <param name="sirial"> package number</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdatePackege(Package package)
+        public void DeletePackege(uint sirial)
         {
             List<Package> packages = XMLTools.LoadListFromXMLSerializer<Package>(PackagesPath);
-            int i = packages.FindIndex(x => x.SerialNumber == package.SerialNumber);
+
+            int i = packages.FindIndex(x => x.SerialNumber == sirial);
             if (i == -1)
-                throw (new DO.ItemNotFoundException("Packege", package.SerialNumber));
-            else
-                packages[i] = package;
+                throw (new ItemNotFoundException("package", sirial));
+            packages.Remove(packages[i]);
             XMLTools.SaveListToXMLSerializer(packages, PackagesPath);
         }
         #endregion
 
+
+
+        #endregion
+        #endregion
+   
     }
 
 }

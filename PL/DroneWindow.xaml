@@ -82,11 +82,13 @@
 
             </Grid.RowDefinitions>
             <Label Name="TitelDroneLabel" Content="Add Drone" FontSize="15" Foreground="#FF1432F0" Background="Transparent"/>
-            <TextBox x:Name="SirialNumberTextBox" Validation.Error="Error"  Margin="126,44,0,14"  TextWrapping="Wrap" Width="130"  PreviewKeyUp="SirialNumberTextBox_PreviewKeyUp" HorizontalAlignment="Left" Grid.RowSpan="2" BorderBrush="#FF0E1015"   >
+            <TextBox x:Name="SirialNumberTextBox" Validation.Error="Error"  Margin="126,44,0,14"  TextWrapping="Wrap" Width="130" HorizontalAlignment="Left" Grid.RowSpan="2" BorderBrush="#FF0E1015"   >
                 <TextBox.Text>
                     <Binding Path="SerialNumber" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
                         <Binding.ValidationRules>
                             <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            <local:MinusValidationRule ValidatesOnTargetUpdated="True"/>
+                            <local:InputERRORValidationRule ValidatesOnTargetUpdated="True"/>
                         </Binding.ValidationRules>
                     </Binding> 
                 </TextBox.Text>

@@ -22,13 +22,14 @@ namespace PL
     /// Interaction logic for ClientView.xaml
     /// </summary>
     public partial class ClientView : Window
+        
     {
         ClientModel client;
         IBL bl;
         bool clientMode;
         ObservableCollection<ClientToList> list;
         private int _noOfErrorsOnScreen = 0;
-
+        
         public ClientView(BlApi.IBL bL,bool clientView=false, ObservableCollection<ClientToList> lists = null)
         {
             InitializeComponent();
@@ -82,7 +83,7 @@ namespace PL
             
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             this.Closing += ClientView_Closing;
             this.Close();
@@ -243,6 +244,13 @@ namespace PL
                 _noOfErrorsOnScreen++;
             else
                 _noOfErrorsOnScreen--;
+        }
+
+        private void letitudeTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+          
+                ((TextBox)sender).SelectAll();
+            
         }
     }
 }

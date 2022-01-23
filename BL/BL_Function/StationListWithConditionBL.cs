@@ -13,8 +13,10 @@ namespace BlApi
     partial class BL : IBL
     {
 
+
+
         /// <summary>
-        /// show base station list 
+        /// show base station list
         /// </summary>
         /// <returns> base station list </returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -22,14 +24,15 @@ namespace BlApi
         {
             lock (dalObj)
             {
+
                 var base_ = from x in dalObj.BaseStationList(x => x.Active)
-                        select x.convertBaseInDalToBaseStationList(dalObj);
+                            select x.convertBaseInDalToBaseStationList(dalObj);
 
-            if (base_.Count() == 0)
-                return null;
+                if (base_.Count() == 0)
+                    return null;
 
-            return base_;
-        }
+                return base_;
+            }
         }
         /// <summary>
         /// return base station with free place for drone
@@ -41,11 +44,15 @@ namespace BlApi
             lock (dalObj)
             {
                 var base_ = from x in dalObj.BaseStationList(x => x.NumberOfChargingStations > 0 && x.Active)
-                        select x.convertBaseInDalToBaseStationList(dalObj);
+                            select x.convertBaseInDalToBaseStationList(dalObj);
 
-            return base_;
+                return base_;
+            }
         }
-        }
+        /// <summary>
+        /// get all base station include delted
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationToList> AllBaseStation()
         {
@@ -62,6 +69,6 @@ namespace BlApi
                 }
             }
         }
-        
+
     }
 }

@@ -18,6 +18,7 @@ namespace BlApi
         /// calculation the most collset base station to a particular location
         /// </summary>
         /// <param name="location"> particular location</param>
+        /// <param name="toCharge">if we locking base for charging</param>
         /// <returns> the most collset base station </returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation ClosestBase(Location location,bool toCharge=false)
@@ -100,6 +101,8 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddBase(BaseStation baseStation)
         {
+            chckingPoint(baseStation.Location);
+
             lock (dalObj)
             {
                 try
@@ -119,6 +122,17 @@ namespace BlApi
                     throw (new ItemFoundExeption(ex));
                 }
             }
+        }
+        /// <summary>
+        /// check if the locatiton is currect
+        /// </summary>
+        /// <param name="location"></param>
+        private static void chckingPoint(Location location)
+        {
+            if (Math.Abs(location.Latitude) > 90)
+                throw new InputErrorException();
+            if (Math.Abs(location.Longitude) > 180)
+                throw new InputErrorException();
         }
 
         /// <summary>

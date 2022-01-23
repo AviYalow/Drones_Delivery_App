@@ -24,8 +24,8 @@ namespace BL
         private Thread myThread;
         Stopwatch sw;
         double chargePerMiliSecond;
-        private const double SPEED = 1.0;
-        private const int DELAY = 1000;
+        private const double SPEED = 500;
+        private const double HOUER_TO_MILISECOUND = 60.0 * 60.0 * 1000;
         static Dictionary<uint, uint> keys = new();
         //private const double TIME_STEP = DELAY / 1000.0;
         //private const double STEP = VELOCITY / TIME_STEP;
@@ -247,7 +247,7 @@ namespace BL
         /// <returns></returns>
         private double distanse(double m, SpeedDrone speed)
         {
-            return (sw.ElapsedMilliseconds - m)*500 * (((double)speed / (60.0 * 60.0 * 1000)));
+            return (sw.ElapsedMilliseconds - m)*SPEED * (((double)speed / HOUER_TO_MILISECOUND));
         }
 
         /// <summary>

@@ -8,9 +8,13 @@
         mc:Ignorable="d"
         Title="PackagesList" Height="650" Width="1000"
     Icon="/DroneIcon.png"  ResizeMode="NoResize"
-    Closing="Window_Closing"
-    
-     Background="LightGreen">
+    Closing="Window_Closing">
+    <Window.Background>
+        <ImageBrush ImageSource="/packages-la-gi-1.jpg" />
+
+    </Window.Background>
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="55*"/>

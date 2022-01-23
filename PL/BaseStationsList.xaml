@@ -13,42 +13,45 @@
         Icon="/DroneIcon.png" ResizeMode="NoResize"
         Title="BaseStationsList" Height="750" Width="1200">
     <Window.Background>
-        <ImageBrush ImageSource="/Mastercard_Controlcenter.jpg"  />
+        <ImageBrush ImageSource="/baseImaege.png"  />
 
     </Window.Background>
     <Grid>
         <Grid>
-            <ListView x:Name="BaseListView" ItemsSource="{Binding}" Margin="0,150,0,106" Background="#FF28EB28"  Foreground="#DD2B00FF" MouseDoubleClick="BaseListView_MouseDoubleClick">
+            <ListView x:Name="BaseListView" ItemsSource="{Binding}" Margin="0,150,0,106"  Foreground="#DD2B00FF" MouseDoubleClick="BaseListView_MouseDoubleClick" Background="#FF33E433">
                 <ListView.View>
-                    <GridView x:Name="ListviewGridToDroneList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
+
+                    <GridView x:Name="ListviewGridToDroneList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee" >
                         <GridViewColumn  DisplayMemberBinding="{Binding Path=SerialNum}" x:Name="Serial"   >
                             <HeaderedContentControl x:Name="SerialNum"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
-                                <TextBox Text="Serial Number" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFF00EE" TextDecorations="Underline" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"/>
+                                <TextBox Text="Serial Number" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="Black"  TextDecorations="Underline" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"/>
                             </HeaderedContentControl>
                         </GridViewColumn>
                         <GridViewColumn  DisplayMemberBinding="{Binding Path=Name}" x:Name="NameGrid" >
                             <HeaderedContentControl x:Name="Name"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
-                                <TextBox Text="Name" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFF00EE" TextDecorations="Underline" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"/>
+                                <TextBox Text="Name" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="Black" TextDecorations="Underline" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"/>
                             </HeaderedContentControl>
                         </GridViewColumn>
                         <GridViewColumn  DisplayMemberBinding="{Binding Path=FreeState}" x:Name="FreeStateGrid"  >
                             <HeaderedContentControl x:Name="FreeState"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
-                                <TextBox Text="Free State" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFF00EE" TextDecorations="Underline" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"/>
+                                <TextBox Text="Free State" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="Black" TextDecorations="Underline" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"/>
                             </HeaderedContentControl>
                         </GridViewColumn>
                         <GridViewColumn  DisplayMemberBinding="{Binding Path=BusyState}" x:Name="BusyStateGrid"  >
                             <HeaderedContentControl x:Name="BusyState"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
-                                <TextBox Text="Busy State" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#BCFF00CA" TextDecorations="Underline" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"/>
+                                <TextBox Text="Busy State" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="Black" TextDecorations="Underline" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"/>
                             </HeaderedContentControl>
                         </GridViewColumn>
                         <GridViewColumn  DisplayMemberBinding="{Binding Path=Active}" x:Name="ActiveeGrid"  >
                             <HeaderedContentControl x:Name="Active"    MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" >
-                                <TextBox Text="Active Base Station" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="#FFF900FF" TextDecorations="Underline" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"/>
+                                <TextBox Text="Active Base Station" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Foreground="Black" TextDecorations="Underline" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"/>
                             </HeaderedContentControl>
                         </GridViewColumn>
 
                     </GridView>
+                    
                 </ListView.View>
+             
                 <ListView.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.ContainerStyle>
@@ -79,7 +82,7 @@
                     </GroupStyle>
                 </ListView.GroupStyle>
             </ListView>
-            <ComboBox Name="ChoceGroupCmb" HorizontalAlignment="Left" Margin="225,93,0,0" VerticalAlignment="Top" Width="109" 
+            <ComboBox Name="ChoceGroupCmb" HorizontalAlignment="Left" Margin="483,92,0,0" VerticalAlignment="Top" Width="109" 
                 Style="{StaticResource MaterialDesignFloatingHintComboBox}"  materialDesign:TextFieldAssist.HasClearButton="True"
                 materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
                 materialDesign:ColorZoneAssist.Mode="SecondaryLight"
@@ -89,7 +92,7 @@
                 <ComboBoxItem Content="Regeluer"/>
                 <ComboBoxItem Content="Grupe"/>
             </ComboBox>
-            <ComboBox Name="FiletrListCmb" HorizontalAlignment="Left" Margin="29,93,0,0" VerticalAlignment="Top" Width="120"
+            <ComboBox Name="FiletrListCmb" HorizontalAlignment="Left" Margin="330,90,0,0" VerticalAlignment="Top" Width="120"
                 Style="{StaticResource MaterialDesignFloatingHintComboBox}"
 
   

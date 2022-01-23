@@ -25,8 +25,8 @@ namespace PL
     public partial class BaseStationsList : Window
     {
         IBL bl;
-       
-      ObservableCollection<BaseStationToList> lists;
+
+        ObservableCollection<BaseStationToList> lists;
         CollectionView view;
         PropertyGroupDescription groupDescription;
         public BaseStationsList(BlApi.IBL bL)
@@ -35,10 +35,6 @@ namespace PL
             bl = bL;
             lists = new ObservableCollection<BaseStationToList>(bl.BaseStationToLists());
             DataContext = lists;
-            
-            
-         
-         
             view = (CollectionView)CollectionViewSource.GetDefaultView(BaseListView.ItemsSource);
             groupDescription = new PropertyGroupDescription("FreeState");
         }
@@ -54,8 +50,8 @@ namespace PL
         {
             if (BaseListView.SelectedItem != null)
             {
-                new BaseStationView(bl, (BaseStationToList)BaseListView.SelectedItem,lists).Show();
-                
+                new BaseStationView(bl, (BaseStationToList)BaseListView.SelectedItem, lists).Show();
+
             }
         }
 
@@ -69,10 +65,9 @@ namespace PL
             HeaderedContentControl control = sender as HeaderedContentControl;
             try
             {
-                
-             bl.SortList(control.Name,lists).ConvertIenmurbleToObserve(lists);
-         
-                
+
+                bl.SortList(control.Name, lists).ConvertIenmurbleToObserve(lists);
+
             }
             catch (Exception ex)
             {
@@ -90,20 +85,20 @@ namespace PL
             {
                 if (FiletrListCmb.SelectedItem == BaseStationActive)
                 {
-                    bl.BaseStationToLists(). ConvertIenmurbleToObserve(lists);
-                   
-                    
+                    bl.BaseStationToLists().ConvertIenmurbleToObserve(lists);
+
+
                 }
                 if (FiletrListCmb.SelectedItem == BaseStationWithFreeChargingStation)
                 {
                     bl.BaseStationWhitFreeChargingStationToLists().ConvertIenmurbleToObserve(lists);
-                  
-        
+
+
                 }
                 else
                     bl.AllBaseStation().ConvertIenmurbleToObserve(lists);
-              
-             
+
+
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString(), "ERROR"); }
@@ -137,8 +132,8 @@ namespace PL
         {
             try
             {
-                new BaseStationView( bl,lists).Show();
-           
+                new BaseStationView(bl, lists).Show();
+
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
@@ -173,6 +168,8 @@ namespace PL
         {
             e.Cancel = false;
         }
+
+       
     }
 
 

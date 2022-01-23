@@ -23,7 +23,7 @@ using System.Threading.Tasks;
                 uint m = (uint)((point - d) * 60);
                 double mph = (double)((double)m / 60);
                 double s = (point - d - mph) * 3600;
-                return $"{d}\x00B0 {m}' {s}\"";
+                return $"{d}\x00B0 {m}' {s:0.0000}\"";
             }
 
             //A function that calculates distance at sea given two points

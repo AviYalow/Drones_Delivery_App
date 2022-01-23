@@ -214,13 +214,16 @@ namespace PO
             uint packege = model.PackageInTransfer is null ? 0 : model.packageInTransfer.SerialNum;
             return new DroneToList
             {
-                ButrryStatus = model.butrryStatus,
-                Model = model.model,
-                DroneStatus = model.droneStatus,
+                ButrryStatus = model.ButrryStatus,
+                Model = model.Model,
+                DroneStatus = model.DroneStatus,
                 Location = model.Location,
                 NumPackage = packege,
-                SerialNumber = model.serialNumber,
-                WeightCategory = model.WeightCategory
+                SerialNumber = model.SerialNumber,
+                WeightCategory = model.WeightCategory,
+                DistanseToNextLocation=model.DistanseToNextLocation,
+                LocationName=model.LocationName,
+                LocationNext=model.LocationNext
             };
 
         }

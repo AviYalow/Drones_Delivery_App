@@ -5,11 +5,74 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
-         Background="LightGreen"
+  Background="{StaticResource Borde}"
         mc:Ignorable="d"
       ResizeMode="NoResize"
         Closing="Window_Closing"
         Title="MainWindow" Height="640" Width="800" Icon="/DroneIcon.png">
+    <Window.Resources>
+       
+            <Storyboard x:Key="backToBord" >
+                <ObjectAnimationUsingKeyFrames Duration="0:0:0.300"  Storyboard.TargetProperty="Background" >
+                    <DiscreteObjectKeyFrame KeyTime="0:0" Value="{StaticResource Borde}"/>
+                </ObjectAnimationUsingKeyFrames>
+            </Storyboard>
+    
+    </Window.Resources>
+    <Window.Triggers>
+
+        <EventTrigger SourceName="DroneMainButton" RoutedEvent="Button.MouseEnter">
+            <BeginStoryboard>
+                <Storyboard >
+                    <ObjectAnimationUsingKeyFrames Duration="0:0:0.300"  Storyboard.TargetProperty="Background" >
+                        <DiscreteObjectKeyFrame KeyTime="0:0" Value="{StaticResource Drone}"/>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger SourceName="BaseStationsButton" RoutedEvent="Button.MouseEnter">
+            <BeginStoryboard>
+                <Storyboard >
+                    <ObjectAnimationUsingKeyFrames Duration="0:0:0.300"  Storyboard.TargetProperty="Background" >
+                        <DiscreteObjectKeyFrame KeyTime="0:0" Value="{StaticResource Base}"/>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger SourceName="ClientsButton" RoutedEvent="Button.MouseEnter">
+            <BeginStoryboard>
+                <Storyboard >
+                    <ObjectAnimationUsingKeyFrames Duration="0:0:0.300"  Storyboard.TargetProperty="Background" >
+                        <DiscreteObjectKeyFrame KeyTime="0:0" Value="{StaticResource client}"/>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger SourceName="PackagesButton" RoutedEvent="Button.MouseEnter">
+            <BeginStoryboard>
+                <Storyboard >
+                    <ObjectAnimationUsingKeyFrames Duration="0:0:0.300"  Storyboard.TargetProperty="Background" >
+                        <DiscreteObjectKeyFrame KeyTime="0:0" Value="{StaticResource Packege}"/>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger SourceName="ClientsButton" RoutedEvent="Button.MouseLeave" >
+            <BeginStoryboard Storyboard="{StaticResource backToBord}"/>
+        </EventTrigger>
+        <EventTrigger SourceName="PackagesButton" RoutedEvent="Button.MouseLeave" >
+            <BeginStoryboard Storyboard="{StaticResource backToBord}"/>
+        </EventTrigger>
+        <EventTrigger SourceName="BaseStationsButton" RoutedEvent="Button.MouseLeave" >
+            <BeginStoryboard Storyboard="{StaticResource backToBord}"/>
+        </EventTrigger>
+        <EventTrigger SourceName="DroneMainButton" RoutedEvent="Button.MouseLeave" >
+            <BeginStoryboard Storyboard="{StaticResource backToBord}"/>
+        </EventTrigger>
+
+
+    </Window.Triggers>
+
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -24,20 +87,22 @@
             </Grid.ColumnDefinitions>
         </Grid>
         <Grid/>
-        <Button x:Name="DroneMainButton" Content="Drones" HorizontalAlignment="Left" Margin="286,135,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="DroneMainButton_Click"
+        <Button x:Name="DroneMainButton" Content="Drones" HorizontalAlignment="Left" Margin="286,135,299,0" Grid.Row="1" HorizontalContentAlignment="Center" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="DroneMainButton_Click"
                   Style="{StaticResource MaterialDesignRaisedButton}"
     materialDesign:ButtonProgressAssist.Value="-1"
     materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-    materialDesign:ButtonProgressAssist.IsIndeterminate="True"/>
-        <Button x:Name="PackagesButton" Content="Packages" HorizontalAlignment="Right" Margin="286,239,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="PackagesButton_Click"   Style="{StaticResource MaterialDesignRaisedButton}"
+    materialDesign:ButtonProgressAssist.IsIndeterminate="True">
+       
+        </Button>
+        <Button x:Name="PackagesButton" Content="Packages" HorizontalAlignment="Right" Margin="286,239,299,0" Grid.Row="1" VerticalAlignment="Top" HorizontalContentAlignment="Center" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="PackagesButton_Click"   Style="{StaticResource MaterialDesignRaisedButton}"
     materialDesign:ButtonProgressAssist.Value="-1"
     materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
     materialDesign:ButtonProgressAssist.IsIndeterminate="True"/>
-        <Button x:Name="BaseStationsButton" Content="BaseStations" HorizontalAlignment="Right" Margin="286,346,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="BaseStationsButton_Click"   Style="{StaticResource MaterialDesignRaisedButton}"
+        <Button x:Name="BaseStationsButton" Content="BaseStations" HorizontalAlignment="Right" Margin="286,346,299,0" Grid.Row="1" VerticalAlignment="Top" HorizontalContentAlignment="Center" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="BaseStationsButton_Click"   Style="{StaticResource MaterialDesignRaisedButton}"
     materialDesign:ButtonProgressAssist.Value="-1"
     materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
     materialDesign:ButtonProgressAssist.IsIndeterminate="True" />
-        <Button x:Name="ClientsButton" Content="Clients" HorizontalAlignment="Right" Margin="286,31,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" Width="216" FontSize="22" FontWeight="Bold" Click="ClientsButton_Click"   Style="{StaticResource MaterialDesignRaisedButton}"
+        <Button x:Name="ClientsButton" Content="Clients" HorizontalAlignment="Right" Margin="286,31,299,0" Grid.Row="1" VerticalAlignment="Top" Height="97" HorizontalContentAlignment="Center" Width="216" FontSize="22" FontWeight="Bold" Click="ClientsButton_Click"   Style="{StaticResource MaterialDesignRaisedButton}"
     materialDesign:ButtonProgressAssist.Value="-1"
     materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
     materialDesign:ButtonProgressAssist.IsIndeterminate="True" />
