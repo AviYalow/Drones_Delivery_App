@@ -240,4 +240,16 @@
     <CollectPackageForShipment xsi:nil="true" />
     <PackageArrived xsi:nil="true" />
   </Package>
+  <Package>
+    <SerialNumber>1020</SerialNumber>
+    <SendClient>600786717</SendClient>
+    <GetingClient>522167800</GetingClient>
+    <WeightCatgory>Easy</WeightCatgory>
+    <Priority>Immediate</Priority>
+    <OperatorSkimmerId>0</OperatorSkimmerId>
+    <ReceivingDelivery>2022-01-23T20:21:48.5386117+02:00</ReceivingDelivery>
+    <PackageAssociation xsi:nil="true" />
+    <CollectPackageForShipment xsi:nil="true" />
+    <PackageArrived xsi:nil="true" />
+  </Package>
 </ArrayOfPackage>

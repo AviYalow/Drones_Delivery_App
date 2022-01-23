@@ -23,39 +23,43 @@ namespace BlApi
             lock (dalObj)
             {
                 uint packegeNum = 0;
-            try
-            {
-                if (package.Priority > Priority.Regular || package.WeightCatgory > WeightCategories.Heavy)
-                    throw new InputErrorException();
+                try
+                {
+                    if (package.Priority > Priority.Regular || package.WeightCatgory > WeightCategories.Heavy)
+                        throw new InputErrorException();
 
 
-                var send = dalObj.CilentByNumber(package.SendClient.Id);
+                    var send = dalObj.CilentByNumber(package.SendClient.Id);
 
 
-                if (!send.Active)
-                    throw new ItemNotFoundException("Client", package.SendClient.Id);
-                Location locationsend = new Location { Latitude = send.Latitude, Longitude = send.Longitude };
-                Location locationGet = ClientLocation(package.RecivedClient.Id).Clone();
-                var butrryWithDelvery = buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package));
-                var butrryFree = buttryDownWithNoPackege(ClosestBase(locationsend).Location, locationsend) + buttryDownWithNoPackege(ClosestBase(locationGet).Location, locationGet);
-                if (butrryWithDelvery + butrryFree > 100)
-                    throw new MoreDistasThenMaximomException(package.SendClient.Id, package.RecivedClient.Id);
+                    if (!send.Active)
+                        throw new ItemNotFoundException("Client", package.SendClient.Id);
+                    Location locationsend = new Location { Latitude = send.Latitude, Longitude = send.Longitude };
+                    Location locationGet = ClientLocation(package.RecivedClient.Id).Clone();
+                    var butrryWithDelvery = buttryDownPackegeDelivery(convertPackegeBlToPackegeInTrnansfer(package));
+                    var butrryFree = buttryDownWithNoPackege(ClosestBase(locationsend).Location, locationsend) + buttryDownWithNoPackege(ClosestBase(locationGet).Location, locationGet);
+                    if (butrryWithDelvery + butrryFree > 100)
+                        throw new MoreDistasThenMaximomException(package.SendClient.Id, package.RecivedClient.Id);
 
 
 
 
-                packegeNum = dalObj.AddPackage(package.convertPackageBltopackegeDal());
-            }
-            catch (DO.ItemFoundException ex)
-            {
-                throw (new ItemFoundExeption(ex));
-            }
-catch(Exception)
+                    packegeNum = dalObj.AddPackage(package.convertPackageBltopackegeDal());
+                }
+                catch (DO.ItemFoundException ex)
+                {
+                    throw (new ItemFoundExeption(ex));
+                }
+                catch (DO.ItemNotFoundException ex)
+                {
+                    throw new ItemNotFoundException(ex);
+                }
+                catch (Exception)
                 { }
 
 
-            return packegeNum;
-        }
+                return packegeNum;
+            }
 
         }
 
@@ -74,7 +78,7 @@ catch(Exception)
                 }
                 catch (DO.ItemNotFoundException ex)
                 { throw new ItemNotFoundException(ex); }
-                catch(Exception)
+                catch (Exception)
                 { }
             }
         }
@@ -98,7 +102,7 @@ catch(Exception)
                 {
                     throw new ItemNotFoundException(ex);
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     return null;
                 }
@@ -140,8 +144,8 @@ catch(Exception)
                 {
                     throw new ItemNotFoundException(ex);
                 }
-                catch(Exception)
-                {  }
+                catch (Exception)
+                { }
             }
         }
 
@@ -171,11 +175,11 @@ catch(Exception)
                         WeightCatgory = (WeightCategories)dataPackege.WeightCatgory
                     };
                 }
-                catch(DO.ItemNotFoundException ex)
+                catch (DO.ItemNotFoundException ex)
                 {
                     throw new ItemNotFoundException(ex);
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     return null;
                 }

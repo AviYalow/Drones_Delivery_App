@@ -143,7 +143,8 @@ namespace Dal
 
             List<string> config = XMLTools.LoadListFromXMLSerializer<string>(@"DalXmlConfig.xml");
             uint package_num = uint.Parse(config[5]);
-                    
+            if (packages.Any(x => x.SerialNumber == package_num))
+                throw new ItemFoundException("Packege", package_num);
 
             packages.Add(new Package
             {
@@ -164,6 +165,7 @@ namespace Dal
             config[5] = package_num.ToString();
 
             XMLTools.SaveListToXMLSerializer(config, @"DalXmlConfig.xml");
+            XMLTools.SaveListToXMLSerializer(packages, PackagesPath);
             return package_num - 1;
         }
         [MethodImpl(MethodImplOptions.Synchronized)]

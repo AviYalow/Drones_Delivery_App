@@ -161,7 +161,7 @@ namespace BlApi
         {
             lock (dalObj)
             {
-                return from client in dalObj.CilentList(x => true)
+                return from client in dalObj.CilentList(x => x.Active)
                        select new ClientInPackage { Id = client.Id, Name = client.Name };
             }
         }

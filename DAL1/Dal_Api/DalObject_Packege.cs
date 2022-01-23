@@ -21,6 +21,9 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public uint AddPackage(Package package)
         {
+            var package_num = DataSource.Config.package_num;
+            if (DataSource.packages.Any(x => x.SerialNumber == package_num))
+                throw new ItemFoundException("Packege", package_num);
             package.ReceivingDelivery = DateTime.Now;
             package.CollectPackageForShipment =null;
             package.PackageArrived = null;
