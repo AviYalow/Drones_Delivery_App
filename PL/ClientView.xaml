@@ -132,27 +132,27 @@
                     <GridView x:Name="ListviewGridFromClientsList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
 
                         <GridViewColumn  DisplayMemberBinding="{Binding SerialNum}" x:Name="SerialNumPac" >
-                            <HeaderedContentControl x:Name="SerialNumS" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"   >
+                            <HeaderedContentControl x:Name="SerialNumS"  MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick" Foreground="White"   >
                                 <TextBox Text="Serial Number" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                             </HeaderedContentControl>
                         </GridViewColumn>
                         <GridViewColumn  DisplayMemberBinding="{Binding WeightCatgory}" x:Name="WeightCatgoryPAc"  >
-                            <HeaderedContentControl x:Name="WeightCatgoryS" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"    >
+                            <HeaderedContentControl Foreground="White" x:Name="WeightCatgoryS" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"    >
                                 <TextBox Text="Weight Catgory" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                             </HeaderedContentControl>
                         </GridViewColumn>
                         <GridViewColumn  DisplayMemberBinding="{Binding Priority}" x:Name="PriorityPac"  >
-                            <HeaderedContentControl x:Name="PriorityS" HorizontalAlignment="Left" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"  >
+                            <HeaderedContentControl Foreground="White" x:Name="PriorityS" HorizontalAlignment="Left" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"  >
                                 <TextBox Text="Priority" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                             </HeaderedContentControl>
                         </GridViewColumn>
                         <GridViewColumn  DisplayMemberBinding="{Binding PackageStatus}" x:Name="PackageStatusPac" >
-                            <HeaderedContentControl x:Name="PackageStatusS" HorizontalAlignment="Left" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"   >
+                            <HeaderedContentControl Foreground="White" x:Name="PackageStatusS" HorizontalAlignment="Left" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"   >
                                 <TextBox Text="Package Status" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                             </HeaderedContentControl>
                         </GridViewColumn>
                         <GridViewColumn  DisplayMemberBinding="{Binding Client2}" x:Name="Client2Pac" >
-                            <HeaderedContentControl x:Name="Client2S" HorizontalAlignment="Left" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"   >
+                            <HeaderedContentControl Foreground="White" x:Name="Client2S" HorizontalAlignment="Left" MouseLeftButtonDown="HeaderedContentControl_MouseDoubleClick"   >
                                 <TextBox Text="To Client " IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                             </HeaderedContentControl>
                         </GridViewColumn>
@@ -165,27 +165,27 @@
                     <GridView x:Name="ListviewGridToClientsList"  AllowsColumnReorder="True" ColumnHeaderToolTip="Employee">
 
                         <GridViewColumn  DisplayMemberBinding="{Binding SerialNum}" x:Name="SerialNumberGet" >
-                            <HeaderedContentControl x:Name="SerialNumP" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
+                            <HeaderedContentControl Foreground="White" x:Name="SerialNumP" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"   >
                                 <TextBox Text="Serial Number" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                             </HeaderedContentControl>
                         </GridViewColumn>
                         <GridViewColumn  DisplayMemberBinding="{Binding WeightCatgory}" x:Name="WeightCatgoryGet"  >
-                            <HeaderedContentControl x:Name="WeightCatgoryP" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"    >
+                            <HeaderedContentControl Foreground="White" x:Name="WeightCatgoryP" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick"    >
                                 <TextBox Text="Weight Catgory" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                             </HeaderedContentControl>
                         </GridViewColumn>
                         <GridViewColumn  DisplayMemberBinding="{Binding Priority}" x:Name="PriorityGet"  >
-                            <HeaderedContentControl x:Name="PriorityP" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"  >
+                            <HeaderedContentControl  Foreground="White" x:Name="PriorityP" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"  >
                                 <TextBox Text="Priority" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                             </HeaderedContentControl>
                         </GridViewColumn>
                         <GridViewColumn  DisplayMemberBinding="{Binding PackageStatus}" x:Name="PackageStatusGet" >
-                            <HeaderedContentControl x:Name="PackageStatusP" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"   >
+                            <HeaderedContentControl Foreground="White" x:Name="PackageStatusP" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"   >
                                 <TextBox Text="Package Status" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                             </HeaderedContentControl>
                         </GridViewColumn>
                         <GridViewColumn  DisplayMemberBinding="{Binding Client2}" x:Name="Client2Get" >
-                            <HeaderedContentControl x:Name="Client2P" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"   >
+                            <HeaderedContentControl Foreground="White" x:Name="Client2P" MouseDoubleClick="HeaderedContentControl_MouseDoubleClick" HorizontalAlignment="Left"   >
                                 <TextBox Text="To Client " IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
                             </HeaderedContentControl>
                         </GridViewColumn>

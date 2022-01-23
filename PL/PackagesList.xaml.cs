@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
-using  BO;
+using BO;
 
 namespace PL
 {
@@ -21,10 +21,10 @@ namespace PL
     /// </summary>
     public partial class PackagesList : Window
     {
-      
+
         BlApi.IBL bl;
         CollectionView view;
-         ObservableCollection<PackageToList> lists;
+        ObservableCollection<PackageToList> lists;
         PropertyGroupDescription groupDescription;
         public PackagesList(BlApi.IBL bl)
         {
@@ -59,7 +59,7 @@ namespace PL
             HeaderedContentControl control = sender as HeaderedContentControl;
             try
             {
-               bl.SortList(control.Name, lists).ConvertIenmurbleToObserve(lists);
+                bl.SortList(control.Name, lists).ConvertIenmurbleToObserve(lists);
             }
             catch (Exception ex)
             {
@@ -105,14 +105,14 @@ namespace PL
                     return;
                 if (WeightCombo.SelectedItem == WeightCombo.Items[0])
                 {
-                     bl.PackageWeightLists().ConvertIenmurbleToObserve(lists);
+                    bl.PackageWeightLists().ConvertIenmurbleToObserve(lists);
 
 
                 }
                 else if (WeightCombo.SelectedItem != WeightCombo.Items[0])
                 {
 
-                     bl.PackageWeightLists((BO.WeightCategories)WeightCombo.SelectedItem).ConvertIenmurbleToObserve(lists);
+                    bl.PackageWeightLists((BO.WeightCategories)WeightCombo.SelectedItem).ConvertIenmurbleToObserve(lists);
 
                 }
             }
@@ -188,7 +188,7 @@ namespace PL
             try
             {
                 new PackageView(bl).Show();
-               bl.PackageToLists().ConvertIenmurbleToObserve(lists);
+                bl.PackageToLists().ConvertIenmurbleToObserve(lists);
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
@@ -200,8 +200,8 @@ namespace PL
             {
                 if (PackagesListView.SelectedItem != null)
                 {
-                    new PackageView(bl,lists, ((BO.PackageToList)PackagesListView.SelectedItem).SerialNumber).Show();
-                     bl.PackageToLists().ConvertIenmurbleToObserve(lists);
+                    new PackageView(bl, lists, ((BO.PackageToList)PackagesListView.SelectedItem).SerialNumber).Show();
+                    bl.PackageToLists().ConvertIenmurbleToObserve(lists);
                     PackagesListView.SelectedItem = null;
                 }
             }
@@ -213,8 +213,8 @@ namespace PL
         {
             try
             {
-                new PackageView(bl,lists).Show();
-                
+                new PackageView(bl, lists).Show();
+
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
@@ -244,6 +244,11 @@ namespace PL
         private void PackagesList_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = false;
+        }
+
+        private void refreshboutton_Click(object sender, RoutedEventArgs e)
+        {
+            bl.PackageToLists().ConvertIenmurbleToObserve(lists);
         }
     }
 }

@@ -18,7 +18,13 @@ namespace PL
 {
    internal static class HelpClass
     {
- 
+ /// <summary>
+ /// replse IEnumrble to observationCollection
+ /// </summary>
+ /// <typeparam name="T"></typeparam>
+ /// <param name="ienumerable"></param>
+ /// <param name="ts"></param>
+ /// <returns></returns>
         internal static ObservableCollection<T> ConvertIenmurbleToObserve<T>(this IEnumerable<T> ienumerable, ObservableCollection<T> ts)
         {
             lock (ts)lock(ienumerable)
@@ -32,13 +38,14 @@ namespace PL
                         int stop = ts.Count();
                         foreach (var item in ienumerable)
                         {
-
+                            //replace beween ienumrble to observ item
                             if (i<stop)
                             {
                                 ts[i] = item;
                                 i++;
 
                             }
+                            //if the place in obsrvation collection over
                             else
                             {
                                 stopFlag = true;
@@ -46,6 +53,7 @@ namespace PL
                             }
                            
                         }
+                        //if the list shorted
                         if (!stopFlag)
                             while (i < stop)
                             {
@@ -64,46 +72,5 @@ namespace PL
         }
     }
 
-    public class TitelBaseViewConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            
-            var a = value as Label;
-            var b = a.Content;
-            if ((string)b == "Base Station update")
-                return Visibility.Visible;
-            else
-                return Visibility.Collapsed;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if ((Visibility)value == Visibility.Visible)
-                return "Base Station update";
-
-            return "Add Base Station";
-        }
-    }
-
-    public class BoolToVisibaleConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-         {
-            if (value is Boolean && (bool)value)
-            {
-                return Visibility.Collapsed;
-            }
-            return Visibility.Visible;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            if (value is Visibility && (Visibility)value == Visibility.Visible)
-            {
-                return false;
-            }
-            return true;
-        }
-    }
+  
 }

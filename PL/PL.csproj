@@ -18,6 +18,7 @@
     <None Remove="clientList.jpg" />
     <None Remove="clientlist1.png" />
     <None Remove="clientview.jpg" />
+    <None Remove="clientview.png" />
     <None Remove="depositphotos_70711715-stock-photo-quadrocopter-drone-delivering-package.jpg" />
     <None Remove="drone-delivery-concept-model-package-box-blue-background-d-design-illustration-hd-image-concept-delivery-quadcopter-157633516.jpg" />
     <None Remove="Drone-Delivery.jpg" />
@@ -37,6 +38,7 @@
     <None Remove="ok.jpg" />
     <None Remove="packages-la-gi-1.jpg" />
     <None Remove="packege.jpg" />
+    <None Remove="packegelist.png" />
     <None Remove="relation-client-.png" />
     <None Remove="return.png" />
     <None Remove="Velodyne_Drone_920.jpg" />
@@ -69,6 +71,7 @@
     <Resource Include="clientList.jpg" />
     <Resource Include="clientlist1.png" />
     <Resource Include="clientview.jpg" />
+    <Resource Include="clientview.png" />
     <Resource Include="depositphotos_70711715-stock-photo-quadrocopter-drone-delivering-package.jpg" />
     <Resource Include="drone-delivery-concept-model-package-box-blue-background-d-design-illustration-hd-image-concept-delivery-quadcopter-157633516.jpg" />
     <Resource Include="Drone-Delivery.jpg" />
@@ -88,6 +91,7 @@
     <Resource Include="ok.jpg" />
     <Resource Include="packages-la-gi-1.jpg" />
     <Resource Include="packege.jpg" />
+    <Resource Include="packegelist.png" />
     <Resource Include="relation-client-.png" />
     <Resource Include="return.png" />
     <Resource Include="Velodyne_Drone_920.jpg" />

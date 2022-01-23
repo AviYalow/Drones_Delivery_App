@@ -246,12 +246,13 @@ namespace PL
 
         private void update_Click(object sender, RoutedEventArgs e)
         {
-            TextBox text = sender as TextBox;
-            if (MessageBox.Show("Do you want to update the number of charching station?", "Update", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            string name = NameText.Text;
+            if (MessageBox.Show("Do you want to update the number of charching station\n or the baseStation name?", "Update", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 try
                 {
-                    bl.UpdateBase(baseStation.SerialNum, "", text.Text);
+                    
+                    bl.UpdateBase(baseStation.SerialNum, NameText.Text, FreeStateText.Text);
                     MessageBox.Show("Update seccsed!");
                     bl.BaseStationToLists().ConvertIenmurbleToObserve(lists);
 
@@ -260,13 +261,20 @@ namespace PL
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString(), "ERROR");
-                    text.Text = numberOfChargingStation.ToString();
+                    FreeStateText.Text = numberOfChargingStation.ToString();
+                    NameText.Text = name;
                 }
             }
             else
-                text.Text = numberOfChargingStation.ToString();
-        }
+            {
+                FreeStateText.Text = numberOfChargingStation.ToString();
+                NameText.Text = name;
+            }
+            }
 
-      
+        private void Text_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ((TextBox)sender).SelectAll();
+        }
     }
 }

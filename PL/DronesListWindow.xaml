@@ -97,7 +97,7 @@
                                                     <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold" VerticalAlignment="Bottom" TextDecorations="Underline"/>
                                                     <TextBlock Text=" Number of Drones: " FontSize="16" FontWeight="Bold" VerticalAlignment="Bottom"/>
                                                     <TextBlock Text="{Binding ItemCount}" FontSize="16" FontWeight="Bold" VerticalAlignment="Bottom"/>
-                                                   
+
                                                 </StackPanel>
                                             </Expander.Header>
                                             <ItemsPresenter />
@@ -123,12 +123,13 @@
               Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
   ToolTip="MaterialDesignFloatingActionDarkButton"
  >
-            
+
             <materialdesignin:PackIcon Kind="Add" Height="78" Width="81" HorizontalAlignment="Center"   />
 
         </Button>
         <CheckBox x:Name="gropListCB" Content="group list"  HorizontalAlignment="Left" Margin="818,400,0,0" Grid.Row="1" VerticalAlignment="Top" Height="77" Width="180" FontSize="34" Click="gropListCB_Checked" BorderBrush="#FF02090C" />
         <Label Name="SelectBynumberLab" Content="Select By number" FontSize="20" HorizontalAlignment="Left" Margin="426,38,0,0" VerticalAlignment="Top" Width="187" FontWeight="Bold" Height="34"/>
+        <Button x:Name="refreshboutton"  Content="{materialdesignin:PackIcon Kind=RefreshCircle, Size=35}" HorizontalAlignment="Left" Margin="1125,441,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="150" Height="59" Width="85" Click="refreshboutton_Click"/>
 
     </Grid>
 </Window>

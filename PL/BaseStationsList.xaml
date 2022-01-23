@@ -49,9 +49,9 @@
                         </GridViewColumn>
 
                     </GridView>
-                    
+
                 </ListView.View>
-             
+
                 <ListView.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.ContainerStyle>
@@ -114,6 +114,7 @@
                 <materialDesign:PackIcon Kind="Add"  Height="35"    Width="35" />
             </Button>
             <Button x:Name="Exit" Content="{  materialDesign:PackIcon Kind=ExitRun, Size=45}" HorizontalAlignment="Left" Margin="926,92,0,0" VerticalAlignment="Top" Height="54" Width="77" Click="Exit_Click"/>
+            <Button x:Name="refreshboutton"  Content="{materialdesignin:PackIcon Kind=RefreshCircle, Size=35}" HorizontalAlignment="Left" Margin="1067,83,0,0" VerticalAlignment="Top" FontSize="150" Height="59" Width="85" Click="refreshboutton_Click"/>
         </Grid>
     </Grid>
 </Window>

@@ -206,6 +206,9 @@ namespace PL
             }
         }
 
-      
+        private void refreshboutton_Click(object sender, RoutedEventArgs e)
+        {
+            bl.DroneToLists().ConvertIenmurbleToObserve(lists);
+        }
     }
 }

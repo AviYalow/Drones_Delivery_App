@@ -28,16 +28,13 @@ namespace PL
     {
         IBL bl;
         DroneItemModel drone;
-        
         BO.DroneModel droneModel;
         BO.DroneStatus droneStatus;
         private int _noOfErrorsOnScreen = 0;
         bool addDrone;
-
         ObservableCollection<DroneToList> lists;
         bool simulatorActive;
-        public DroneWindow()
-        { }
+       
         public DroneWindow(BlApi.IBL bl, ObservableCollection<DroneToList> lists = null)
         {
             try
@@ -47,7 +44,6 @@ namespace PL
                 drone = new();
                 addDrone = true;
                 this.lists = lists;
-                
                 this.DataContext = drone;
                 StatusComb.Items.Add(BO.DroneStatus.Maintenance);
                 droneStatus = DroneStatus.Maintenance;
@@ -68,7 +64,12 @@ namespace PL
             ctorUpdate(bl, droneFromListView, lists);
 
         }
-
+        /// <summary>
+        /// crate the window update
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="droneFromListView"></param>
+        /// <param name="lists"></param>
         private void ctorUpdate(IBL bl, uint droneFromListView, ObservableCollection<DroneToList> lists = null)
         {
             try
@@ -81,13 +82,16 @@ namespace PL
                 statusOption();
                 this.DataContext = drone;
                 ModelComboBox.ItemsSource = Enum.GetValues(typeof(BO.DroneModel));
-              
                 UpdateDronWindow(droneFromListView, false);
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
         }
-
+        /// <summary>
+        /// update the drone view window to be in update window
+        /// </summary>
+        /// <param name="droneFromListView"></param>
+        /// <param name="updeat"></param>
         private void UpdateDronWindow(uint droneFromListView, bool updeat = true)
         {
             try
@@ -97,7 +101,6 @@ namespace PL
                 {
                     if (updeat)
                           bl.GetDrone(droneFromListView).dronefromBl(drone);
-              
                     TitelDroneLabel.Content = "Updte Drone Window";
                     droneModel = drone.Model;
                     addDrone = false;
@@ -181,16 +184,6 @@ namespace PL
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-
-
-        }
-
-     
-
-        private void WeightChoseCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        
 
 
         }

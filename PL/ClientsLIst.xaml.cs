@@ -127,5 +127,10 @@ namespace PL
         {
             e.Cancel = false;
         }
+
+        private void refreshboutton_Click(object sender, RoutedEventArgs e)
+        {
+            bl.ClientToLists().ConvertIenmurbleToObserve(lists);
+        }
     }
 }

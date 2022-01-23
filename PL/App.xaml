@@ -9,11 +9,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <local:DegrreConverter x:Key="degrre"/>
-            <local:TitelBaseViewConverter x:Key="convertTytelToVisblity"/>
-            <local:BoolToVisibaleConverter x:Key="opessetFromVisibilty"/>
+          
             <local:LongPointEorWConverter x:Key="EorW"/>
             <local:LutitudePointSorNConverter x:Key="SorN"/>
-            <ImageBrush ImageSource="/clientview.jpg" x:Key="clientBackground"/>
+            <ImageBrush ImageSource="/clientview.png" x:Key="clientBackground"/>
             <ImageBrush ImageSource="/clientlist1.png" x:Key="clientListBackground"/>
             <ImageBrush x:Key="Borde" ImageSource="/normal.jpg" />
             <ImageBrush x:Key="Drone" ImageSource="/Velodyne_Drone_920.jpg" />

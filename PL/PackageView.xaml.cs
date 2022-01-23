@@ -27,10 +27,12 @@ namespace PL
     {
         BlApi.IBL bl;
         PackageModel package = new();
-
         PackageStatus packageStatus;
         StatusPackegeWindow changFromClient;
         ObservableCollection<PackageToList> lists;
+        /// <summary>
+        /// if the packege is in client mode thet he can chenge only what connct to hem
+        /// </summary>
         bool clientMode;
         private int _noOfErrorsOnScreen = 0;
 
@@ -71,15 +73,24 @@ namespace PL
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
         }
+        /// <summary>
+        /// ctor for packege 
+        /// </summary>
+        /// <param name="bL"></param>
+        /// <param name="mode"></param>
+        /// <param name="status"></param>
         private void InitializingCtor(IBL bL, bool mode = false, StatusPackegeWindow status = StatusPackegeWindow.NotClient)
         {
             InitializeComponent();
-            this.clientMode = false;
+            this.clientMode = mode;
             changFromClient = StatusPackegeWindow.NotClient;
             this.bl = bL;
         }
 
-
+        /// <summary>
+        /// ctor to packege from list
+        /// </summary>
+        /// <param name="serialNumber"></param>
         private void packegeFromDialog(uint serialNumber)
         {
             try
@@ -99,6 +110,9 @@ namespace PL
 
             }
         }
+        /// <summary>
+        /// order the visibility of next move of packege
+        /// </summary>
         void statusSelectorSurce()
         {
             if (package.PackageArrived != null)
@@ -137,6 +151,7 @@ namespace PL
 
 
         }
+
         void DataToCmb(string SendClient)
         {
             try
@@ -149,6 +164,7 @@ namespace PL
                 {
                     uint id;
                     uint.TryParse(SendClient, out id);
+                    //get the send client to packege
                     package.SendClient = bl.ClientInPackagesList().FirstOrDefault(x => x.Id == id);
                     SendClientCMB.Items.Add(package.SendClient);
                     SendClientCMB.SelectedItem = SendClientCMB.Items[0];

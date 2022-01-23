@@ -169,7 +169,10 @@ namespace PL
             e.Cancel = false;
         }
 
-       
+        private void refreshboutton_Click(object sender, RoutedEventArgs e)
+        {
+            bl.BaseStationToLists().ConvertIenmurbleToObserve(lists);
+        }
     }
 
 

@@ -4,13 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="PL.PackagesList"
+    xmlns:materialdesignin="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    x:Class="PL.PackagesList"
         mc:Ignorable="d"
         Title="PackagesList" Height="650" Width="1000"
     Icon="/DroneIcon.png"  ResizeMode="NoResize"
     Closing="Window_Closing">
     <Window.Background>
-        <ImageBrush ImageSource="/packages-la-gi-1.jpg" />
+        <ImageBrush ImageSource="/packegelist.png" />
 
     </Window.Background>
 
@@ -140,7 +142,7 @@
         <Label Content="From date:" HorizontalAlignment="Left" Margin="661,29,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black"/>
         <Label Content="To date:" HorizontalAlignment="Left" Margin="670,10,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Segoe UI Black" Grid.Row="1"/>
         <Button Content="Add Packege" HorizontalAlignment="Left" Margin="66,0,0,0" Grid.Row="3" VerticalAlignment="Top" Width="171" Height="64" Click="Button_Click_1"/>
-
+        <Button x:Name="refreshboutton"  Content="{materialdesignin:PackIcon Kind=RefreshCircle, Size=35}" HorizontalAlignment="Left" Margin="440,6,0,0" Grid.Row="3" VerticalAlignment="Top" FontSize="150" Height="59" Width="85" Click="refreshboutton_Click"/>
         <Button x:Name="Exit" Content="{  materialDesign:PackIcon Kind=ExitRun, Size=45}" HorizontalAlignment="Left" Margin="782,9,0,0" Grid.Row="3" VerticalAlignment="Top" Height="54" Width="77" Click="Exit_Click"/>
     </Grid>
 </Window>
