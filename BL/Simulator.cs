@@ -23,31 +23,28 @@ namespace BL
         BlApi.BL BL;
         private Thread myThread;
         Stopwatch sw;
-        double chargePerMiliSecond;
         private const double SPEED = 500;
         private const double HOUER_TO_MILISECOUND = 60.0 * 60.0 * 1000;
         static Dictionary<uint, uint> keys = new();
-        //private const double TIME_STEP = DELAY / 1000.0;
-        //private const double STEP = VELOCITY / TIME_STEP;
+       
 
         public Simulator(BlApi.BL bl, uint droneNumber, Action action, Func<bool> StopChecking)
         {
             sw = new Stopwatch();
             Drone drone;
             bool sendToCharge = false;
-            double m = 0,past=0;
+            double timePastUntilNwo = 0,distansePast=0;
             SpeedDrone speed=SpeedDrone.Free;
-
+            const uint SEND_DRONE_TO_CHARGE = 5;
+            uint sendToChargeCounter = 5;
             try
             {
                 BL = bl;
 
-
-                chargePerMiliSecond = 100 / (bl.chargingPerMinute / 60 * 1000);
-
                 new Thread(() =>
                 {
                   try  {
+                        //check the same drone dont activ the simolator towice
                         if (keys.Any(x => x.Key == droneNumber))
                             throw new DroneTryToStartSecondeSimolatorException(droneNumber);
                         keys.Add(droneNumber, droneNumber);
@@ -64,35 +61,35 @@ namespace BL
                                 {
                                     case BO.DroneStatus.Free:
 
-
                                         try
                                         {
-                                           
-                                            if ((drone.ButrryStatus <= 20 || sendToCharge) && drone.ButrryStatus < 100)
+                                           //if the drone buttry is low then20 or all packeges are delivery or more then 5 try to connect to packege
+                                            if ((drone.ButrryStatus <= 20 || sendToCharge||sendToChargeCounter==0) && drone.ButrryStatus < 100)
                                             {
                                                 BaseStation base_ = new();
                                                 if (drone.LocationNext==LocationNext.None)
                                                 base_ = bl.ClosestBase(drone.Location, true);
                                                 drone.LocationNext = LocationNext.Base;
                                                 
-                                                 past = distanse(m, SpeedDrone.Free);
-                                                var a = bl.Distans(drone.Location, base_.Location);
-                                                if (drone.DistanseToNextLocation -past<=0)
+                                                 distansePast = distanse(timePastUntilNwo, SpeedDrone.Free);
+                                             
+                                                if (drone.DistanseToNextLocation -distansePast<=0)
                                                 {
                                                     sw.Stop();
                                                     drone.ButrryStatus -= bl.buttryDownWithNoPackege(drone.DistanseToNextLocation);
                                                     sw.Reset();
-                                                    
+                                                    sendToChargeCounter = SEND_DRONE_TO_CHARGE;
                                                     bl.DroneToCharge(drone.SerialNumber, drone.DistanseToNextLocation);
                                                     drone.DistanseToNextLocation = 0;
                                                 }
                                                 else
                                                 {
-                                                    drone.DistanseToNextLocation -= distanse(m, SpeedDrone.Free);
+                                                    drone.DistanseToNextLocation -= distanse(timePastUntilNwo, SpeedDrone.Free);
                                                     changeDroneList(bl, drone);
+                                                    sendToCharge = false;
                                                    
                                                 }
-                                                m = sw.ElapsedMilliseconds;
+                                                timePastUntilNwo = sw.ElapsedMilliseconds;
                                             }
                                             else
                                             {
@@ -105,8 +102,11 @@ namespace BL
                                         {
                                             lock (bl.dalObj)
                                             {
+                                                if(!sendToCharge)
                                                 if (bl.dalObj.PackegeList(x => true).All(x => x.OperatorSkimmerId != 0))
                                                     sendToCharge = true;
+                                                if (sendToChargeCounter > 0)
+                                                    sendToChargeCounter--;
                                             }
                                         }
                                         catch (Exception)
@@ -117,7 +117,7 @@ namespace BL
                                         break;
                                     case BO.DroneStatus.Maintenance:
 
-                                        var buttry = bl.droneChrgingAlredy(sw.ElapsedMilliseconds - m) + drone.ButrryStatus;
+                                        var buttry = bl.droneChrgingAlredy(sw.ElapsedMilliseconds - timePastUntilNwo) + drone.ButrryStatus;
                                         if (buttry >= 100)
                                         {
                                             stopWatch();
@@ -138,24 +138,24 @@ namespace BL
                                             {
                                                 case WeightCategories.Easy:
                                               
-                                                    past= distanse(m, SpeedDrone.Easy);
+                                                    distansePast= distanse(timePastUntilNwo, SpeedDrone.Easy);
                                                     speed = SpeedDrone.Easy;
                                                     break;
                                                 case WeightCategories.Medium:
                                            
-                                                   past= distanse(m, SpeedDrone.Medium);
+                                                   distansePast= distanse(timePastUntilNwo, SpeedDrone.Medium);
                                                     speed = SpeedDrone.Medium;
                                                     break;
                                                 case WeightCategories.Heavy:
                                         
-                                                   past= distanse(m, SpeedDrone.Heavy);
+                                                   distansePast= distanse(timePastUntilNwo, SpeedDrone.Heavy);
                                                     speed = SpeedDrone.Heavy;
                                                     break;
                                                 default:
                                                     break;
                                             }
 
-                                            if (drone.DistanseToNextLocation-past <= 0)
+                                            if (drone.DistanseToNextLocation-distansePast <= 0)
                                             {
                                                 stopWatch();
                                                 bl.PackegArrive(droneNumber, drone.DistanseToNextLocation);
@@ -163,18 +163,18 @@ namespace BL
                                             }
                                             else
                                             {
-                                                drone.ButrryStatus -= bl.buttryDownPackegeDelivery(drone.PackageInTransfer, distanse(m, speed));
-                                                drone.DistanseToNextLocation -= past;
+                                                drone.ButrryStatus -= bl.buttryDownPackegeDelivery(drone.PackageInTransfer, distanse(timePastUntilNwo, speed));
+                                                drone.DistanseToNextLocation -= distansePast;
                                                 changeDroneList(bl, drone);
                                             }
                                         }
                                         else
                                         {
 
-                                            past = distanse(m, SpeedDrone.Free);
+                                            distansePast = distanse(timePastUntilNwo, SpeedDrone.Free);
 
                                             var a = bl.Distans(drone.Location, drone.PackageInTransfer.Source);
-                                            if (drone.DistanseToNextLocation-past<=0)
+                                            if (drone.DistanseToNextLocation-distansePast<=0)
                                             {
                                                 stopWatch();
                                              
@@ -183,12 +183,12 @@ namespace BL
                                             }
                                             else
                                             {
-                                                drone.ButrryStatus -= bl.buttryDownWithNoPackege(distanse(m, SpeedDrone.Free));
-                                                drone.DistanseToNextLocation -= past;
+                                                drone.ButrryStatus -= bl.buttryDownWithNoPackege(distanse(timePastUntilNwo, SpeedDrone.Free));
+                                                drone.DistanseToNextLocation -= distansePast;
                                                changeDroneList(bl, drone);
                                             }
                                         }
-                                        m = sw.ElapsedMilliseconds;
+                                        timePastUntilNwo = sw.ElapsedMilliseconds;
 
                                         break;
                                     case BO.DroneStatus.Delete:

@@ -45,8 +45,8 @@
     <OperatorSkimmerId>8358</OperatorSkimmerId>
     <ReceivingDelivery>2021-12-21T10:42:30.8423425+02:00</ReceivingDelivery>
     <PackageAssociation>2021-12-21T11:12:30.8423425+02:00</PackageAssociation>
-    <CollectPackageForShipment xsi:nil="true" />
-    <PackageArrived xsi:nil="true" />
+    <CollectPackageForShipment>2022-01-23T20:59:19.1046786+02:00</CollectPackageForShipment>
+    <PackageArrived>2022-01-23T20:59:24.2085134+02:00</PackageArrived>
   </Package>
   <Package>
     <SerialNumber>10004</SerialNumber>
@@ -82,7 +82,7 @@
     <ReceivingDelivery>2021-12-15T06:01:30.8423452+02:00</ReceivingDelivery>
     <PackageAssociation>2021-12-15T06:31:30.8423452+02:00</PackageAssociation>
     <CollectPackageForShipment>2021-12-15T06:31:30.8423452+02:00</CollectPackageForShipment>
-    <PackageArrived xsi:nil="true" />
+    <PackageArrived>2022-01-23T20:59:16.8442273+02:00</PackageArrived>
   </Package>
   <Package>
     <SerialNumber>10007</SerialNumber>
@@ -90,11 +90,11 @@
     <GetingClient>522167800</GetingClient>
     <WeightCatgory>Heavy</WeightCatgory>
     <Priority>quick</Priority>
-    <OperatorSkimmerId>0</OperatorSkimmerId>
+    <OperatorSkimmerId>6638</OperatorSkimmerId>
     <ReceivingDelivery>2022-01-01T04:25:30.8423462+02:00</ReceivingDelivery>
-    <PackageAssociation xsi:nil="true" />
-    <CollectPackageForShipment xsi:nil="true" />
-    <PackageArrived xsi:nil="true" />
+    <PackageAssociation>2022-01-23T20:59:19.0625779+02:00</PackageAssociation>
+    <CollectPackageForShipment>2022-01-23T20:59:22.6402502+02:00</CollectPackageForShipment>
+    <PackageArrived>2022-01-23T20:59:29.7725733+02:00</PackageArrived>
   </Package>
   <Package>
     <SerialNumber>10008</SerialNumber>
@@ -102,11 +102,11 @@
     <GetingClient>295661672</GetingClient>
     <WeightCatgory>Easy</WeightCatgory>
     <Priority>Immediate</Priority>
-    <OperatorSkimmerId>0</OperatorSkimmerId>
+    <OperatorSkimmerId>4231</OperatorSkimmerId>
     <ReceivingDelivery>2022-01-02T07:46:30.8423469+02:00</ReceivingDelivery>
-    <PackageAssociation xsi:nil="true" />
-    <CollectPackageForShipment xsi:nil="true" />
-    <PackageArrived xsi:nil="true" />
+    <PackageAssociation>2022-01-23T20:59:19.5879157+02:00</PackageAssociation>
+    <CollectPackageForShipment>2022-01-23T20:59:23.6685863+02:00</CollectPackageForShipment>
+    <PackageArrived>2022-01-23T20:59:28.7642117+02:00</PackageArrived>
   </Package>
   <Package>
     <SerialNumber>10009</SerialNumber>
@@ -189,8 +189,8 @@
     <OperatorSkimmerId>4231</OperatorSkimmerId>
     <ReceivingDelivery>2021-12-19T19:17:30.9407013+02:00</ReceivingDelivery>
     <PackageAssociation>2021-12-19T19:47:30.9407013+02:00</PackageAssociation>
-    <CollectPackageForShipment xsi:nil="true" />
-    <PackageArrived xsi:nil="true" />
+    <CollectPackageForShipment>2022-01-23T20:59:16.3804906+02:00</CollectPackageForShipment>
+    <PackageArrived>2022-01-23T20:59:19.067196+02:00</PackageArrived>
   </Package>
   <Package>
     <SerialNumber>10016</SerialNumber>
@@ -210,11 +210,11 @@
     <GetingClient>652497859</GetingClient>
     <WeightCatgory>Medium</WeightCatgory>
     <Priority>Regular</Priority>
-    <OperatorSkimmerId>0</OperatorSkimmerId>
+    <OperatorSkimmerId>6638</OperatorSkimmerId>
     <ReceivingDelivery>2021-12-26T17:42:30.9407043+02:00</ReceivingDelivery>
-    <PackageAssociation xsi:nil="true" />
-    <CollectPackageForShipment xsi:nil="true" />
-    <PackageArrived xsi:nil="true" />
+    <PackageAssociation>2022-01-23T20:59:08.0677112+02:00</PackageAssociation>
+    <CollectPackageForShipment>2022-01-23T20:59:12.6902219+02:00</CollectPackageForShipment>
+    <PackageArrived>2022-01-23T20:59:18.4096818+02:00</PackageArrived>
   </Package>
   <Package>
     <SerialNumber>10018</SerialNumber>
@@ -222,11 +222,11 @@
     <GetingClient>545670583</GetingClient>
     <WeightCatgory>Heavy</WeightCatgory>
     <Priority>quick</Priority>
-    <OperatorSkimmerId>0</OperatorSkimmerId>
+    <OperatorSkimmerId>8358</OperatorSkimmerId>
     <ReceivingDelivery>2022-01-01T14:40:30.9407057+02:00</ReceivingDelivery>
-    <PackageAssociation xsi:nil="true" />
-    <CollectPackageForShipment xsi:nil="true" />
-    <PackageArrived xsi:nil="true" />
+    <PackageAssociation>2022-01-23T20:59:35.0458715+02:00</PackageAssociation>
+    <CollectPackageForShipment>2022-01-23T20:59:39.2362998+02:00</CollectPackageForShipment>
+    <PackageArrived>2022-01-23T20:59:47.3436365+02:00</PackageArrived>
   </Package>
   <Package>
     <SerialNumber>10019</SerialNumber>
@@ -234,11 +234,11 @@
     <GetingClient>407756688</GetingClient>
     <WeightCatgory>Medium</WeightCatgory>
     <Priority>Immediate</Priority>
-    <OperatorSkimmerId>0</OperatorSkimmerId>
+    <OperatorSkimmerId>6638</OperatorSkimmerId>
     <ReceivingDelivery>2022-01-02T17:54:30.940707+02:00</ReceivingDelivery>
-    <PackageAssociation xsi:nil="true" />
-    <CollectPackageForShipment xsi:nil="true" />
-    <PackageArrived xsi:nil="true" />
+    <PackageAssociation>2022-01-23T20:59:39.7864113+02:00</PackageAssociation>
+    <CollectPackageForShipment>2022-01-23T20:59:47.3079485+02:00</CollectPackageForShipment>
+    <PackageArrived>2022-01-23T20:59:53.6751228+02:00</PackageArrived>
   </Package>
   <Package>
     <SerialNumber>1020</SerialNumber>
@@ -246,10 +246,10 @@
     <GetingClient>522167800</GetingClient>
     <WeightCatgory>Easy</WeightCatgory>
     <Priority>Immediate</Priority>
-    <OperatorSkimmerId>0</OperatorSkimmerId>
+    <OperatorSkimmerId>3206</OperatorSkimmerId>
     <ReceivingDelivery>2022-01-23T20:21:48.5386117+02:00</ReceivingDelivery>
-    <PackageAssociation xsi:nil="true" />
-    <CollectPackageForShipment xsi:nil="true" />
-    <PackageArrived xsi:nil="true" />
+    <PackageAssociation>2022-01-23T20:59:17.3645375+02:00</PackageAssociation>
+    <CollectPackageForShipment>2022-01-23T20:59:17.8780476+02:00</CollectPackageForShipment>
+    <PackageArrived>2022-01-23T20:59:25.1690857+02:00</PackageArrived>
   </Package>
 </ArrayOfPackage>
