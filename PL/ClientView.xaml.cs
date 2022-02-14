@@ -22,29 +22,29 @@ namespace PL
     /// Interaction logic for ClientView.xaml
     /// </summary>
     public partial class ClientView : Window
-        
+
     {
         ClientModel client;
         IBL bl;
         bool clientMode;
         ObservableCollection<ClientToList> list;
         private int _noOfErrorsOnScreen = 0;
-        
-        public ClientView(BlApi.IBL bL,bool clientView=false, ObservableCollection<ClientToList> lists = null)
+
+        public ClientView(BlApi.IBL bL, bool clientView = false, ObservableCollection<ClientToList> lists = null)
         {
             InitializeComponent();
             bl = bL;
             list = lists;
-            client =new();
+            client = new();
             client.Location = new();
             DataContext = client;
             clientMode = clientView;
-           
+
             ListPackegeFromClient.Visibility = Visibility.Collapsed;
 
         }
 
-        public ClientView(BlApi.IBL bL, ObservableCollection<ClientToList> lists, ClientToList clientFromList,bool clientView= false)
+        public ClientView(BlApi.IBL bL, ObservableCollection<ClientToList> lists, ClientToList clientFromList, bool clientView = false)
         {
             ctorupdate(bL, lists, clientFromList.ID, clientView);
 
@@ -58,29 +58,29 @@ namespace PL
             client = new();
             client.Location = new();
             clientMode = clientView;
-            
+
             this.DataContext = this.client;
             UpdateClient(clientFromList);
-            
+
         }
 
-        public ClientView(BlApi.IBL bL, uint clientFromList, bool clientView = false, ObservableCollection<ClientToList> lists=null)
+        public ClientView(BlApi.IBL bL, uint clientFromList, bool clientView = false, ObservableCollection<ClientToList> lists = null)
         {
 
             ctorupdate(bL, lists, clientFromList, clientView);
         }
         private void UpdateClient(uint id)
         {
-             bl.GetingClient(id).clientFromBl(this.client);
-            
-         
+            bl.GetingClient(id).clientFromBl(this.client);
+
+
             TitelClientLabel.Content = "Updte Client Window";
-         
+
             ListPackegeFromClient.Visibility = Visibility.Visible;
             OkButton.Visibility = Visibility.Collapsed;
-        
-               
-            
+
+
+
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -100,14 +100,14 @@ namespace PL
             {
                 bl.AddClient(client);
                 MessageBox.Show("Add client \n" + client.ToString() + "\nsucceed!");
-               list.Add(client);
+                list.Add(client);
                 UpdateClient(client.Id);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             { MessageBox.Show(ex.ToString(), "ERROR"); }
         }
-    
-    
+
+
 
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
@@ -128,7 +128,7 @@ namespace PL
             }
         }
 
-        
+
 
         private void HeaderedContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -137,9 +137,9 @@ namespace PL
                 HeaderedContentControl control = sender as HeaderedContentControl;
                 if (control.Name.LastOrDefault() == 'S')
                 {
-                   control.Name = control.Name.Remove(control.Name.Count() - 1);
-                    bl.SortList(control.Name,client.FromClient).ConvertIenmurbleToObserve(client.FromClient);
-               }
+                    control.Name = control.Name.Remove(control.Name.Count() - 1);
+                    bl.SortList(control.Name, client.FromClient).ConvertIenmurbleToObserve(client.FromClient);
+                }
                 if (control.Name.LastOrDefault() == 'P')
                 {
                     control.Name = control.Name.Remove(control.Name.Count() - 1);
@@ -159,25 +159,25 @@ namespace PL
             {
 
                 new PackageView(bl, ((PackageAtClient)ListPackegeFromClient.SelectedItem).SerialNum, StatusPackegeWindow.SendClient).ShowDialog();
-                 bl.GetingClient(client.Id).clientFromBl(this.client);
-            
+                bl.GetingClient(client.Id).clientFromBl(this.client);
+
                 ListPackegeFromClient.SelectedItem = null;
-                if(list!=null)
-                bl.FilterClientList().ConvertIenmurbleToObserve(list);
+                if (list != null)
+                    bl.FilterClientList().ConvertIenmurbleToObserve(list);
                 this.DataContext = this.client;
             }
         }
 
         private void ListPackegeToClient_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(ListPackegeToClient.SelectedItem!=null)
+            if (ListPackegeToClient.SelectedItem != null)
             {
 
                 new PackageView(bl, ((PackageAtClient)ListPackegeToClient.SelectedItem).SerialNum, StatusPackegeWindow.GetingClient, clientMode).ShowDialog();
                 ListPackegeToClient.SelectedItem = null;
-                 bl.GetingClient(client.Id).clientFromBl(this.client );
+                bl.GetingClient(client.Id).clientFromBl(this.client);
                 this.DataContext = this.client;
- 
+
                 ListPackegeFromClient.SelectedItem = null;
                 if (list != null)
                     bl.FilterClientList().ConvertIenmurbleToObserve(list);
@@ -186,12 +186,12 @@ namespace PL
 
         private void AddPAckegeButton_Click(object sender, RoutedEventArgs e)
         {
-            new PackageView(bl,client.Id.ToString(),StatusPackegeWindow.SendClient,clientMode).ShowDialog();
+            new PackageView(bl, client.Id.ToString(), StatusPackegeWindow.SendClient, clientMode).ShowDialog();
             bl.GetingClient(client.Id).clientFromBl(this.client);
             if (list != null)
                 bl.FilterClientList().ConvertIenmurbleToObserve(list);
-            
-            
+
+
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
@@ -248,9 +248,9 @@ namespace PL
 
         private void letitudeTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-          
-                ((TextBox)sender).SelectAll();
-            
+
+            ((TextBox)sender).SelectAll();
+
         }
     }
 }

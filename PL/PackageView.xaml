@@ -44,8 +44,7 @@
         <Grid x:Name="AddGrid"  Visibility="Collapsed">
             <Label Name="TitelPackegeViewLabel" Content="New Packege" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="62" Width="235" FontSize="34"/>
             <ComboBox Name="SendClientCMB" HorizontalAlignment="Left" Margin="148,92,0,0" VerticalAlignment="Top"  
-            Validation.Error="Error" FontSize="18" materialDesign:HintAssist.Hint="Send Client"  Width="291" Height="59"
-                  >
+            Validation.Error="Error" FontSize="18" materialDesign:HintAssist.Hint="Send Client"  Width="291" Height="59"                  >
                 <ComboBox.SelectedItem>
                     <Binding  Path="SendClient"  Mode="TwoWay"  UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

@@ -2,7 +2,7 @@
 <ArrayOfDrone xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Drone>
     <SerialNumber>6638</SerialNumber>
-    <Model>Cargo</Model>
+    <Model>BigContainers</Model>
     <WeightCategory>Heavy</WeightCategory>
     <Active>true</Active>
   </Drone>
@@ -20,7 +20,7 @@
   </Drone>
   <Drone>
     <SerialNumber>8358</SerialNumber>
-    <Model>FlyingSky</Model>
+    <Model>Blockchains</Model>
     <WeightCategory>Heavy</WeightCategory>
     <Active>true</Active>
   </Drone>
@@ -184,6 +184,12 @@
     <SerialNumber>15151</SerialNumber>
     <Model>Blockchains</Model>
     <WeightCategory>Medium</WeightCategory>
+    <Active>true</Active>
+  </Drone>
+  <Drone>
+    <SerialNumber>6664</SerialNumber>
+    <Model>Cargo</Model>
+    <WeightCategory>Easy</WeightCategory>
     <Active>true</Active>
   </Drone>
 </ArrayOfDrone>

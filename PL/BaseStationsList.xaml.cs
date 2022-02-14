@@ -111,13 +111,21 @@ namespace PL
         /// <param name="e"></param>
         private void ChoceDroneCmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ChoceGroupCmb.SelectedItem == ChoceGroupCmb.Items[0] || ChoceGroupCmb.SelectedItem is null)
-            { view.GroupDescriptions.Clear(); }
-            else
+            try
             {
-                view = (CollectionView)CollectionViewSource.GetDefaultView(BaseListView.ItemsSource);
-                view.GroupDescriptions.Add(groupDescription);
+                if (ChoceGroupCmb.SelectedItem == ChoceGroupCmb.Items[0] || ChoceGroupCmb.SelectedItem is null)
+                {
+                    if (view.GroupDescriptions != null)
+                        view.GroupDescriptions.Clear();
+                }
+                else
+                {
+                    view = (CollectionView)CollectionViewSource.GetDefaultView(BaseListView.ItemsSource);
+                    view.GroupDescriptions.Add(groupDescription);
+                }
             }
+            catch(Exception)
+            { }
 
         }
 

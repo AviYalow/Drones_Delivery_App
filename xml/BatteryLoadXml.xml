@@ -1,83 +1,93 @@
 <?xml version="1.0"?>
 <ArrayOfBatteryLoad xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <BatteryLoad>
+    <idBaseStation>9347</idBaseStation>
+    <IdDrone>6638</IdDrone>
+    <EntringDrone>2022-02-06T23:54:10.7992695+02:00</EntringDrone>
+  </BatteryLoad>
+  <BatteryLoad>
+    <idBaseStation>2873</idBaseStation>
+    <IdDrone>4231</IdDrone>
+    <EntringDrone>2022-02-06T23:54:10.809828+02:00</EntringDrone>
+  </BatteryLoad>
+  <BatteryLoad>
+    <idBaseStation>9347</idBaseStation>
+    <IdDrone>7404</IdDrone>
+    <EntringDrone>2022-02-06T23:54:10.9237265+02:00</EntringDrone>
+  </BatteryLoad>
+  <BatteryLoad>
     <idBaseStation>2873</idBaseStation>
     <IdDrone>5708</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.4023206+02:00</EntringDrone>
-  </BatteryLoad>
-  <BatteryLoad>
-    <idBaseStation>9347</idBaseStation>
-    <IdDrone>5671</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.4100975+02:00</EntringDrone>
-  </BatteryLoad>
-  <BatteryLoad>
-    <idBaseStation>9347</idBaseStation>
-    <IdDrone>5729</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.4195672+02:00</EntringDrone>
+    <EntringDrone>2022-02-06T23:54:10.9306695+02:00</EntringDrone>
   </BatteryLoad>
   <BatteryLoad>
     <idBaseStation>51845</idBaseStation>
-    <IdDrone>7222</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.426292+02:00</EntringDrone>
+    <IdDrone>1219</IdDrone>
+    <EntringDrone>2022-02-06T23:54:10.9390692+02:00</EntringDrone>
   </BatteryLoad>
   <BatteryLoad>
-    <idBaseStation>7769</idBaseStation>
+    <idBaseStation>51845</idBaseStation>
     <IdDrone>7175</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.434223+02:00</EntringDrone>
+    <EntringDrone>2022-02-06T23:54:10.9565065+02:00</EntringDrone>
   </BatteryLoad>
   <BatteryLoad>
     <idBaseStation>51845</idBaseStation>
     <IdDrone>6096</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.4447616+02:00</EntringDrone>
+    <EntringDrone>2022-02-06T23:54:10.9674553+02:00</EntringDrone>
+  </BatteryLoad>
+  <BatteryLoad>
+    <idBaseStation>51845</idBaseStation>
+    <IdDrone>8677</IdDrone>
+    <EntringDrone>2022-02-06T23:54:10.9781747+02:00</EntringDrone>
+  </BatteryLoad>
+  <BatteryLoad>
+    <idBaseStation>9347</idBaseStation>
+    <IdDrone>8466</IdDrone>
+    <EntringDrone>2022-02-06T23:54:10.9909196+02:00</EntringDrone>
+  </BatteryLoad>
+  <BatteryLoad>
+    <idBaseStation>51845</idBaseStation>
+    <IdDrone>6098</IdDrone>
+    <EntringDrone>2022-02-06T23:54:10.998591+02:00</EntringDrone>
+  </BatteryLoad>
+  <BatteryLoad>
+    <idBaseStation>2873</idBaseStation>
+    <IdDrone>6208</IdDrone>
+    <EntringDrone>2022-02-06T23:54:11.0092758+02:00</EntringDrone>
+  </BatteryLoad>
+  <BatteryLoad>
+    <idBaseStation>9347</idBaseStation>
+    <IdDrone>5567</IdDrone>
+    <EntringDrone>2022-02-06T23:54:11.0173435+02:00</EntringDrone>
+  </BatteryLoad>
+  <BatteryLoad>
+    <idBaseStation>9347</idBaseStation>
+    <IdDrone>3171</IdDrone>
+    <EntringDrone>2022-02-06T23:54:11.0251359+02:00</EntringDrone>
   </BatteryLoad>
   <BatteryLoad>
     <idBaseStation>6844</idBaseStation>
-    <IdDrone>5584</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.4535828+02:00</EntringDrone>
-  </BatteryLoad>
-  <BatteryLoad>
-    <idBaseStation>2873</idBaseStation>
-    <IdDrone>3099</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.4652603+02:00</EntringDrone>
+    <IdDrone>1951</IdDrone>
+    <EntringDrone>2022-02-06T23:54:11.0341138+02:00</EntringDrone>
   </BatteryLoad>
   <BatteryLoad>
     <idBaseStation>7769</idBaseStation>
-    <IdDrone>8466</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.4713268+02:00</EntringDrone>
-  </BatteryLoad>
-  <BatteryLoad>
-    <idBaseStation>7769</idBaseStation>
-    <IdDrone>6098</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.4776262+02:00</EntringDrone>
-  </BatteryLoad>
-  <BatteryLoad>
-    <idBaseStation>2873</idBaseStation>
-    <IdDrone>1340</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.4833766+02:00</EntringDrone>
-  </BatteryLoad>
-  <BatteryLoad>
-    <idBaseStation>2873</idBaseStation>
-    <IdDrone>3171</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.4961297+02:00</EntringDrone>
-  </BatteryLoad>
-  <BatteryLoad>
-    <idBaseStation>2873</idBaseStation>
     <IdDrone>6492</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.5068091+02:00</EntringDrone>
+    <EntringDrone>2022-02-06T23:54:11.0554762+02:00</EntringDrone>
   </BatteryLoad>
   <BatteryLoad>
     <idBaseStation>7769</idBaseStation>
     <IdDrone>8041</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.5286234+02:00</EntringDrone>
+    <EntringDrone>2022-02-06T23:54:11.0640642+02:00</EntringDrone>
   </BatteryLoad>
   <BatteryLoad>
     <idBaseStation>6844</idBaseStation>
-    <IdDrone>9472</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.5364284+02:00</EntringDrone>
+    <IdDrone>6205</IdDrone>
+    <EntringDrone>2022-02-06T23:54:11.0814228+02:00</EntringDrone>
   </BatteryLoad>
   <BatteryLoad>
     <idBaseStation>2873</idBaseStation>
-    <IdDrone>8546</IdDrone>
-    <EntringDrone>2022-01-23T20:58:52.5456102+02:00</EntringDrone>
+    <IdDrone>6664</IdDrone>
+    <EntringDrone>2022-02-06T23:54:11.0985107+02:00</EntringDrone>
   </BatteryLoad>
 </ArrayOfBatteryLoad>

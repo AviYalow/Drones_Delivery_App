@@ -57,8 +57,8 @@
     <OperatorSkimmerId>8933</OperatorSkimmerId>
     <ReceivingDelivery>2021-12-22T01:05:30.8423434+02:00</ReceivingDelivery>
     <PackageAssociation>2021-12-22T01:35:30.8423434+02:00</PackageAssociation>
-    <CollectPackageForShipment xsi:nil="true" />
-    <PackageArrived xsi:nil="true" />
+    <CollectPackageForShipment>2022-01-27T09:21:39.6327072+02:00</CollectPackageForShipment>
+    <PackageArrived>2022-01-27T09:21:50.8526044+02:00</PackageArrived>
   </Package>
   <Package>
     <SerialNumber>10005</SerialNumber>
@@ -165,8 +165,8 @@
     <OperatorSkimmerId>8358</OperatorSkimmerId>
     <ReceivingDelivery>2021-12-25T04:08:30.9406982+02:00</ReceivingDelivery>
     <PackageAssociation>2021-12-25T04:38:30.9406982+02:00</PackageAssociation>
-    <CollectPackageForShipment xsi:nil="true" />
-    <PackageArrived xsi:nil="true" />
+    <CollectPackageForShipment>2022-01-27T09:18:12.2402407+02:00</CollectPackageForShipment>
+    <PackageArrived>2022-01-27T09:18:16.318126+02:00</PackageArrived>
   </Package>
   <Package>
     <SerialNumber>10014</SerialNumber>
@@ -202,7 +202,7 @@
     <ReceivingDelivery>2021-12-23T20:06:30.9407029+02:00</ReceivingDelivery>
     <PackageAssociation>2021-12-23T20:36:30.9407029+02:00</PackageAssociation>
     <CollectPackageForShipment>2021-12-23T21:36:30.9407029+02:00</CollectPackageForShipment>
-    <PackageArrived xsi:nil="true" />
+    <PackageArrived>2022-01-27T09:08:01.8913408+02:00</PackageArrived>
   </Package>
   <Package>
     <SerialNumber>10017</SerialNumber>
@@ -251,5 +251,17 @@
     <PackageAssociation>2022-01-23T20:59:17.3645375+02:00</PackageAssociation>
     <CollectPackageForShipment>2022-01-23T20:59:17.8780476+02:00</CollectPackageForShipment>
     <PackageArrived>2022-01-23T20:59:25.1690857+02:00</PackageArrived>
+  </Package>
+  <Package>
+    <SerialNumber>1021</SerialNumber>
+    <SendClient>600786717</SendClient>
+    <GetingClient>522167800</GetingClient>
+    <WeightCatgory>Easy</WeightCatgory>
+    <Priority>Immediate</Priority>
+    <OperatorSkimmerId>3206</OperatorSkimmerId>
+    <ReceivingDelivery>2022-01-27T20:30:07.2564067+02:00</ReceivingDelivery>
+    <PackageAssociation>2022-02-04T15:29:37.7741555+02:00</PackageAssociation>
+    <CollectPackageForShipment>2022-02-04T15:29:44.6973981+02:00</CollectPackageForShipment>
+    <PackageArrived xsi:nil="true" />
   </Package>
 </ArrayOfPackage>

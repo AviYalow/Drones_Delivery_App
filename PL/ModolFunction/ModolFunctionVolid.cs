@@ -25,9 +25,6 @@ namespace PL
     /// </summary>
     public class NotEmptyValidationRule : ValidationRule
     {
-
-
-
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
 

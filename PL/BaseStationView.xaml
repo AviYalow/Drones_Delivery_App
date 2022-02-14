@@ -39,6 +39,7 @@
                     <Binding.ValidationRules>
                         <local:NotEmptyValidationRule ValidatesOnTargetUpdated="True"  />
                         <local:MinusValidationRule ValidatesOnTargetUpdated="True"/>
+                        <local:InputERRORValidationRule ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
 
